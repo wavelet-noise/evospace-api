@@ -20,11 +20,17 @@ jobs:
         
         cd source
         
+        git rm -rf .git
+        git rm -rf .github
+        
         echo "- clone doxy css -"
         
         git clone https://github.com/jothepro/doxygen-awesome-css.git
         cd doxygen-awesome-css
         git checkout v2.1.0
+        
+        git rm -rf .git
+        git rm -rf .github
         
         echo "- finish -"
         
