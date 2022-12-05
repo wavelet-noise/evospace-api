@@ -31,6 +31,11 @@ jobs:
       env:
         working-directory: 'source'
         doxyfile-path: 'dest'
+        
+    - name: Build 💼
+      run: |
+        ls -A
+        
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
       env:
