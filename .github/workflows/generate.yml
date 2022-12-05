@@ -36,7 +36,7 @@ jobs:
         
         ls -A
         
-        realpath
+        realpath Doxyfile
         
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
