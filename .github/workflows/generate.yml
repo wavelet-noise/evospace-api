@@ -18,17 +18,19 @@ jobs:
         echo "- clone api -"
         git clone --depth 1 https://github.com/wavelet-noise/evospace-api.git source
         
-        ls -A
-        
         cd source
+        
+        rm -rf .git
+        rm -rf .github
         
         echo "- clone doxy css -"
         
-        git submodule add https://github.com/jothepro/doxygen-awesome-css.git
+        git clone https://github.com/jothepro/doxygen-awesome-css.git
         cd doxygen-awesome-css
         git checkout v2.1.0
         
-        ls -A
+        rm -rf .git
+        rm -rf .github
         
         echo "- finish -"
         
@@ -42,17 +44,13 @@ jobs:
       uses: mattnotmitt/doxygen-action@1.9.4
       env:
         working-directory: 'source'
-        doxyfile-path: 'dest'
-        
-    - name: Test
-      run: |
-        ls -A
+        doxyfile-path: 'source'
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
       env:
         REPO: self
         BRANCH: gh-pages
-        FOLDER: dest
+        FOLDER: source
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SQUASH_HISTORY: true
