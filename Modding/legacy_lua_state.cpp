@@ -21,14 +21,14 @@ LegacyLuaState::LegacyLuaState() {
 
     getGlobalNamespace(L)
         .beginClass<Vec3i>("Vec3i")
-        .addStaticFunction("new", &LegacyLuaState::NewVec3i)
-        .addStaticFunction("zero", &LegacyLuaState::ZeroVec3i)
-        .addStaticFunction("up", &LegacyLuaState::UpVec3i)
-        .addStaticFunction("down", &LegacyLuaState::DownVec3i)
-        .addStaticFunction("left", &LegacyLuaState::LeftVec3i)
-        .addStaticFunction("right", &LegacyLuaState::RightVec3i)
-        .addStaticFunction("back", &LegacyLuaState::BackVec3i)
-        .addStaticFunction("front", &LegacyLuaState::FrontVec3i)
+        .addStaticFunction("new", &LegacyLuaState::Vec3i_new)
+        .addStaticFunction("zero", &LegacyLuaState::Vec3i_zero)
+        .addStaticFunction("up", &LegacyLuaState::Vec3i_up)
+        .addStaticFunction("down", &LegacyLuaState::Vec3i_down)
+        .addStaticFunction("left", &LegacyLuaState::Vec3i_left)
+        .addStaticFunction("right", &LegacyLuaState::Vec3i_right)
+        .addStaticFunction("back", &LegacyLuaState::Vec3i_back)
+        .addStaticFunction("front", &LegacyLuaState::Vec3i_front)
         .endClass();
 
     getGlobalNamespace(L)
@@ -94,61 +94,40 @@ int LegacyLuaState::AccessorSetSidePos(lua_State *l) {
     return 0;
 }
 
-int LegacyLuaState::NewVec3i(lua_State *l) {
-    auto x = Stack<int32>::get(l, 1);
-    auto y = Stack<int32>::get(l, 2);
-    auto z = Stack<int32>::get(l, 3);
-    std::error_code ec;
-    push(l, Vec3i(x, y, z), ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_new(int32 x, int32 y, int32 z) {
+    return Vec3i(x, y, z);
 }
 
-int LegacyLuaState::ZeroVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Vec3i(0, 0, 0), ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_zero() {
+    return Vec3i(0, 0, 0);
 }
 
-int LegacyLuaState::OneVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Vec3i(1, 1, 1), ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_one() {
+    return Vec3i(1, 1, 1);
 }
 
-int LegacyLuaState::LeftVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Left, ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_left() {
+    return Side::Left;
 }
 
-int LegacyLuaState::RightVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Right, ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_right() {
+    return Side::Right;
 }
 
-int LegacyLuaState::UpVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Up, ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_up() {
+    return Side::Up;
 }
 
-int LegacyLuaState::DownVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Down, ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_down() {
+    return Side::Down;
 }
 
-int LegacyLuaState::FrontVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Front, ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_front() {
+    return Side::Front;
 }
 
-int LegacyLuaState::BackVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Back, ec);
-    return 1;
+Vec3i LegacyLuaState::Vec3i_back() {
+    return Side::Back;
 }
 
 UClass *LegacyLuaState::GetClass(const std::string &name) {

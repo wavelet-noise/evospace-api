@@ -8,6 +8,10 @@
 struct lua_State;
 
 namespace evo {
+
+/**
+ * @brief Most basic lua state class
+ */
 class LuaState {
   public:
     static int l_my_print(lua_State *L);
