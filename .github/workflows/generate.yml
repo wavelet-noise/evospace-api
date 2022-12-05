@@ -12,12 +12,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: Build 💼
       run: |
-        echo "- clone api -"
-        git clone --depth 1 https://github.com/wavelet-noise/evospace-api.git source
-        
-        cd source
+        echo "- clean api -"
         
         rm -rf .git
         rm -rf .github
@@ -35,15 +33,8 @@ jobs:
         
         cd ..
         
-        ls -A
-        
-        realpath Doxyfile
-        
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
-      env:
-        working-directory: 'source'
-        doxyfile-path: 'source'
         
     - name: Show Result
       run: |
