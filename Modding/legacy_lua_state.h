@@ -23,7 +23,7 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from 3 numbers
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.new(x, y, z)
      * @endcode
@@ -36,7 +36,7 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from (0, 0, 0)
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.zero()
      * @endcode
@@ -46,7 +46,7 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from (1, 1, 1)
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.one()
      * @endcode
@@ -56,7 +56,7 @@ class LegacyLuaState : public LuaState {
     
     /**
      * @brief Construct Vec3i from up (0, 0, 1)
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.up()
      * @endcode
@@ -66,7 +66,7 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from (0, 0, -1)
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.down()
      * @endcode
@@ -76,7 +76,7 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from (0, 1, 0)
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.left()
      * @endcode
@@ -86,7 +86,7 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from (0, -1, 0)
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.right()
      * @endcode
@@ -96,7 +96,7 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from (-1, 0, 0)
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.back()
      * @endcode
@@ -106,7 +106,7 @@ class LegacyLuaState : public LuaState {
     
     /**
      * @brief Construct Vec3i from (1, 0, 0)
-     * @detailed lua syntax
+     * @details lua syntax
      * @code{.lua}
      * Vec3i.front()
      * @endcode
