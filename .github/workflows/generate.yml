@@ -12,7 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
     - name: Build 💼
       run: |
         echo "- clone api -"
@@ -55,6 +54,6 @@ jobs:
       env:
         REPO: self
         BRANCH: gh-pages
-        FOLDER: source
+        FOLDER: doxygen
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SQUASH_HISTORY: true
