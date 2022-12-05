@@ -23,10 +23,10 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from 3 numbers
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.new(x, y, z)
-     * \endcode
+     * @endcode
      * @param x 
      * @param y 
      * @param z 
@@ -36,80 +36,80 @@ class LegacyLuaState : public LuaState {
 
     /**
      * @brief Construct Vec3i from (0, 0, 0)
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.zero()
-     * \endcode
+     * @endcode
      * @return Constructed Vec3i(0, 0, 0) object
      */
     static Vec3i Vec3i_zero();
 
     /**
      * @brief Construct Vec3i from (1, 1, 1)
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.one()
-     * \endcode
+     * @endcode
      * @return Constructed Vec3i(1, 1, 1) object
      */
     static Vec3i Vec3i_one();
     
     /**
      * @brief Construct Vec3i from up (0, 0, 1)
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.up()
-     * \endcode
+     * @endcode
      * @return Constructed Vec3i(0, 0, 1) object
      */
     static Vec3i Vec3i_up();
 
     /**
      * @brief Construct Vec3i from (0, 0, -1)
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.down()
-     * \endcode
+     * @endcode
      * @return Constructed Vec3i(0, 0, -1) object
      */
     static Vec3i Vec3i_down();
 
     /**
      * @brief Construct Vec3i from (0, 1, 0)
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.left()
-     * \endcode
+     * @endcode
      * @return Constructed Vec3i(0, 1, 0) object
      */
     static Vec3i Vec3i_left();
 
     /**
      * @brief Construct Vec3i from (0, -1, 0)
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.right()
-     * \endcode
+     * @endcode
      * @return Constructed Vec3i(0, -1, 0) object
      */
     static Vec3i Vec3i_right();
 
     /**
      * @brief Construct Vec3i from (-1, 0, 0)
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.back()
-     * \endcode
+     * @endcode
      * @return Constructed Vec3i(-1, 0, 0) object
      */
     static Vec3i Vec3i_back();
     
     /**
      * @brief Construct Vec3i from (1, 0, 0)
-     * lua syntax
-     * \code{.lua}
+     * @detailed lua syntax
+     * @code{.lua}
      * Vec3i.front()
-     * \endcode
+     * @endcode
      * @return Constructed Vec3i(1, 0, 0) object
      */
     static Vec3i Vec3i_front();
