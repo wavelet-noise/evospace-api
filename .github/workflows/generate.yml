@@ -24,12 +24,13 @@ jobs:
         cd doxygen-awesome-css
         git checkout v2.1.0
         
-        cd ../..
+        cd ..
         
         rm -rf source/.git
         rm -rf source/.github
         rm source/.gitignore
         rm source/README.md
+        
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
       env:
