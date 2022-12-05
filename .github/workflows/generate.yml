@@ -18,17 +18,13 @@ jobs:
         echo "- clone api -"
         git clone --depth 1 https://github.com/wavelet-noise/evospace-api.git source
         
-        ls -A
-        
         cd source
         
         echo "- clone doxy css -"
         
-        git submodule add https://github.com/jothepro/doxygen-awesome-css.git
+        git clone https://github.com/jothepro/doxygen-awesome-css.git
         cd doxygen-awesome-css
         git checkout v2.1.0
-        
-        ls -A
         
         echo "- finish -"
         
@@ -43,10 +39,6 @@ jobs:
       env:
         working-directory: 'source'
         doxyfile-path: 'source'
-        
-    - name: Test
-      run: |
-        ls -A
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
