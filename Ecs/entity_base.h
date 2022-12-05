@@ -7,7 +7,7 @@
 
 class UInventory;
 
-namespace ECS {
+namespace ecs {
 
 ECS_TYPE_IMPLEMENTATION
 
@@ -19,7 +19,7 @@ struct EntityFactory
         }
     };
 
-    using FactoryType = evo::TemplateFactory<std::string, ECS::Entity, cmpNameFast>;
+    using FactoryType = evo::TemplateFactory<std::string, ecs::Entity, cmpNameFast>;
 
     static FactoryType& Get()
     {
@@ -28,7 +28,7 @@ struct EntityFactory
     }
 };
 
-#define ECS_REGISTER_COMPONENT(type) ECS_REGISTER_COMPONENT_IMPL(type, ECS::EntityFactory::Get(), #type)
+#define ECS_REGISTER_COMPONENT(type) ECS_REGISTER_COMPONENT_IMPL(type, ecs::EntityFactory::Get(), #type)
 
 namespace Events {
 struct OnEntitySpawned
@@ -45,10 +45,10 @@ struct OnEntitySpawned
 template<typename Ty_>
 struct EcsComponentBase {
     static auto GetPrototypeLambda() {
-        return [](ECS::Entity* e, void* proto) { e->assign_prototype<Ty_>(*static_cast<Ty_*>(proto)); };
+        return [](ecs::Entity* e, void* proto) { e->assign_prototype<Ty_>(*static_cast<Ty_*>(proto)); };
     }
     static auto GetComponentLambda() {
-        return [](ECS::Entity* e) -> void* { return e->get_ptr<Ty_>(); };
+        return [](ecs::Entity* e) -> void* { return e->get_ptr<Ty_>(); };
     }
     static auto GetAnyLambda() {
         return [](void** data) { *data = new Ty_(); };

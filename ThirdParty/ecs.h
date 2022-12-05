@@ -50,13 +50,13 @@ class EntityBase;
 // tick()
 #define ECS_TICK_TYPE_VOID
 #ifndef ECS_TICK_TYPE
-#define ECS_TICK_TYPE ECS::DefaultTickData
+#define ECS_TICK_TYPE ecs::DefaultTickData
 #endif
 
 // Define what kind of allocator you want the world to use. It should have a
 // default constructor.
 #ifndef ECS_ALLOCATOR_TYPE
-#define ECS_ALLOCATOR_TYPE std::allocator<ECS::Entity>
+#define ECS_ALLOCATOR_TYPE std::allocator<ecs::Entity>
 #endif
 
 // Define ECS_TICK_NO_CLEANUP if you don't want the world to automatically
@@ -79,10 +79,10 @@ class EntityBase;
 #else
 
 #define ECS_TYPE_IMPLEMENTATION                                                \
-    ECS::TypeIndex ECS::Internal::TypeRegistry::nextIndex = 1;                 \
+    ecs::TypeIndex ecs::Internal::TypeRegistry::nextIndex = 1;                 \
                                                                                \
-    ECS_DEFINE_TYPE(ECS::Events::OnEntityCreated);                             \
-    ECS_DEFINE_TYPE(ECS::Events::OnEntityDestroyed);
+    ECS_DEFINE_TYPE(ecs::Events::OnEntityCreated);                             \
+    ECS_DEFINE_TYPE(ecs::Events::OnEntityDestroyed);
 
 #endif
 
@@ -90,7 +90,7 @@ class EntityBase;
 // CODE //
 //////////////////////////////////////////////////////////////////////////
 
-namespace ECS {
+namespace ecs {
 #ifndef ECS_NO_RTTI
 typedef std::type_index TypeIndex;
 
@@ -122,8 +122,8 @@ class TypeRegistry {
 
 #define ECS_DECLARE_TYPE                                                       \
   public:                                                                      \
-    static ECS::Internal::TypeRegistry __ecs_type_reg
-#define ECS_DEFINE_TYPE(name) ECS::Internal::TypeRegistry name::__ecs_type_reg
+    static ecs::Internal::TypeRegistry __ecs_type_reg
+#define ECS_DEFINE_TYPE(name) ecs::Internal::TypeRegistry name::__ecs_type_reg
 
 template <typename T> TypeIndex getTypeIndex() {
     return T::__ecs_type_reg.getIndex();
@@ -201,7 +201,7 @@ template <typename... Types> class EntityComponentIterator {
   private:
     bool bIsEnd = false;
     size_t index;
-    class ECS::World *world;
+    class ecs::World *world;
     bool bIncludePendingDestroy;
 };
 
@@ -327,8 +327,8 @@ template <typename T> struct OnComponentRemoved {
 };
 
 #ifdef ECS_NO_RTTI
-template <typename T> ECS_DEFINE_TYPE(ECS::Events::OnComponentAssigned<T>);
-template <typename T> ECS_DEFINE_TYPE(ECS::Events::OnComponentRemoved<T>);
+template <typename T> ECS_DEFINE_TYPE(ecs::Events::OnComponentAssigned<T>);
+template <typename T> ECS_DEFINE_TYPE(ecs::Events::OnComponentRemoved<T>);
 #endif
 } // namespace Events
 
@@ -851,7 +851,7 @@ class EntityIterator {
   private:
     bool bIsEnd = false;
     size_t index;
-    class ECS::World *world;
+    class ecs::World *world;
     bool bIncludePendingDestroy;
 };
 

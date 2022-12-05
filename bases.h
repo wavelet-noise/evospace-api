@@ -46,7 +46,7 @@ struct BaseFactory {
 }*/
 
 #define SOG_REGISTER_BASE(type)                                                \
-    SOG_REGISTER_BASE_IMPL(type, ECS::BaseFactory::Get(), #type)
+    SOG_REGISTER_BASE_IMPL(type, ecs::BaseFactory::Get(), #type)
 
 class Base : public std::enable_shared_from_this<Base> {
   public:
@@ -62,11 +62,11 @@ class Base : public std::enable_shared_from_this<Base> {
 /*template<typename Ty_>
 struct BaseHelper : public Base {
         static auto GetPrototypeLambda() {
-                return [](ECS::Entity* e, void* proto) {
+                return [](ecs::Entity* e, void* proto) {
 e->assign_prototype<Ty_>(*reinterpret_cast<Ty_*>(proto)); };
         }
         static auto GetComponentLambda() {
-                return [](ECS::Entity* e) -> void* { return e->get_ptr<Ty_>();
+                return [](ecs::Entity* e) -> void* { return e->get_ptr<Ty_>();
 };
         }
         static auto GetAnyLambda() {

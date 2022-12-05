@@ -13,11 +13,11 @@
 template<typename Ty_>
         struct EcsComponentBase {
                 static auto GetPrototypeLambda() {
-                        return [](ECS::Entity* e, void * proto) {
+                        return [](ecs::Entity* e, void * proto) {
 e->assign_prototype<Ty_>(*reinterpret_cast<Ty_ *>(proto)); };
                 }
                 static auto GetComponentLambda() {
-                        return [](ECS::Entity* e) -> void * { return
+                        return [](ecs::Entity* e) -> void * { return
 e->get_ptr<Ty_>(); };
                 }
                 static auto GetAnyLambda() {
@@ -39,7 +39,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     using RegisterFunc = std::function<void(lua_State *)>;
 
     // Assign component prototype to entity
-    using PrototypeFunc = std::function<void(ECS::Entity *, void *)>;
+    using PrototypeFunc = std::function<void(ecs::Entity *, void *)>;
 
     // Create any class
     using AnyFunction = std::function<void(void **)>;
@@ -48,7 +48,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     using CopyAnyFunction = std::function<void *(void *)>;
 
     // Get named component
-    using ComponentFunction = std::function<void *(ECS::Entity *)>;
+    using ComponentFunction = std::function<void *(ecs::Entity *)>;
 
     // Push any class into lua stack
     using LuaFunction = std::function<void(lua_State *, void *)>;
@@ -88,7 +88,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
         }
     }
 
-    void componentCheckDraw(ECS::Entity *ent) const {}
+    void componentCheckDraw(ecs::Entity *ent) const {}
 
     void AddComponent(
         const IdType &id, RegisterFunc reg, PrototypeFunc proto,
