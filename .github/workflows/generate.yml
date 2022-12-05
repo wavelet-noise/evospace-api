@@ -9,12 +9,9 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-    
     - name: Build 💼
       run: |
         echo "- clone wiki -"
@@ -32,13 +29,11 @@ jobs:
         rm -rf source/.github
         rm source/.gitignore
         rm source/README.md
-        
     - name: doxy
       uses: mattnotmitt/doxygen-action@v1.9.5
       with:
-          working-directory: 'source'
-          doxyfile-path: 'dest'
-          
+        working-directory: 'source'
+        doxyfile-path: 'dest'
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
       env:
