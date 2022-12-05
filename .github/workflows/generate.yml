@@ -26,11 +26,6 @@ jobs:
         
         cd ..
         
-        rm -rf source/.git
-        rm -rf source/.github
-        rm source/.gitignore
-        rm source/README.md
-        
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
       env:
