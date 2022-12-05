@@ -42,7 +42,7 @@ jobs:
       uses: mattnotmitt/doxygen-action@1.9.4
       env:
         working-directory: 'source'
-        doxyfile-path: 'dest'
+        doxyfile-path: 'source'
         
     - name: Test
       run: |
@@ -53,6 +53,6 @@ jobs:
       env:
         REPO: self
         BRANCH: gh-pages
-        FOLDER: dest
+        FOLDER: source
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SQUASH_HISTORY: true
