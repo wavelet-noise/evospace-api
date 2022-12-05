@@ -36,6 +36,8 @@ jobs:
         
         ls -A
         
+        realpath
+        
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
       env:
