@@ -29,9 +29,9 @@ jobs:
         rm -rf source/.github
         rm source/.gitignore
         rm source/README.md
-    - name: doxy
-      uses: mattnotmitt/doxygen-action@v1.9.5
-      with:
+    - name: Doxygen Action
+      uses: mattnotmitt/doxygen-action@1.9.4
+      env:
         working-directory: 'source'
         doxyfile-path: 'dest'
     - name: Deploy 🚀
