@@ -45,6 +45,6 @@ jobs:
       env:
         REPO: self
         BRANCH: gh-pages
-        FOLDER: doxygen
+        FOLDER: doxygen/html
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SQUASH_HISTORY: true
