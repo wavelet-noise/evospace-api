@@ -1,8 +1,12 @@
 name: generate
 
+workflow_dispatch
+
 on:
   push:
     branches: [ "master" ]
+    
+on: workflow_dispatch
 
 env:
   CARGO_TERM_COLOR: always
