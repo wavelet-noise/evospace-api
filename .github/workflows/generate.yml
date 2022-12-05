@@ -46,6 +46,10 @@ jobs:
         working-directory: 'source'
         doxyfile-path: 'source'
         
+    - name: Show Result
+      run: |
+        ls -R
+        
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
       env:
