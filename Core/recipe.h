@@ -1,0 +1,68 @@
+// Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
+
+#pragma once
+
+#include "Evospace/Item/ItemData.h"
+#include "Evospace/SerializableJson.h"
+
+#include <Dom/JsonObject.h>
+
+#include "Recipe.generated.h"
+
+class URecipeInventory;
+class UStaticResearch;
+
+UCLASS(BlueprintType)
+class EVOSPACE_API URecipe : public UObject, public ISerializableJson {
+    GENERATED_BODY()
+
+    // Lua api
+  public:
+    int32 get_loss() const { return loss; }
+    void set_loss(int32 val) { loss = val; }
+
+    int32 get_ticks() const { return ticks; }
+    void set_ticks(int32 val) { ticks = val; }
+
+    // Engine code
+  public:
+    URecipe();
+
+    virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    URecipeInventory *input;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    URecipeInventory *output;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    FItemData res_input;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    FItemData res_output;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    FRecipeItemData input_data;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    FRecipeItemData output_data;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    int32 ticks = 1;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    int32 loss = 0;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    FName name;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    bool locked = false;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    bool default_locked = false;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UStaticResearch *unlocks_by;
+};

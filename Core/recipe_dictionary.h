@@ -1,0 +1,97 @@
+// Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
+#pragma once
+#include "Containers/Map.h"
+#include "CoreMinimal.h"
+#include "Evospace/SerializableJson.h"
+#include "Evospace/Shared/Core/recipe.h"
+
+#include "recipe_dictionary.generated.h"
+
+class UStaticItem;
+class UInventory;
+class URecipe;
+class UInventoryReader;
+
+USTRUCT(BlueprintType)
+struct EVOSPACE_API FUsedIn {
+    GENERATED_BODY()
+
+  public:
+    UPROPERTY(BlueprintReadOnly)
+    const UStaticItem *item = nullptr;
+
+    UPROPERTY(BlueprintReadOnly)
+    int32 tier = 0;
+};
+
+// UENUM(BlueprintType)
+// enum class EIODirection : uint8
+//{
+// };
+
+/**
+ *
+ */
+UCLASS(BlueprintType)
+class EVOSPACE_API URecipeDictionary : public UObject,
+                                       public ISerializableJson {
+    GENERATED_BODY()
+
+    // Lua api
+  public:
+    int32 get_count() const { return mRecipes.Num(); }
+
+    URecipe *get_recipe(int32 index) const {
+        if (index >= 0 && index < mRecipes.Num())
+            return mRecipes[index];
+        return nullptr;
+    }
+
+    bool add_recipe(URecipe *val) {
+        if (mNameChache.Contains(val->name))
+            return false;
+        mRecipes.Add(val);
+        mNameChache.Add(val->name, val);
+        return true;
+    }
+
+    static URecipeDictionary *new_object() {
+        return NewObject<URecipeDictionary>();
+    }
+
+    // Engine code
+  public:
+    URecipeDictionary();
+
+    virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+
+    const URecipe *Find(UInventoryReader *inventory) const;
+
+    UFUNCTION(BlueprintCallable)
+    TArray<URecipe *> &GetRecipes();
+
+    const TArray<URecipe *> &GetRecipes() const;
+
+    const TArray<FUsedIn> &GetUsedIn() const;
+
+    URecipe *GetByName(const FName &name) const;
+
+    UInventory *GetUsedInInventory();
+
+    void ResetLocked();
+
+    const URecipe *Find(UStaticItem *item, int32 count = 1) const;
+
+  protected:
+    UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    TArray<URecipe *> mRecipes;
+
+    UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    TArray<FUsedIn> mUsedIn;
+
+    UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    TMap<FName, URecipe *> mNameChache;
+
+    UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    UInventory *mUsedInInventory;
+};
