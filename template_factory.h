@@ -112,9 +112,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     ) {
         auto i = base_map_.find(id);
         if (i == base_map_.end()) {
-            base_map_.insert(
-                std::make_pair(id, std::make_tuple(reg, lua))
-            );
+            base_map_.insert(std::make_pair(id, std::make_tuple(reg, lua)));
         } else {
             std::cout << id << "base redefinition!" << std::endl;
             i->second = std::make_tuple(reg, lua);
@@ -153,11 +151,11 @@ template <class T> class RegisterBase {
 
 #define ECS_REGISTER_COMPONENT_IMPL(type, factory, id)                         \
     namespace {                                                                \
-    evo::RegisterComponent<type> RegisterComponent##type(factory, id);              \
+    evo::RegisterComponent<type> RegisterComponent##type(factory, id);         \
     }
 
 #define ECS_REGISTER_BASE_IMPL(type, factory, id)                              \
     namespace {                                                                \
-    evo::RegisterBase<type> RegisterBase##type(factory, id);                        \
+    evo::RegisterBase<type> RegisterBase##type(factory, id);                   \
     }
 } // namespace evo

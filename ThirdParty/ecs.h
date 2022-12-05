@@ -1253,4 +1253,4 @@ EntityComponentView<Types...>::EntityComponentView(
     }
 }
 } // namespace Internal
-} // namespace ECS
+} // namespace ecs
