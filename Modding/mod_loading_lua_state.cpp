@@ -21,32 +21,6 @@ ModLoadingLuaState::ModLoadingLuaState() {
 
     getGlobalNamespace(L).beginClass<UObject>("Object").endClass();
 
-    getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<UAutoCrafterBlockLogic>("BlockLogic")
-        .addFunction(
-            "create_accessor", &ModLoadingLuaState::BlockLogicCreateAccessor
-        )
-        .addFunction(
-            "get_input_container", &ModLoadingLuaState::CrafterGetInputContainer
-        )
-        .addFunction(
-            "get_output_container",
-            &ModLoadingLuaState::CrafterGetOutputContainer
-        )
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<UBaseInventoryAccessor>("Accessor")
-        .addFunction("set_side_pos", &ModLoadingLuaState::AccessorSetSidePos)
-        .addFunction("bind", &ModLoadingLuaState::AccessorBind)
-        .endClass();
-
-    getGlobalNamespace(L).addFunction(
-        "get_class", &ModLoadingLuaState::GetClass
-    );
-
     getGlobalNamespace(L)
         .beginClass<UInventoryContainer>("InventoryContainer")
         .endClass();
@@ -84,54 +58,6 @@ ModLoadingLuaState::ModLoadingLuaState() {
         .endClass();
 }
 
-int ModLoadingLuaState::AccessorBind(lua_State *l) {
-    auto side_acc = Stack<UBaseInventoryAccessor *>::get(l, 1);
-    auto container = Stack<UInventoryContainer *>::get(l, 2);
-
-    side_acc->Bind(container);
-
-    return 0;
-}
-
-int ModLoadingLuaState::CrafterGetInputContainer(lua_State *l) {
-    auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
-
-    std::error_code er;
-
-    push(l, self->mAutoCrafterInputContainer, er);
-
-    return 1;
-}
-
-int ModLoadingLuaState::CrafterGetOutputContainer(lua_State *l) {
-    auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
-
-    std::error_code er;
-
-    push(l, self->mAutoCrafterOutputContainer, er);
-
-    return 1;
-}
-
-int ModLoadingLuaState::AccessorSetSidePos(lua_State *l) {
-    auto self = Stack<UBaseInventoryAccessor *>::get(l, 1);
-    auto side = Stack<Vec3i>::get(l, 2);
-    auto pos = Stack<Vec3i>::get(l, 3);
-    self->SetSidePos(side, pos);
-    return 0;
-}
-
-UClass *ModLoadingLuaState::GetClass(const std::string &name) {
-    using namespace std::string_literals;
-    auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
-
-    if (type == nullptr) {
-        StaticLogger::Get().Log("Class not found " + name);
-    }
-
-    return type;
-}
-
 void ModLoadingLuaState::RegisterObject(UObject *val) {
     ModLoadingLuaState::Get().mLibrary->RegisterObject(val);
 }
@@ -144,21 +70,5 @@ inline ModLoadingLuaState &ModLoadingLuaState::Get() {
     }
 
     return *inst;
-}
-
-int ModLoadingLuaState::BlockLogicCreateAccessor(lua_State *l) {
-    auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
-    auto type = Stack<UClass *>::get(l, 2);
-    std::error_code ec;
-
-    if (type && type->IsChildOf(UBaseAccessor::StaticClass())) {
-        auto accessor = NewObject<UBaseInventoryAccessor>(self, type);
-        self->RegisterComponent(accessor);
-        push(l, accessor, ec);
-    } else {
-        push(l, luabridge::LuaNil(), ec);
-    }
-
-    return 1;
 }
 } // namespace evo

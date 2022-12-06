@@ -200,7 +200,16 @@ LuaState::LuaState() {
         .addStaticFunction("front", &LuaState::Vec3i_front)
         .endClass();
 
-    getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
+    getGlobalNamespace(L)
+        .beginClass<UObject>("Object")
+        .endClass();
+
+    getGlobalNamespace(L)
+        .beginClass<UClass>("Class")
+        .endClass();
+
+    getGlobalNamespace(L)
+        .addFunction("get_class", &LuaState::GetClass);
 }
 
 UClass *LuaState::GetClass(std::string_view name) {

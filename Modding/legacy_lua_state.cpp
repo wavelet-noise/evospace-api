@@ -13,13 +13,6 @@ namespace evo {
 LegacyLuaState::LegacyLuaState() {
 
     getGlobalNamespace(L)
-        .beginClass<UObject>("Object")
-        //.addFunction("ptr", &UBlockModdingLuaState::LuaThis)
-        .endClass();
-
-    getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
-
-    getGlobalNamespace(L)
         .beginClass<UAutoCrafterBlockLogic>("BlockLogic")
         .addFunction(
             "create_accessor", &LegacyLuaState::BlockLogic_create_accessor

@@ -1,5 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "legacy_lua_state.h"
 #include "Evospace/CoordinateSystem.h"
 #include "lua_state.h"
 
@@ -10,20 +11,9 @@ namespace evo {
 /**
  * @brief Legacy lua state for BlockLogic lua script part executing
  */
-class ModLoadingLuaState : public LuaState {
+class ModLoadingLuaState : public LegacyLuaState {
   public:
     ModLoadingLuaState();
-
-    static int AccessorBind(lua_State *l);
-
-    static int CrafterGetInputContainer(lua_State *l);
-
-    static int CrafterGetOutputContainer(lua_State *l);
-
-    static int AccessorSetSidePos(lua_State *l);
-
-    static int BlockLogicCreateAccessor(lua_State *l);
-    static UClass *GetClass(const std::string &name);
 
     static void RegisterObject(UObject *val);
 
