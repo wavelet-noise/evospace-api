@@ -1,14 +1,11 @@
 #include "mod_loading_lua_state.h"
 
-#include "Evospace/Blocks/AutoCrafterBlockLogic.h"
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
-#include "Evospace/Blocks/BlockLogic.h"
-#include "Evospace/Item/BaseInventory.h"
 #include "Evospace/Item/InventoryContainer.h"
 #include "Evospace/JsonObjectLibrary.h"
 #include "Evospace/Shared/Core/recipe.h"
 #include "Evospace/Shared/Core/recipe_dictionary.h"
-#include "Evospace/Shared/static_logger.h"
+#include <memory>
 
 using namespace luabridge;
 

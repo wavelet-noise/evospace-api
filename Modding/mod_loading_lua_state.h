@@ -1,8 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "legacy_lua_state.h"
-#include "Evospace/CoordinateSystem.h"
-#include "lua_state.h"
 
 #include <string>
 
