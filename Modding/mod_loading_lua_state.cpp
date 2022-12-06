@@ -24,18 +24,6 @@ ModLoadingLuaState::ModLoadingLuaState() {
     getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
 
     getGlobalNamespace(L)
-        .beginClass<Vec3i>("Vec3i")
-        .addStaticFunction("new", &ModLoadingLuaState::NewVec3i)
-        .addStaticFunction("zero", &ModLoadingLuaState::ZeroVec3i)
-        .addStaticFunction("up", &ModLoadingLuaState::UpVec3i)
-        .addStaticFunction("down", &ModLoadingLuaState::DownVec3i)
-        .addStaticFunction("left", &ModLoadingLuaState::LeftVec3i)
-        .addStaticFunction("right", &ModLoadingLuaState::RightVec3i)
-        .addStaticFunction("back", &ModLoadingLuaState::BackVec3i)
-        .addStaticFunction("front", &ModLoadingLuaState::FrontVec3i)
-        .endClass();
-
-    getGlobalNamespace(L)
         .beginClass<UAutoCrafterBlockLogic>("BlockLogic")
         .addFunction(
             "create_accessor", &ModLoadingLuaState::BlockLogicCreateAccessor
@@ -131,63 +119,6 @@ int ModLoadingLuaState::AccessorSetSidePos(lua_State *l) {
     auto pos = Stack<Vec3i>::get(l, 3);
     self->SetSidePos(side, pos);
     return 0;
-}
-
-int ModLoadingLuaState::NewVec3i(lua_State *l) {
-    auto x = Stack<int32>::get(l, 1);
-    auto y = Stack<int32>::get(l, 2);
-    auto z = Stack<int32>::get(l, 3);
-    std::error_code ec;
-    push(l, Vec3i(x, y, z), ec);
-    return 1;
-}
-
-int ModLoadingLuaState::ZeroVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Vec3i(0, 0, 0), ec);
-    return 1;
-}
-
-int ModLoadingLuaState::OneVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Vec3i(1, 1, 1), ec);
-    return 1;
-}
-
-int ModLoadingLuaState::LeftVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Left, ec);
-    return 1;
-}
-
-int ModLoadingLuaState::RightVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Right, ec);
-    return 1;
-}
-
-int ModLoadingLuaState::UpVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Up, ec);
-    return 1;
-}
-
-int ModLoadingLuaState::DownVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Down, ec);
-    return 1;
-}
-
-int ModLoadingLuaState::FrontVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Front, ec);
-    return 1;
-}
-
-int ModLoadingLuaState::BackVec3i(lua_State *l) {
-    std::error_code ec;
-    push(l, Side::Back, ec);
-    return 1;
 }
 
 UClass *ModLoadingLuaState::GetClass(const std::string &name) {

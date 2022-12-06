@@ -20,44 +20,30 @@ LegacyLuaState::LegacyLuaState() {
     getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
 
     getGlobalNamespace(L)
-        .beginClass<Vec3i>("Vec3i")
-        .addStaticFunction("new", &LegacyLuaState::Vec3i_new)
-        .addStaticFunction("zero", &LegacyLuaState::Vec3i_zero)
-        .addStaticFunction("up", &LegacyLuaState::Vec3i_up)
-        .addStaticFunction("down", &LegacyLuaState::Vec3i_down)
-        .addStaticFunction("left", &LegacyLuaState::Vec3i_left)
-        .addStaticFunction("right", &LegacyLuaState::Vec3i_right)
-        .addStaticFunction("back", &LegacyLuaState::Vec3i_back)
-        .addStaticFunction("front", &LegacyLuaState::Vec3i_front)
-        .endClass();
-
-    getGlobalNamespace(L)
         .beginClass<UAutoCrafterBlockLogic>("BlockLogic")
         .addFunction(
-            "create_accessor", &LegacyLuaState::BlockLogicCreateAccessor
+            "create_accessor", &LegacyLuaState::BlockLogic_create_accessor
         )
         .addFunction(
-            "get_input_container", &LegacyLuaState::CrafterGetInputContainer
+            "get_input_container", &LegacyLuaState::Crafter_get_input_container
         )
         .addFunction(
-            "get_output_container", &LegacyLuaState::CrafterGetOutputContainer
+            "get_output_container", &LegacyLuaState::Crafter_get_output_container
         )
         .endClass();
 
     getGlobalNamespace(L)
         .beginClass<UBaseInventoryAccessor>("Accessor")
-        .addFunction("set_side_pos", &LegacyLuaState::AccessorSetSidePos)
-        .addFunction("bind", &LegacyLuaState::AccessorBind)
+        .addFunction("set_side_pos", &LegacyLuaState::Accessor_set_side_pos)
+        .addFunction("bind", &LegacyLuaState::Accessor_bind)
         .endClass();
-
-    getGlobalNamespace(L).addFunction("get_class", &LegacyLuaState::GetClass);
 
     getGlobalNamespace(L)
         .beginClass<UInventoryContainer>("InventoryContainer")
         .endClass();
 }
 
-int LegacyLuaState::AccessorBind(lua_State *l) {
+int LegacyLuaState::Accessor_bind(lua_State *l) {
     auto side_acc = Stack<UBaseInventoryAccessor *>::get(l, 1);
     auto container = Stack<UInventoryContainer *>::get(l, 2);
 
@@ -66,7 +52,7 @@ int LegacyLuaState::AccessorBind(lua_State *l) {
     return 0;
 }
 
-int LegacyLuaState::CrafterGetInputContainer(lua_State *l) {
+int LegacyLuaState::Crafter_get_input_container(lua_State *l) {
     auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
 
     std::error_code er;
@@ -76,7 +62,7 @@ int LegacyLuaState::CrafterGetInputContainer(lua_State *l) {
     return 1;
 }
 
-int LegacyLuaState::CrafterGetOutputContainer(lua_State *l) {
+int LegacyLuaState::Crafter_get_output_container(lua_State *l) {
     auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
 
     std::error_code er;
@@ -86,7 +72,7 @@ int LegacyLuaState::CrafterGetOutputContainer(lua_State *l) {
     return 1;
 }
 
-int LegacyLuaState::AccessorSetSidePos(lua_State *l) {
+int LegacyLuaState::Accessor_set_side_pos(lua_State *l) {
     auto self = Stack<UBaseInventoryAccessor *>::get(l, 1);
     auto side = Stack<Vec3i>::get(l, 2);
     auto pos = Stack<Vec3i>::get(l, 3);
@@ -94,54 +80,9 @@ int LegacyLuaState::AccessorSetSidePos(lua_State *l) {
     return 0;
 }
 
-Vec3i LegacyLuaState::Vec3i_new(int32 x, int32 y, int32 z) {
-    return Vec3i(x, y, z);
-}
 
-Vec3i LegacyLuaState::Vec3i_zero() {
-    return Vec3i(0, 0, 0);
-}
 
-Vec3i LegacyLuaState::Vec3i_one() {
-    return Vec3i(1, 1, 1);
-}
-
-Vec3i LegacyLuaState::Vec3i_left() {
-    return Side::Left;
-}
-
-Vec3i LegacyLuaState::Vec3i_right() {
-    return Side::Right;
-}
-
-Vec3i LegacyLuaState::Vec3i_up() {
-    return Side::Up;
-}
-
-Vec3i LegacyLuaState::Vec3i_down() {
-    return Side::Down;
-}
-
-Vec3i LegacyLuaState::Vec3i_front() {
-    return Side::Front;
-}
-
-Vec3i LegacyLuaState::Vec3i_back() {
-    return Side::Back;
-}
-
-UClass *LegacyLuaState::GetClass(const std::string &name) {
-    using namespace std::string_literals;
-    auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
-
-    if (type == nullptr) {
-        StaticLogger::Get().Log("Class not found " + name);
-    }
-
-    return type;
-}
-
-int LegacyLuaState::BlockLogicCreateAccessor(lua_State *l) {
+int LegacyLuaState::BlockLogic_create_accessor(lua_State *l) {
     auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
     auto type = Stack<UClass *>::get(l, 2);
     std::error_code ec;

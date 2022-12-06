@@ -7,6 +7,9 @@
 
 class UJsonObjectLibrary;
 namespace evo {
+/**
+ * @brief Legacy lua state for BlockLogic lua script part executing
+ */
 class ModLoadingLuaState : public LuaState {
   public:
     ModLoadingLuaState();
@@ -18,17 +21,7 @@ class ModLoadingLuaState : public LuaState {
     static int CrafterGetOutputContainer(lua_State *l);
 
     static int AccessorSetSidePos(lua_State *l);
-
-    static int NewVec3i(lua_State *l);
-
-    static int ZeroVec3i(lua_State *l);
-    static int OneVec3i(lua_State *l);
-    static int UpVec3i(lua_State *l);
-    static int DownVec3i(lua_State *l);
-    static int LeftVec3i(lua_State *l);
-    static int RightVec3i(lua_State *l);
-    static int BackVec3i(lua_State *l);
-    static int FrontVec3i(lua_State *l);
+    
 
     static int BlockLogicCreateAccessor(lua_State *l);
     static UClass *GetClass(const std::string &name);

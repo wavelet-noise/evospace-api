@@ -13,108 +13,59 @@ class LegacyLuaState : public LuaState {
   public:
     LegacyLuaState();
 
-    static int AccessorBind(lua_State *l);
-
-    static int CrafterGetInputContainer(lua_State *l);
-
-    static int CrafterGetOutputContainer(lua_State *l);
-
-    static int AccessorSetSidePos(lua_State *l);
-
     /**
-     * @brief Construct Vec3i from 3 numbers
+     * @brief Bind inventory to accessor
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.new(x, y, z)
+     * accessor:bind(crafter:get_input_container())
      * @endcode
-     * @param x 
-     * @param y 
-     * @param z 
-     * @return Constructed Vec3i(x, y, z) object
+     * @param inventory
+     * @return Nothing
      */
-    static Vec3i Vec3i_new(int32 x, int32 y, int32 z);
+    static int Accessor_bind(lua_State *l);
 
     /**
-     * @brief Construct Vec3i from (0, 0, 0)
+     * @brief Get input container from crafter
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.zero()
+     * crafter:get_input_container()
      * @endcode
-     * @return Constructed Vec3i(0, 0, 0) object
+     * @return InventoryContainer object
      */
-    static Vec3i Vec3i_zero();
+    static int Crafter_get_input_container(lua_State *l);
 
     /**
-     * @brief Construct Vec3i from (1, 1, 1)
+     * @brief Get output container from crafter
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.one()
+     * crafter:get_output_container()
      * @endcode
-     * @return Constructed Vec3i(1, 1, 1) object
+     * @return InventoryContainer object
      */
-    static Vec3i Vec3i_one();
+    static int Crafter_get_output_container(lua_State *l);
+
+    /**
+     * @brief Setup accessor side and position
+     * @details lua syntax
+     * @code{.lua}
+     * accessor:set_side_pos(Vec3i.right(), Vec3i.one())
+     * @endcode
+     * @param side
+     * @param pos 
+     * @return Nothing
+     */
+    static int Accessor_set_side_pos(lua_State *l);
+
+    /**
+     * @brief Create new accessor for crafter
+     * @details lua syntax
+     * @code{.lua}
+     * crafter:create_accessor(get_class("KineticInputAccessor"))
+     * @endcode
+     * @param type
+     * @return Constructed accessor object with given type
+     */
+    static int BlockLogic_create_accessor(lua_State *l);
     
-    /**
-     * @brief Construct Vec3i from up (0, 0, 1)
-     * @details lua syntax
-     * @code{.lua}
-     * Vec3i.up()
-     * @endcode
-     * @return Constructed Vec3i(0, 0, 1) object
-     */
-    static Vec3i Vec3i_up();
-
-    /**
-     * @brief Construct Vec3i from (0, 0, -1)
-     * @details lua syntax
-     * @code{.lua}
-     * Vec3i.down()
-     * @endcode
-     * @return Constructed Vec3i(0, 0, -1) object
-     */
-    static Vec3i Vec3i_down();
-
-    /**
-     * @brief Construct Vec3i from (0, 1, 0)
-     * @details lua syntax
-     * @code{.lua}
-     * Vec3i.left()
-     * @endcode
-     * @return Constructed Vec3i(0, 1, 0) object
-     */
-    static Vec3i Vec3i_left();
-
-    /**
-     * @brief Construct Vec3i from (0, -1, 0)
-     * @details lua syntax
-     * @code{.lua}
-     * Vec3i.right()
-     * @endcode
-     * @return Constructed Vec3i(0, -1, 0) object
-     */
-    static Vec3i Vec3i_right();
-
-    /**
-     * @brief Construct Vec3i from (-1, 0, 0)
-     * @details lua syntax
-     * @code{.lua}
-     * Vec3i.back()
-     * @endcode
-     * @return Constructed Vec3i(-1, 0, 0) object
-     */
-    static Vec3i Vec3i_back();
-    
-    /**
-     * @brief Construct Vec3i from (1, 0, 0)
-     * @details lua syntax
-     * @code{.lua}
-     * Vec3i.front()
-     * @endcode
-     * @return Constructed Vec3i(1, 0, 0) object
-     */
-    static Vec3i Vec3i_front();
-
-    static int BlockLogicCreateAccessor(lua_State *l);
-    static UClass *GetClass(const std::string &name);
 };
 } // namespace evo

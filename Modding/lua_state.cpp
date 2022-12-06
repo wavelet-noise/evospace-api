@@ -185,6 +185,33 @@ LuaState::LuaState() {
     // }
     //
     // lua_pop(L, 1);
+
+    using namespace luabridge;
+
+    getGlobalNamespace(L)
+    .beginClass<Vec3i>("Vec3i")
+    .addStaticFunction("new", &LuaState::Vec3i_new)
+    .addStaticFunction("zero", &LuaState::Vec3i_zero)
+    .addStaticFunction("up", &LuaState::Vec3i_up)
+    .addStaticFunction("down", &LuaState::Vec3i_down)
+    .addStaticFunction("left", &LuaState::Vec3i_left)
+    .addStaticFunction("right", &LuaState::Vec3i_right)
+    .addStaticFunction("back", &LuaState::Vec3i_back)
+    .addStaticFunction("front", &LuaState::Vec3i_front)
+    .endClass();
+
+    getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
+}
+
+UClass *LuaState::GetClass(std::string_view name) {
+    using namespace std::string_literals;
+    auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
+
+    if (type == nullptr) {
+        StaticLogger::Get().Log("Class not found " + name);
+    }
+
+    return type;
 }
 
 LuaState::~LuaState() {
@@ -193,4 +220,41 @@ LuaState::~LuaState() {
         L = nullptr;
     }
 }
+
+Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) {
+    return Vec3i(x, y, z);
+}
+
+Vec3i LuaState::Vec3i_zero() {
+    return Vec3i(0, 0, 0);
+}
+
+Vec3i LuaState::Vec3i_one() {
+    return Vec3i(1, 1, 1);
+}
+
+Vec3i LuaState::Vec3i_left() {
+    return Side::Left;
+}
+
+Vec3i LuaState::Vec3i_right() {
+    return Side::Right;
+}
+
+Vec3i LuaState::Vec3i_up() {
+    return Side::Up;
+}
+
+Vec3i LuaState::Vec3i_down() {
+    return Side::Down;
+}
+
+Vec3i LuaState::Vec3i_front() {
+    return Side::Front;
+}
+
+Vec3i LuaState::Vec3i_back() {
+    return Side::Back;
+}
+
 } // namespace evo
