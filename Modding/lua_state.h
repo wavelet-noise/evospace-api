@@ -146,6 +146,13 @@ class LuaState {
     to_byte_code(std::string_view code, std::string_view context) noexcept
         -> result<std::string, std::unique_ptr<AbstractError>>;
 
+    /**
+     * @brief 
+     * @param Code 
+     * @param CodePath 
+     * @param NRet 
+     * @return 
+     */
     bool RunCode(
         std::string_view Code, std::string_view CodePath = "", int NRet = 0
     ) noexcept;
