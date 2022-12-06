@@ -25,7 +25,7 @@ class LuaState {
      * @code{.lua}
      * get_class("name")
      * @endcode
-     * @param Class name 
+     * @param Class name
      * @return Class object
      */
     static UClass *GetClass(std::string_view name);
@@ -36,12 +36,12 @@ class LuaState {
      * @code{.lua}
      * Vec3i.new(x, y, z)
      * @endcode
-     * @param x 
-     * @param y 
-     * @param z 
+     * @param x
+     * @param y
+     * @param z
      * @return Constructed Vec3i(x, y, z) object
      */
-    static Vec3i Vec3i_new(int32 x, int32 y, int32 z);
+    static Vec3i Vec3i_new(int32 x, int32 y, int32 z) noexcept;
 
     /**
      * @brief Construct Vec3i from (0, 0, 0)
@@ -51,7 +51,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, 0, 0) object
      */
-    static Vec3i Vec3i_zero();
+    static Vec3i Vec3i_zero() noexcept;
 
     /**
      * @brief Construct Vec3i from (1, 1, 1)
@@ -61,8 +61,8 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(1, 1, 1) object
      */
-    static Vec3i Vec3i_one();
-    
+    static Vec3i Vec3i_one() noexcept;
+
     /**
      * @brief Construct Vec3i from up (0, 0, 1)
      * @details lua syntax
@@ -71,7 +71,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, 0, 1) object
      */
-    static Vec3i Vec3i_up();
+    static Vec3i Vec3i_up() noexcept;
 
     /**
      * @brief Construct Vec3i from (0, 0, -1)
@@ -81,7 +81,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, 0, -1) object
      */
-    static Vec3i Vec3i_down();
+    static Vec3i Vec3i_down() noexcept;
 
     /**
      * @brief Construct Vec3i from (0, 1, 0)
@@ -91,7 +91,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, 1, 0) object
      */
-    static Vec3i Vec3i_left();
+    static Vec3i Vec3i_left() noexcept;
 
     /**
      * @brief Construct Vec3i from (0, -1, 0)
@@ -101,7 +101,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, -1, 0) object
      */
-    static Vec3i Vec3i_right();
+    static Vec3i Vec3i_right() noexcept;
 
     /**
      * @brief Construct Vec3i from (-1, 0, 0)
@@ -111,8 +111,8 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(-1, 0, 0) object
      */
-    static Vec3i Vec3i_back();
-    
+    static Vec3i Vec3i_back() noexcept;
+
     /**
      * @brief Construct Vec3i from (1, 0, 0)
      * @details lua syntax
@@ -121,7 +121,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(1, 0, 0) object
      */
-    static Vec3i Vec3i_front();
+    static Vec3i Vec3i_front() noexcept;
 
     void doFile(std::string_view s) { luaL_dofile(L, s.data()); }
 
@@ -147,11 +147,11 @@ class LuaState {
         -> result<std::string, std::unique_ptr<AbstractError>>;
 
     /**
-     * @brief 
-     * @param Code 
-     * @param CodePath 
-     * @param NRet 
-     * @return 
+     * @brief
+     * @param Code
+     * @param CodePath
+     * @param NRet
+     * @return
      */
     bool RunCode(
         std::string_view Code, std::string_view CodePath = "", int NRet = 0

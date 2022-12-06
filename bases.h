@@ -182,12 +182,15 @@ class DB {
         return GetStorage<_TReturned>();
     }
 
-    static std::vector<void *> mProtos;
-    static void StoreProtoPtr(void *proto) { mProtos.push_back(proto); }
+    static std::vector<std::pair<void *, std::function<void(void *)>>> mProtos;
+    static void
+    StoreProtoPtr(void *proto, std::function<void(void *)> deallocator) {
+        mProtos.push_back(std::make_pair(proto, deallocator));
+    }
 
     static void FreeProtos() {
         for (auto p : mProtos) {
-            delete p;
+            p.second(p.first);
         }
 
         ensure(mProtos.empty());

@@ -51,7 +51,7 @@ class LegacyLuaState : public LuaState {
      * accessor:set_side_pos(Vec3i.right(), Vec3i.one())
      * @endcode
      * @param side
-     * @param pos 
+     * @param pos
      * @return Nothing
      */
     static int Accessor_set_side_pos(lua_State *l);
@@ -66,6 +66,5 @@ class LegacyLuaState : public LuaState {
      * @return Constructed accessor object with given type
      */
     static int BlockLogic_create_accessor(lua_State *l);
-    
 };
 } // namespace evo

@@ -21,7 +21,6 @@ class ModLoadingLuaState : public LuaState {
     static int CrafterGetOutputContainer(lua_State *l);
 
     static int AccessorSetSidePos(lua_State *l);
-    
 
     static int BlockLogicCreateAccessor(lua_State *l);
     static UClass *GetClass(const std::string &name);

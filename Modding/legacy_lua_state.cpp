@@ -28,7 +28,8 @@ LegacyLuaState::LegacyLuaState() {
             "get_input_container", &LegacyLuaState::Crafter_get_input_container
         )
         .addFunction(
-            "get_output_container", &LegacyLuaState::Crafter_get_output_container
+            "get_output_container",
+            &LegacyLuaState::Crafter_get_output_container
         )
         .endClass();
 
@@ -79,8 +80,6 @@ int LegacyLuaState::Accessor_set_side_pos(lua_State *l) {
     self->SetSidePos(side, pos);
     return 0;
 }
-
-
 
 int LegacyLuaState::BlockLogic_create_accessor(lua_State *l) {
     auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);

@@ -189,16 +189,16 @@ LuaState::LuaState() {
     using namespace luabridge;
 
     getGlobalNamespace(L)
-    .beginClass<Vec3i>("Vec3i")
-    .addStaticFunction("new", &LuaState::Vec3i_new)
-    .addStaticFunction("zero", &LuaState::Vec3i_zero)
-    .addStaticFunction("up", &LuaState::Vec3i_up)
-    .addStaticFunction("down", &LuaState::Vec3i_down)
-    .addStaticFunction("left", &LuaState::Vec3i_left)
-    .addStaticFunction("right", &LuaState::Vec3i_right)
-    .addStaticFunction("back", &LuaState::Vec3i_back)
-    .addStaticFunction("front", &LuaState::Vec3i_front)
-    .endClass();
+        .beginClass<Vec3i>("Vec3i")
+        .addStaticFunction("new", &LuaState::Vec3i_new)
+        .addStaticFunction("zero", &LuaState::Vec3i_zero)
+        .addStaticFunction("up", &LuaState::Vec3i_up)
+        .addStaticFunction("down", &LuaState::Vec3i_down)
+        .addStaticFunction("left", &LuaState::Vec3i_left)
+        .addStaticFunction("right", &LuaState::Vec3i_right)
+        .addStaticFunction("back", &LuaState::Vec3i_back)
+        .addStaticFunction("front", &LuaState::Vec3i_front)
+        .endClass();
 
     getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
 }
@@ -208,7 +208,7 @@ UClass *LuaState::GetClass(std::string_view name) {
     auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
-        StaticLogger::Get().Log("Class not found " + name);
+        StaticLogger::Get().Log("Class not found " + std::string(name));
     }
 
     return type;
@@ -221,40 +221,24 @@ LuaState::~LuaState() {
     }
 }
 
-Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) {
+Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) noexcept {
     return Vec3i(x, y, z);
 }
 
-Vec3i LuaState::Vec3i_zero() {
-    return Vec3i(0, 0, 0);
-}
+Vec3i LuaState::Vec3i_zero() noexcept { return Vec3i(0, 0, 0); }
 
-Vec3i LuaState::Vec3i_one() {
-    return Vec3i(1, 1, 1);
-}
+Vec3i LuaState::Vec3i_one() noexcept { return Vec3i(1, 1, 1); }
 
-Vec3i LuaState::Vec3i_left() {
-    return Side::Left;
-}
+Vec3i LuaState::Vec3i_left() noexcept { return Side::Left; }
 
-Vec3i LuaState::Vec3i_right() {
-    return Side::Right;
-}
+Vec3i LuaState::Vec3i_right() noexcept { return Side::Right; }
 
-Vec3i LuaState::Vec3i_up() {
-    return Side::Up;
-}
+Vec3i LuaState::Vec3i_up() noexcept { return Side::Up; }
 
-Vec3i LuaState::Vec3i_down() {
-    return Side::Down;
-}
+Vec3i LuaState::Vec3i_down() noexcept { return Side::Down; }
 
-Vec3i LuaState::Vec3i_front() {
-    return Side::Front;
-}
+Vec3i LuaState::Vec3i_front() noexcept { return Side::Front; }
 
-Vec3i LuaState::Vec3i_back() {
-    return Side::Back;
-}
+Vec3i LuaState::Vec3i_back() noexcept { return Side::Back; }
 
 } // namespace evo
