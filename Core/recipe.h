@@ -7,6 +7,9 @@
 
 #include <Dom/JsonObject.h>
 
+
+#include <string>
+
 #include "Recipe.generated.h"
 
 class URecipeInventory;
@@ -26,6 +29,7 @@ class EVOSPACE_API URecipe : public UObject, public ISerializableJson {
 
     // Engine code
   public:
+    
     URecipe();
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
@@ -58,11 +62,11 @@ class EVOSPACE_API URecipe : public UObject, public ISerializableJson {
     FName name;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    bool locked = false;
+    mutable bool locked = false;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    bool default_locked = false;
+    mutable bool default_locked = false;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    UStaticResearch *unlocks_by;
+    mutable UStaticResearch *unlocks_by;
 };

@@ -39,9 +39,12 @@ class EVOSPACE_API URecipeDictionary : public UObject,
 
     // Lua api
   public:
+
+    std::string name;
+    
     int32 get_count() const { return mRecipes.Num(); }
 
-    URecipe *get_recipe(int32 index) const {
+    const URecipe *get_recipe(int32 index) const {
         if (index >= 0 && index < mRecipes.Num())
             return mRecipes[index];
         return nullptr;
@@ -70,11 +73,11 @@ class EVOSPACE_API URecipeDictionary : public UObject,
     UFUNCTION(BlueprintCallable)
     TArray<URecipe *> &GetRecipes();
 
-    const TArray<URecipe *> &GetRecipes() const;
+    const TArray<const URecipe *> &GetRecipes() const;
 
     const TArray<FUsedIn> &GetUsedIn() const;
 
-    URecipe *GetByName(const FName &name) const;
+    const URecipe *GetByName(const FName &name) const;
 
     UInventory *GetUsedInInventory();
 
@@ -84,13 +87,12 @@ class EVOSPACE_API URecipeDictionary : public UObject,
 
   protected:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-    TArray<URecipe *> mRecipes;
+    TArray<const URecipe *> mRecipes;
 
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     TArray<FUsedIn> mUsedIn;
-
-    UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-    TMap<FName, URecipe *> mNameChache;
+    
+    TMap<FName, const URecipe *> mNameChache;
 
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     UInventory *mUsedInInventory;
