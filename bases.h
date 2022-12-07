@@ -4,6 +4,7 @@
 #include "ThirdParty/luabridge.h"
 #include "localization_table.h"
 #include "template_factory.h"
+#include "Evospace/MainGameInstance.h"
 
 #include <memory>
 #include <unordered_map>
@@ -93,21 +94,31 @@ template <typename Ty_> struct BaseHelper : public Base {
 class DB {
   public:
     template <typename TReturned> static auto &GetStorage() {
-        static std::unordered_map<std::string, std::unique_ptr<TReturned>>
+        static std::unordered_map<
+            std::string,
+            std::unique_ptr<TReturned, std::function<void(TReturned *)>>>
             storage;
         return storage;
     }
 
     template <typename TReturned, typename TCreated>
     static TReturned *Register(std::string_view name) {
+        using ReturntdNorm = typename std::remove_cv<TReturned>::type;
         static_assert(std::is_base_of<TReturned, TCreated>());
-        auto &gs = GetStorage<TReturned>();
-        if (!gs.contains(name.data())) {
-            auto u = std::make_unique<TCreated>();
+        auto &gs = GetStorage<ReturntdNorm>();
+        if (!gs.contains(name.data())) { // TODO: make find
+            auto u =
+                std::unique_ptr<ReturntdNorm, std::function<void(ReturntdNorm *)>>(
+                    NewObject<TCreated>(),
+                    [](ReturntdNorm *f) { /*f->ConditionalBeginDestroy();*/ }
+                );
             u->name = name;
-            TReturned *uptr = u.get();
+            ReturntdNorm *uptr = u.get();
+            UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(uptr);
             gs.insert(std::make_pair(name, std::move(u)));
             return uptr;
+        } else {
+            return gs.find(name.data())->second.get();
         }
 
         // std::cout << typeid(TCreated).name() << " with name " << name << " is
@@ -115,15 +126,26 @@ class DB {
         return nullptr;
     }
 
+    template <typename TReturned> static void Clear() {
+        GetStorage<TReturned>().clear();
+    }
+
     template <typename TReturned>
     static TReturned *Register(std::string_view name) {
         auto &gs = GetStorage<TReturned>();
         if (!gs.contains(name.data())) {
-            auto u = std::make_unique<TReturned>();
+            auto u =
+                std::unique_ptr<TReturned, std::function<void(TReturned *)>>(
+                    NewObject<TReturned>(),
+                    [](TReturned *f) { /*f->ConditionalBeginDestroy();*/ }
+                );
             u->name = name;
             TReturned *uptr = u.get();
+            UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(uptr);
             gs.insert(std::make_pair(name, std::move(u)));
             return uptr;
+        } else {
+            return gs.find(name.data())->second.get();
         }
 
         // std::cout << typeid(TReturned).name() << " with name " << name << "
@@ -131,46 +153,49 @@ class DB {
         return nullptr;
     }
 
-    template <typename TReturned>
-    static TReturned *
-    RegisterTable(luabridge::LuaRef table, std::string_view name) {
-        auto &gs = GetStorage<TReturned>();
-        if (!gs.contains(name.data())) {
-            auto u = std::make_unique<TReturned>();
-            u->name = name;
-            TReturned *uptr = u.get();
-            gs.insert(std::make_pair(name, std::move(u)));
-            return uptr;
-        }
+    // template <typename TReturned>
+    // static TReturned *
+    // RegisterTable(luabridge::LuaRef table, std::string_view name) {
+    //     auto &gs = GetStorage<TReturned>();
+    //     if (!gs.contains(name.data())) {
+    //         auto u = std::make_unique<TReturned>();
+    //         u->name = name;
+    //         TReturned *uptr = u.get();
+    //         gs.insert(std::make_pair(name, std::move(u)));
+    //         return uptr;
+    //     }
+    //
+    //     // std::cout << typeid(TReturned).name() << " with name " << name <<
+    //     "
+    //     // is already exists" << std::endl;
+    //     return nullptr;
+    // }
 
-        // std::cout << typeid(TReturned).name() << " with name " << name << "
-        // is already exists" << std::endl;
-        return nullptr;
-    }
-
-    template <typename TReturned, typename... Types>
-    static TReturned *RegisterArg(std::string_view name, Types... args) {
-        auto &gs = GetStorage<TReturned>();
-        if (!gs.contains(name.data())) {
-            auto u = std::make_unique<TReturned>(args...);
-            u->name = name;
-            TReturned *uptr = u.get();
-            gs.insert(std::make_pair(name, std::move(u)));
-            return uptr;
-        }
-
-        // std::cout << typeid(TReturned).name() << " with name " << name << "
-        // is already exists" << std::endl;
-        return nullptr;
-    }
+    // template <typename TReturned, typename... Types>
+    // static TReturned *RegisterArg(std::string_view name, Types... args) {
+    //     auto &gs = GetStorage<TReturned>();
+    //     if (!gs.contains(name.data())) {
+    //         auto u = std::make_unique<TReturned>(args...);
+    //         u->name = name;
+    //         TReturned *uptr = u.get();
+    //         gs.insert(std::make_pair(name, std::move(u)));
+    //         return uptr;
+    //     }
+    //
+    //     // std::cout << typeid(TReturned).name() << " with name " << name <<
+    //     "
+    //     // is already exists" << std::endl;
+    //     return nullptr;
+    // }
 
     template <typename _TReturned>
     static const _TReturned *Find(std::string_view name) {
-        auto &storage = GetStorage<_TReturned>();
+        using ReturntdNorm = typename std::remove_cv<_TReturned>::type;
+        auto &storage = GetStorage<ReturntdNorm>();
 
         auto res = storage.find(std::string(name));
         if (res != storage.end()) {
-            return reinterpret_cast<_TReturned *>(res->second.get());
+            return reinterpret_cast<ReturntdNorm *>(res->second.get());
         }
 
         // std::cout << typeid(_TReturned).name() << " " << name << " not found"

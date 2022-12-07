@@ -36,6 +36,8 @@ class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
     UStaticMesh *get_mesh() const { return mMesh; }
     void set_mesh(UStaticMesh *val) { mMesh = val; }
 
+    std::string name;
+
     // Engine code
   public:
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;

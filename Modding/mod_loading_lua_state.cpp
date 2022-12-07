@@ -5,6 +5,7 @@
 #include "Evospace/JsonObjectLibrary.h"
 #include "Evospace/Shared/Core/recipe.h"
 #include "Evospace/Shared/Core/recipe_dictionary.h"
+
 #include <memory>
 
 using namespace luabridge;
