@@ -7,15 +7,11 @@ bool LuaState::RunCode(
     std::string_view Code, std::string_view CodePath, int NRet
 ) noexcept {
     if (luaL_loadbuffer(L, Code.data(), Code.size(), CodePath.data())) {
-        StaticLogger::Get().Log(
-            "Lua loading error: " + std::string(lua_tostring(L, -1))
-        );
+        LOG(ERROR) << "Lua loading error: " << lua_tostring(L, -1);
         return false;
     } else {
         if (lua_pcall(L, 0, NRet, 0)) {
-            StaticLogger::Get().Log(
-                "Lua execution error: " + std::string(lua_tostring(L, -1))
-            );
+            LOG(ERROR) << "Lua execution error: " << lua_tostring(L, -1);
             return false;
         }
     }
@@ -69,11 +65,11 @@ int LuaState::l_my_print(lua_State *L) {
 
     for (int i = 1; i <= nargs; i++) {
         if (lua_isstring(L, i)) {
-            StaticLogger::Get().Log(std::string("Lua print: ") + lua_tostring(L, i));
+            LOG(INFO) << "Lua print: " << lua_tostring(L, i);
         } else if (lua_isnumber(L, i)) {
-            StaticLogger::Get().Log(std::string("Lua print: ") + std::to_string(lua_tonumber(L, i)));
+            LOG(INFO) <<"Lua print: " << lua_tonumber(L, i);
         } else if (lua_isboolean(L, i)) {
-            StaticLogger::Get().Log(std::string("Lua print: ") + std::to_string(lua_toboolean(L, i)));
+            LOG(INFO) <<"Lua print: " << lua_toboolean(L, i);
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -81,7 +77,7 @@ int LuaState::l_my_print(lua_State *L) {
         // "}" << std::endl;
         // }
         else {
-            StaticLogger::Get().Log("Lua print: not implementer type");
+            LOG(WARN) << "Lua print: not implementer type";
         }
     }
 
@@ -204,10 +200,10 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
 
-    StaticLogger::Get().Log("lua state initialized");
+    LOG(INFO) << "Lua state initialized";
     
     auto ver = getGlobal(L, "_VERSION");
-    StaticLogger::Get().Log(ver.tostring());
+    LOG(INFO) << ver.tostring();
 
     RunCode("require('jit') if type(jit) == 'table' then print(jit.version) else print('jit fatal error') end", "jit_test", 0);
 }

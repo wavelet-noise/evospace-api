@@ -42,6 +42,26 @@ struct ObjectIsNotDeserializedError : AbstractError {
     }
 };
 
+struct BrokenJsonError : AbstractError {
+    
+    BrokenJsonError() {}
+
+    virtual auto to_string() noexcept -> std::string override {
+        return "json is broken";
+    }
+};
+
+struct JsonTryToFindNotExistingObjectError : AbstractError {
+
+    std::string name;
+    std::string value;
+    JsonTryToFindNotExistingObjectError(std::string field, std::string field_value) : name(std::move(field)), value(std::move(field_value)) {}
+
+    virtual auto to_string() noexcept -> std::string override {
+        return "Json with field " + name + " trying to find \"" + value + "\" " + " that not exists";
+    }
+};
+
 struct ClassNotFoundError : AbstractError {
 
     std::string name;

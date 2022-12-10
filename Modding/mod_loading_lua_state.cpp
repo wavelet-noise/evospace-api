@@ -22,7 +22,7 @@ ModLoadingLuaState::ModLoadingLuaState() {
     getGlobalNamespace(L)
         .beginClass<UInventoryContainer>("InventoryContainer")
         .endClass();
-
+    
     getGlobalNamespace(L).beginClass<UTexture2D>("Texture").endClass();
 
     getGlobalNamespace(L).beginClass<UStaticMesh>("Mesh").endClass();
