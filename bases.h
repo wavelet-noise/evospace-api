@@ -6,9 +6,8 @@
 #include "template_factory.h"
 #include "Evospace/MainGameInstance.h"
 
-#include <memory>
+#include "static_logger.h"
 #include <unordered_map>
-#include <unordered_set>
 #include <vector>
 
 class Base;
@@ -143,8 +142,10 @@ class DB {
             TReturned *uptr = u.get();
             UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(uptr);
             gs.insert(std::make_pair(name, std::move(u)));
+            LOG(TRACE) << "Registering " << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName()) << " with name " << name;
             return uptr;
         } else {
+            LOG(TRACE) << "Appending " << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName()) << " with name " << name;
             return gs.find(name.data())->second.get();
         }
 
