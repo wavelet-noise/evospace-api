@@ -54,7 +54,7 @@ auto LuaState::to_byte_code(
         );
     }
 
-    if (lua_dump(L, ToByteCode_Writer, &Output, 1)) {
+    if (lua_dump(L, ToByteCode_Writer, &Output)) {
         auto error = lua_tostring(L, -1);
         lua_close(L);
         return failure(std::make_unique<LuaStateCodeDumpError>(error));
@@ -69,15 +69,11 @@ int LuaState::l_my_print(lua_State *L) {
 
     for (int i = 1; i <= nargs; i++) {
         if (lua_isstring(L, i)) {
-            std::cout << "Lua print: " << lua_tostring(L, i) << std::endl;
+            StaticLogger::Get().Log(std::string("Lua print: ") + lua_tostring(L, i));
         } else if (lua_isnumber(L, i)) {
-            std::cout << "Lua print: " << lua_tonumber(L, i) << std::endl;
+            StaticLogger::Get().Log(std::string("Lua print: ") + std::to_string(lua_tonumber(L, i)));
         } else if (lua_isboolean(L, i)) {
-            std::cout << "Lua print: " << lua_toboolean(L, i) << std::endl;
-        } else if (luabridge::Stack<FVector2D>::isInstance(L, i)) {
-            auto vec = luabridge::Stack<FVector2D>::get(L, i);
-            std::cout << "Lua print: vec2{" << vec.X << ", " << vec.Y << "}"
-                      << std::endl;
+            StaticLogger::Get().Log(std::string("Lua print: ") + std::to_string(lua_toboolean(L, i)));
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -85,7 +81,7 @@ int LuaState::l_my_print(lua_State *L) {
         // "}" << std::endl;
         // }
         else {
-            std::cout << "Lua print: not implementer type" << std::endl;
+            StaticLogger::Get().Log("Lua print: not implementer type");
         }
     }
 
@@ -95,53 +91,55 @@ int LuaState::l_my_print(lua_State *L) {
 LuaState::LuaState() {
     L = luaL_newstate();
 
-    luaL_requiref(L, "package", luaopen_package, 1);
-    lua_pop(L, 1);
+    luaL_openlibs(L);
 
-    {
-        luaL_requiref(L, "_G", luaopen_base, 1);
-        lua_pop(L, 1);
-    }
+    // luaL_requiref(L, "package", luaopen_package, 1);
+    // lua_pop(L, 1);
 
-    //{
-    //	luaL_requiref(L, "coroutine", luaopen_coroutine, 1);
-    //	lua_pop(L, 1);
-    //}
-
-    {
-        luaL_requiref(L, "table", luaopen_table, 1);
-        lua_pop(L, 1);
-    }
-
-    //{
-    //	luaL_requiref(L, "io", luaopen_io, 1);
-    //	lua_pop(L, 1);
-    //}
-
-    //{
-    //	luaL_requiref(L, "os", luaopen_os, 1);
-    //	lua_pop(L, 1);
-    //}
-
-    {
-        luaL_requiref(L, "string", luaopen_string, 1);
-        lua_pop(L, 1);
-    }
-
-    {
-        luaL_requiref(L, "math", luaopen_math, 1);
-        lua_pop(L, 1);
-    }
-
-    {
-        luaL_requiref(L, "utf8", luaopen_utf8, 1);
-        lua_pop(L, 1);
-    }
-
-    {
-        luaL_requiref(L, "debug", luaopen_debug, 1);
-        lua_pop(L, 1);
-    }
+    // {
+    //     luaL_requiref(L, "_G", luaopen_base, 1);
+    //     lua_pop(L, 1);
+    // }
+    //
+    // //{
+    // //	luaL_requiref(L, "coroutine", luaopen_coroutine, 1);
+    // //	lua_pop(L, 1);
+    // //}
+    //
+    // {
+    //     luaL_requiref(L, "table", luaopen_table, 1);
+    //     lua_pop(L, 1);
+    // }
+    //
+    // //{
+    // //	luaL_requiref(L, "io", luaopen_io, 1);
+    // //	lua_pop(L, 1);
+    // //}
+    //
+    // //{
+    // //	luaL_requiref(L, "os", luaopen_os, 1);
+    // //	lua_pop(L, 1);
+    // //}
+    //
+    // {
+    //     luaL_requiref(L, "string", luaopen_string, 1);
+    //     lua_pop(L, 1);
+    // }
+    //
+    // {
+    //     luaL_requiref(L, "math", luaopen_math, 1);
+    //     lua_pop(L, 1);
+    // }
+    //
+    // // {
+    // //     luaL_requiref(L, "utf8", luaopen_utf8, 1);
+    // //     lua_pop(L, 1);
+    // // }
+    //
+    // {
+    //     luaL_requiref(L, "debug", luaopen_debug, 1);
+    //     lua_pop(L, 1);
+    // }
 
     constexpr luaL_Reg print_lib[] = {
         {"print", l_my_print}, {nullptr, nullptr}};
@@ -205,6 +203,27 @@ LuaState::LuaState() {
     getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
 
     getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
+
+    StaticLogger::Get().Log("lua state initialized");
+    
+    auto ver = getGlobal(L, "_VERSION");
+    StaticLogger::Get().Log(ver.tostring());
+
+    RunCode("require('jit') if type(jit) == 'table' then print(jit.version) else print('jit fatal error') end", "jit_test", 0);
+}
+
+int AppendPath(lua_State *L, std::string_view path) noexcept
+{
+    lua_getglobal(L, "package");
+    lua_getfield(L, -1, "path");
+    std::string npath = path.data();
+    npath.append(";");
+    npath.append(lua_tostring(L, -1)); 
+    lua_pop(L, 1);
+    lua_pushstring(L, npath.c_str());
+    lua_setfield(L, -2, "path");
+    lua_pop(L, 1);
+    return 0;
 }
 
 UClass *LuaState::GetClass(std::string_view name) {

@@ -9,7 +9,6 @@ class StaticLogger {
     static StaticLogger &Get();
     std::list<std::string> lines{};
     void Log(std::string_view sw);
-    void Log(const FString &sw);
     void Clear();
 
     StaticLogger(const StaticLogger &) = delete;

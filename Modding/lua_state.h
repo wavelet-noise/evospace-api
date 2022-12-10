@@ -156,5 +156,7 @@ class LuaState {
     bool RunCode(
         std::string_view Code, std::string_view CodePath = "", int NRet = 0
     ) noexcept;
+
+    int AppendPath(lua_State *L, std::string_view path) noexcept;
 };
 } // namespace evo

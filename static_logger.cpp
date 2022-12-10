@@ -14,8 +14,4 @@ StaticLogger &StaticLogger::Get() {
 
 void StaticLogger::Log(std::string_view sw) { lines.push_back(sw.data()); }
 
-void StaticLogger::Log(const FString &sw) {
-    lines.push_back(TCHAR_TO_UTF8(*sw));
-}
-
 void StaticLogger::Clear() { lines.clear(); }
