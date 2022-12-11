@@ -1,6 +1,7 @@
 #include "lua_state.h"
 
 #include "Evospace/Shared/static_logger.h"
+#include "Evospace/Shared/Core/static_research.h"
 
 namespace evo {
 bool LuaState::RunCode(
@@ -180,29 +181,9 @@ LuaState::LuaState() {
     //
     // lua_pop(L, 1);
 
-    using namespace luabridge;
-
-    getGlobalNamespace(L)
-        .beginClass<Vec3i>("Vec3i")
-        .addStaticFunction("new", &LuaState::Vec3i_new)
-        .addStaticFunction("zero", &LuaState::Vec3i_zero)
-        .addStaticFunction("up", &LuaState::Vec3i_up)
-        .addStaticFunction("down", &LuaState::Vec3i_down)
-        .addStaticFunction("left", &LuaState::Vec3i_left)
-        .addStaticFunction("right", &LuaState::Vec3i_right)
-        .addStaticFunction("back", &LuaState::Vec3i_back)
-        .addStaticFunction("front", &LuaState::Vec3i_front)
-        .endClass();
-
-    getGlobalNamespace(L).beginClass<UObject>("Object").endClass();
-
-    getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
-
-    getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
-
     LOG(INFO) << "Lua state initialized";
     
-    auto ver = getGlobal(L, "_VERSION");
+    auto ver = luabridge::getGlobal(L, "_VERSION");
     LOG(INFO) << ver.tostring();
 
     RunCode("require('jit') if type(jit) == 'table' then print(jit.version) else print('jit fatal error') end", "jit_test", 0);

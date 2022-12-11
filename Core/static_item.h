@@ -36,6 +36,9 @@ class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
     UStaticMesh *get_mesh() const { return mMesh; }
     void set_mesh(UStaticMesh *val) { mMesh = val; }
 
+    /**
+     * @brief Object name in database
+     */
     std::string name;
 
     // Engine code

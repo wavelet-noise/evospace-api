@@ -112,17 +112,13 @@ class DB {
                     [](ReturntdNorm *f) { /*f->ConditionalBeginDestroy();*/ }
                 );
             u->name = name;
-            ReturntdNorm *uptr = u.get();
-            UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(uptr);
+            ReturntdNorm *u_ptr = u.get();
+            UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
             gs.insert(std::make_pair(name, std::move(u)));
-            return uptr;
+            return u_ptr;
         } else {
             return gs.find(name.data())->second.get();
         }
-
-        // std::cout << typeid(TCreated).name() << " with name " << name << " is
-        // already exists" << std::endl;
-        return nullptr;
     }
 
     template <typename TReturned> static void Clear() {
@@ -139,19 +135,15 @@ class DB {
                     [](TReturned *f) { /*f->ConditionalBeginDestroy();*/ }
                 );
             u->name = name;
-            TReturned *uptr = u.get();
-            UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(uptr);
+            TReturned *u_ptr = u.get();
+            UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
             gs.insert(std::make_pair(name, std::move(u)));
             LOG(TRACE) << "Registering " << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName()) << " with name " << name;
-            return uptr;
+            return u_ptr;
         } else {
             LOG(TRACE) << "Appending " << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName()) << " with name " << name;
             return gs.find(name.data())->second.get();
         }
-
-        // std::cout << typeid(TReturned).name() << " with name " << name << "
-        // is already exists" << std::endl;
-        return nullptr;
     }
 
     // template <typename TReturned>
@@ -198,9 +190,7 @@ class DB {
         if (res != storage.end()) {
             return reinterpret_cast<ReturntdNorm *>(res->second.get());
         }
-
-        // std::cout << typeid(_TReturned).name() << " " << name << " not found"
-        // << std::endl;
+        
         return nullptr;
     }
 

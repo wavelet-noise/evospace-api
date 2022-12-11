@@ -9,7 +9,7 @@ namespace evo {
 /**
  * @brief Legacy lua state for BlockLogic lua script part executing
  */
-class ModLoadingLuaState : public LegacyLuaState {
+class ModLoadingLuaState : public LuaState {
   public:
     ModLoadingLuaState();
 

@@ -40,6 +40,9 @@ class EVOSPACE_API URecipeDictionary : public UObject,
     // Lua api
   public:
 
+    /**
+     * @brief Object name in database
+     */
     std::string name;
     
     int32 get_count() const { return mRecipes.Num(); }
