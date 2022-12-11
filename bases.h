@@ -92,7 +92,7 @@ template <typename Ty_> struct BaseHelper : public Base {
 //! database of static game objects
 class DB {
   public:
-    template <typename TReturned> static auto &GetStorage() {
+    template <typename TReturned> static auto &get_storage() {
         static std::unordered_map<
             std::string,
             std::unique_ptr<TReturned, std::function<void(TReturned *)>>>
@@ -101,10 +101,10 @@ class DB {
     }
 
     template <typename TReturned, typename TCreated>
-    static TReturned *Register(std::string_view name) {
+    static TReturned *reg(std::string_view name) {
         using ReturntdNorm = typename std::remove_cv<TReturned>::type;
         static_assert(std::is_base_of<TReturned, TCreated>());
-        auto &gs = GetStorage<ReturntdNorm>();
+        auto &gs = get_storage<ReturntdNorm>();
         if (!gs.contains(name.data())) { // TODO: make find
             auto u =
                 std::unique_ptr<ReturntdNorm, std::function<void(ReturntdNorm *)>>(
@@ -126,12 +126,12 @@ class DB {
     }
 
     template <typename TReturned> static void Clear() {
-        GetStorage<TReturned>().clear();
+        get_storage<TReturned>().clear();
     }
 
     template <typename TReturned>
-    static TReturned *Register(std::string_view name) {
-        auto &gs = GetStorage<TReturned>();
+    static TReturned *reg(std::string_view name) {
+        auto &gs = get_storage<TReturned>();
         if (!gs.contains(name.data())) {
             auto u =
                 std::unique_ptr<TReturned, std::function<void(TReturned *)>>(
@@ -190,9 +190,9 @@ class DB {
     // }
 
     template <typename _TReturned>
-    static const _TReturned *Find(std::string_view name) {
+    static const _TReturned *find(std::string_view name) {
         using ReturntdNorm = typename std::remove_cv<_TReturned>::type;
-        auto &storage = GetStorage<ReturntdNorm>();
+        auto &storage = get_storage<ReturntdNorm>();
 
         auto res = storage.find(std::string(name));
         if (res != storage.end()) {
@@ -205,16 +205,16 @@ class DB {
     }
 
     template <typename _TReturned> static const auto &ObjectIterator() {
-        return GetStorage<_TReturned>();
+        return get_storage<_TReturned>();
     }
 
     static std::vector<std::pair<void *, std::function<void(void *)>>> mProtos;
     static void
-    StoreProtoPtr(void *proto, std::function<void(void *)> deallocator) {
+    store_proto(void *proto, std::function<void(void *)> deallocator) {
         mProtos.push_back(std::make_pair(proto, deallocator));
     }
 
-    static void FreeProtos() {
+    static void free_protos() {
         for (auto p : mProtos) {
             p.second(p.first);
         }
@@ -281,7 +281,7 @@ template <typename _TReturned> class LazyBase {
 
     const _TReturned *operator()() const {
         if (stored.size()) {
-            base = DB::Find<_TReturned>(stored);
+            base = DB::find<_TReturned>(stored);
             stored.clear();
             stored.shrink_to_fit();
         }
@@ -291,7 +291,7 @@ template <typename _TReturned> class LazyBase {
 
     operator bool() const {
         if (stored.size()) {
-            base = DB::Find<_TReturned>(stored);
+            base = DB::find<_TReturned>(stored);
             stored.clear();
             stored.shrink_to_fit();
         }
