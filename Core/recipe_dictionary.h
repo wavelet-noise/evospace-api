@@ -86,7 +86,7 @@ class EVOSPACE_API URecipeDictionary : public UObject,
 
     void ResetLocked();
 
-    const URecipe *Find(UStaticItem *item, int32 count = 1) const;
+    const URecipe *Find(const UStaticItem *item, int32 count = 1) const;
 
   protected:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

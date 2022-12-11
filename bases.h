@@ -102,17 +102,17 @@ class DB {
 
     template <typename TReturned, typename TCreated>
     static TReturned *reg(std::string_view name) {
-        using ReturntdNorm = typename std::remove_cv<TReturned>::type;
+        using TReturnedNormalized = typename std::remove_cv<TReturned>::type;
         static_assert(std::is_base_of<TReturned, TCreated>());
-        auto &gs = get_storage<ReturntdNorm>();
+        auto &gs = get_storage<TReturnedNormalized>();
         if (!gs.contains(name.data())) { // TODO: make find
             auto u =
-                std::unique_ptr<ReturntdNorm, std::function<void(ReturntdNorm *)>>(
+                std::unique_ptr<TReturnedNormalized, std::function<void(TReturnedNormalized *)>>(
                     NewObject<TCreated>(),
-                    [](ReturntdNorm *f) { /*f->ConditionalBeginDestroy();*/ }
+                    [](TReturnedNormalized *f) { /*f->ConditionalBeginDestroy();*/ }
                 );
             u->name = name;
-            ReturntdNorm *u_ptr = u.get();
+            TReturnedNormalized *u_ptr = u.get();
             UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
             gs.insert(std::make_pair(name, std::move(u)));
             return u_ptr;
