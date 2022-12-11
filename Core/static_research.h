@@ -2,15 +2,17 @@
 #pragma once
 #include "CoreMinimal.h"
 #include <string>
-#include "Vector.h"
-#include "Common.h"
-#include "SerializableJson.h"
+#include "Evospace/Vector.h"
+#include "Evospace/Common.h"
+#include "Evospace/SerializableJson.h"
 #include "static_research.generated.h"
 
 class AMainPlayerController;
 class UStaticChapter;
 class URecipe;
 class UStaticItem;
+class UInventory;
+class UInternalInventory;
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {

@@ -186,6 +186,26 @@ LuaState::LuaState() {
     auto ver = luabridge::getGlobal(L, "_VERSION");
     LOG(INFO) << ver.tostring();
 
+    using namespace luabridge;
+
+    getGlobalNamespace(L).beginClass<UObject>("Object").endClass();
+
+    getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
+
+    getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
+
+    getGlobalNamespace(L)
+        .beginClass<Vec3i>("Vec3i")
+        .addStaticFunction("new", &LuaState::Vec3i_new)
+        .addStaticFunction("zero", &LuaState::Vec3i_zero)
+        .addStaticFunction("up", &LuaState::Vec3i_up)
+        .addStaticFunction("down", &LuaState::Vec3i_down)
+        .addStaticFunction("left", &LuaState::Vec3i_left)
+        .addStaticFunction("right", &LuaState::Vec3i_right)
+        .addStaticFunction("back", &LuaState::Vec3i_back)
+        .addStaticFunction("front", &LuaState::Vec3i_front)
+        .endClass();
+
     RunCode("require('jit') if type(jit) == 'table' then print(jit.version) else print('jit fatal error') end", "jit_test", 0);
 }
 
