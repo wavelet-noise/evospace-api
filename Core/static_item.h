@@ -18,11 +18,12 @@ struct FItemData;
 class UUserWidgetSlot;
 class AItemLogic;
 
-UCLASS(BlueprintType)
-/**
- * @brief 
+/** @def UStaticItem
+ *  @brief 
  */
-class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
+
+UCLASS(BlueprintType)
+class UStaticItem : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api

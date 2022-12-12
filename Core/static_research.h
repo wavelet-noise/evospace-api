@@ -77,11 +77,12 @@ class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson {
     virtual void PostDeserializeJson() override;
 };
 
-UCLASS(BlueprintType)
-/**
- * @brief 
+/** @def UStaticResearch
+ *  @brief 
  */
-class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
+
+UCLASS(BlueprintType)
+class UStaticResearch : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api

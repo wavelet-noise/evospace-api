@@ -15,11 +15,12 @@
 class URecipeInventory;
 class UStaticResearch;
 
-UCLASS(BlueprintType)
-/**
- * @brief 
+/** @def URecipe
+ *  @brief 
  */
-class EVOSPACE_API URecipe : public UObject, public ISerializableJson {
+
+UCLASS(BlueprintType)
+class URecipe : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
