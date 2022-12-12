@@ -17,7 +17,7 @@ class UStaticResearch;
 
 UCLASS(BlueprintType)
 /**
- * @brief 
+ * @brief 123
  */
 class URecipe : public UObject, public ISerializableJson {
     GENERATED_BODY()
