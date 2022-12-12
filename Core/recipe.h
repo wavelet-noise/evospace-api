@@ -15,8 +15,8 @@
 class URecipeInventory;
 class UStaticResearch;
 
-/** \file recipe.h
- *  \brief Recipe
+/** @file recipe.h
+ *  @brief Recipe
  *   
  *   Details.
  */

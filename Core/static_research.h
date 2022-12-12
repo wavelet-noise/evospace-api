@@ -14,8 +14,8 @@ class UStaticItem;
 class UInventory;
 class UInternalInventory;
 
-/** \file static_research.h
- *  \brief Recipe
+/** @file static_research.h
+ *  @brief Recipe
  *   
  *   Details.
  */

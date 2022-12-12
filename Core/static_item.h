@@ -18,8 +18,8 @@ struct FItemData;
 class UUserWidgetSlot;
 class AItemLogic;
 
-/** \file static_item.h
- *  \brief Recipe
+/** @file static_item.h
+ *  @brief Recipe
  *   
  *   Details.
  */

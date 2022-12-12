@@ -29,8 +29,8 @@ struct EVOSPACE_API FUsedIn {
 //{
 // };
 
-/** \file recipe_dictionary.h
- *  \brief Recipe
+/** @file recipe_dictionary.h
+ *  @brief Recipe
  *   
  *   Details.
  */
