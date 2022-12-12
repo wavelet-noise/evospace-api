@@ -1,5 +1,5 @@
 #pragma once
-#include "static_logger.h"
+#include "Evospace/Shared/ThirdParty/result.h"
 
 struct AbstractError {
     virtual ~AbstractError() = default;

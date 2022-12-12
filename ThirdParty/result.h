@@ -32,6 +32,8 @@
 #include <type_traits>      // std::enable_if, std::is_constructible, etc
 #include <utility>          // std::in_place_t, std::forward
 
+#define RESULT_DISABLE_EXCEPTIONS
+
 #if defined(RESULT_EXCEPTIONS_DISABLED)
 #include <cstdio> // std::fprintf, stderr
 #else

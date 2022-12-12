@@ -31,7 +31,8 @@ ModLoadingLuaState::ModLoadingLuaState() {
         .endClass();
 
     getGlobalNamespace(L)
-        .deriveClass<UStaticItem, UObject>("StaticItem")
+        .beginClass<UStaticItem>("StaticItem")
+        .addProperty("name", &UStaticItem::name)
         .addProperty("image", &UStaticItem::get_image, &UStaticItem::set_image)
         .addProperty(
             "max_count",
@@ -45,13 +46,14 @@ ModLoadingLuaState::ModLoadingLuaState() {
         .endClass();
 
     getGlobalNamespace(L)
-        .deriveClass<URecipe, UObject>("Recipe")
+        .beginClass<URecipe>("Recipe")
         .addProperty("loss", &URecipe::get_loss, &URecipe::set_loss)
         .addProperty("ticks", &URecipe::get_ticks, &URecipe::set_ticks)
         .endClass();
 
     getGlobalNamespace(L)
-        .deriveClass<URecipeDictionary, UObject>("RecipeDictionary")
+        .beginClass<URecipeDictionary>("RecipeDictionary")
+        .addProperty("name", &URecipeDictionary::name)
         .addStaticFunction("new", &URecipeDictionary::new_object)
         .addFunction("get_recipe", &URecipeDictionary::get_recipe)
         .addFunction("get_count", &URecipeDictionary::get_count)

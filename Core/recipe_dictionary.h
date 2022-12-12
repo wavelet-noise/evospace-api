@@ -44,15 +44,29 @@ class EVOSPACE_API URecipeDictionary : public UObject,
      * @brief Object name in database
      */
     std::string name;
-    
+
+    /**
+     * @brief 
+     * @return 
+     */
     int32 get_count() const { return mRecipes.Num(); }
 
+    /**
+     * @brief 
+     * @param index 
+     * @return 
+     */
     const URecipe *get_recipe(int32 index) const {
         if (index >= 0 && index < mRecipes.Num())
             return mRecipes[index];
         return nullptr;
     }
 
+    /**
+     * @brief 
+     * @param val 
+     * @return 
+     */
     bool add_recipe(URecipe *val) {
         if (mNameChache.Contains(val->name))
             return false;
@@ -61,6 +75,10 @@ class EVOSPACE_API URecipeDictionary : public UObject,
         return true;
     }
 
+    /**
+     * @brief 
+     * @return 
+     */
     static URecipeDictionary *new_object() {
         return NewObject<URecipeDictionary>();
     }

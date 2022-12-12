@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Evospace/Blocks/BlockModdingLuaState.h"
+#include "Evospace/Blocks/BlockDeserializeLegacyLuaState.h"
 #include "Evospace/Common.h"
 #include "Evospace/Item/ItemLogic.h"
 #include "Evospace/SerializableJson.h"
@@ -24,16 +24,52 @@ class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
 
     // Lua api
   public:
+    /**
+     * @brief 
+     * @return 
+     */
     UTexture2D *get_image() const { return mImage; }
+
+    /**
+     * @brief 
+     * @param val 
+     */
     void set_image(UTexture2D *val) { mImage = val; }
 
+    /**
+     * @brief 
+     * @return 
+     */
     float get_unit_mul() const { return mUnitMul; }
+
+    /**
+     * @brief 
+     * @param val 
+     */
     void set_unit_mul(float val) { mUnitMul = val; }
 
+    /**
+     * @brief 
+     * @return 
+     */
     int64 get_max_count() const { return mMaxCount; }
+
+    /**
+     * @brief 
+     * @param val 
+     */
     void set_max_count(int64 val) { mMaxCount = val; }
 
+    /**
+     * @brief 
+     * @return 
+     */
     UStaticMesh *get_mesh() const { return mMesh; }
+
+    /**
+     * @brief 
+     * @param val 
+     */
     void set_mesh(UStaticMesh *val) { mMesh = val; }
 
     /**

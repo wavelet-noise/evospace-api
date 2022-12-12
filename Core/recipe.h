@@ -21,10 +21,28 @@ class EVOSPACE_API URecipe : public UObject, public ISerializableJson {
 
     // Lua api
   public:
+    /**
+     * @brief 
+     * @return 
+     */
     int32 get_loss() const { return loss; }
+
+    /**
+     * @brief 
+     * @param val 
+     */
     void set_loss(int32 val) { loss = val; }
 
+    /**
+     * @brief 
+     * @return 
+     */
     int32 get_ticks() const { return ticks; }
+
+    /**
+     * @brief 
+     * @param val 
+     */
     void set_ticks(int32 val) { ticks = val; }
 
     // Engine code
