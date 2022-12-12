@@ -18,17 +18,10 @@ struct FItemData;
 class UUserWidgetSlot;
 class AItemLogic;
 
-/** @file static_item.h
- *  @brief Recipe
- *   
- *   Details.
- */
-
-/** @def UStaticItem
- *  @brief 
- */
-
 UCLASS(BlueprintType)
+/**
+ * @brief 
+ */
 class UStaticItem : public UObject, public ISerializableJson {
     GENERATED_BODY()
 

@@ -15,17 +15,10 @@
 class URecipeInventory;
 class UStaticResearch;
 
-/** @file recipe.h
- *  @brief Recipe
- *   
- *   Details.
- */
-
-/** @def URecipe
- *  @brief 
- */
-
 UCLASS(BlueprintType)
+/**
+ * @brief 
+ */
 class URecipe : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
