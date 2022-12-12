@@ -19,6 +19,9 @@ class UUserWidgetSlot;
 class AItemLogic;
 
 UCLASS(BlueprintType)
+/**
+ * @brief 
+ */
 class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
     GENERATED_BODY()
 

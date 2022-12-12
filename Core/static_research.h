@@ -78,6 +78,9 @@ class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson {
 };
 
 UCLASS(BlueprintType)
+/**
+ * @brief 
+ */
 class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
     GENERATED_BODY()
 

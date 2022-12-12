@@ -16,6 +16,9 @@ class URecipeInventory;
 class UStaticResearch;
 
 UCLASS(BlueprintType)
+/**
+ * @brief 
+ */
 class EVOSPACE_API URecipe : public UObject, public ISerializableJson {
     GENERATED_BODY()
 

@@ -29,10 +29,10 @@ struct EVOSPACE_API FUsedIn {
 //{
 // };
 
-/**
- *
- */
 UCLASS(BlueprintType)
+/**
+ * @brief 
+ */
 class EVOSPACE_API URecipeDictionary : public UObject,
                                        public ISerializableJson {
     GENERATED_BODY()
