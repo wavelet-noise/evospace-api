@@ -17,7 +17,7 @@ class UInternalInventory;
 
 UCLASS(BlueprintType)
 /**
- * @brief 
+ * @brief 234
  */
 class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
     GENERATED_BODY()
