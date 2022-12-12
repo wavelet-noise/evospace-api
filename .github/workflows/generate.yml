@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4.3.1
+      
     - name: Build 💼
       run: |
         echo "- clean api -"
@@ -29,9 +33,9 @@ jobs:
         rm -rf .git
         rm -rf .github
         
-        echo "- finish -"
-        
         cd ..
+        
+        python filter_ue4_macros.py
         
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
