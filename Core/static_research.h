@@ -14,6 +14,12 @@ class UStaticItem;
 class UInventory;
 class UInternalInventory;
 
+/** \file static_research.h
+ *  \brief Recipe
+ *   
+ *   Details.
+ */
+
 UCLASS(BlueprintType)
 class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
     GENERATED_BODY()
