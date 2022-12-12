@@ -26,25 +26,25 @@ class URecipe : public UObject, public ISerializableJson {
     // Lua api
   public:
     /**
-     * @brief 
+     * @brief Get recipe loss percent
      * @return 
      */
     int32 get_loss() const { return loss; }
 
     /**
-     * @brief 
+     * @brief Set recipe loss percent
      * @param val 
      */
     void set_loss(int32 val) { loss = val; }
 
     /**
-     * @brief 
+     * @brief Get recipe basic duration
      * @return 
      */
     int32 get_ticks() const { return ticks; }
 
     /**
-     * @brief 
+     * @brief Set recipe basic duration
      * @param val 
      */
     void set_ticks(int32 val) { ticks = val; }
