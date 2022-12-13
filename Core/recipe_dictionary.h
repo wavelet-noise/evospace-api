@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Shared/Core/recipe.h"
+#include "Evospace/Shared/bases.h"
 
 #include "recipe_dictionary.generated.h"
 
@@ -31,30 +32,25 @@ struct EVOSPACE_API FUsedIn {
 
 UCLASS(BlueprintType)
 /**
- * @brief 
+ * @brief
  */
 class URecipeDictionary : public UObject,
-                                       public ISerializableJson {
+                          public ISerializableJson,
+                          public evo::BaseHelper<URecipeDictionary> {
     GENERATED_BODY()
 
     // Lua api
   public:
-
     /**
-     * @brief Object name in database
-     */
-    std::string name;
-
-    /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     int32 get_count() const { return mRecipes.Num(); }
 
     /**
-     * @brief 
-     * @param index 
-     * @return 
+     * @brief
+     * @param index
+     * @return
      */
     const URecipe *get_recipe(int32 index) const {
         if (index >= 0 && index < mRecipes.Num())
@@ -63,9 +59,9 @@ class URecipeDictionary : public UObject,
     }
 
     /**
-     * @brief 
-     * @param val 
-     * @return 
+     * @brief
+     * @param val
+     * @return
      */
     bool add_recipe(URecipe *val) {
         if (mNameChache.Contains(val->name))
@@ -76,8 +72,8 @@ class URecipeDictionary : public UObject,
     }
 
     /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     static URecipeDictionary *new_object() {
         return NewObject<URecipeDictionary>();
@@ -106,15 +102,18 @@ class URecipeDictionary : public UObject,
 
     const URecipe *Find(const UStaticItem *item, int32 count = 1) const;
 
-  protected:
+  public:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     TArray<const URecipe *> mRecipes;
 
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     TArray<FUsedIn> mUsedIn;
-    
+
     TMap<FName, const URecipe *> mNameChache;
 
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     UInventory *mUsedInInventory;
+
+    static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
 };
+SOG_REGISTER_STATIC(URecipeDictionary, RecipeDictionary);

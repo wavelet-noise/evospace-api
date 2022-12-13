@@ -1,16 +1,17 @@
 #pragma once
 #include "ThirdParty/cpplog.h"
 
-
 #include <list>
 #include <string>
 
 #ifndef LOG_LEVEL
-#define LOG(level) cpplog::LogMessage((level), *StaticLogger::Get().logger).getStream()
+#define LOG(level)                                                             \
+    cpplog::LogMessage((level), *StaticLogger::Get().logger).getStream()
 #endif
 
 #ifndef LOG_NOTHING
-#define LOG_NOTHING(level) true ? (void)0 : cpplog::helpers::VoidStreamClass() & LOG(level)
+#define LOG_NOTHING(level)                                                     \
+    true ? (void)0 : cpplog::helpers::VoidStreamClass() & LOG(level)
 #endif
 
 class StaticLogger {

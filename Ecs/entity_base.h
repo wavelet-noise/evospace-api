@@ -28,7 +28,7 @@ struct EntityFactory {
 };
 
 #define ECS_REGISTER_COMPONENT(type)                                           \
-    ECS_REGISTER_COMPONENT_IMPL(type, ecs::EntityFactory::Get(), #type)
+    SOG_REGISTER_COMPONENT_IMPL(type, ecs::EntityFactory::Get(), #type)
 
 namespace Events {
 struct OnEntitySpawned {

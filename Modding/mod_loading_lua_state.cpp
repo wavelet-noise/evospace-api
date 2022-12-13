@@ -21,12 +21,13 @@ ModLoadingLuaState::ModLoadingLuaState() {
     getGlobalNamespace(L)
         .beginClass<UInventoryContainer>("InventoryContainer")
         .endClass();
-    
+
     getGlobalNamespace(L).beginClass<UTexture2D>("Texture").endClass();
 
     getGlobalNamespace(L).beginClass<UStaticMesh>("Mesh").endClass();
 
-    getGlobalNamespace(L).beginClass<UStaticResearch>("StaticResearch")
+    getGlobalNamespace(L)
+        .beginClass<UStaticResearch>("StaticResearch")
         .addProperty("name", &UStaticResearch::name)
         .endClass();
 

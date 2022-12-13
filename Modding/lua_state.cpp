@@ -1,7 +1,7 @@
 #include "lua_state.h"
 
-#include "Evospace/Shared/static_logger.h"
 #include "Evospace/Shared/Core/static_research.h"
+#include "Evospace/Shared/static_logger.h"
 
 namespace evo {
 bool LuaState::RunCode(
@@ -68,9 +68,9 @@ int LuaState::l_my_print(lua_State *L) {
         if (lua_isstring(L, i)) {
             LOG(INFO) << "Lua print: " << lua_tostring(L, i);
         } else if (lua_isnumber(L, i)) {
-            LOG(INFO) <<"Lua print: " << lua_tonumber(L, i);
+            LOG(INFO) << "Lua print: " << lua_tonumber(L, i);
         } else if (lua_isboolean(L, i)) {
-            LOG(INFO) <<"Lua print: " << lua_toboolean(L, i);
+            LOG(INFO) << "Lua print: " << lua_toboolean(L, i);
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -182,7 +182,7 @@ LuaState::LuaState() {
     // lua_pop(L, 1);
 
     LOG(INFO) << "Lua state initialized";
-    
+
     auto ver = luabridge::getGlobal(L, "_VERSION");
     LOG(INFO) << ver.tostring();
 
@@ -206,16 +206,20 @@ LuaState::LuaState() {
         .addStaticFunction("front", &LuaState::Vec3i_front)
         .endClass();
 
-    RunCode("require('jit') if type(jit) == 'table' then print(jit.version) else print('jit fatal error') end", "jit_test", 0);
+    RunCode(
+        "require('jit') if type(jit) == 'table' then print(jit.version) else "
+        "print('jit fatal error') end",
+        "jit_test",
+        0
+    );
 }
 
-int AppendPath(lua_State *L, std::string_view path) noexcept
-{
+int AppendPath(lua_State *L, std::string_view path) noexcept {
     lua_getglobal(L, "package");
     lua_getfield(L, -1, "path");
     std::string npath = path.data();
     npath.append(";");
-    npath.append(lua_tostring(L, -1)); 
+    npath.append(lua_tostring(L, -1));
     lua_pop(L, 1);
     lua_pushstring(L, npath.c_str());
     lua_setfield(L, -2, "path");

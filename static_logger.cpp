@@ -4,12 +4,11 @@
 
 StaticLogger::StaticLogger(std::string_view filename)
 #ifdef WITH_EDITOR
-: logger(std::make_unique<cpplog::UeLogger>())
+    : logger(std::make_unique<cpplog::UeLogger>())
 #else
-: logger(std::make_unique<cpplog::FileLogger>(filename.data()))
+    : logger(std::make_unique<cpplog::FileLogger>(filename.data()))
 #endif
 {
-     
 }
 
 StaticLogger &StaticLogger::Get() {
@@ -22,9 +21,7 @@ StaticLogger &StaticLogger::Get() {
     return *inst;
 }
 
-cpplog::BaseLogger & StaticLogger::get_logger(){
-    return *Get().logger;
-}
+cpplog::BaseLogger &StaticLogger::get_logger() { return *Get().logger; }
 
 void StaticLogger::Log(std::string_view sw) { lines.push_back(sw.data()); }
 

@@ -6,6 +6,7 @@
 #include "Evospace/Common.h"
 #include "Evospace/Item/ItemLogic.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Shared/bases.h"
 
 #include <Engine/World.h>
 #include <Internationalization/Text.h>
@@ -20,65 +21,62 @@ class AItemLogic;
 
 UCLASS(BlueprintType)
 /**
- * @brief 
+ * @brief
  */
-class UStaticItem : public UObject, public ISerializableJson {
+class UStaticItem : public UObject,
+                    public ISerializableJson,
+                    public evo::BaseHelper<UStaticItem> {
     GENERATED_BODY()
 
     // Lua api
   public:
     /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     UTexture2D *get_image() const { return mImage; }
 
     /**
-     * @brief 
-     * @param val 
+     * @brief
+     * @param val
      */
     void set_image(UTexture2D *val) { mImage = val; }
 
     /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     float get_unit_mul() const { return mUnitMul; }
 
     /**
-     * @brief 
-     * @param val 
+     * @brief
+     * @param val
      */
     void set_unit_mul(float val) { mUnitMul = val; }
 
     /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     int64 get_max_count() const { return mMaxCount; }
 
     /**
-     * @brief 
-     * @param val 
+     * @brief
+     * @param val
      */
     void set_max_count(int64 val) { mMaxCount = val; }
 
     /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     UStaticMesh *get_mesh() const { return mMesh; }
 
     /**
-     * @brief 
-     * @param val 
+     * @brief
+     * @param val
      */
     void set_mesh(UStaticMesh *val) { mMesh = val; }
-
-    /**
-     * @brief Object name in database
-     */
-    std::string name;
 
     // Engine code
   public:
@@ -143,4 +141,7 @@ class UStaticItem : public UObject, public ISerializableJson {
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     bool mSolid = true;
+
+    static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
 };
+SOG_REGISTER_STATIC(UStaticItem, StaticItem);

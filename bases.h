@@ -1,19 +1,19 @@
 #pragma once
 
 #include "Evospace/Common.h"
+#include "Evospace/MainGameInstance.h"
 #include "ThirdParty/luabridge.h"
 #include "localization_table.h"
-#include "template_factory.h"
-#include "Evospace/MainGameInstance.h"
-
 #include "static_logger.h"
+#include "template_factory.h"
+
 #include <unordered_map>
 #include <vector>
 
 class Base;
 
 namespace evo {
-struct BaseFactory {
+struct StaticsFactory {
     struct cmpNameFast {
         bool operator()(std::string_view a, std::string_view b) const {
             return a < b;
@@ -45,42 +45,29 @@ struct BaseFactory {
         };
 }*/
 
-#define SOG_REGISTER_BASE(type)                                                \
-    SOG_REGISTER_BASE_IMPL(type, ecs::BaseFactory::Get(), #type)
+#define SOG_REGISTER_STATIC(type, name)                                        \
+    SOG_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
 
-class Base : public std::enable_shared_from_this<Base> {
+/**
+ * @brief Super class for all objects stored in database
+ */
+class Base { // : public std::enable_shared_from_this<Base> {
   public:
-    Base() = default;
-    virtual ~Base() = default;
+    // Base() = default;
+    // virtual ~Base() = default;
 
-    Base(const Base &) = delete;
-    Base &operator=(const Base &) = delete;
+    // Base(const Base &) = delete;
+    // Base &operator=(const Base &) = delete;
 
+    /**
+     * @brief Object name in database
+     */
     std::string name;
 };
 
-/*template<typename Ty_>
-struct BaseHelper : public Base {
-        static auto GetPrototypeLambda() {
-                return [](ecs::Entity* e, void* proto) {
-e->assign_prototype<Ty_>(*reinterpret_cast<Ty_*>(proto)); };
-        }
-        static auto GetComponentLambda() {
-                return [](ecs::Entity* e) -> void* { return e->get_ptr<Ty_>();
-};
-        }
-        static auto GetAnyLambda() {
-                return [](void** data) { *data = new Ty_(); };
-        }
-        static auto GetLuaLambda() {
-                return [](lua_State* state, void* data) { std::error_code er;
-luabridge::push(state, reinterpret_cast<Ty_*>(data), er);
-                };
-        }
-};*/
-
 //! helper class for all objects stored in DB
-template <typename Ty_> struct BaseHelper : public Base {
+template <typename Ty_> class BaseHelper : public Base {
+  public:
     static auto GetLuaLambda() {
         return [](lua_State *state, void *data) {
             std::error_code er;
@@ -106,11 +93,12 @@ class DB {
         static_assert(std::is_base_of<TReturned, TCreated>());
         auto &gs = get_storage<TReturnedNormalized>();
         if (!gs.contains(name.data())) { // TODO: make find
-            auto u =
-                std::unique_ptr<TReturnedNormalized, std::function<void(TReturnedNormalized *)>>(
-                    NewObject<TCreated>(),
-                    [](TReturnedNormalized *f) { /*f->ConditionalBeginDestroy();*/ }
-                );
+            auto u = std::unique_ptr<
+                TReturnedNormalized,
+                std::function<void(TReturnedNormalized *)>>(
+                NewObject<TCreated>(),
+                [](TReturnedNormalized *f) { /*f->ConditionalBeginDestroy();*/ }
+            );
             u->name = name;
             TReturnedNormalized *u_ptr = u.get();
             UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
@@ -125,8 +113,7 @@ class DB {
         get_storage<TReturned>().clear();
     }
 
-    template <typename TReturned>
-    static TReturned *reg(std::string_view name) {
+    template <typename TReturned> static TReturned *reg(std::string_view name) {
         auto &gs = get_storage<TReturned>();
         if (!gs.contains(name.data())) {
             auto u =
@@ -138,10 +125,14 @@ class DB {
             TReturned *u_ptr = u.get();
             UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
             gs.insert(std::make_pair(name, std::move(u)));
-            LOG(TRACE) << "Registering " << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName()) << " with name " << name;
+            LOG(TRACE) << "Registering "
+                       << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName())
+                       << " with name " << name;
             return u_ptr;
         } else {
-            LOG(TRACE) << "Appending " << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName()) << " with name " << name;
+            LOG(TRACE) << "Appending "
+                       << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName())
+                       << " with name " << name;
             return gs.find(name.data())->second.get();
         }
     }
@@ -190,7 +181,7 @@ class DB {
         if (res != storage.end()) {
             return reinterpret_cast<ReturntdNorm *>(res->second.get());
         }
-        
+
         return nullptr;
     }
 

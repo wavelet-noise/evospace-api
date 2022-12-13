@@ -1,10 +1,13 @@
 
 #pragma once
 #include "CoreMinimal.h"
-#include <string>
-#include "Evospace/Vector.h"
 #include "Evospace/Common.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Shared/bases.h"
+#include "Evospace/Vector.h"
+
+#include <string>
+
 #include "static_research.generated.h"
 
 class AMainPlayerController;
@@ -14,7 +17,6 @@ class UStaticItem;
 class UInventory;
 class UInternalInventory;
 
-
 UCLASS(BlueprintType)
 /**
  * @brief 234
@@ -22,7 +24,7 @@ UCLASS(BlueprintType)
 class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
-public:
+  public:
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
@@ -34,7 +36,7 @@ USTRUCT(BlueprintType)
 struct EVOSPACE_API FResearchUnlock {
     GENERATED_BODY()
 
-public:
+  public:
     FName Dictionary;
     FName Recipe;
 };
@@ -43,7 +45,7 @@ USTRUCT(BlueprintType)
 struct EVOSPACE_API FResearchUnlockLevel {
     GENERATED_BODY()
 
-public:
+  public:
     TArray<FResearchUnlock> Unlocks;
     TArray<const URecipe *> Recipes;
 };
@@ -58,9 +60,8 @@ class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
   public:
-
     std::string name;
-    
+
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     TArray<FKeyTableObject> LabelParts = {};
 
@@ -82,29 +83,24 @@ class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson {
 };
 
 /** @def UStaticResearch
- *  @brief 
+ *  @brief
  */
 
 UCLASS(BlueprintType)
-class UStaticResearch : public UObject, public ISerializableJson {
+class UStaticResearch : public UObject,
+                        public ISerializableJson,
+                        public evo::BaseHelper<UStaticResearch> {
     GENERATED_BODY()
 
     // Lua api
   public:
-
-    /**
-     * @brief Object name in database
-     */
-    std::string name;
-    
     UTexture2D *get_image() const { return Texture; }
     void set_image(UTexture2D *val) { Texture = val; }
-    
+
     Vec2i get_position() const { return Position; }
-    void set_position(const Vec2i & val) { Position = FVector2D(val.X, val.Y); }
+    void set_position(const Vec2i &val) { Position = FVector2D(val.X, val.Y); }
 
   public:
-    
     UStaticResearch();
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -169,7 +165,10 @@ class UStaticResearch : public UObject, public ISerializableJson {
     virtual void PostDeserializeJson() override;
 
     virtual void ApplyToController(AMainPlayerController *apply_to);
+
+    static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
 };
+SOG_REGISTER_STATIC(UStaticResearch, StaticResearch);
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {

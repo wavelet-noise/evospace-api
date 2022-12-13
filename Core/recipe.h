@@ -7,7 +7,6 @@
 
 #include <Dom/JsonObject.h>
 
-
 #include <string>
 
 #include "Recipe.generated.h"
@@ -26,31 +25,30 @@ class URecipe : public UObject, public ISerializableJson {
   public:
     /**
      * @brief Get recipe loss percent
-     * @return 
+     * @return
      */
     int32 get_loss() const { return loss; }
 
     /**
      * @brief Set recipe loss percent
-     * @param val 
+     * @param val
      */
     void set_loss(int32 val) { loss = val; }
 
     /**
      * @brief Get recipe basic duration
-     * @return 
+     * @return
      */
     int32 get_ticks() const { return ticks; }
 
     /**
      * @brief Set recipe basic duration
-     * @param val 
+     * @param val
      */
     void set_ticks(int32 val) { ticks = val; }
 
     // Engine code
   public:
-    
     URecipe();
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;

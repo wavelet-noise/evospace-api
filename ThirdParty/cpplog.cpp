@@ -1,8 +1,7 @@
 #include "cpplog.h"
 
 namespace cpplog {
-bool UeLogger::sendLogMessage(LogData* logData)
-{
+bool UeLogger::sendLogMessage(LogData *logData) {
     OstreamLogger::sendLogMessage(logData);
     std::string out_string = m_stream.str().c_str();
     switch (logData->level) {
@@ -24,4 +23,4 @@ bool UeLogger::sendLogMessage(LogData* logData)
 
     return true;
 }
-}
+} // namespace cpplog

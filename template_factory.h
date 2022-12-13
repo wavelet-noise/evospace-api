@@ -9,27 +9,6 @@
 #include <optional>
 #include <utility>
 
-/*
-template<typename Ty_>
-        struct EcsComponentBase {
-                static auto GetPrototypeLambda() {
-                        return [](ecs::Entity* e, void * proto) {
-e->assign_prototype<Ty_>(*reinterpret_cast<Ty_ *>(proto)); };
-                }
-                static auto GetComponentLambda() {
-                        return [](ecs::Entity* e) -> void * { return
-e->get_ptr<Ty_>(); };
-                }
-                static auto GetAnyLambda() {
-                        return [](void ** data) { *data = new Ty_(); };
-                }
-                static auto GetLuaLambda() {
-                        return [](lua_State* state, void * data) {
-std::error_code er; luabridge::push(state, reinterpret_cast<Ty_ *>(data), er);
-                }; }
-        };
-*/
-
 namespace evo {
 template <class IdType, class Base, class Comparator> class TemplateFactory {
   public:
@@ -149,12 +128,12 @@ template <class T> class RegisterBase {
     }
 };
 
-#define ECS_REGISTER_COMPONENT_IMPL(type, factory, id)                         \
+#define SOG_REGISTER_COMPONENT_IMPL(type, factory, id)                         \
     namespace {                                                                \
     evo::RegisterComponent<type> RegisterComponent##type(factory, id);         \
     }
 
-#define ECS_REGISTER_BASE_IMPL(type, factory, id)                              \
+#define SOG_REGISTER_BASE_IMPL(type, factory, id)                              \
     namespace {                                                                \
     evo::RegisterBase<type> RegisterBase##type(factory, id);                   \
     }
