@@ -168,7 +168,7 @@ class UStaticResearch : public UObject,
 
     static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
 };
-SOG_REGISTER_STATIC(UStaticResearch, StaticResearch);
+EVO_REGISTER_STATIC(UStaticResearch, StaticResearch);
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {

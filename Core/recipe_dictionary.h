@@ -116,4 +116,4 @@ class URecipeDictionary : public UObject,
 
     static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
 };
-SOG_REGISTER_STATIC(URecipeDictionary, RecipeDictionary);
+EVO_REGISTER_STATIC(URecipeDictionary, RecipeDictionary);

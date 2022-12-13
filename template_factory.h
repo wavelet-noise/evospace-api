@@ -128,12 +128,12 @@ template <class T> class RegisterBase {
     }
 };
 
-#define SOG_REGISTER_COMPONENT_IMPL(type, factory, id)                         \
+#define EVO_REGISTER_COMPONENT_IMPL(type, factory, id)                         \
     namespace {                                                                \
     evo::RegisterComponent<type> RegisterComponent##type(factory, id);         \
     }
 
-#define SOG_REGISTER_BASE_IMPL(type, factory, id)                              \
+#define EVO_REGISTER_BASE_IMPL(type, factory, id)                              \
     namespace {                                                                \
     evo::RegisterBase<type> RegisterBase##type(factory, id);                   \
     }

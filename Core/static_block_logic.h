@@ -39,4 +39,4 @@ class UStaticBlockLogic : public UObject,
 
     //std::vector<std::tuple<std::string, evo::EntityFactory::FactoryType::ComponentFuncTuple, void *>> mFuncTuples;
 };
-SOG_REGISTER_STATIC(UStaticBlockLogic, StaticBlockLogic);
+EVO_REGISTER_STATIC(UStaticBlockLogic, StaticBlockLogic);

@@ -144,4 +144,4 @@ class UStaticItem : public UObject,
 
     static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
 };
-SOG_REGISTER_STATIC(UStaticItem, StaticItem);
+EVO_REGISTER_STATIC(UStaticItem, StaticItem);

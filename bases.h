@@ -45,8 +45,8 @@ struct StaticsFactory {
         };
 }*/
 
-#define SOG_REGISTER_STATIC(type, name)                                        \
-    SOG_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
+#define EVO_REGISTER_STATIC(type, name)                             \
+        EVO_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
 
 /**
  * @brief Super class for all objects stored in database
@@ -119,6 +119,30 @@ class DB {
             auto u =
                 std::unique_ptr<TReturned, std::function<void(TReturned *)>>(
                     NewObject<TReturned>(),
+                    [](TReturned *f) { /*f->ConditionalBeginDestroy();*/ }
+                );
+            u->name = name;
+            TReturned *u_ptr = u.get();
+            UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
+            gs.insert(std::make_pair(name, std::move(u)));
+            LOG(TRACE) << "Registering "
+                       << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName())
+                       << " with name " << name;
+            return u_ptr;
+        } else {
+            LOG(TRACE) << "Appending "
+                       << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName())
+                       << " with name " << name;
+            return gs.find(name.data())->second.get();
+        }
+    }
+
+    template <typename TReturned> static TReturned *reg(std::string_view name, UClass * class_ptr) {
+        auto &gs = get_storage<TReturned>();
+        if (!gs.contains(name.data())) {
+            auto u =
+                std::unique_ptr<TReturned, std::function<void(TReturned *)>>(
+                    NewObject<TReturned>((UObject*)GetTransientPackage(), class_ptr),
                     [](TReturned *f) { /*f->ConditionalBeginDestroy();*/ }
                 );
             u->name = name;

@@ -27,8 +27,8 @@ struct EntityFactory {
     }
 };
 
-#define ECS_REGISTER_COMPONENT(type)                                           \
-    SOG_REGISTER_COMPONENT_IMPL(type, ecs::EntityFactory::Get(), #type)
+#define EVO_REGISTER_COMPONENT(type)                                           \
+    EVO_REGISTER_COMPONENT_IMPL(type, ecs::EntityFactory::Get(), #type)
 
 namespace Events {
 struct OnEntitySpawned {
@@ -73,7 +73,7 @@ struct Core : EcsComponentBase<Core> {
 
     ECS_DECLARE_TYPE;
 };
-ECS_REGISTER_COMPONENT(Core);
+EVO_REGISTER_COMPONENT(Core);
 ECS_DEFINE_TYPE(Core);
 
 //! Block inventory
@@ -87,7 +87,7 @@ struct Inventory : EcsComponentBase<Inventory> {
 
     ECS_DECLARE_TYPE;
 };
-ECS_REGISTER_COMPONENT(Inventory);
+EVO_REGISTER_COMPONENT(Inventory);
 ECS_DEFINE_TYPE(Inventory);
 
 struct Autocrafter : EcsComponentBase<Autocrafter> {
@@ -97,7 +97,7 @@ struct Autocrafter : EcsComponentBase<Autocrafter> {
 
     ECS_DECLARE_TYPE;
 };
-ECS_REGISTER_COMPONENT(Autocrafter);
+EVO_REGISTER_COMPONENT(Autocrafter);
 ECS_DEFINE_TYPE(Autocrafter);
 
 #undef ECS_REGISTER_ENTITY
