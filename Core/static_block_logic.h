@@ -1,5 +1,7 @@
+// Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "Evospace/Shared/bases.h"
+
 #include "static_block_logic.generated.h"
 
 class AItemLogic;
@@ -16,11 +18,12 @@ class UStaticBlockLogic : public UObject,
   public:
     //
   public:
-    
     static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
 
-    virtual void NeighborBlockAdded(UStaticBlockLogic *block, const Vec3i &pos) {}
-    virtual void NeighborBlockRemoved(UStaticBlockLogic *block, const Vec3i &pos) {}
+    virtual void
+    NeighborBlockAdded(UStaticBlockLogic *block, const Vec3i &pos) {}
+    virtual void
+    NeighborBlockRemoved(UStaticBlockLogic *block, const Vec3i &pos) {}
 
     virtual void SideAccessorAdded(
         UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
@@ -30,13 +33,17 @@ class UStaticBlockLogic : public UObject,
     ) {}
 
     virtual void SpawnedByItem(AItemLogic *item) {}
-    virtual EBreakResult RemovedByItem(AItemLogic *item) { return EBreakResult::Breaked; }
+    virtual EBreakResult RemovedByItem(AItemLogic *item) {
+        return EBreakResult::Breaked;
+    }
 
     virtual Vec3i GetRotationLocks() const { return {0, 0, 0}; }
 
     virtual bool IsHandleRecipeSelection() const { return false; }
     virtual void HandleRecipeSelection(UStaticItem *item) {}
 
-    //std::vector<std::tuple<std::string, evo::EntityFactory::FactoryType::ComponentFuncTuple, void *>> mFuncTuples;
+    // std::vector<std::tuple<std::string,
+    // evo::EntityFactory::FactoryType::ComponentFuncTuple, void *>>
+    // mFuncTuples;
 };
 EVO_REGISTER_STATIC(UStaticBlockLogic, StaticBlockLogic);

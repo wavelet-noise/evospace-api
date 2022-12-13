@@ -1,3 +1,4 @@
+// Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #include "mod_loading_lua_state.h"
 
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"

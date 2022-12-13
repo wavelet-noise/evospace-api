@@ -1,3 +1,4 @@
+// Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 
 #include "Evospace/Common.h"
@@ -45,8 +46,8 @@ struct StaticsFactory {
         };
 }*/
 
-#define EVO_REGISTER_STATIC(type, name)                             \
-        EVO_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
+#define EVO_REGISTER_STATIC(type, name)                                        \
+    EVO_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
 
 /**
  * @brief Super class for all objects stored in database
@@ -137,12 +138,15 @@ class DB {
         }
     }
 
-    template <typename TReturned> static TReturned *reg(std::string_view name, UClass * class_ptr) {
+    template <typename TReturned>
+    static TReturned *reg(std::string_view name, UClass *class_ptr) {
         auto &gs = get_storage<TReturned>();
         if (!gs.contains(name.data())) {
             auto u =
                 std::unique_ptr<TReturned, std::function<void(TReturned *)>>(
-                    NewObject<TReturned>((UObject*)GetTransientPackage(), class_ptr),
+                    NewObject<TReturned>(
+                        (UObject *)GetTransientPackage(), class_ptr
+                    ),
                     [](TReturned *f) { /*f->ConditionalBeginDestroy();*/ }
                 );
             u->name = name;

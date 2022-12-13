@@ -1,3 +1,4 @@
+// Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "Evospace/Shared/ThirdParty/result.h"
 

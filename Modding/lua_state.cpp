@@ -1,3 +1,4 @@
+// Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #include "lua_state.h"
 
 #include "Evospace/Shared/Core/static_research.h"
