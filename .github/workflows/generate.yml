@@ -37,6 +37,8 @@ jobs:
         
         python filter_ue4_macros.py
         
+        python cleanup_css.py
+        
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
         
