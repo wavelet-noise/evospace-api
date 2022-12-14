@@ -23,5 +23,8 @@ for root, dirs, files in os.walk("./"):
                 content = content.replace("UStaticBlock",'StaticBlock')
                 content = content.replace("UStaticItem",'StaticItem')
                 content = content.replace("UBlockLogic",'BlockLogic')
+                content = content.replace("UClass","Class")
+                content = content.replace("UObject","Object")
+                content = content.replace("UStaticMesh","StaticMesh")
             with open(namepath, 'w') as file:
                 file.write(content)

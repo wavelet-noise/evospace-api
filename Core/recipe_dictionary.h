@@ -32,7 +32,7 @@ struct EVOSPACE_API FUsedIn {
 
 UCLASS(BlueprintType)
 /**
- * @brief
+ * @brief List of recipes for using in some crafter
  */
 class URecipeDictionary : public UObject,
                           public ISerializableJson,

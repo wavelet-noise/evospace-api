@@ -35,7 +35,7 @@ class LuaState {
      * @brief Construct Vec3i from 3 numbers
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.new(x, y, z)
+     * vec = Vec3i.new(x, y, z)
      * @endcode
      * @param x
      * @param y
@@ -48,7 +48,7 @@ class LuaState {
      * @brief Construct Vec3i from (0, 0, 0)
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.zero()
+     * vec = Vec3i.zero()
      * @endcode
      * @return Constructed Vec3i(0, 0, 0) object
      */
@@ -58,7 +58,7 @@ class LuaState {
      * @brief Construct Vec3i from (1, 1, 1)
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.one()
+     * vec = Vec3i.one()
      * @endcode
      * @return Constructed Vec3i(1, 1, 1) object
      */
@@ -68,7 +68,7 @@ class LuaState {
      * @brief Construct Vec3i from up (0, 0, 1)
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.up()
+     * vec = Vec3i.up()
      * @endcode
      * @return Constructed Vec3i(0, 0, 1) object
      */
@@ -78,7 +78,7 @@ class LuaState {
      * @brief Construct Vec3i from (0, 0, -1)
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.down()
+     * vec = Vec3i.down()
      * @endcode
      * @return Constructed Vec3i(0, 0, -1) object
      */
@@ -88,7 +88,7 @@ class LuaState {
      * @brief Construct Vec3i from (0, 1, 0)
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.left()
+     * vec = Vec3i.left()
      * @endcode
      * @return Constructed Vec3i(0, 1, 0) object
      */
@@ -98,7 +98,7 @@ class LuaState {
      * @brief Construct Vec3i from (0, -1, 0)
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.right()
+     * vec = Vec3i.right()
      * @endcode
      * @return Constructed Vec3i(0, -1, 0) object
      */
@@ -108,7 +108,7 @@ class LuaState {
      * @brief Construct Vec3i from (-1, 0, 0)
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.back()
+     * vec = Vec3i.back()
      * @endcode
      * @return Constructed Vec3i(-1, 0, 0) object
      */
@@ -118,7 +118,7 @@ class LuaState {
      * @brief Construct Vec3i from (1, 0, 0)
      * @details lua syntax
      * @code{.lua}
-     * Vec3i.front()
+     * vec = Vec3i.front()
      * @endcode
      * @return Constructed Vec3i(1, 0, 0) object
      */

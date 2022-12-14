@@ -21,7 +21,14 @@ class AItemLogic;
 
 UCLASS(BlueprintType)
 /**
- * @brief
+ * @brief Static part of every item
+ *
+ * Item Instance {
+ *      per instance data,
+ *      static part pointer
+ * }
+ *
+ * Not modifiable part of item
  */
 class UStaticItem : public UObject,
                     public ISerializableJson,
@@ -31,52 +38,81 @@ class UStaticItem : public UObject,
     // Lua api
   public:
     /**
-     * @brief
-     * @return
+     * @brief Get item ico for drawing in inventory
+     * @code{.lua}
+     * image = static_item.get_image()
+     * @endcode
+     * @return Texture2D object
      */
     UTexture2D *get_image() const { return mImage; }
 
     /**
-     * @brief
-     * @param val
+     * @brief Set item ico for drawing in inventory
+     * @code{.lua}
+     * static_item.set_image(image)
+     * @endcode
+     * @param tex Texture2D object
      */
-    void set_image(UTexture2D *val) { mImage = val; }
+    void set_image(UTexture2D *tex) { mImage = tex; }
 
     /**
-     * @brief
-     * @return
+     * @brief Get multiplier for internal item count units
+     *
+     * When drawing in inventory this multiplier is applying. Showing number = count * multiplier
+     *
+     * @code{.lua}
+     * mul = static_item.get_unit_mul()
+     * @endcode
+     * @return multiplier
      */
     float get_unit_mul() const { return mUnitMul; }
 
     /**
-     * @brief
-     * @param val
+     * @brief Set multiplier for internal item count units
+     *
+     * When drawing in inventory this multiplier is applying. Showing number = count * multiplier
+     * @code{.lua}
+     * static_item.set_unit_mul(mul)
+     * @endcode
+     * @param mul multiplier
      */
-    void set_unit_mul(float val) { mUnitMul = val; }
+    void set_unit_mul(float mul) { mUnitMul = mul; }
 
     /**
-     * @brief
+     * @brief Get max count that can be stored in one slot of default inventory
      * @return
      */
     int64 get_max_count() const { return mMaxCount; }
 
     /**
-     * @brief
-     * @param val
+     * @brief Set max count that can be stored in one slot of default inventory
+     * @param max count
      */
-    void set_max_count(int64 val) { mMaxCount = val; }
+    void set_max_count(int64 max) { mMaxCount = max; }
 
     /**
-     * @brief
-     * @return
+     * @brief Get mesh for rendering item in world (on ground or at conveyor)
+     * @return mesh object
      */
     UStaticMesh *get_mesh() const { return mMesh; }
 
     /**
-     * @brief
-     * @param val
+     * @brief Set mesh for rendering item in world (on ground or at conveyor)
+     * @param mesh
      */
-    void set_mesh(UStaticMesh *val) { mMesh = val; }
+    void set_mesh(UStaticMesh *mesh) { mMesh = mesh; }
+
+    /**
+     * @brief Set visibility for non creative game
+     * @return mesh object
+     */
+    bool get_craftable() const { return mCraftable; }
+
+    /**
+     * @brief Get visibility for non creative game
+     * @param craftable
+     */
+    void set_mesh(bool craftable) { mCraftable = craftable; }
 
     // Engine code
   public:
@@ -127,9 +163,6 @@ class UStaticItem : public UObject,
     // Hidden in survival
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     bool mCraftable = true;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    bool mStackable = true;
 
     TSharedPtr<FJsonObject> mLogicJson;
 

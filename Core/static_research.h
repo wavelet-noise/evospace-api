@@ -19,7 +19,7 @@ class UInternalInventory;
 
 UCLASS(BlueprintType)
 /**
- * @brief 234
+ * @brief Object for storing research progress
  */
 class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
     GENERATED_BODY()
@@ -56,6 +56,9 @@ enum class EResearchStatus : uint8 { Opened, Closed, Complete, Restricted };
 class UStaticResearch;
 
 UCLASS(BlueprintType)
+/**
+ * @brief Object for research chapter data (example of chapter is "decorative" or "production")
+ */
 class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
@@ -87,6 +90,9 @@ class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson {
  */
 
 UCLASS(BlueprintType)
+/**
+ * @brief Static part of every research
+ */
 class UStaticResearch : public UObject,
                         public ISerializableJson,
                         public evo::BaseHelper<UStaticResearch> {

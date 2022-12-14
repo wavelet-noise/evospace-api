@@ -16,7 +16,10 @@ class UStaticResearch;
 
 UCLASS(BlueprintType)
 /**
- * @brief 123
+ * @brief Item recipe data
+ *
+ * input inventory is must be consumed before
+ * output inventory will be created
  */
 class URecipe : public UObject, public ISerializableJson {
     GENERATED_BODY()
