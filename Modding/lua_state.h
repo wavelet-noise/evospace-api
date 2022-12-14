@@ -3,7 +3,6 @@
 #include "Evospace/CoordinateSystem.h"
 #include "Evospace/Shared/ThirdParty/luabridge.h"
 #include "Evospace/Shared/abstract_error.h"
-#include "Evospace/Shared/lua_state_error.h"
 
 #include <string>
 

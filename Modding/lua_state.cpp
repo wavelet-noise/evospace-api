@@ -1,7 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #include "lua_state.h"
 
+#include "Evospace/Item/InventoryContainer.h"
 #include "Evospace/Shared/Core/static_research.h"
+#include "Evospace/Shared/lua_state_error.h"
 #include "Evospace/Shared/static_logger.h"
 
 namespace evo {
@@ -189,6 +191,14 @@ LuaState::LuaState() {
 
     using namespace luabridge;
 
+    getGlobalNamespace(L)
+        .beginClass<UInventoryContainer>("InventoryContainer")
+        .endClass();
+
+    getGlobalNamespace(L).beginClass<UTexture2D>("Texture").endClass();
+
+    getGlobalNamespace(L).beginClass<UStaticMesh>("Mesh").endClass();
+
     getGlobalNamespace(L).beginClass<UObject>("Object").endClass();
 
     getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
@@ -213,6 +223,8 @@ LuaState::LuaState() {
         "jit_test",
         0
     );
+
+    StaticsFactory::Get().register_lua(L);
 }
 
 int AppendPath(lua_State *L, std::string_view path) noexcept {

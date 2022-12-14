@@ -114,6 +114,6 @@ class URecipeDictionary : public UObject,
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     UInventory *mUsedInInventory;
 
-    static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
+    static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(URecipeDictionary, RecipeDictionary);

@@ -2,7 +2,7 @@
 #include "legacy_lua_state.h"
 
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
-#include "Evospace/Blocks/BlockLogic.h"
+#include "Evospace/Shared/Core/block_logic.h"
 #include "Evospace/Blocks/Vanilla/AutoCrafterBlockLogic.h"
 #include "Evospace/Item/InventoryContainer.h"
 
@@ -31,10 +31,6 @@ LegacyLuaState::LegacyLuaState() {
         .beginClass<UBaseInventoryAccessor>("Accessor")
         .addFunction("set_side_pos", &LegacyLuaState::Accessor_set_side_pos)
         .addFunction("bind", &LegacyLuaState::Accessor_bind)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<UInventoryContainer>("InventoryContainer")
         .endClass();
 }
 
@@ -82,7 +78,7 @@ int LegacyLuaState::BlockLogic_create_accessor(lua_State *l) {
 
     if (type && type->IsChildOf(UBaseAccessor::StaticClass())) {
         auto accessor = NewObject<UBaseInventoryAccessor>(self, type);
-        self->RegisterComponent(accessor);
+        self->AddAccessor(accessor);
         push(l, accessor, ec);
     } else {
         push(l, luabridge::LuaNil(), ec);

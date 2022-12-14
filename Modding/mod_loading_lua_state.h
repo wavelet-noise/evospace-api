@@ -3,8 +3,6 @@
 #include "CoreMinimal.h"
 #include "legacy_lua_state.h"
 
-#include <string>
-
 class UJsonObjectLibrary;
 namespace evo {
 /**

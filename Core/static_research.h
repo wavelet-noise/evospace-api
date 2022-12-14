@@ -57,7 +57,8 @@ class UStaticResearch;
 
 UCLASS(BlueprintType)
 /**
- * @brief Object for research chapter data (example of chapter is "decorative" or "production")
+ * @brief Object for research chapter data (example of chapter is "decorative"
+ * or "production")
  */
 class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson {
     GENERATED_BODY()
@@ -172,7 +173,7 @@ class UStaticResearch : public UObject,
 
     virtual void ApplyToController(AMainPlayerController *apply_to);
 
-    static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
+    static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UStaticResearch, StaticResearch);
 

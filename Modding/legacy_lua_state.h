@@ -1,10 +1,7 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/CoordinateSystem.h"
 #include "lua_state.h"
-
-#include <string>
 
 namespace evo {
 /**

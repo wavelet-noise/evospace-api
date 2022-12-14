@@ -32,13 +32,13 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
         return {};
     }
 
-    void registerLua(lua_State *state) const {
+    void register_lua(lua_State *state) const {
         for (const auto &[key, value] : base_map_) {
             std::get<RegisterFunc>(value)(state);
         }
     }
 
-    void AddBase(
+    void add_base(
         const IdType &id, RegisterFunc reg, LuaFunction lua,
         std::string_view comment = ""
     ) {
@@ -58,7 +58,7 @@ template <class T> class RegisterBase {
   public:
     template <class Factory>
     RegisterBase(Factory &factory, const typename Factory::IdTypeUsing &id) {
-        factory.AddBase(id, T::GetRegisterLambda(), T::GetLuaLambda());
+        factory.add_base(id, T::GetRegisterLambda(), T::GetLuaLambda());
     }
 };
 

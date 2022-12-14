@@ -40,7 +40,7 @@ class UStaticItem : public UObject,
     /**
      * @brief Get item ico for drawing in inventory
      * @code{.lua}
-     * image = static_item.get_image()
+     * image = static_item.image()
      * @endcode
      * @return Texture2D object
      */
@@ -49,7 +49,7 @@ class UStaticItem : public UObject,
     /**
      * @brief Set item ico for drawing in inventory
      * @code{.lua}
-     * static_item.set_image(image)
+     * static_item.image = image
      * @endcode
      * @param tex Texture2D object
      */
@@ -58,10 +58,11 @@ class UStaticItem : public UObject,
     /**
      * @brief Get multiplier for internal item count units
      *
-     * When drawing in inventory this multiplier is applying. Showing number = count * multiplier
+     * When drawing in inventory this multiplier is applying. Showing number =
+     * count * multiplier
      *
      * @code{.lua}
-     * mul = static_item.get_unit_mul()
+     * mul = static_item.unit_mul()
      * @endcode
      * @return multiplier
      */
@@ -70,9 +71,10 @@ class UStaticItem : public UObject,
     /**
      * @brief Set multiplier for internal item count units
      *
-     * When drawing in inventory this multiplier is applying. Showing number = count * multiplier
+     * When drawing in inventory this multiplier is applying. Showing number =
+     * count * multiplier
      * @code{.lua}
-     * static_item.set_unit_mul(mul)
+     * static_item.unit_mul = mul
      * @endcode
      * @param mul multiplier
      */
@@ -112,7 +114,7 @@ class UStaticItem : public UObject,
      * @brief Get visibility for non creative game
      * @param craftable
      */
-    void set_mesh(bool craftable) { mCraftable = craftable; }
+    void set_craftable(bool craftable) { mCraftable = craftable; }
 
     // Engine code
   public:
@@ -175,6 +177,6 @@ class UStaticItem : public UObject,
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     bool mSolid = true;
 
-    static std::function<void(lua_State *)> GetRegisterLambda() { return {}; }
+    static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UStaticItem, StaticItem);
