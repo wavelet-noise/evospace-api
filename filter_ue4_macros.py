@@ -18,5 +18,10 @@ for root, dirs, files in os.walk("./"):
                 content = file.read()
                 regex = '^(\s*)((?:UFUNCTION|UCLASS|UPROPERTY|UENUM|GENERATED_BODY)\s*\('+paren_matcher(25)+'\))'
                 content = re.sub(regex, r'\1', content, flags=re.MULTILINE)
+                content = content.replace('URecipe','Recipe')
+                content = content.replace("UOldResearch",'OldResearch')
+                content = content.replace("UStaticBlock",'StaticBlock')
+                content = content.replace("UStaticItem",'StaticItem')
+                content = content.replace("UBlockLogic",'BlockLogic')
             with open(namepath, 'w') as file:
                 file.write(content)

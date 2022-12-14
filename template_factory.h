@@ -50,7 +50,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
             i->second = std::make_tuple(reg, lua);
         }
     }
-    
+
     FactoryBaseMap base_map_;
 };
 
