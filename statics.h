@@ -64,7 +64,7 @@ class Static { // : public std::enable_shared_from_this<Static> {
      * @brief Object name in database
      */
     std::string name;
-    
+
     // virtual auto GetLuaLambda() {
     //     return [](lua_State *state, void *data) {
     //         std::error_code er;

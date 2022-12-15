@@ -1,14 +1,14 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "CoreMinimal.h"
+#include "Evospace/Blocks/AccessorComponent.h"
 #include "Evospace/BreakResult.h"
 #include "Evospace/Common.h"
 #include "Evospace/CoordinateSystem.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Blocks/AccessorComponent.h"
-#include "CoreMinimal.h"
 #include "Evospace/Shared/statics.h"
 
-#include "static_block_logic.generated.h"
+#include "block_logic.generated.h"
 
 DECLARE_STATS_GROUP(
     TEXT("BLOCKLOGIC_Game"), STATGROUP_BLOCKLOGIC, STATCAT_Advanced
@@ -32,8 +32,7 @@ class EVOSPACE_API UBlockLogic : public UObject,
 
     // Lua api
   public:
-    
-
+    // Engine code
   public:
     UBlockLogic();
 
@@ -60,8 +59,7 @@ class EVOSPACE_API UBlockLogic : public UObject,
     virtual void SetActor(AActor *actor);
     void DefferedPaintApply();
     virtual void RemoveActor();
-
-    virtual void LuaBlock();
+    
     virtual void BlockDestruction();
 
     virtual bool IsBlockTicks() const;
@@ -78,7 +76,7 @@ class EVOSPACE_API UBlockLogic : public UObject,
      * @param pos position for test
      * @return
      */
-    virtual bool CheckPlaceble(ADimension *dim, FVector3i pos);
+    virtual bool CheckPlaceble(ADimension *dim, FVector3i pos) const;
 
     UFUNCTION(BlueprintCallable)
     /**
@@ -196,7 +194,7 @@ class EVOSPACE_API UBlockLogic : public UObject,
 
     void AddAccessor(UBaseAccessor *c);
 
-    virtual TArray<UBaseAccessor *> & GetAccessors();
+    virtual TArray<UBaseAccessor *> &GetAccessors();
 
     virtual AActor *GetActor();
 
@@ -221,7 +219,9 @@ class EVOSPACE_API UBlockLogic : public UObject,
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     UMaterialInterface *mPaintMaterial;
 
-    static std::function<void(lua_State *)> GetRegisterLambda() { return [](lua_State *) {};  }
+    static std::function<void(lua_State *)> GetRegisterLambda() {
+        return [](lua_State *) {};
+    }
 };
 EVO_REGISTER_STATIC(UBlockLogic, BlockLogic);
 
@@ -241,7 +241,7 @@ class EVOSPACE_API UPartBlockLogic : public UBlockLogic {
 
     virtual UBlockLogic *GetRootBlock() override;
 
-    virtual TArray<UBaseAccessor *> & GetAccessors() override;
+    virtual TArray<UBaseAccessor *> &GetAccessors() override;
 
     virtual AActor *GetActor() override;
 

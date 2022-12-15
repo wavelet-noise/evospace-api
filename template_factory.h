@@ -36,8 +36,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     }
 
     void add_base(
-        const IdType &id, RegisterFunc reg,
-        std::string_view comment = ""
+        const IdType &id, RegisterFunc reg, std::string_view comment = ""
     ) {
         auto i = base_map_.find(id);
         if (i == base_map_.end()) {
