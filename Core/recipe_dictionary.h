@@ -4,7 +4,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Shared/Core/recipe.h"
-#include "Evospace/Shared/bases.h"
+#include "Evospace/Shared/statics.h"
 
 #include "recipe_dictionary.generated.h"
 
@@ -36,7 +36,7 @@ UCLASS(BlueprintType)
  */
 class URecipeDictionary : public UObject,
                           public ISerializableJson,
-                          public evo::BaseHelper<URecipeDictionary> {
+                          public evo::Static {
     GENERATED_BODY()
 
     // Lua api

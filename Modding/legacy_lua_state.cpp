@@ -2,7 +2,7 @@
 #include "legacy_lua_state.h"
 
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
-#include "Evospace/Shared/Core/block_logic.h"
+#include "Evospace/Shared/Core/static_block_logic.h"
 #include "Evospace/Blocks/Vanilla/AutoCrafterBlockLogic.h"
 #include "Evospace/Item/InventoryContainer.h"
 

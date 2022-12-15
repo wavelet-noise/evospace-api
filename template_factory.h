@@ -17,10 +17,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     // Register lua class in lua state
     using RegisterFunc = std::function<void(lua_State *)>;
 
-    // Push any class into lua stack
-    using LuaFunction = std::function<void(lua_State *, void *)>;
-
-    using BaseFuncTuple = std::tuple<RegisterFunc, LuaFunction>;
+    using BaseFuncTuple = std::tuple<RegisterFunc>;
 
     using FactoryBaseMap = std::map<IdType, BaseFuncTuple, Comparator>;
 
@@ -39,15 +36,15 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     }
 
     void add_base(
-        const IdType &id, RegisterFunc reg, LuaFunction lua,
+        const IdType &id, RegisterFunc reg,
         std::string_view comment = ""
     ) {
         auto i = base_map_.find(id);
         if (i == base_map_.end()) {
-            base_map_.insert(std::make_pair(id, std::make_tuple(reg, lua)));
+            base_map_.insert(std::make_pair(id, std::make_tuple(reg)));
         } else {
             std::cout << id << "base redefinition!" << std::endl;
-            i->second = std::make_tuple(reg, lua);
+            i->second = std::make_tuple(reg);
         }
     }
 
@@ -58,7 +55,7 @@ template <class T> class RegisterBase {
   public:
     template <class Factory>
     RegisterBase(Factory &factory, const typename Factory::IdTypeUsing &id) {
-        factory.add_base(id, T::GetRegisterLambda(), T::GetLuaLambda());
+        factory.add_base(id, T::GetRegisterLambda());
     }
 };
 

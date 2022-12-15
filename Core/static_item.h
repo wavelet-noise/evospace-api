@@ -6,7 +6,7 @@
 #include "Evospace/Common.h"
 #include "Evospace/Item/ItemLogic.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/bases.h"
+#include "Evospace/Shared/statics.h"
 
 #include <Engine/World.h>
 #include <Internationalization/Text.h>
@@ -32,7 +32,7 @@ UCLASS(BlueprintType)
  */
 class UStaticItem : public UObject,
                     public ISerializableJson,
-                    public evo::BaseHelper<UStaticItem> {
+                    public evo::Static {
     GENERATED_BODY()
 
     // Lua api

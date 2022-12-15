@@ -52,22 +52,29 @@ struct StaticsFactory {
 /**
  * @brief Super class for all objects stored in database
  */
-class Base { // : public std::enable_shared_from_this<Base> {
+class Static { // : public std::enable_shared_from_this<Static> {
   public:
-    // Base() = default;
-    // virtual ~Base() = default;
+    Static() = default;
+    virtual ~Static() = default;
 
-    // Base(const Base &) = delete;
-    // Base &operator=(const Base &) = delete;
+    // Static(const Static &) = delete;
+    // Static &operator=(const Static &) = delete;
 
     /**
      * @brief Object name in database
      */
     std::string name;
+    
+    // virtual auto GetLuaLambda() {
+    //     return [](lua_State *state, void *data) {
+    //         std::error_code er;
+    //         luabridge::push(state, reinterpret_cast<Ty_ *>(data), er);
+    //     };
+    // }
 };
 
 //! helper class for all objects stored in DB
-template <typename Ty_> class BaseHelper : public Base {
+template <typename Ty_> class StaticHelper : public Static {
   public:
     static auto GetLuaLambda() {
         return [](lua_State *state, void *data) {

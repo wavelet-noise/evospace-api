@@ -6,9 +6,9 @@
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Blocks/AccessorComponent.h"
 #include "CoreMinimal.h"
-#include "Evospace/Shared/bases.h"
+#include "Evospace/Shared/statics.h"
 
-#include "block_logic.generated.h"
+#include "static_block_logic.generated.h"
 
 DECLARE_STATS_GROUP(
     TEXT("BLOCKLOGIC_Game"), STATGROUP_BLOCKLOGIC, STATCAT_Advanced
@@ -27,7 +27,7 @@ class UBaseAccessor;
 UCLASS(BlueprintType)
 class EVOSPACE_API UBlockLogic : public UObject,
                                  public ISerializableJson,
-                                 public evo::BaseHelper<UBlockLogic> {
+                                 public evo::Static {
     GENERATED_BODY()
 
     // Lua api

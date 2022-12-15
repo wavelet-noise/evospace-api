@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Common.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/bases.h"
+#include "Evospace/Shared/statics.h"
 #include "Evospace/Vector.h"
 
 #include <string>
@@ -60,12 +60,14 @@ UCLASS(BlueprintType)
  * @brief Object for research chapter data (example of chapter is "decorative"
  * or "production")
  */
-class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson {
+class EVOSPACE_API UStaticChapter : public UObject, public ISerializableJson, public evo::Static {
     GENERATED_BODY()
 
+    // Lua api
   public:
-    std::string name;
-
+    
+    // Engine code
+  public:
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     TArray<FKeyTableObject> LabelParts = {};
 
@@ -96,7 +98,7 @@ UCLASS(BlueprintType)
  */
 class UStaticResearch : public UObject,
                         public ISerializableJson,
-                        public evo::BaseHelper<UStaticResearch> {
+                        public evo::Static {
     GENERATED_BODY()
 
     // Lua api
@@ -107,6 +109,7 @@ class UStaticResearch : public UObject,
     Vec2i get_position() const { return Position; }
     void set_position(const Vec2i &val) { Position = FVector2D(val.X, val.Y); }
 
+    // Engine code
   public:
     UStaticResearch();
 
