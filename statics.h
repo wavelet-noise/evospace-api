@@ -47,7 +47,13 @@ struct StaticsFactory {
 }*/
 
 #define EVO_REGISTER_STATIC(type, name)                                        \
-    EVO_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
+EVO_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
+
+#define EVO_LUA_CODEGEN(type) \
+virtual auto lua_push(lua_State *state) const override { \
+std::error_code er; \
+ensure(luabridge::push(state, reinterpret_cast<const type *>(this), er)); \
+} \
 
 /**
  * @brief Super class for all objects stored in database
@@ -65,11 +71,14 @@ class Static { // : public std::enable_shared_from_this<Static> {
      */
     std::string name;
 
-    // virtual auto GetLuaLambda() {
-    //     return [](lua_State *state, void *data) {
-    //         std::error_code er;
-    //         luabridge::push(state, reinterpret_cast<Ty_ *>(data), er);
-    //     };
+    /**
+     * @fn Object * find(std::string_view name) const
+     * @brief Find in database Object with name
+     * @return Object with specific type. It will return topmost type
+     */
+
+    // virtual auto lua_push(lua_State *state) const {
+    //     checkNoEntry();
     // }
 };
 

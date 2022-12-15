@@ -42,13 +42,19 @@ class URecipeDictionary : public UObject,
     // Lua api
   public:
     /**
-     * @brief
+     * @brief Get count of recipes in this dictionary
+     * @code{.lua}
+     * recipe = recipe_dict:count()
+     * @endcode
      * @return
      */
     int32 get_count() const { return mRecipes.Num(); }
 
     /**
-     * @brief
+     * @brief Get recipe from this dictionary by index
+     * @code{.lua}
+     * recipe = recipe_dict:get_recipe(index)
+     * @endcode
      * @param index
      * @return
      */
@@ -59,20 +65,26 @@ class URecipeDictionary : public UObject,
     }
 
     /**
-     * @brief
-     * @param val
-     * @return
+     * @brief Add recipe to this dictionary
+     * @code{.lua}
+     * success = recipe_dict:add_recipe(recipe)
+     * @endcode
+     * @param recipe
+     * @return false if recipe is already in dictionary, true otherwise
      */
-    bool add_recipe(URecipe *val) {
-        if (mNameChache.Contains(val->name))
+    bool add_recipe(URecipe *recipe) {
+        if (mNameChache.Contains(recipe->name))
             return false;
-        mRecipes.Add(val);
-        mNameChache.Add(val->name, val);
+        mRecipes.Add(recipe);
+        mNameChache.Add(recipe->name, recipe);
         return true;
     }
 
     /**
-     * @brief
+     * @brief Create new instance of RecipeDictionary
+     * @code{.lua}
+     * recipe_dict = RecipeDictionary.new()
+     * @endcode
      * @return
      */
     static URecipeDictionary *new_object() {

@@ -40,20 +40,20 @@ class UStaticItem : public UObject,
     /**
      * @brief Get item ico for drawing in inventory
      * @code{.lua}
-     * image = static_item.image()
+     * image = static_item:image()
      * @endcode
      * @return Texture2D object
      */
-    UTexture2D *get_image() const { return mImage; }
+    UTexture2D *image() const { return mImage; }
 
     /**
      * @brief Set item ico for drawing in inventory
      * @code{.lua}
-     * static_item.image = image
+     * static_item:image = image
      * @endcode
      * @param tex Texture2D object
      */
-    void set_image(UTexture2D *tex) { mImage = tex; }
+    void image(UTexture2D *tex) { mImage = tex; }
 
     /**
      * @brief Get multiplier for internal item count units
@@ -62,11 +62,11 @@ class UStaticItem : public UObject,
      * count * multiplier
      *
      * @code{.lua}
-     * mul = static_item.unit_mul()
+     * mul = static_item:unit_mul()
      * @endcode
      * @return multiplier
      */
-    float get_unit_mul() const { return mUnitMul; }
+    float unit_mul() const { return mUnitMul; }
 
     /**
      * @brief Set multiplier for internal item count units
@@ -74,47 +74,47 @@ class UStaticItem : public UObject,
      * When drawing in inventory this multiplier is applying. Showing number =
      * count * multiplier
      * @code{.lua}
-     * static_item.unit_mul = mul
+     * static_item:unit_mul = mul
      * @endcode
      * @param mul multiplier
      */
-    void set_unit_mul(float mul) { mUnitMul = mul; }
+    void unit_mul(float mul) { mUnitMul = mul; }
 
     /**
      * @brief Get max count that can be stored in one slot of default inventory
      * @return
      */
-    int64 get_max_count() const { return mMaxCount; }
+    int64 max_count() const { return mMaxCount; }
 
     /**
      * @brief Set max count that can be stored in one slot of default inventory
      * @param max count
      */
-    void set_max_count(int64 max) { mMaxCount = max; }
+    void max_count(int64 max) { mMaxCount = max; }
 
     /**
      * @brief Get mesh for rendering item in world (on ground or at conveyor)
      * @return mesh object
      */
-    UStaticMesh *get_mesh() const { return mMesh; }
+    UStaticMesh *mesh() const { return mMesh; }
 
     /**
      * @brief Set mesh for rendering item in world (on ground or at conveyor)
      * @param mesh
      */
-    void set_mesh(UStaticMesh *mesh) { mMesh = mesh; }
+    void mesh(UStaticMesh *mesh) { mMesh = mesh; }
 
     /**
      * @brief Set visibility for non creative game
      * @return mesh object
      */
-    bool get_craftable() const { return mCraftable; }
+    bool craftable() const { return mCraftable; }
 
     /**
      * @brief Get visibility for non creative game
      * @param craftable
      */
-    void set_craftable(bool craftable) { mCraftable = craftable; }
+    void craftable(bool craftable) { mCraftable = craftable; }
 
     // Engine code
   public:
@@ -178,5 +178,6 @@ class UStaticItem : public UObject,
     bool mSolid = true;
 
     static std::function<void(lua_State *)> GetRegisterLambda();
+    //EVO_LUA_CODEGEN(UStaticItem);
 };
 EVO_REGISTER_STATIC(UStaticItem, StaticItem);

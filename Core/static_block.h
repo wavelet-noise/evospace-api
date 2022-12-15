@@ -83,4 +83,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject, public evo::Static {
     std::string tick_bytecode;
 
     TSharedPtr<FJsonObject> mLogicJson;
+
+    static std::function<void(lua_State *)> GetRegisterLambda();
 };
+EVO_REGISTER_STATIC(UStaticBlock, StaticBlock);
