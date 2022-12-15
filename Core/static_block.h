@@ -84,6 +84,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject, public evo::Static {
 
     TSharedPtr<FJsonObject> mLogicJson;
 
+  public:
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UStaticBlock, StaticBlock);

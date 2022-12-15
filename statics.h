@@ -71,11 +71,17 @@ class Static { // : public std::enable_shared_from_this<Static> {
      */
     std::string name;
 
+  private:
     /**
-     * @fn Object * find(std::string_view name) const
      * @brief Find in database Object with name
+     * @code{.lua}
+     * ingot = StaticItem.find("CopperIngot")
+     * ingot = StaticBlock.find("CopperMacerator")
+     * ingot = BlockLogic.find("CopperFussionReactor")
+     * @endcode
      * @return Object with specific type. It will return topmost type
      */
+    static Static * find(std::string_view name) { return nullptr; }
 
     // virtual auto lua_push(lua_State *state) const {
     //     checkNoEntry();
@@ -83,15 +89,15 @@ class Static { // : public std::enable_shared_from_this<Static> {
 };
 
 //! helper class for all objects stored in DB
-template <typename Ty_> class StaticHelper : public Static {
-  public:
-    static auto GetLuaLambda() {
-        return [](lua_State *state, void *data) {
-            std::error_code er;
-            luabridge::push(state, reinterpret_cast<Ty_ *>(data), er);
-        };
-    }
-};
+// template <typename Ty_> class StaticHelper : public Static {
+//   public:
+//     static auto GetLuaLambda() {
+//         return [](lua_State *state, void *data) {
+//             std::error_code er;
+//             luabridge::push(state, reinterpret_cast<Ty_ *>(data), er);
+//         };
+//     }
+// };
 
 //! database of static game objects
 class DB {
