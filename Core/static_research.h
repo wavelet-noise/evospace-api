@@ -177,9 +177,9 @@ class UStaticResearch : public UObject,
 
     virtual void ApplyToController(AMainPlayerController *apply_to);
 
+    EVO_LUA_CODEGEN(UStaticResearch);
     static std::function<void(lua_State *)> GetRegisterLambda();
-};
-EVO_REGISTER_STATIC(UStaticResearch, StaticResearch);
+}; EVO_REGISTER_STATIC(UStaticResearch, StaticResearch);
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {

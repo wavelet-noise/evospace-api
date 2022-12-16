@@ -13,7 +13,9 @@
 #include "static_block.generated.h"
 
 namespace evo {
-class LuaState;}class UBlockLogic;
+class LuaState;
+}
+class UBlockLogic;
 class UPartBlockLogic;
 class ADimension;
 
@@ -63,7 +65,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject, public evo::Static {
 
     TArray<FVector3i> mPositions;
 
-    void MoveDataToProto(evo::LuaState & state, UBlockLogic * logic);
+    void MoveDataToProto(evo::LuaState &state, UBlockLogic *logic);
 
     //===================================
 
@@ -85,6 +87,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject, public evo::Static {
     TSharedPtr<FJsonObject> mLogicJson;
 
   public:
+    EVO_LUA_CODEGEN(UStaticBlock);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UStaticBlock, StaticBlock);

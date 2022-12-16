@@ -59,7 +59,7 @@ class EVOSPACE_API UBlockLogic : public UObject,
     virtual void SetActor(AActor *actor);
     void DefferedPaintApply();
     virtual void RemoveActor();
-    
+
     virtual void BlockDestruction();
 
     virtual bool IsBlockTicks() const;
@@ -219,9 +219,10 @@ class EVOSPACE_API UBlockLogic : public UObject,
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     UMaterialInterface *mPaintMaterial;
 
-    static std::function<void(lua_State *)> GetRegisterLambda() {
-        return [](lua_State *) {};
-    }
+    static int lua_push_static(lua_State *state);
+
+    EVO_LUA_CODEGEN(UBlockLogic);
+    static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UBlockLogic, BlockLogic);
 

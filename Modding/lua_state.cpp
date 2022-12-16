@@ -223,8 +223,6 @@ LuaState::LuaState() {
         "jit_test",
         0
     );
-
-    StaticsFactory::Get().register_lua(L);
 }
 
 int AppendPath(lua_State *L, std::string_view path) noexcept {

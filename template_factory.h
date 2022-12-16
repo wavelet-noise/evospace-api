@@ -31,6 +31,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
 
     void register_lua(lua_State *state) const {
         for (const auto &[key, value] : base_map_) {
+            LOG(TRACE) << "Register class " << key;
             std::get<RegisterFunc>(value)(state);
         }
     }

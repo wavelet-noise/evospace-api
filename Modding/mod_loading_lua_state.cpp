@@ -20,6 +20,8 @@ ModLoadingLuaState::ModLoadingLuaState() {
         .addProperty("loss", &URecipe::get_loss, &URecipe::set_loss)
         .addProperty("ticks", &URecipe::get_ticks, &URecipe::set_ticks)
         .endClass();
+
+    StaticsFactory::Get().register_lua(L);
 }
 
 void ModLoadingLuaState::RegisterObject(UObject *val) {
