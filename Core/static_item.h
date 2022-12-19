@@ -30,9 +30,7 @@ UCLASS(BlueprintType)
  *
  * Not modifiable part of item
  */
-class UStaticItem : public UObject,
-                    public ISerializableJson,
-                    public evo::Static {
+class UStaticItem : public UStatic, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api

@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "statics.generated.h"
+
 class Base;
 
 namespace evo {
@@ -57,15 +59,17 @@ struct StaticsFactory {
             luabridge::push(state, reinterpret_cast<const type *>(this), er)   \
         );                                                                     \
     }
+} // namespace evo
 
+UCLASS(Abstract)
 /**
  * @brief Super class for all objects stored in database
  */
-class Static { // : public std::enable_shared_from_this<Static> {
-  public:
-    Static() = default;
-    virtual ~Static() = default;
+class UStatic
+    : public UObject { // : public std::enable_shared_from_this<Static> {
+    GENERATED_BODY()
 
+  public:
     // Static(const Static &) = delete;
     // Static &operator=(const Static &) = delete;
 
@@ -76,7 +80,7 @@ class Static { // : public std::enable_shared_from_this<Static> {
 
     std::string_view get_name() const { return name; }
 
-  private:
+  public:
     /**
      * @brief Find in database Object with name
      * @code{.lua}
@@ -86,10 +90,12 @@ class Static { // : public std::enable_shared_from_this<Static> {
      * @endcode
      * @return Object with specific type. It will return topmost type
      */
-    static Static *find(std::string_view name) { return nullptr; }
+    static UStatic *find(std::string_view name) { return nullptr; }
 
     virtual void lua_push(lua_State *state) const { checkNoEntry(); }
 };
+
+namespace evo {
 
 //! helper class for all objects stored in DB
 // template <typename Ty_> class StaticHelper : public Static {
@@ -227,6 +233,19 @@ class DB {
 
     template <typename _TReturned>
     static const _TReturned *find(std::string_view name) {
+        using ReturntdNorm = typename std::remove_cv<_TReturned>::type;
+        auto &storage = get_storage<ReturntdNorm>();
+
+        auto res = storage.find(std::string(name));
+        if (res != storage.end()) {
+            return reinterpret_cast<ReturntdNorm *>(res->second.get());
+        }
+
+        return nullptr;
+    }
+
+    template <typename _TReturned>
+    static _TReturned *find_mut(std::string_view name) {
         using ReturntdNorm = typename std::remove_cv<_TReturned>::type;
         auto &storage = get_storage<ReturntdNorm>();
 

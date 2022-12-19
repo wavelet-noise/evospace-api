@@ -34,9 +34,7 @@ UCLASS(BlueprintType)
 /**
  * @brief List of recipes for using in some crafter
  */
-class URecipeDictionary : public UObject,
-                          public ISerializableJson,
-                          public evo::Static {
+class URecipeDictionary : public UStatic, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api

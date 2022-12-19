@@ -21,6 +21,15 @@ ModLoadingLuaState::ModLoadingLuaState() {
         .addProperty("ticks", &URecipe::get_ticks, &URecipe::set_ticks)
         .endClass();
 
+    luabridge::getGlobalNamespace(L)
+        .beginClass<UStatic>("Static")
+        .addProperty("name", &UStatic::get_name)
+        .endClass();
+    
+    luabridge::getGlobalNamespace(L)
+        .beginClass<UBlockLogic>("BlockLogic")
+        .endClass();
+
     StaticsFactory::Get().register_lua(L);
 }
 

@@ -73,15 +73,22 @@ int LuaState::l_my_print(lua_State *L) {
         } else if (lua_isnumber(L, i)) {
             LOG(INFO) << "Lua print: " << lua_tonumber(L, i);
         } else if (lua_isboolean(L, i)) {
-            LOG(INFO) << "Lua print: " << lua_toboolean(L, i);
+            LOG(INFO) << "Lua print: " << (lua_toboolean(L, i) ? "true" : "false");
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
         // 	std::cout << "lua print: ivec2{" << vec.x << ", " << vec.y <<
         // "}" << std::endl;
         // }
-        else {
-            LOG(WARN) << "Lua print: not implementer type";
+        // if (luabridge::Stack<UStatic *>::isInstance(L, i)) {
+        //     auto stat = luabridge::Stack<UStatic *>::get(L, i);
+        //     LOG(INFO) << "Lua print: "
+        //               << TCHAR_TO_UTF8(*stat->GetClass()->GetName()) << ""
+        //               << stat->name;
+        // }
+        else
+            {
+            LOG(WARN) << "Lua print: not implemented type";
         }
     }
 

@@ -20,7 +20,7 @@ class UPartBlockLogic;
 class ADimension;
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UStaticBlock : public UStaticObject, public evo::Static {
+class EVOSPACE_API UStaticBlock : public UStaticObject {
     GENERATED_BODY()
 
     // Lua api

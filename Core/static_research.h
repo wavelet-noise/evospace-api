@@ -60,9 +60,7 @@ UCLASS(BlueprintType)
  * @brief Object for research chapter data (example of chapter is "decorative"
  * or "production")
  */
-class EVOSPACE_API UStaticChapter : public UObject,
-                                    public ISerializableJson,
-                                    public evo::Static {
+class EVOSPACE_API UStaticChapter : public UStatic, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -97,9 +95,7 @@ UCLASS(BlueprintType)
 /**
  * @brief Static part of every research
  */
-class UStaticResearch : public UObject,
-                        public ISerializableJson,
-                        public evo::Static {
+class UStaticResearch : public UStatic, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -179,7 +175,8 @@ class UStaticResearch : public UObject,
 
     EVO_LUA_CODEGEN(UStaticResearch);
     static std::function<void(lua_State *)> GetRegisterLambda();
-}; EVO_REGISTER_STATIC(UStaticResearch, StaticResearch);
+};
+EVO_REGISTER_STATIC(UStaticResearch, StaticResearch);
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {

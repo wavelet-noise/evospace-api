@@ -25,9 +25,7 @@ class UStaticBlock;
 class UBaseAccessor;
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UBlockLogic : public UObject,
-                                 public ISerializableJson,
-                                 public evo::Static {
+class EVOSPACE_API UBlockLogic : public UStatic, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -218,8 +216,6 @@ class EVOSPACE_API UBlockLogic : public UObject,
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     UMaterialInterface *mPaintMaterial;
-
-    static int lua_push_static(lua_State *state);
 
     EVO_LUA_CODEGEN(UBlockLogic);
     static std::function<void(lua_State *)> GetRegisterLambda();
