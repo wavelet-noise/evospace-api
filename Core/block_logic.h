@@ -36,7 +36,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
      */
     virtual bool is_block_tick() const;
     
-    UPROPERTY()
+    UPROPERTY(BlueprintReadOnly)
     /**
      * @brief Readonly property;
      */
