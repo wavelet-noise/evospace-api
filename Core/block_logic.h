@@ -6,7 +6,7 @@
 #include "Evospace/Common.h"
 #include "Evospace/CoordinateSystem.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/statics.h"
+#include "Evospace/Shared/Core/prototype.h"
 
 #include "block_logic.generated.h"
 
@@ -19,13 +19,13 @@ class URootBlockComponent;
 
 class ADimension;
 class AItemLogic;
-class UStaticItem;
+class UItem;
 class UInventoryAccess;
-class UStaticBlock;
+class UBlock;
 class UBaseAccessor;
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UBlockLogic : public UStatic, public ISerializableJson {
+class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -58,7 +58,7 @@ class EVOSPACE_API UBlockLogic : public UStatic, public ISerializableJson {
     virtual Vec3i GetRotationLocks() const;
 
     virtual bool IsHandleRecipeSelection() const;
-    virtual void HandleRecipeSelection(UStaticItem *item);
+    virtual void HandleRecipeSelection(UItem *item);
 
     virtual void SetActor(AActor *actor);
     void DefferedPaintApply();
@@ -179,9 +179,9 @@ class EVOSPACE_API UBlockLogic : public UStatic, public ISerializableJson {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
-    void SetStaticBlock(const UStaticBlock *static_block);
+    void SetStaticBlock(const UBlock *static_block);
 
-    virtual const UStaticBlock *GetStaticBlock() const;
+    virtual const UBlock *GetStaticBlock() const;
 
     // ************************************* //
 
@@ -202,7 +202,7 @@ class EVOSPACE_API UBlockLogic : public UStatic, public ISerializableJson {
     virtual AActor *GetActor();
 
     UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-    const UStaticBlock *mStaticBlock = nullptr;
+    const UBlock *mStaticBlock = nullptr;
 
     UPROPERTY(VisibleAnywhere)
     AActor *mActor = nullptr;

@@ -31,7 +31,7 @@ Load order:
         ]
     ],
     "LogicJson": {
-        "StaticBlock": "CopperPlate"
+        "Block": "CopperPlate"
     },
     "Materials": [
         "Materials/Copper"

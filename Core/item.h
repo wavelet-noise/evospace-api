@@ -6,14 +6,14 @@
 #include "Evospace/Common.h"
 #include "Evospace/Item/ItemLogic.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/statics.h"
+#include "Evospace/Shared/Core/prototype.h"
 
 #include <Engine/World.h>
 #include <Internationalization/Text.h>
 #include <Math/TransformNonVectorized.h>
 #include <Templates/SubclassOf.h>
 
-#include "static_item.generated.h"
+#include "item.generated.h"
 
 struct FItemData;
 class UUserWidgetSlot;
@@ -30,7 +30,7 @@ UCLASS(BlueprintType)
  *
  * Not modifiable part of item
  */
-class UStaticItem : public UStatic, public ISerializableJson {
+class UItem : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -136,7 +136,7 @@ class UStaticItem : public UStatic, public ISerializableJson {
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     bool mSolid = true;
 
-    EVO_LUA_CODEGEN(UStaticItem);
+    EVO_LUA_CODEGEN(UItem);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
-EVO_REGISTER_STATIC(UStaticItem, StaticItem);
+EVO_REGISTER_STATIC(UItem, StaticItem);

@@ -3,15 +3,15 @@
 
 #include "Evospace/Common.h"
 #include "Evospace/MainGameInstance.h"
-#include "ThirdParty/luabridge.h"
-#include "localization_table.h"
-#include "static_logger.h"
-#include "template_factory.h"
+#include "Evospace/Shared/ThirdParty/luabridge.h"
+#include "../localization_table.h"
+#include "../static_logger.h"
+#include "../template_factory.h"
 
 #include <unordered_map>
 #include <vector>
 
-#include "statics.generated.h"
+#include "prototype.generated.h"
 
 class Base;
 
@@ -65,7 +65,7 @@ UCLASS(Abstract)
 /**
  * @brief Super class for all objects stored in database
  */
-class UStatic
+class UPrototype
     : public UObject { // : public std::enable_shared_from_this<Static> {
     GENERATED_BODY()
 
@@ -90,7 +90,7 @@ class UStatic
      * @endcode
      * @return Object with specific type. It will return topmost type
      */
-    static UStatic *find(std::string_view name) { return nullptr; }
+    static UPrototype *find(std::string_view name) { return nullptr; }
 
     virtual void lua_push(lua_State *state) const { checkNoEntry(); }
 };

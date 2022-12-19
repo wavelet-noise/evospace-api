@@ -81,8 +81,8 @@ int LuaState::l_my_print(lua_State *L) {
         // 	std::cout << "lua print: ivec2{" << vec.x << ", " << vec.y <<
         // "}" << std::endl;
         // }
-        // if (luabridge::Stack<UStatic *>::isInstance(L, i)) {
-        //     auto stat = luabridge::Stack<UStatic *>::get(L, i);
+        // if (luabridge::Stack<UPrototype *>::isInstance(L, i)) {
+        //     auto stat = luabridge::Stack<UPrototype *>::get(L, i);
         //     LOG(INFO) << "Lua print: "
         //               << TCHAR_TO_UTF8(*stat->GetClass()->GetName()) << ""
         //               << stat->name;

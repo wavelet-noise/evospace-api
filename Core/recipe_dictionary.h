@@ -4,11 +4,11 @@
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Shared/Core/recipe.h"
-#include "Evospace/Shared/statics.h"
+#include "Evospace/Shared/Core/prototype.h"
 
 #include "recipe_dictionary.generated.h"
 
-class UStaticItem;
+class UItem;
 class UInventory;
 class URecipe;
 class UInventoryReader;
@@ -19,7 +19,7 @@ struct EVOSPACE_API FUsedIn {
 
   public:
     UPROPERTY(BlueprintReadOnly)
-    const UStaticItem *item = nullptr;
+    const UItem *item = nullptr;
 
     UPROPERTY(BlueprintReadOnly)
     int32 tier = 0;
@@ -34,7 +34,7 @@ UCLASS(BlueprintType)
 /**
  * @brief List of recipes for using in some crafter
  */
-class URecipeDictionary : public UStatic, public ISerializableJson {
+class URecipeDictionary : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -71,10 +71,10 @@ class URecipeDictionary : public UStatic, public ISerializableJson {
      * @return false if recipe is already in dictionary, true otherwise
      */
     bool add_recipe(URecipe *recipe) {
-        if (mNameChache.Contains(UTF8_TO_TCHAR(recipe->name.data())))
+        if (mNameChache.Contains(recipe->name))
             return false;
         mRecipes.Add(recipe);
-        mNameChache.Add(UTF8_TO_TCHAR(recipe->name.data()), recipe);
+        mNameChache.Add(recipe->name, recipe);
         return true;
     }
 
@@ -110,7 +110,7 @@ class URecipeDictionary : public UStatic, public ISerializableJson {
 
     void ResetLocked();
 
-    const URecipe *Find(const UStaticItem *item, int32 count = 1) const;
+    const URecipe *Find(const UItem *item, int32 count = 1) const;
 
   public:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

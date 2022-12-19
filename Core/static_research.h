@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Common.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/statics.h"
+#include "Evospace/Shared/Core/prototype.h"
 #include "Evospace/Vector.h"
 
 #include <string>
@@ -13,7 +13,7 @@
 class AMainPlayerController;
 class UStaticChapter;
 class URecipe;
-class UStaticItem;
+class UItem;
 class UInventory;
 class UInternalInventory;
 
@@ -28,7 +28,7 @@ class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
-    TArray<UStaticItem *> mItems;
+    TArray<UItem *> mItems;
     TArray<int64> mValues;
 };
 
@@ -60,7 +60,7 @@ UCLASS(BlueprintType)
  * @brief Object for research chapter data (example of chapter is "decorative"
  * or "production")
  */
-class EVOSPACE_API UStaticChapter : public UStatic, public ISerializableJson {
+class EVOSPACE_API UStaticChapter : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -95,7 +95,7 @@ UCLASS(BlueprintType)
 /**
  * @brief Static part of every research
  */
-class UStaticResearch : public UStatic, public ISerializableJson {
+class UStaticResearch : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api

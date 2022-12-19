@@ -1,7 +1,7 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/statics.h"
+#include "Evospace/Shared/Core/prototype.h"
 #include "Evospace/StaticObject.h"
 #include "Evospace/Tesselator/Tesselator.h"
 #include "Evospace/Vector.h"
@@ -10,7 +10,7 @@
 
 #include <string>
 
-#include "static_block.generated.h"
+#include "block.generated.h"
 
 namespace evo {
 class LuaState;
@@ -20,7 +20,7 @@ class UPartBlockLogic;
 class ADimension;
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UStaticBlock : public UStaticObject {
+class EVOSPACE_API UBlock : public UStaticObject {
     GENERATED_BODY()
 
     // Lua api
@@ -33,7 +33,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject {
     const UTesselator *GetTesselator() const;
 
     UPROPERTY(BlueprintReadWrite)
-    const UStaticItem *mStaticItem;
+    const UItem *mStaticItem;
 
     UPROPERTY(BlueprintReadOnly)
     const UTesselator *mTesselator;
@@ -87,7 +87,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject {
     TSharedPtr<FJsonObject> mLogicJson;
 
   public:
-    EVO_LUA_CODEGEN(UStaticBlock);
+    EVO_LUA_CODEGEN(UBlock);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
-EVO_REGISTER_STATIC(UStaticBlock, StaticBlock);
+EVO_REGISTER_STATIC(UBlock, StaticBlock);

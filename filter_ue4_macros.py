@@ -19,10 +19,10 @@ for root, dirs, files in os.walk("./"):
                 regex = '^(\s*)((?:UFUNCTION|UCLASS|UPROPERTY|UENUM|GENERATED_BODY)\s*\('+paren_matcher(25)+'\))'
                 content = re.sub(regex, r'\1', content, flags=re.MULTILINE)
                 content = content.replace('URecipe','Recipe')
-                content = content.replace('UStatic','Static')
+                content = content.replace('UPrototype','Prototype')
                 content = content.replace("UOldResearch",'OldResearch')
-                content = content.replace("UStaticBlock",'StaticBlock')
-                content = content.replace("UStaticItem",'StaticItem')
+                content = content.replace("UBlock",'Block')
+                content = content.replace("UItem",'Item')
                 content = content.replace("UBlockLogic",'BlockLogic')
                 content = content.replace("UClass","Class")
                 content = content.replace("UObject","Object")
