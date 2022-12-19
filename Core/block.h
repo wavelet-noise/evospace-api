@@ -2,7 +2,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/Shared/Core/prototype.h"
-#include "Evospace/StaticObject.h"
+#include "Evospace/Entity.h"
 #include "Evospace/Tesselator/Tesselator.h"
 #include "Evospace/Vector.h"
 
@@ -20,7 +20,10 @@ class UPartBlockLogic;
 class ADimension;
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UBlock : public UStaticObject {
+/**
+ * @brief Block in world. Can be cube, machine or smooth surface segment
+ */
+class EVOSPACE_API UBlock : public UEntity {
     GENERATED_BODY()
 
     // Lua api

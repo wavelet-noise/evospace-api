@@ -2,7 +2,7 @@
 #include "legacy_lua_state.h"
 
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
-#include "Evospace/Blocks/Vanilla/AutoCrafterBlockLogic.h"
+#include "Evospace/Shared/Core/select_crafter.h"
 #include "Evospace/Item/InventoryContainer.h"
 #include "Evospace/Shared/Core/block_logic.h"
 
@@ -14,7 +14,7 @@ LegacyLuaState::LegacyLuaState() {
     using namespace luabridge;
 
     getGlobalNamespace(L)
-        .beginClass<UAutoCrafterBlockLogic>("BlockLogic")
+        .beginClass<USelectCrafter>("BlockLogic")
         .addFunction(
             "create_accessor", &LegacyLuaState::BlockLogic_create_accessor
         )
@@ -44,7 +44,7 @@ int LegacyLuaState::Accessor_bind(lua_State *l) {
 }
 
 int LegacyLuaState::Crafter_get_input_container(lua_State *l) {
-    auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
+    auto self = Stack<USelectCrafter *>::get(l, 1);
 
     std::error_code er;
 
@@ -54,7 +54,7 @@ int LegacyLuaState::Crafter_get_input_container(lua_State *l) {
 }
 
 int LegacyLuaState::Crafter_get_output_container(lua_State *l) {
-    auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
+    auto self = Stack<USelectCrafter *>::get(l, 1);
 
     std::error_code er;
 
@@ -72,7 +72,7 @@ int LegacyLuaState::Accessor_set_side_pos(lua_State *l) {
 }
 
 int LegacyLuaState::BlockLogic_create_accessor(lua_State *l) {
-    auto self = Stack<UAutoCrafterBlockLogic *>::get(l, 1);
+    auto self = Stack<USelectCrafter *>::get(l, 1);
     auto type = Stack<UClass *>::get(l, 2);
     std::error_code ec;
 

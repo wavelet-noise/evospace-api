@@ -35,6 +35,12 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
      * @return
      */
     virtual bool is_block_tick() const;
+    
+    UPROPERTY()
+    /**
+     * @brief Readonly property;
+     */
+    const UBlock *static_block = nullptr;
 
     // Engine code
   public:
@@ -63,8 +69,6 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void SetActor(AActor *actor);
     void DefferedPaintApply();
     virtual void RemoveActor();
-
-    virtual void BlockDestruction();
 
     virtual void Tick();
     virtual void TickAccessor();
@@ -124,8 +128,6 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     FQuat GetBlockQuat() const;
     void SetBlockQuat(const FQuat &r);
 
-    float DeltaTime = 0.05f;
-
     UFUNCTION(BlueprintCallable)
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const;
 
@@ -142,8 +144,6 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     FTransform GetTransform() const;
 
     void SetActorRotation(FQuat param1);
-    void SetOwner(void *param1);
-    void Destroy();
 
     UBaseAccessor *GetSideAccessor(UClass *type, Vec3i side, Vec3i pos);
 
@@ -201,25 +201,20 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
 
     virtual AActor *GetActor();
 
-    UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-    const UBlock *mStaticBlock = nullptr;
-
-    UPROPERTY(VisibleAnywhere)
+    UPROPERTY()
     AActor *mActor = nullptr;
-
-    UPROPERTY(VisibleAnywhere)
+    
     FVector3i mPos = {};
-
-    UPROPERTY(VisibleAnywhere)
+    
     FQuat mQuat = FQuat(EForceInit::ForceInitToZero);
 
-    UPROPERTY(VisibleAnywhere)
+    UPROPERTY()
     TArray<UBaseAccessor *> mAccessors;
 
     UPROPERTY()
     ADimension *mDimension;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY()
     UMaterialInterface *mPaintMaterial;
 
     EVO_LUA_CODEGEN(UBlockLogic);

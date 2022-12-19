@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Evospace/Item/ItemData.h"
+#include "Evospace/Shared/Core/item_data.h"
 #include "Evospace/SerializableJson.h"
 
 #include <Dom/JsonObject.h>
@@ -95,12 +95,16 @@ class URecipe : public UObject, public ISerializableJson {
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FName name;
 
+    // Currently locked status (after research applying)
+    // It will be better to make separate ResearchInstance object
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     mutable bool locked = false;
 
+    // All item with research will be locked; Other items will be unlocked;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     mutable bool default_locked = false;
 
+    // Pointer to unlocking research
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     mutable UStaticResearch *unlocks_by;
 };

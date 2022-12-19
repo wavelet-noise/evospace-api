@@ -29,5 +29,6 @@ for root, dirs, files in os.walk("./"):
                 content = content.replace("UStaticMesh","StaticMesh")
                 content = content.replace("UStaticResearch","StaticResearch")
                 content = content.replace("UStaticChapter","StaticChapter")
+                content = content.replace("UCrafterBase","CrafterBase")
             with open(namepath, 'w') as file:
                 file.write(content)
