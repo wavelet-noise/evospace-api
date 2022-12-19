@@ -40,23 +40,23 @@ class URecipeDictionary : public UStatic, public ISerializableJson {
     // Lua api
   public:
     /**
-     * @brief Get count of recipes in this dictionary
+     * @brief Readonly property. Count of recipes in this dictionary
      * @code{.lua}
      * recipe = recipe_dict:count()
      * @endcode
      * @return
      */
-    int32 get_count() const { return mRecipes.Num(); }
+    int32 count() const { return mRecipes.Num(); }
 
     /**
-     * @brief Get recipe from this dictionary by index
+     * @brief Readonly property. Get recipe from this dictionary by index
      * @code{.lua}
-     * recipe = recipe_dict:get_recipe(index)
+     * recipe = recipe_dict:recipe_at(index)
      * @endcode
      * @param index
      * @return
      */
-    const URecipe *get_recipe(int32 index) const {
+    const URecipe *recipe_at(int32 index) const {
         if (index >= 0 && index < mRecipes.Num())
             return mRecipes[index];
         return nullptr;
@@ -71,10 +71,10 @@ class URecipeDictionary : public UStatic, public ISerializableJson {
      * @return false if recipe is already in dictionary, true otherwise
      */
     bool add_recipe(URecipe *recipe) {
-        if (mNameChache.Contains(recipe->name))
+        if (mNameChache.Contains(UTF8_TO_TCHAR(recipe->name.data())))
             return false;
         mRecipes.Add(recipe);
-        mNameChache.Add(recipe->name, recipe);
+        mNameChache.Add(UTF8_TO_TCHAR(recipe->name.data()), recipe);
         return true;
     }
 
@@ -85,7 +85,7 @@ class URecipeDictionary : public UStatic, public ISerializableJson {
      * @endcode
      * @return
      */
-    static URecipeDictionary *new_object() {
+    static URecipeDictionary *_new() {
         return NewObject<URecipeDictionary>();
     }
 

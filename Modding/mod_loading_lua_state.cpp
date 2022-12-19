@@ -17,15 +17,16 @@ ModLoadingLuaState::ModLoadingLuaState() {
 
     getGlobalNamespace(L)
         .beginClass<URecipe>("Recipe")
-        .addProperty("loss", &URecipe::get_loss, &URecipe::set_loss)
-        .addProperty("ticks", &URecipe::get_ticks, &URecipe::set_ticks)
+        .addProperty("loss", &URecipe::loss)
+        .addProperty("ticks", &URecipe::ticks)
+        .addProperty("name", &URecipe::get_name, &URecipe::set_name)
         .endClass();
 
     luabridge::getGlobalNamespace(L)
         .beginClass<UStatic>("Static")
         .addProperty("name", &UStatic::get_name)
         .endClass();
-    
+
     luabridge::getGlobalNamespace(L)
         .beginClass<UBlockLogic>("BlockLogic")
         .endClass();

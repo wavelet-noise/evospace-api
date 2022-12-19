@@ -26,29 +26,47 @@ class URecipe : public UObject, public ISerializableJson {
 
     // Lua api
   public:
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     /**
-     * @brief Get recipe loss percent
-     * @return
+     * @brief Property. Get recipe loss percent
+     *
+     * Default value: 0
+     * 
      */
-    int32 get_loss() const { return loss; }
+    int32 loss = 0;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    /**
+     * @brief Property. Get recipe basic duration
+     *
+     * Default value: 1
+     *
+     * @code{.lua}
+     * ticks = recipe.ticks
+     * recipe.ticks = 100
+     * @endcode
+     */
+    int32 ticks = 1;
 
     /**
-     * @brief Set recipe loss percent
-     * @param val
+     * @brief Property. Recipe name. Must be not empty
+     *
+     * @code{.lua}
+     * name = recipe.name
+     * recipe.name = name
+     * @endcode
      */
-    void set_loss(int32 val) { loss = val; }
+    std::string get_name() const { return TCHAR_TO_UTF8(*name.ToString()); }
 
     /**
-     * @brief Get recipe basic duration
-     * @return
+     * @brief Property. Recipe name. Must be not empty
+     *
+     * @code{.lua}
+     * name = recipe.name
+     * recipe.name = name
+     * @endcode
      */
-    int32 get_ticks() const { return ticks; }
-
-    /**
-     * @brief Set recipe basic duration
-     * @param val
-     */
-    void set_ticks(int32 val) { ticks = val; }
+    void set_name(std::string_view val) { name = UTF8_TO_TCHAR(val.data()); }
 
     // Engine code
   public:
@@ -73,12 +91,6 @@ class URecipe : public UObject, public ISerializableJson {
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FRecipeItemData output_data;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    int32 ticks = 1;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    int32 loss = 0;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FName name;

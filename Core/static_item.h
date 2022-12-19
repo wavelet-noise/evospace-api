@@ -35,84 +35,61 @@ class UStaticItem : public UStatic, public ISerializableJson {
 
     // Lua api
   public:
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     /**
-     * @brief Get item ico for drawing in inventory
+     * @brief Property. Item ico for drawing in inventory
+     *
+     * Default value: nil
+     *
      * @code{.lua}
-     * image = static_item:image()
-     * @endcode
-     * @return Texture2D object
-     */
-    UTexture2D *image() const { return mImage; }
-
-    /**
-     * @brief Set item ico for drawing in inventory
-     * @code{.lua}
+     * image = static_item.image
      * static_item.image = image
      * @endcode
-     * @param tex Texture2D object
      */
-    void image(UTexture2D *tex) { mImage = tex; }
+    UTexture2D *image = nullptr;
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     /**
-     * @brief Get multiplier for internal item count units
+     * @brief Property. Multiplier for internal item count units
      *
      * When drawing in inventory this multiplier is applying. Showing number =
      * count * multiplier
      *
-     * @code{.lua}
-     * mul = static_item:unit_mul()
-     * @endcode
-     * @return multiplier
-     */
-    float unit_mul() const { return mUnitMul; }
-
-    /**
-     * @brief Set multiplier for internal item count units
+     * Default value: 1.0
      *
-     * When drawing in inventory this multiplier is applying. Showing number =
-     * count * multiplier
      * @code{.lua}
-     * static_item.unit_mul = mul
+     * mul = static_item.unit_mul
+     * static_item.unit_mul = 1.0
      * @endcode
-     * @param mul multiplier
      */
-    void unit_mul(float mul) { mUnitMul = mul; }
+    float unit_mul = 1.f;
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     /**
-     * @brief Get max count that can be stored in one slot of default inventory
-     * @return
+     * @brief Property. Max count that can be stored in one slot of default
+     * inventory
+     *
+     * Default value: 0
+     *
+     * @code{.lua}
+     * count = static_item.max_count
+     * static_item.max_count = 64
+     * @endcode
      */
-    int64 max_count() const { return mMaxCount; }
+    int64 max_count = 0;
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     /**
-     * @brief Set max count that can be stored in one slot of default inventory
-     * @param max count
+     * @brief Property. Mesh for rendering item in world (on ground or at
+     * conveyor)
      */
-    void max_count(int64 max) { mMaxCount = max; }
+    UStaticMesh *mesh;
 
-    /**
-     * @brief Get mesh for rendering item in world (on ground or at conveyor)
-     * @return mesh object
-     */
-    UStaticMesh *mesh() const { return mMesh; }
-
-    /**
-     * @brief Set mesh for rendering item in world (on ground or at conveyor)
-     * @param mesh
-     */
-    void mesh(UStaticMesh *mesh) { mMesh = mesh; }
-
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     /**
      * @brief Set visibility for non creative game
-     * @return mesh object
      */
-    bool craftable() const { return mCraftable; }
-
-    /**
-     * @brief Get visibility for non creative game
-     * @param craftable
-     */
-    void craftable(bool craftable) { mCraftable = craftable; }
+    bool craftable = true;
 
     // Engine code
   public:
@@ -128,22 +105,10 @@ class UStaticItem : public UStatic, public ISerializableJson {
     FKeyTableObject mLabelFormat;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    float mUnitMul = 1.f;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    UTexture2D *mImage = nullptr;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     TSubclassOf<AItemLogic> mItemLogic;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    UStaticMesh *mMesh;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     TArray<UMaterialInterface *> mMaterials;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    int64 mMaxCount = 0;
 
     // Database page tag
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -159,10 +124,6 @@ class UStaticItem : public UStatic, public ISerializableJson {
     // Ingame effects color
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     FLinearColor mColor = FLinearColor(.5, .5, .5, 1);
-
-    // Hidden in survival
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    bool mCraftable = true;
 
     TSharedPtr<FJsonObject> mLogicJson;
 

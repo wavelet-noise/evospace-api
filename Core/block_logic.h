@@ -30,6 +30,12 @@ class EVOSPACE_API UBlockLogic : public UStatic, public ISerializableJson {
 
     // Lua api
   public:
+    /**
+     * @brief
+     * @return
+     */
+    virtual bool is_block_tick() const;
+
     // Engine code
   public:
     UBlockLogic();
@@ -60,7 +66,6 @@ class EVOSPACE_API UBlockLogic : public UStatic, public ISerializableJson {
 
     virtual void BlockDestruction();
 
-    virtual bool IsBlockTicks() const;
     virtual void Tick();
     virtual void TickAccessor();
 

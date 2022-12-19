@@ -73,7 +73,8 @@ int LuaState::l_my_print(lua_State *L) {
         } else if (lua_isnumber(L, i)) {
             LOG(INFO) << "Lua print: " << lua_tonumber(L, i);
         } else if (lua_isboolean(L, i)) {
-            LOG(INFO) << "Lua print: " << (lua_toboolean(L, i) ? "true" : "false");
+            LOG(INFO) << "Lua print: "
+                      << (lua_toboolean(L, i) ? "true" : "false");
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -86,8 +87,7 @@ int LuaState::l_my_print(lua_State *L) {
         //               << TCHAR_TO_UTF8(*stat->GetClass()->GetName()) << ""
         //               << stat->name;
         // }
-        else
-            {
+        else {
             LOG(WARN) << "Lua print: not implemented type";
         }
     }
