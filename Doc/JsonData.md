@@ -20,7 +20,7 @@ Load order:
 #### StaticItem
 ```json 
 {
-    "Class": "StaticItem",
+    "Class": "Item",
     "Name": "CopperPlate",
     "Category": "Parts",
     "Image": "T_CopperPlate",
