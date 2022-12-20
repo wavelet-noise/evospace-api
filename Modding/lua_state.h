@@ -144,7 +144,7 @@ class LuaState {
 
     static auto
     to_byte_code(std::string_view code, std::string_view context) noexcept
-        -> result<std::string, std::unique_ptr<AbstractError>>;
+        -> std::string;
 
     /**
      * @brief
