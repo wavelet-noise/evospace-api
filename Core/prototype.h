@@ -124,7 +124,7 @@ class DB {
         using TReturnedNormalized = typename std::remove_cv<TReturned>::type;
         static_assert(std::is_base_of<TReturned, TCreated>());
         auto &gs = get_storage<TReturnedNormalized>();
-        if (!gs.contains(name.data())) { // TODO: make find
+        if (gs.find(name.data()) == gs.end()) { // TODO: make find
             auto u = std::unique_ptr<
                 TReturnedNormalized,
                 std::function<void(TReturnedNormalized *)>>(
@@ -147,7 +147,7 @@ class DB {
 
     template <typename TReturned> static TReturned *reg(std::string_view name) {
         auto &gs = get_storage<TReturned>();
-        if (!gs.contains(name.data())) {
+        if (gs.find(name.data()) == gs.end()) {
             auto u =
                 std::unique_ptr<TReturned, std::function<void(TReturned *)>>(
                     NewObject<TReturned>(),
@@ -172,7 +172,7 @@ class DB {
     template <typename TReturned>
     static TReturned *reg(std::string_view name, UClass *class_ptr) {
         auto &gs = get_storage<TReturned>();
-        if (!gs.contains(name.data())) {
+        if (gs.find(name.data()) == gs.end()) {
             auto u =
                 std::unique_ptr<TReturned, std::function<void(TReturned *)>>(
                     NewObject<TReturned>(

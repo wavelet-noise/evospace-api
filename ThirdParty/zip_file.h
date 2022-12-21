@@ -58,7 +58,7 @@
 #define MINIZ_X86_OR_X64_CPU 1
 #endif
 
-#if (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__) || MINIZ_X86_OR_X64_CPU
+#if MINIZ_X86_OR_X64_CPU
 
 #define MINIZ_LITTLE_ENDIAN 1
 #endif
