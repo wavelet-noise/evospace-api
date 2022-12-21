@@ -136,7 +136,7 @@ class UItem : public UPrototype, public ISerializableJson {
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     bool mSolid = true;
 
-    EVO_LUA_CODEGEN(UItem);
+    EVO_LUA_CODEGEN(UItem, Item);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UItem, StaticItem);

@@ -210,6 +210,8 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
 
+    getGlobalNamespace(L).beginClass<APlayerController>("PlayerController").endClass();
+
     getGlobalNamespace(L)
         .beginClass<Vec3i>("Vec3i")
         .addStaticFunction("new", &LuaState::Vec3i_new)

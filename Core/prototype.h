@@ -51,15 +51,24 @@ struct StaticsFactory {
 #define EVO_REGISTER_STATIC(type, name)                                        \
     EVO_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
 
-#define EVO_LUA_CODEGEN(type)                                                  \
+#define EVO_LUA_CODEGEN(type, name)                                                  \
   public:                                                                      \
     virtual void lua_push(lua_State *state) const override {                   \
         std::error_code er;                                                    \
         ensure(                                                                \
             luabridge::push(state, reinterpret_cast<const type *>(this), er)   \
         );                                                                     \
+    } \
+    static std::function<void(lua_State *)> GetPreRegisterLambda() { \
+        return [](lua_State *L) { \
+            luabridge::getGlobalNamespace(L) \
+            .beginClass<type>(#name) \
+            .endClass(); \
+        }; \
     }
 } // namespace evo
+
+
 
 UCLASS(Abstract)
 /**

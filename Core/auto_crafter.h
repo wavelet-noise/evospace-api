@@ -14,6 +14,19 @@ UCLASS(BlueprintType)
 class EVOSPACE_API UAutoCrafter : public USelectCrafter {
     GENERATED_BODY()
 
+    // Lua api
+  public:
+    // TODO: remake this with lua for inventory
+    // AutoCrafterOutputContainer slot force capacity
+    int32 force_capacity = 0;
+
+    /**
+     * @brief Static function.
+     * @param bl BlockLogic object
+     * @return AutoCrafter object or nil
+     */
+    static UAutoCrafter * cast(UBlockLogic * bl);
+
   protected:
     UAutoCrafter();
 
@@ -25,12 +38,15 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
   public:
     virtual bool is_universal_crafter() const override;
 
-    virtual void SelectRecipe(APlayerController *pc, int32 i) override;
+    virtual void select_recipe(APlayerController *pc, int32 i) override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-
-    int32 cap_replace = 0;
+    
+public:
+    EVO_LUA_CODEGEN(UAutoCrafter, AutoCrafter);
+    static std::function<void(lua_State *)> GetRegisterLambda();
 };
+EVO_REGISTER_STATIC(UAutoCrafter, AutoCrafter);
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UDeconstructorCrafterBlockLogic
@@ -94,7 +110,7 @@ class EVOSPACE_API UDumpCrafterBlockLogic : public USelectCrafter {
   public:
     virtual bool is_universal_crafter() const override;
 
-    virtual void SelectRecipe(APlayerController *pc, int32 i) override;
+    virtual void select_recipe(APlayerController *pc, int32 i) override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 

@@ -27,10 +27,6 @@ ModLoadingLuaState::ModLoadingLuaState() {
         .addProperty("name", &UPrototype::get_name)
         .endClass();
 
-    luabridge::getGlobalNamespace(L)
-        .beginClass<UBlockLogic>("BlockLogic")
-        .endClass();
-
     StaticsFactory::Get().register_lua(L);
 }
 
