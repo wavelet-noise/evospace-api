@@ -90,7 +90,7 @@ class EVOSPACE_API UBlock : public UEntity {
     TSharedPtr<FJsonObject> mLogicJson;
 
   public:
-    EVO_LUA_CODEGEN(UBlock);
+    EVO_LUA_CODEGEN(UBlock, Block);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
-EVO_REGISTER_STATIC(UBlock, StaticBlock);
+EVO_REGISTER_STATIC(UBlock, Block);

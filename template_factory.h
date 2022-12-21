@@ -17,7 +17,7 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     // Register lua class in lua state
     using RegisterFunc = std::function<void(lua_State *)>;
 
-    using BaseFuncTuple = std::tuple<RegisterFunc>;
+    using BaseFuncTuple = std::tuple<RegisterFunc, RegisterFunc>;
 
     using FactoryBaseMap = std::map<IdType, BaseFuncTuple, Comparator>;
 
@@ -32,19 +32,22 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     void register_lua(lua_State *state) const {
         for (const auto &[key, value] : base_map_) {
             LOG(TRACE) << "Register class " << key;
-            std::get<RegisterFunc>(value)(state);
+            std::get<1>(value)(state);
+        }
+        for (const auto &[key, value] : base_map_) {
+            std::get<0>(value)(state);
         }
     }
 
     void add_base(
-        const IdType &id, RegisterFunc reg, std::string_view comment = ""
+        const IdType &id, RegisterFunc reg, RegisterFunc pre_reg, std::string_view comment = ""
     ) {
         auto i = base_map_.find(id);
         if (i == base_map_.end()) {
-            base_map_.insert(std::make_pair(id, std::make_tuple(reg)));
+            base_map_.insert(std::make_pair(id, std::make_tuple(reg, pre_reg)));
         } else {
             std::cout << id << "base redefinition!" << std::endl;
-            i->second = std::make_tuple(reg);
+            i->second = std::make_tuple(reg, pre_reg);
         }
     }
 
@@ -55,7 +58,7 @@ template <class T> class RegisterBase {
   public:
     template <class Factory>
     RegisterBase(Factory &factory, const typename Factory::IdTypeUsing &id) {
-        factory.add_base(id, T::GetRegisterLambda());
+        factory.add_base(id, T::GetRegisterLambda(), T::GetPreRegisterLambda());
     }
 };
 

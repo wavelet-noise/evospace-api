@@ -50,6 +50,28 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
      */
     virtual bool is_universal_crafter() const;
 
+    /**
+     * @brief Static function.
+     * @param bl BlockLogic object
+     * @return CrafterBase object or nil
+     */
+    static UCrafterBase *cast(UBlockLogic *bl);
+
+    UFUNCTION(BlueprintCallable)
+    /**
+     * @brief Change selected recipe in this crafter
+     * @param pc Who have changed recipe or nil
+     * @param i recipe index to select
+     */
+    virtual void select_recipe(APlayerController *pc, int32 i);
+
+    UFUNCTION(BlueprintCallable)
+    /**
+     * @brief Get RecipeDictionary linked with this crafter
+     * @return RecipeDictionary object
+     */
+    virtual const URecipeDictionary *get_recipe_dictionary() const;
+
     // Engine code
   public:
     UCrafterBase();
@@ -59,13 +81,7 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
     UFUNCTION(BlueprintCallable)
-    virtual const URecipeDictionary *GetRecipeDictionary() const;
-
-    UFUNCTION(BlueprintCallable)
     virtual const URecipe *GetCurrentRecipe() const;
-
-    UFUNCTION(BlueprintCallable)
-    virtual void SelectRecipe(APlayerController *pc, int32 i);
 
     UFUNCTION(BlueprintCallable)
     virtual void ResetRecipe();
@@ -119,8 +135,6 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
     UFUNCTION(BlueprintCallable)
     virtual UInventoryReader *GetBusy() const;
 
-    static UCrafterBase *cast(UBlockLogic *bl);
-
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     bool mBusy = false;
 
@@ -143,7 +157,7 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
     const URecipe *mCurrentRecipe = nullptr;
 
   public:
-    EVO_LUA_CODEGEN(UCrafterBase);
+    EVO_LUA_CODEGEN(UCrafterBase, CrafterBase);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UCrafterBase, CrafterBase);

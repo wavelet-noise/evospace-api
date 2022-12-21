@@ -19,11 +19,20 @@ UCLASS(BlueprintType)
 class EVOSPACE_API USelectCrafter : public UCrafterBase {
     GENERATED_BODY()
 
+    // Lua api
+  public:
+    /**
+     * @brief Static function.
+     * @param bl BlockLogic object
+     * @return SelectCrafter object or nil
+     */
+    static USelectCrafter * cast(UBlockLogic * bl);
+
   public:
     USelectCrafter();
 
     void SpawnDropItems(APlayerController *pc);
-    virtual void SelectRecipe(APlayerController *pc, int32 i) override;
+    virtual void select_recipe(APlayerController *pc, int32 i) override;
 
     virtual void ResetRecipe() override;
 
@@ -67,7 +76,7 @@ class EVOSPACE_API USelectCrafter : public UCrafterBase {
     UInventoryContainer *mAutoCrafterCoreOutput;
 
   public:
-    EVO_LUA_CODEGEN(USelectCrafter);
+    EVO_LUA_CODEGEN(USelectCrafter, SelectCrafter);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
-EVO_REGISTER_STATIC(USelectCrafter, AutoCrafterBlockLogic);
+EVO_REGISTER_STATIC(USelectCrafter, SelectCrafter);

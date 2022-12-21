@@ -124,7 +124,7 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     UInventory *mUsedInInventory;
 
-    EVO_LUA_CODEGEN(URecipeDictionary);
+    EVO_LUA_CODEGEN(URecipeDictionary, RecipeDictionary);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(URecipeDictionary, RecipeDictionary);

@@ -217,7 +217,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     UPROPERTY()
     UMaterialInterface *mPaintMaterial;
 
-    EVO_LUA_CODEGEN(UBlockLogic);
+    EVO_LUA_CODEGEN(UBlockLogic, BlockLogic);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UBlockLogic, BlockLogic);
