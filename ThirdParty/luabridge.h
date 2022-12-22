@@ -45,7 +45,7 @@
 #endif
 
 #if defined(_MSC_VER)
-#if _CPPUNWIND || _HAS_EXCEPTIONS
+#if _HAS_EXCEPTIONS
 #define LUABRIDGE_HAS_EXCEPTIONS 0
 #else
 #define LUABRIDGE_HAS_EXCEPTIONS 0
