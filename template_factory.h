@@ -46,7 +46,6 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
         if (i == base_map_.end()) {
             base_map_.insert(std::make_pair(id, std::make_tuple(reg, pre_reg)));
         } else {
-            std::cout << id << "base redefinition!" << std::endl;
             i->second = std::make_tuple(reg, pre_reg);
         }
     }
