@@ -73,6 +73,10 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void Tick();
     virtual void TickAccessor();
 
+    virtual void EvospacePostDuplicate(const UBlockLogic * proto) {
+        
+    }
+
     /**
      * @brief Test if position is suitable for this block placing
      *
@@ -175,6 +179,10 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     void SetDimention(ADimension *dim);
 
     //=====================
+
+    virtual bool DeserializeProtoJson(TSharedPtr<FJsonObject> json) {
+        
+    }
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;

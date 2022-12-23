@@ -80,6 +80,13 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
 
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
+    virtual bool DeserializeProtoJson(TSharedPtr<FJsonObject> json) override;
+
+    std::vector<std::vector<uint16>> input_split;
+    std::vector<std::vector<uint16>> output_split;
+
+    virtual void EvospacePostDuplicate(const UBlockLogic * proto) override;
+
     UFUNCTION(BlueprintCallable)
     virtual const URecipe *GetCurrentRecipe() const;
 

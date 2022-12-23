@@ -93,8 +93,6 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
-    virtual void PostDeserializeJson() override;
-
     const URecipe *Find(UInventoryReader *inventory) const;
     int32 FindIndex(UInventoryReader *inventory) const;
 
@@ -112,10 +110,6 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
     void ResetLocked();
 
     const URecipe *Find(const UItem *item, int32 count = 1) const;
-
-    mutable std::vector<std::vector<int64>> input_split;
-
-    mutable std::vector<std::vector<int64>> output_split;
 
   public:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
