@@ -36,7 +36,7 @@ std::vector<std::string> split(std::string_view s, char delim) {
 }
 
 auto LuaState::to_byte_code(
-    std::string_view code, std::string_view context
+    std::string_view code
 ) noexcept -> std::string {
     const char *CodeRaw = code.data();
     std::string Output;
@@ -49,12 +49,14 @@ auto LuaState::to_byte_code(
         auto index = std::stoi(splited_error[1]);
         auto splitted_source = split(code, '\n');
         auto in_error = splitted_source[index - 1];
+        LOG(ERROR) << "Load buffer error: " << error << "; line " << index << ": " << in_error;
         return "";
     }
 
     if (lua_dump(L, ToByteCode_Writer, &Output)) {
         auto error = lua_tostring(L, -1);
         lua_close(L);
+        LOG(ERROR) << "Dump error: " << error;
         return "";
     }
 
@@ -210,7 +212,9 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
 
-    getGlobalNamespace(L).beginClass<APlayerController>("PlayerController").endClass();
+    getGlobalNamespace(L)
+        .beginClass<APlayerController>("PlayerController")
+        .endClass();
 
     getGlobalNamespace(L)
         .beginClass<Vec3i>("Vec3i")

@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Core/prototype.h"
 #include "Evospace/Entity.h"
+#include "Evospace/Shared/Core/prototype.h"
 #include "Evospace/Tesselator/Tesselator.h"
 #include "Evospace/Vector.h"
 
@@ -81,7 +81,6 @@ class EVOSPACE_API UBlock : public UEntity {
     ) const;
 
   private:
-    void to_bytecode(std::string_view str, std::string &bytecode);
 
     std::string actor_bytecode;
     std::string block_bytecode;

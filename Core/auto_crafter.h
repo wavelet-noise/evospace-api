@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 
+#include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
 #include "Evospace/Shared/Core/select_crafter.h"
-#include "CoreMinimal.h"
 
 #include "auto_crafter.generated.h"
 
@@ -25,7 +25,7 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
      * @param bl BlockLogic object
      * @return AutoCrafter object or nil
      */
-    static UAutoCrafter * cast(UBlockLogic * bl);
+    static UAutoCrafter *cast(UBlockLogic *bl);
 
   protected:
     UAutoCrafter();
@@ -41,16 +41,15 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
     virtual void select_recipe(APlayerController *pc, int32 i) override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-    
-public:
+
+  public:
     EVO_LUA_CODEGEN(UAutoCrafter, AutoCrafter);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UAutoCrafter, AutoCrafter);
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UDeconstructorCrafterBlockLogic
-    : public UAutoCrafter {
+class EVOSPACE_API UDeconstructorCrafterBlockLogic : public UAutoCrafter {
     GENERATED_BODY()
 
   public:

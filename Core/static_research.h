@@ -60,7 +60,8 @@ UCLASS(BlueprintType)
  * @brief Object for research chapter data (example of chapter is "decorative"
  * or "production")
  */
-class EVOSPACE_API UStaticChapter : public UPrototype, public ISerializableJson {
+class EVOSPACE_API UStaticChapter : public UPrototype,
+                                    public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api

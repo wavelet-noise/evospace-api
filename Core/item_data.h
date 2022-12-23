@@ -55,10 +55,16 @@ struct FRecipeItemData {
 
   public:
     UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-    int64 mCapacity = 0;
+    /**
+     * @brief
+     */
+    int64 capacity = 0;
 
     UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-    float mProbability = 1;
+    /**
+     * @brief
+     */
+    int64 split = 1;
 
     bool DeserializeJson(TSharedPtr<FJsonObject> json);
 };

@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Evospace/Shared/Core/item_data.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Shared/Core/item_data.h"
 
 #include <Dom/JsonObject.h>
 
@@ -31,7 +31,7 @@ class URecipe : public UObject, public ISerializableJson {
      * @brief Property. Get recipe loss percent
      *
      * Default value: 0
-     * 
+     *
      */
     int32 loss = 0;
 
@@ -107,4 +107,6 @@ class URecipe : public UObject, public ISerializableJson {
     // Pointer to unlocking research
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     mutable UStaticResearch *unlocks_by;
+
+    int32 dictionary_index = INDEX_NONE;
 };

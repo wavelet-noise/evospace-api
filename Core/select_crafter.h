@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "CoreMinimal.h"
 #include "Evospace/Blocks/BlockWidget.h"
 #include "Evospace/Shared/Core/crafter_base.h"
-#include "CoreMinimal.h"
 
 #include <Dom/JsonObject.h>
 
@@ -26,7 +26,7 @@ class EVOSPACE_API USelectCrafter : public UCrafterBase {
      * @param bl BlockLogic object
      * @return SelectCrafter object or nil
      */
-    static USelectCrafter * cast(UBlockLogic * bl);
+    static USelectCrafter *cast(UBlockLogic *bl);
 
   public:
     USelectCrafter();

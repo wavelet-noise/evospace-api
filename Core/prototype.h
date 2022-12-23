@@ -1,12 +1,11 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 
+#include "../static_logger.h"
+#include "../template_factory.h"
 #include "Evospace/Common.h"
 #include "Evospace/MainGameInstance.h"
 #include "Evospace/Shared/ThirdParty/luabridge.h"
-#include "../localization_table.h"
-#include "../static_logger.h"
-#include "../template_factory.h"
 
 #include <unordered_map>
 #include <vector>
@@ -51,24 +50,21 @@ struct StaticsFactory {
 #define EVO_REGISTER_STATIC(type, name)                                        \
     EVO_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
 
-#define EVO_LUA_CODEGEN(type, name)                                                  \
+#define EVO_LUA_CODEGEN(type, name)                                            \
   public:                                                                      \
     virtual void lua_push(lua_State *state) const override {                   \
         std::error_code er;                                                    \
         ensure(                                                                \
             luabridge::push(state, reinterpret_cast<const type *>(this), er)   \
         );                                                                     \
-    } \
-    static std::function<void(lua_State *)> GetPreRegisterLambda() { \
-        return [](lua_State *L) { \
-            luabridge::getGlobalNamespace(L) \
-            .beginClass<type>(#name) \
-            .endClass(); \
-        }; \
+    }                                                                          \
+    static std::function<void(lua_State *)> GetPreRegisterLambda() {           \
+        return [](lua_State *L) {                                              \
+            luabridge::getGlobalNamespace(L).beginClass<type>(#name).endClass( \
+            );                                                                 \
+        };                                                                     \
     }
 } // namespace evo
-
-
 
 UCLASS(Abstract)
 /**
@@ -245,7 +241,7 @@ class DB {
         using ReturntdNorm = typename std::remove_cv<_TReturned>::type;
         auto &storage = get_storage<ReturntdNorm>();
 
-        auto res = storage.find(std::string(name));
+        auto res = storage.find(name.data());
         if (res != storage.end()) {
             return reinterpret_cast<ReturntdNorm *>(res->second.get());
         }
@@ -283,10 +279,7 @@ class DB {
 
         ensure(mProtos.empty());
     }
-
-    static std::unordered_map<std::string, LocalizationTable> mLocTablesSource;
-    static std::unordered_map<std::string, LocalizationTable> mLocTables;
-
+    
     static std::string_view
     GetLocalizedString(std::string_view table, const FKeyTableObject &object) {
         // if (const auto & loctable = mLocTables.find(table.data()); loctable

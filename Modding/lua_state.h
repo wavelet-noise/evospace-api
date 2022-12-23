@@ -143,7 +143,7 @@ class LuaState {
     }
 
     static auto
-    to_byte_code(std::string_view code, std::string_view context) noexcept
+    to_byte_code(std::string_view code) noexcept
         -> std::string;
 
     /**

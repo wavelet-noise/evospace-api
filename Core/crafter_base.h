@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
 #include "Evospace/Blocks/TieredBlockLogic.h"
-#include "CoreMinimal.h"
 
 #include "crafter_base.generated.h"
 
