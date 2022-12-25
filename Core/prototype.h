@@ -279,7 +279,7 @@ class DB {
 
         ensure(mProtos.empty());
     }
-    
+
     static std::string_view
     GetLocalizedString(std::string_view table, const FKeyTableObject &object) {
         // if (const auto & loctable = mLocTables.find(table.data()); loctable

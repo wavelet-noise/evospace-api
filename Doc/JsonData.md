@@ -20,25 +20,25 @@ Load order:
 #### StaticItem
 ```json 
 {
-    "Class": "Item",
-    "Name": "CopperPlate",
-    "Category": "Parts",
-    "Image": "T_CopperPlate",
-    "LabelParts": [
+    "class": "Item",
+    "name": "CopperPlate",
+    "category": "Parts",
+    "image": "T_CopperPlate",
+    "label_parts": [
         [
             "CopperPlate",
             "parts"
         ]
     ],
-    "LogicJson": {
+    "logic_json": {
         "Block": "CopperPlate"
     },
     "Materials": [
         "Materials/Copper"
     ],
     "Model": "Models/Plate",
-    "MaxCount": 64,
-    "Tag": "Misc"
+    "max_count": 64,
+    "tag": "Misc"
 }
 ```
 

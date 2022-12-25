@@ -2,8 +2,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Core/prototype.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Shared/Core/prototype.h"
 
 #include "entity.generated.h"
 

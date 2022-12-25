@@ -28,7 +28,6 @@ class EVOSPACE_API UBlock : public UEntity {
 
     // Lua api
   public:
-    
     // Engine code
   public:
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
@@ -63,24 +62,23 @@ class EVOSPACE_API UBlock : public UEntity {
 
     UPROPERTY(BlueprintReadOnly)
     FVector color_top = FVector(1);
-    
+
     TArray<FVector3i> mPositions;
 
     //===================================
-    
-    // Transfer all block logic specific data from this block object to given block logic object
-    void move_data_to_proto(evo::LuaState &state, UBlockLogic *logic);
-    
-    UBlockLogic *
-    spawn_block(ADimension *dim, const FTransform &tr) const;
 
-    // Spawn block dummy to occupy multiblock space. Stores parent block object 
+    // Transfer all block logic specific data from this block object to given
+    // block logic object
+    void move_data_to_proto(evo::LuaState &state, UBlockLogic *logic);
+
+    UBlockLogic *spawn_block(ADimension *dim, const FTransform &tr) const;
+
+    // Spawn block dummy to occupy multiblock space. Stores parent block object
     UPartBlockLogic *spawn_part(
         ADimension *dim, const FTransform &tr, UBlockLogic *parent
     ) const;
 
   private:
-
     std::string actor_bytecode;
     std::string block_bytecode;
     std::string tick_bytecode;

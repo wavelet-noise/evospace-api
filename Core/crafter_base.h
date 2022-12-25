@@ -85,7 +85,7 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
     std::vector<std::vector<uint16>> input_split;
     std::vector<std::vector<uint16>> output_split;
 
-    virtual void EvospacePostDuplicate(const UBlockLogic * proto) override;
+    virtual void EvospacePostDuplicate(const UBlockLogic *proto) override;
 
     UFUNCTION(BlueprintCallable)
     virtual const URecipe *GetCurrentRecipe() const;

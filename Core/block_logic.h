@@ -40,7 +40,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     /**
      * @brief Readonly property;
      */
-    const UBlock *static_block = nullptr;
+    const UBlock *block = nullptr;
 
     // Engine code
   public:
@@ -73,9 +73,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void Tick();
     virtual void TickAccessor();
 
-    virtual void EvospacePostDuplicate(const UBlockLogic * proto) {
-        
-    }
+    virtual void EvospacePostDuplicate(const UBlockLogic *proto) {}
 
     /**
      * @brief Test if position is suitable for this block placing
@@ -181,7 +179,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     //=====================
 
     virtual bool DeserializeProtoJson(TSharedPtr<FJsonObject> json) {
-        
+        return true;
     }
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
