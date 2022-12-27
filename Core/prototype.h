@@ -86,14 +86,14 @@ struct StaticsFactory {
     static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
         return [](lua_State *L) {                                              \
             luabridge::getGlobalNamespace(L)                                   \
-                .deriveClass<type, parent>(#name)                              \
+                .beginClass<type>(#name)                                       \
                 .endClass();                                                   \
         };                                                                     \
     }                                                                          \
     static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
         return [](lua_State *L) {                                              \
             luabridge::getGlobalNamespace(L)                                   \
-                .beginClass<type>(#name)                                       \
+                .deriveClass<type, parent>(#name)                              \
                 .addStaticFunction("find", &evo::DB::find_mut<type>)           \
                 .addStaticFunction("reg", &evo::DB::reg<type>)                 \
                 .addStaticFunction("reg_derived", &evo::DB::reg_derived<type>) \

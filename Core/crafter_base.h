@@ -164,7 +164,7 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
     const URecipe *mCurrentRecipe = nullptr;
 
   public:
-    EVO_LUA_CODEGEN_DERIVE(UCrafterBase, UBlockLogic, CrafterBase);
+    EVO_LUA_CODEGEN_DERIVE(UCrafterBase, UTieredBlockLogic, CrafterBase);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UCrafterBase, CrafterBase);

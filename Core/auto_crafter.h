@@ -26,6 +26,7 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
      * @return AutoCrafter object or nil
      */
     static UAutoCrafter *cast(UBlockLogic *bl);
+    UBlockLogic*as_block_logic();
 
   protected:
     UAutoCrafter();
