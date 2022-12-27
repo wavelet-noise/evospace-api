@@ -28,21 +28,21 @@ class EVOSPACE_API UBlock : public UEntity {
 
     // Lua api
   public:
+    UPROPERTY(BlueprintReadWrite)
+    const UItem *item;
+
+    UPROPERTY(BlueprintReadOnly)
+    UBlockLogic *logic;
+
+    UPROPERTY(BlueprintReadOnly)
+    const UTesselator *tesselator;
+
     // Engine code
   public:
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
     const UTesselator *GetTesselator() const;
-
-    UPROPERTY(BlueprintReadWrite)
-    const UItem *mStaticItem;
-
-    UPROPERTY(BlueprintReadOnly)
-    const UTesselator *mTesselator;
-
-    UPROPERTY(BlueprintReadOnly)
-    TSubclassOf<UBlockLogic> mBlockLogic;
 
     UPROPERTY(BlueprintReadOnly)
     TSubclassOf<AActor> mActorClass = nullptr;
@@ -86,7 +86,7 @@ class EVOSPACE_API UBlock : public UEntity {
     TSharedPtr<FJsonObject> mLogicJson;
 
   public:
-    EVO_LUA_CODEGEN(UBlock, Block);
+    EVO_LUA_CODEGEN_DERIVE(UBlock, UPrototype, Block);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UBlock, Block);

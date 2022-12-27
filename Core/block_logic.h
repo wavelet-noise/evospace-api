@@ -38,7 +38,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
 
     UPROPERTY(BlueprintReadOnly)
     /**
-     * @brief Readonly property;
+     * @brief Readonly property
      */
     const UBlock *block = nullptr;
 
@@ -223,7 +223,8 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     UPROPERTY()
     UMaterialInterface *mPaintMaterial;
 
-    EVO_LUA_CODEGEN(UBlockLogic, BlockLogic);
+  public:
+    EVO_LUA_CODEGEN_DERIVE(UBlockLogic, UPrototype, BlockLogic);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UBlockLogic, BlockLogic);

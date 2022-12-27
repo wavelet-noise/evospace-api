@@ -58,10 +58,46 @@ struct StaticsFactory {
             luabridge::push(state, reinterpret_cast<const type *>(this), er)   \
         );                                                                     \
     }                                                                          \
-    static std::function<void(lua_State *)> GetPreRegisterLambda() {           \
+    static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
         return [](lua_State *L) {                                              \
             luabridge::getGlobalNamespace(L).beginClass<type>(#name).endClass( \
             );                                                                 \
+        };                                                                     \
+    }                                                                          \
+    static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
+        return [](lua_State *L) {                                              \
+            luabridge::getGlobalNamespace(L)                                   \
+                .beginClass<type>(#name)                                       \
+                .addStaticFunction("find", &evo::DB::find_mut<type>)           \
+                .addStaticFunction("reg", &evo::DB::reg<type>)                 \
+                .addStaticFunction("reg_derived", &evo::DB::reg_derived<type>) \
+                .endClass();                                                   \
+        };                                                                     \
+    }
+
+#define EVO_LUA_CODEGEN_DERIVE(type, parent, name)                             \
+  public:                                                                      \
+    virtual void lua_push(lua_State *state) const override {                   \
+        std::error_code er;                                                    \
+        ensure(                                                                \
+            luabridge::push(state, reinterpret_cast<const type *>(this), er)   \
+        );                                                                     \
+    }                                                                          \
+    static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
+        return [](lua_State *L) {                                              \
+            luabridge::getGlobalNamespace(L)                                   \
+                .deriveClass<type, parent>(#name)                              \
+                .endClass();                                                   \
+        };                                                                     \
+    }                                                                          \
+    static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
+        return [](lua_State *L) {                                              \
+            luabridge::getGlobalNamespace(L)                                   \
+                .beginClass<type>(#name)                                       \
+                .addStaticFunction("find", &evo::DB::find_mut<type>)           \
+                .addStaticFunction("reg", &evo::DB::reg<type>)                 \
+                .addStaticFunction("reg_derived", &evo::DB::reg_derived<type>) \
+                .endClass();                                                   \
         };                                                                     \
     }
 } // namespace evo
@@ -82,8 +118,6 @@ class UPrototype
      * @brief Object name in database
      */
     std::string name;
-
-    std::string_view get_name() const { return name; }
 
   public:
     /**
@@ -175,9 +209,20 @@ class DB {
     }
 
     template <typename TReturned>
-    static TReturned *reg(std::string_view name, UClass *class_ptr) {
+    static TReturned *reg_derived(std::string_view name, UClass *class_ptr) {
         auto &gs = get_storage<TReturned>();
         if (gs.find(name.data()) == gs.end()) {
+            if (!class_ptr) {
+                LOG(ERROR) << "trying to register nullptr";
+                return nullptr;
+            }
+            if (!class_ptr->IsChildOf(TReturned::StaticClass())) {
+                LOG(ERROR) << TCHAR_TO_UTF8(*class_ptr->GetName())
+                           << " is not a child of "
+                           << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName()
+                              );
+                return nullptr;
+            }
             auto u =
                 std::unique_ptr<TReturned, std::function<void(TReturned *)>>(
                     NewObject<TReturned>(

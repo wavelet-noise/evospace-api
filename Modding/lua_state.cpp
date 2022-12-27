@@ -1,12 +1,25 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #include "lua_state.h"
 
+#include "Evospace/IcoGenerator.h"
 #include "Evospace/Item/InventoryContainer.h"
 #include "Evospace/Shared/Core/static_research.h"
 #include "Evospace/Shared/lua_state_error.h"
 #include "Evospace/Shared/static_logger.h"
 
 namespace evo {
+
+void LuaState::add_lua_path(const std::string &path) {
+    lua_getglobal(L, "package");
+    lua_getfield(L, -1, "path");
+    std::string cur_path = lua_tostring(L, -1);
+    cur_path = cur_path + ";" + path + "/?.lua";
+    lua_pop(L, 1);
+    lua_pushstring(L, cur_path.data());
+    lua_setfield(L, -2, "path");
+    lua_pop(L, 1);
+}
+
 bool LuaState::RunCode(
     std::string_view Code, std::string_view CodePath, int NRet
 ) noexcept {
@@ -201,15 +214,20 @@ LuaState::LuaState() {
         .beginClass<UInventoryContainer>("InventoryContainer")
         .endClass();
 
-    getGlobalNamespace(L).beginClass<UTexture2D>("Texture").endClass();
+    getGlobalNamespace(L).beginClass<UIcoGenerator>("IcoGenerator").addStaticFunction("combine", &UIcoGenerator::combine).endClass();
+    
+    getGlobalNamespace(L).beginClass<UTexture2D>("Texture").addStaticFunction("find", &LuaState::GetTexture).endClass();
+
+    getGlobalNamespace(L).beginClass<UMaterialInterface>("Material").addStaticFunction("load", &LuaState::GetMaterial).endClass();
 
     getGlobalNamespace(L).beginClass<UStaticMesh>("Mesh").endClass();
 
     getGlobalNamespace(L).beginClass<UObject>("Object").endClass();
 
-    getGlobalNamespace(L).beginClass<UClass>("Class").endClass();
-
-    getGlobalNamespace(L).addFunction("get_class", &LuaState::GetClass);
+    getGlobalNamespace(L)
+        .beginClass<UClass>("Class")
+        .addStaticFunction("find", &LuaState::GetClass)
+        .endClass();
 
     getGlobalNamespace(L)
         .beginClass<APlayerController>("PlayerController")
@@ -226,6 +244,13 @@ LuaState::LuaState() {
         .addStaticFunction("back", &LuaState::Vec3i_back)
         .addStaticFunction("front", &LuaState::Vec3i_front)
         .endClass();
+
+    getGlobalNamespace(L)
+        .beginClass<KeyTable>("Loc")
+        .addStaticFunction("new", &KeyTable::create)
+        .addStaticFunction("new_param", &KeyTable::create_param)
+        .endClass();
+
 
     RunCode(
         "require('jit') if type(jit) == 'table' then print(jit.version) else "
@@ -249,11 +274,39 @@ int AppendPath(lua_State *L, std::string_view path) noexcept {
 }
 
 UClass *LuaState::GetClass(std::string_view name) {
-    using namespace std::string_literals;
     auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
-        StaticLogger::Get().Log("Class not found " + std::string(name));
+        LOG(ERROR) << "Class not found " << name;
+    }
+    else {
+        LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+    }
+
+    return type;
+}
+
+UTexture2D *LuaState::GetTexture(std::string_view name) {
+    auto type = FindObject<UTexture2D>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
+
+    if (type == nullptr) {
+        LOG(ERROR) << "Texture not found " << name;
+    }
+    else {
+        LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+    }
+
+    return type;
+}
+
+UMaterialInterface *LuaState::GetMaterial(std::string_view name) {
+    auto type = LoadObject<UMaterialInterface>(nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data())));
+
+    if (type == nullptr) {
+        LOG(ERROR) << "Material not found " << name;
+    }
+    else {
+        LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }
 
     return type;

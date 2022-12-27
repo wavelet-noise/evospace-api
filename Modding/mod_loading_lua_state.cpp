@@ -23,8 +23,8 @@ ModLoadingLuaState::ModLoadingLuaState() {
         .endClass();
 
     luabridge::getGlobalNamespace(L)
-        .beginClass<UPrototype>("Static")
-        .addProperty("name", &UPrototype::get_name)
+        .beginClass<UPrototype>("Prototype")
+        .addProperty("name", &UPrototype::name, false)
         .endClass();
 
     StaticsFactory::Get().register_lua(L);

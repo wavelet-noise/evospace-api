@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Evospace/Blocks/BlockDeserializeLegacyLuaState.h"
-#include "Evospace/Common.h"
+#include "Evospace/Shared/Core/loc.h"
 #include "Evospace/Item/ItemLogic.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Shared/Core/prototype.h"
@@ -90,6 +90,21 @@ class UItem : public UPrototype, public ISerializableJson {
      * @brief Set visibility for non creative game
      */
     bool craftable = true;
+    
+    std::vector<KeyTable> label_parts = {};
+
+    // Database page tag
+    std::string page = "";
+    
+    std::string category = "";
+
+    // Description common keys
+    std::vector<KeyTable> description_parts = {};
+    
+    KeyTable label_format;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    UClass * logic;
 
     // Engine code
   public:
@@ -99,27 +114,7 @@ class UItem : public UPrototype, public ISerializableJson {
     SpawnLogicItemDeffered(UWorld *world, const FTransform &transform) const;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    TArray<FKeyTableObject> mLabelParts = {};
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    FKeyTableObject mLabelFormat;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    TSubclassOf<AItemLogic> mItemLogic;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     TArray<UMaterialInterface *> mMaterials;
-
-    // Database page tag
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    FName mTag = "";
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    FName mCategory = "";
-
-    // Description common keys
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    TArray<FKeyTableObject> mDescriptionParts = {};
 
     // Ingame effects color
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -139,4 +134,4 @@ class UItem : public UPrototype, public ISerializableJson {
     EVO_LUA_CODEGEN(UItem, Item);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
-EVO_REGISTER_STATIC(UItem, StaticItem);
+EVO_REGISTER_STATIC(UItem, Item);

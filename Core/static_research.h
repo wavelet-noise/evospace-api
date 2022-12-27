@@ -174,7 +174,7 @@ class UStaticResearch : public UPrototype, public ISerializableJson {
 
     virtual void ApplyToController(AMainPlayerController *apply_to);
 
-    EVO_LUA_CODEGEN(UStaticResearch, StaticResearch);
+    EVO_LUA_CODEGEN_DERIVE(UStaticResearch, UPrototype, StaticResearch);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UStaticResearch, StaticResearch);

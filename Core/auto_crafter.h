@@ -43,7 +43,7 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
   public:
-    EVO_LUA_CODEGEN(UAutoCrafter, AutoCrafter);
+    EVO_LUA_CODEGEN_DERIVE(UAutoCrafter, USelectCrafter, AutoCrafter);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UAutoCrafter, AutoCrafter);

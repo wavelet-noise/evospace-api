@@ -29,6 +29,10 @@ class LuaState {
      * @return Class object
      */
     static UClass *GetClass(std::string_view name);
+    static UTexture2D*GetTexture(std::string_view name);
+    static UMaterialInterface*GetMaterial(std::string_view name);
+
+    void add_lua_path(const std::string &path);
 
     /**
      * @brief Construct Vec3i from 3 numbers
