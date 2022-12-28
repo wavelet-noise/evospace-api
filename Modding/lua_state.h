@@ -29,8 +29,8 @@ class LuaState {
      * @return Class object
      */
     static UClass *GetClass(std::string_view name);
-    static UTexture2D*GetTexture(std::string_view name);
-    static UMaterialInterface*GetMaterial(std::string_view name);
+    static UTexture2D *GetTexture(std::string_view name);
+    static UMaterialInterface *GetMaterial(std::string_view name);
 
     void add_lua_path(const std::string &path);
 
@@ -158,6 +158,7 @@ class LuaState {
     bool RunCode(
         std::string_view Code, std::string_view CodePath = "", int NRet = 0
     ) noexcept;
+    bool RunCode(std::string_view Code, std::string_view CodePath, int NArg, std::function<void(lua_State * L)> push_args, int NRet = 0) noexcept;
 
     int AppendPath(lua_State *L, std::string_view path) noexcept;
 };

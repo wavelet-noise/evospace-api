@@ -3,9 +3,9 @@
 #pragma once
 
 #include "Evospace/Blocks/BlockDeserializeLegacyLuaState.h"
-#include "Evospace/Shared/Core/loc.h"
-#include "Evospace/Item/ItemLogic.h"
+#include "Evospace/Item/ItemLogicActor.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Shared/Core/loc.h"
 #include "Evospace/Shared/Core/prototype.h"
 
 #include <Engine/World.h>
@@ -17,7 +17,7 @@
 
 struct FItemData;
 class UUserWidgetSlot;
-class AItemLogic;
+class AItemLogicActor;
 
 UCLASS(BlueprintType)
 /**
@@ -90,27 +90,32 @@ class UItem : public UPrototype, public ISerializableJson {
      * @brief Set visibility for non creative game
      */
     bool craftable = true;
-    
+
     std::vector<KeyTable> label_parts = {};
 
     // Database page tag
     std::string page = "";
-    
+
     std::string category = "";
 
     // Description common keys
     std::vector<KeyTable> description_parts = {};
-    
+
     KeyTable label_format;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    UClass * logic;
+    UClass *actor_class;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    UItemLogic *logic;
+
+    std::string actor_bytecode;
 
     // Engine code
   public:
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
-    AItemLogic *
+    AItemLogicActor *
     SpawnLogicItemDeffered(UWorld *world, const FTransform &transform) const;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -131,7 +136,7 @@ class UItem : public UPrototype, public ISerializableJson {
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     bool mSolid = true;
 
-    EVO_LUA_CODEGEN(UItem, Item);
+    EVO_LUA_CODEGEN_DB(UItem, Item);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UItem, Item);

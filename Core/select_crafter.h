@@ -76,7 +76,9 @@ class EVOSPACE_API USelectCrafter : public UCrafterBase {
     UInventoryContainer *mAutoCrafterCoreOutput;
 
   public:
-    EVO_LUA_CODEGEN_DERIVE(USelectCrafter, UCrafterBase, SelectCrafter);
+    EVO_LUA_CODEGEN_DB_DERIVE_CAST(
+        USelectCrafter, UCrafterBase, UBlockLogic, SelectCrafter
+    );
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(USelectCrafter, SelectCrafter);

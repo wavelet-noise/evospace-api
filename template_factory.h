@@ -43,12 +43,14 @@ template <class IdType, class Base, class Comparator> class TemplateFactory {
     }
 
     void add_base(
-        const IdType &id, RegisterFunc forward, RegisterFunc common_reg, RegisterFunc reg,
-        std::string_view comment = ""
+        const IdType &id, RegisterFunc forward, RegisterFunc common_reg,
+        RegisterFunc reg, std::string_view comment = ""
     ) {
         auto i = base_map_.find(id);
         if (i == base_map_.end()) {
-            base_map_.insert(std::make_pair(id, std::make_tuple(forward, common_reg, reg)));
+            base_map_.insert(
+                std::make_pair(id, std::make_tuple(forward, common_reg, reg))
+            );
         } else {
             i->second = std::make_tuple(forward, common_reg, reg);
         }

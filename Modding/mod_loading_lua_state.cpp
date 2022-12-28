@@ -11,10 +11,6 @@ ModLoadingLuaState::ModLoadingLuaState() {
 
     using namespace luabridge;
 
-    getGlobalNamespace(L).addFunction(
-        "register", &ModLoadingLuaState::RegisterObject
-    );
-
     getGlobalNamespace(L)
         .beginClass<URecipe>("Recipe")
         .addProperty("loss", &URecipe::loss)
@@ -30,11 +26,7 @@ ModLoadingLuaState::ModLoadingLuaState() {
     StaticsFactory::Get().register_lua(L);
 }
 
-void ModLoadingLuaState::RegisterObject(UObject *val) {
-    ModLoadingLuaState::Get().mLibrary->RegisterObject(val);
-}
-
-inline ModLoadingLuaState &ModLoadingLuaState::Get() {
+ModLoadingLuaState &ModLoadingLuaState::Get() {
     static std::unique_ptr<ModLoadingLuaState> inst;
 
     if (inst == nullptr) {

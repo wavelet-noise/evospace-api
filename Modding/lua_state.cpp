@@ -6,6 +6,8 @@
 #include "Evospace/Shared/Core/static_research.h"
 #include "Evospace/Shared/lua_state_error.h"
 #include "Evospace/Shared/static_logger.h"
+#include "Evospace/Shared/Core/block.h"
+#include "Evospace/Shared/Core/item.h"
 
 namespace evo {
 
@@ -32,7 +34,24 @@ bool LuaState::RunCode(
             return false;
         }
     }
+    
+    return true;
+}
 
+bool LuaState::RunCode(
+    std::string_view Code, std::string_view CodePath, int NArg, std::function<void(lua_State * L)> push_args, int NRet
+) noexcept {
+    if (luaL_loadbuffer(L, Code.data(), Code.size(), CodePath.data())) {
+        LOG(ERROR) << "Lua loading error: " << lua_tostring(L, -1);
+        return false;
+    } else {
+        push_args(L);
+        if (lua_pcall(L, NArg, NRet, 0)) {
+            LOG(ERROR) << "Lua execution error: " << lua_tostring(L, -1);
+            return false;
+        }
+    }
+    
     return true;
 }
 
@@ -87,6 +106,14 @@ int LuaState::l_my_print(lua_State *L) {
         } else if (lua_isboolean(L, i)) {
             LOG(INFO) << "Lua print: "
                       << (lua_toboolean(L, i) ? "true" : "false");
+        } else if (lua_isnil(L, i)) {
+            LOG(INFO) << "Lua print: nil";
+        } else if (luabridge::isInstance<UBlock>(L, i)) {
+            auto block = luabridge::Stack<UBlock *>::get(L, i);
+            LOG(INFO) << "Lua print: UBlock " << block->name;
+        } else if (luabridge::isInstance<UItem>(L, i)) {
+            auto item = luabridge::Stack<UItem *>::get(L, i);
+            LOG(INFO) << "Lua print: UItem " << item->name;
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -100,7 +127,7 @@ int LuaState::l_my_print(lua_State *L) {
         //               << stat->name;
         // }
         else {
-            LOG(WARN) << "Lua print: not implemented type";
+            LOG(WARN) << "Lua print: print not implemented type";
         }
     }
 
@@ -214,11 +241,20 @@ LuaState::LuaState() {
         .beginClass<UInventoryContainer>("InventoryContainer")
         .endClass();
 
-    getGlobalNamespace(L).beginClass<UIcoGenerator>("IcoGenerator").addStaticFunction("combine", &UIcoGenerator::combine).endClass();
-    
-    getGlobalNamespace(L).beginClass<UTexture2D>("Texture").addStaticFunction("find", &LuaState::GetTexture).endClass();
+    getGlobalNamespace(L)
+        .beginClass<UIcoGenerator>("IcoGenerator")
+        .addStaticFunction("combine", &UIcoGenerator::combine)
+        .endClass();
 
-    getGlobalNamespace(L).beginClass<UMaterialInterface>("Material").addStaticFunction("load", &LuaState::GetMaterial).endClass();
+    getGlobalNamespace(L)
+        .beginClass<UTexture2D>("Texture")
+        .addStaticFunction("find", &LuaState::GetTexture)
+        .endClass();
+
+    getGlobalNamespace(L)
+        .beginClass<UMaterialInterface>("Material")
+        .addStaticFunction("load", &LuaState::GetMaterial)
+        .endClass();
 
     getGlobalNamespace(L).beginClass<UStaticMesh>("Mesh").endClass();
 
@@ -251,7 +287,6 @@ LuaState::LuaState() {
         .addStaticFunction("new_param", &KeyTable::create_param)
         .endClass();
 
-
     RunCode(
         "require('jit') if type(jit) == 'table' then print(jit.version) else "
         "print('jit fatal error') end",
@@ -278,8 +313,7 @@ UClass *LuaState::GetClass(std::string_view name) {
 
     if (type == nullptr) {
         LOG(ERROR) << "Class not found " << name;
-    }
-    else {
+    } else {
         LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }
 
@@ -291,8 +325,7 @@ UTexture2D *LuaState::GetTexture(std::string_view name) {
 
     if (type == nullptr) {
         LOG(ERROR) << "Texture not found " << name;
-    }
-    else {
+    } else {
         LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }
 
@@ -300,12 +333,13 @@ UTexture2D *LuaState::GetTexture(std::string_view name) {
 }
 
 UMaterialInterface *LuaState::GetMaterial(std::string_view name) {
-    auto type = LoadObject<UMaterialInterface>(nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data())));
+    auto type = LoadObject<UMaterialInterface>(
+        nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data()))
+    );
 
     if (type == nullptr) {
         LOG(ERROR) << "Material not found " << name;
-    }
-    else {
+    } else {
         LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }
 

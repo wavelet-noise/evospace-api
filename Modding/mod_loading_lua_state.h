@@ -12,8 +12,6 @@ class ModLoadingLuaState : public LuaState {
   public:
     ModLoadingLuaState();
 
-    static void RegisterObject(UObject *val);
-
     static ModLoadingLuaState &Get();
 
   private:

@@ -67,8 +67,8 @@ class EVOSPACE_API UBlock : public UEntity {
 
     //===================================
 
-    // Transfer all block logic specific data from this block object to given
-    // block logic object
+    // Transfer all block actor_class specific data from this block object to
+    // given block actor_class object
     void move_data_to_proto(evo::LuaState &state, UBlockLogic *logic);
 
     UBlockLogic *spawn_block(ADimension *dim, const FTransform &tr) const;
@@ -86,7 +86,7 @@ class EVOSPACE_API UBlock : public UEntity {
     TSharedPtr<FJsonObject> mLogicJson;
 
   public:
-    EVO_LUA_CODEGEN_DERIVE(UBlock, UPrototype, Block);
+    EVO_LUA_CODEGEN_DB_DERIVE(UBlock, UPrototype, Block);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UBlock, Block);

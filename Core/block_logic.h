@@ -18,7 +18,7 @@ class UHudWidget;
 class URootBlockComponent;
 
 class ADimension;
-class AItemLogic;
+class AItemLogicActor;
 class UItem;
 class UInventoryAccess;
 class UBlock;
@@ -56,8 +56,8 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void OnSideAccessorRemoved(
         UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
     );
-    virtual void OnSpawnedByItem(AItemLogic *item);
-    virtual EBreakResult OnRemovedByItem(AItemLogic *item);
+    virtual void OnSpawnedByItem(AItemLogicActor *item);
+    virtual EBreakResult OnRemovedByItem(AItemLogicActor *item);
 
     //
   public:
@@ -197,7 +197,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     void ReceiveOnAction();
 
     virtual void
-    OnAction(const FHitResult &hit, const Vec3i &side, AItemLogic *item);
+    OnAction(const FHitResult &hit, const Vec3i &side, AItemLogicActor *item);
 
     virtual int32 DropItems(UInventoryAccess *inventory);
 
@@ -224,7 +224,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     UMaterialInterface *mPaintMaterial;
 
   public:
-    EVO_LUA_CODEGEN_DERIVE(UBlockLogic, UPrototype, BlockLogic);
+    EVO_LUA_CODEGEN_DB_DERIVE(UBlockLogic, UPrototype, BlockLogic);
     static std::function<void(lua_State *)> GetRegisterLambda();
 };
 EVO_REGISTER_STATIC(UBlockLogic, BlockLogic);
@@ -252,5 +252,5 @@ class EVOSPACE_API UPartBlockLogic : public UBlockLogic {
     virtual void SetActor(AActor *actor);
 
     virtual void
-    OnAction(const FHitResult &hit, const Vec3i &side, AItemLogic *item);
+    OnAction(const FHitResult &hit, const Vec3i &side, AItemLogicActor *item);
 };
