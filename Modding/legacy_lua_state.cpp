@@ -34,21 +34,10 @@ LegacyLuaState::LegacyLuaState() {
         .endClass();
 }
 
-int LegacyLuaState::Accessor_bind(lua_State *l) {
-    auto side_acc = Stack<UBaseInventoryAccessor *>::get(l, 1);
-    auto container = Stack<UInventoryContainer *>::get(l, 2);
-
-    side_acc->Bind(container);
-
-    return 0;
-}
-
 int LegacyLuaState::Crafter_get_input_container(lua_State *l) {
     auto self = Stack<USelectCrafter *>::get(l, 1);
 
-    std::error_code er;
-
-    push(l, self->mAutoCrafterInputContainer, er);
+    auto result = push(l, self.value()->mAutoCrafterInputContainer);
 
     return 1;
 }
@@ -56,19 +45,9 @@ int LegacyLuaState::Crafter_get_input_container(lua_State *l) {
 int LegacyLuaState::Crafter_get_output_container(lua_State *l) {
     auto self = Stack<USelectCrafter *>::get(l, 1);
 
-    std::error_code er;
-
-    push(l, self->mAutoCrafterOutputContainer, er);
+    auto result = push(l, self.value()->mAutoCrafterOutputContainer);
 
     return 1;
-}
-
-int LegacyLuaState::Accessor_set_side_pos(lua_State *l) {
-    auto self = Stack<UBaseInventoryAccessor *>::get(l, 1);
-    auto side = Stack<Vec3i>::get(l, 2);
-    auto pos = Stack<Vec3i>::get(l, 3);
-    self->SetSidePos(side, pos);
-    return 0;
 }
 
 int LegacyLuaState::BlockLogic_create_accessor(lua_State *l) {
@@ -76,12 +55,13 @@ int LegacyLuaState::BlockLogic_create_accessor(lua_State *l) {
     auto type = Stack<UClass *>::get(l, 2);
     std::error_code ec;
 
-    if (type && type->IsChildOf(UBaseAccessor::StaticClass())) {
-        auto accessor = NewObject<UBaseInventoryAccessor>(self, type);
-        self->AddAccessor(accessor);
-        push(l, accessor, ec);
+    if (type && type.value()->IsChildOf(UBaseAccessor::StaticClass())) {
+        auto accessor =
+            NewObject<UBaseInventoryAccessor>(self.value(), type.value());
+        self.value()->AddAccessor(accessor);
+        auto result = push(l, accessor);
     } else {
-        push(l, luabridge::LuaNil(), ec);
+        auto result = push(l, luabridge::LuaNil());
     }
 
     return 1;

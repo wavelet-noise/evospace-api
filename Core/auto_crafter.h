@@ -20,14 +20,6 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
     // AutoCrafterOutputContainer slot force capacity
     int32 force_capacity = 0;
 
-    /**
-     * @brief Static function.
-     * @param bl BlockLogic object
-     * @return AutoCrafter object or nil
-     */
-    static UAutoCrafter *cast(UBlockLogic *bl);
-    UBlockLogic *as_block_logic();
-
   protected:
     UAutoCrafter();
 
@@ -44,12 +36,9 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
   public:
-    EVO_LUA_CODEGEN_DB_DERIVE_CAST(
-        UAutoCrafter, USelectCrafter, UBlockLogic, AutoCrafter
-    );
-    static std::function<void(lua_State *)> GetRegisterLambda();
+    EVO_LUA_CODEGEN_DB(UAutoCrafter, AutoCrafter);
+    static void RegisterLua(lua_State * L);
 };
-EVO_REGISTER_STATIC(UAutoCrafter, AutoCrafter);
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UDeconstructorCrafterBlockLogic : public UAutoCrafter {

@@ -5,6 +5,5 @@
 extern "C" {
 #include "lauxlib.h"
 #include "lua.h"
-#include "luacompat.h"
 #include "lualib.h"
 }

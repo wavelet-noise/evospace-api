@@ -2,8 +2,7 @@
 #pragma once
 
 #include "../static_logger.h"
-#include "../template_factory.h"
-#include "Evospace/Common.h"
+#include "Evospace/Common.h" //TODO: remove
 #include "Evospace/MainGameInstance.h"
 #include "Evospace/Shared/ThirdParty/luabridge.h"
 
@@ -13,22 +12,6 @@
 #include "prototype.generated.h"
 
 class Base;
-
-namespace evo {
-struct StaticsFactory {
-    struct cmpNameFast {
-        bool operator()(std::string_view a, std::string_view b) const {
-            return a < b;
-        }
-    };
-
-    using FactoryType = TemplateFactory<std::string, Base, cmpNameFast>;
-
-    static FactoryType &Get() {
-        static FactoryType object;
-        return object;
-    }
-};
 
 /*namespace Events {
         struct OnAnimationFinished
@@ -47,126 +30,20 @@ struct StaticsFactory {
         };
 }*/
 
-#define EVO_REGISTER_STATIC(type, name)                                        \
-    EVO_REGISTER_BASE_IMPL(type, evo::StaticsFactory::Get(), #name)
-
 #define EVO_LUA_CODEGEN_DB(type, name)                                         \
   public:                                                                      \
-    static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L).beginClass<type>(#name).endClass( \
-            );                                                                 \
-        };                                                                     \
+    static type *lua_codegen_cast(UPrototype *parent_inst) {                   \
+        return Cast<type>(parent_inst);                                        \
     }                                                                          \
-    static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
-        return [](lua_State *L) {                                              \
+    static void RegisterCommonLua(lua_State *L) {        \
             luabridge::getGlobalNamespace(L)                                   \
                 .beginClass<type>(#name)                                       \
                 .addStaticFunction("find", &evo::DB::find_mut<type>)           \
                 .addStaticFunction("reg", &evo::DB::reg<type>)                 \
                 .addStaticFunction("reg_derived", &evo::DB::reg_derived<type>) \
-                .endClass();                                                   \
-        };                                                                     \
-    }
-
-#define EVO_LUA_CODEGEN(type, name)                                         \
-public:                                                                      \
-static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
-return [](lua_State *L) {                                              \
-luabridge::getGlobalNamespace(L).beginClass<type>(#name).endClass( \
-);                                                                 \
-};                                                                     \
-}                                                                          \
-static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
-return [](lua_State *L) {                                              \
-luabridge::getGlobalNamespace(L)                                   \
-.beginClass<type>(#name)                                       \
-.endClass();                                                   \
-};                                                                     \
-}
-
-#define EVO_LUA_CODEGEN_DB_DERIVE(type, parent, name)                          \
-  public:                                                                      \
-    static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L).beginClass<type>(#name).endClass( \
-            );                                                                 \
-        };                                                                     \
-    }                                                                          \
-    static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L)                                   \
-                .deriveClass<type, parent>(#name)                              \
-                .addStaticFunction("find", &evo::DB::find_mut<type>)           \
-                .addStaticFunction("reg", &evo::DB::reg<type>)                 \
-                .addStaticFunction("reg_derived", &evo::DB::reg_derived<type>) \
-                .endClass();                                                   \
-        };                                                                     \
-    }
-
-#define EVO_LUA_CODEGEN_DERIVE(type, parent, name)                             \
-  public:                                                                      \
-    static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L).beginClass<type>(#name).endClass( \
-            );                                                                 \
-        };                                                                     \
-    }                                                                          \
-    static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L)                                   \
-                .deriveClass<type, parent>(#name)                              \
-                .endClass();                                                   \
-        };                                                                     \
-    }
-
-#define EVO_LUA_CODEGEN_DB_DERIVE_CAST(type, parent, upcast_parent, name)      \
-  public:                                                                      \
-    static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L).beginClass<type>(#name).endClass( \
-            );                                                                 \
-        };                                                                     \
-    }                                                                          \
-    static type *lua_codegen_cast(upcast_parent *parent_inst) {                \
-        return Cast<type>(parent_inst);                                        \
-    }                                                                          \
-    upcast_parent *lua_codegen_upcast() { return this; }                       \
-    static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L)                                   \
-                .deriveClass<type, parent>(#name)                              \
-                .addStaticFunction("find", &evo::DB::find_mut<type>)           \
-                .addStaticFunction("reg", &evo::DB::reg<type>)                 \
-                .addStaticFunction("reg_derived", &evo::DB::reg_derived<type>) \
-                .addFunction("upcast", &type::lua_codegen_upcast)              \
                 .addStaticFunction("cast", &type::lua_codegen_cast)            \
                 .endClass();                                                   \
-        };                                                                     \
     }
-
-#define EVO_LUA_CODEGEN_DERIVE_CAST(type, parent, upcast_parent, name)         \
-  public:                                                                      \
-    static std::function<void(lua_State *)> GetForwardRegisterLambda() {       \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L).beginClass<type>(#name).endClass( \
-            );                                                                 \
-        };                                                                     \
-    }                                                                          \
-    static type *lua_codegen_cast(upcast_parent *parent_inst) {                \
-        return Cast<type>(parent_inst);                                        \
-    }                                                                          \
-    upcast_parent *lua_codegen_upcast() { return this; }                       \
-    static std::function<void(lua_State *)> GetCommonRegisterLambda() {        \
-        return [](lua_State *L) {                                              \
-            luabridge::getGlobalNamespace(L)                                   \
-                .deriveClass<type, parent>(#name)                              \
-                .addFunction("upcast", &type::lua_codegen_upcast)              \
-                .addStaticFunction("cast", &type::lua_codegen_cast)            \
-                .endClass();                                                   \
-        };                                                                     \
-    }
-} // namespace evo
 
 UCLASS(Abstract)
 /**

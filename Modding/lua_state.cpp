@@ -3,11 +3,11 @@
 
 #include "Evospace/IcoGenerator.h"
 #include "Evospace/Item/InventoryContainer.h"
+#include "Evospace/Shared/Core/block.h"
+#include "Evospace/Shared/Core/item.h"
 #include "Evospace/Shared/Core/static_research.h"
 #include "Evospace/Shared/lua_state_error.h"
 #include "Evospace/Shared/static_logger.h"
-#include "Evospace/Shared/Core/block.h"
-#include "Evospace/Shared/Core/item.h"
 
 namespace evo {
 
@@ -34,12 +34,13 @@ bool LuaState::RunCode(
             return false;
         }
     }
-    
+
     return true;
 }
 
 bool LuaState::RunCode(
-    std::string_view Code, std::string_view CodePath, int NArg, std::function<void(lua_State * L)> push_args, int NRet
+    std::string_view Code, std::string_view CodePath, int NArg,
+    std::function<void(lua_State *L)> push_args, int NRet
 ) noexcept {
     if (luaL_loadbuffer(L, Code.data(), Code.size(), CodePath.data())) {
         LOG(ERROR) << "Lua loading error: " << lua_tostring(L, -1);
@@ -51,7 +52,7 @@ bool LuaState::RunCode(
             return false;
         }
     }
-    
+
     return true;
 }
 
@@ -110,10 +111,10 @@ int LuaState::l_my_print(lua_State *L) {
             LOG(INFO) << "Lua print: nil";
         } else if (luabridge::isInstance<UBlock>(L, i)) {
             auto block = luabridge::Stack<UBlock *>::get(L, i);
-            LOG(INFO) << "Lua print: UBlock " << block->name;
+            LOG(INFO) << "Lua print: UBlock " << block.value()->name;
         } else if (luabridge::isInstance<UItem>(L, i)) {
             auto item = luabridge::Stack<UItem *>::get(L, i);
-            LOG(INFO) << "Lua print: UItem " << item->name;
+            LOG(INFO) << "Lua print: UItem " << item.value()->name;
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -187,12 +188,12 @@ LuaState::LuaState() {
     //     lua_pop(L, 1);
     // }
 
-    constexpr luaL_Reg print_lib[] = {
-        {"print", l_my_print}, {nullptr, nullptr}};
+    // constexpr luaL_Reg print_lib[] = {
+    //     {"print", l_my_print}, {nullptr, nullptr}};
 
-    lua_getglobal(L, "_G");
-    luaL_setfuncs(L, print_lib, 0);
-    lua_pop(L, 1);
+    // lua_getglobal(L, "_G");
+    // luaL_setfuncs(L, print_lib, 0);
+    // lua_pop(L, 1);
 
     auto col = luabridge::getGlobal(L, "collectgarbage");
     col("setpause", 100);
@@ -262,7 +263,8 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L)
         .beginClass<UClass>("Class")
-        .addStaticFunction("find", &LuaState::GetClass)
+        .addStaticFunction("find", &LuaState::FindClass)
+        .addStaticFunction("load", &LuaState::LoadClass)
         .endClass();
 
     getGlobalNamespace(L)
@@ -308,8 +310,20 @@ int AppendPath(lua_State *L, std::string_view path) noexcept {
     return 0;
 }
 
-UClass *LuaState::GetClass(std::string_view name) {
+UClass *LuaState::FindClass(std::string_view name) {
     auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
+
+    if (type == nullptr) {
+        LOG(ERROR) << "Class not found " << name;
+    } else {
+        LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+    }
+
+    return type;
+}
+
+UClass *LuaState::LoadClass(std::string_view name) {
+    auto type = LoadObject<UClass>(nullptr, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
         LOG(ERROR) << "Class not found " << name;

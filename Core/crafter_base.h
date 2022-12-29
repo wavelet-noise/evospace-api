@@ -7,6 +7,7 @@
 #include "crafter_base.generated.h"
 
 class UInternalInventory;
+class URecipeDictionary;
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
@@ -65,12 +66,12 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
      */
     virtual void select_recipe(APlayerController *pc, int32 i);
 
-    UFUNCTION(BlueprintCallable)
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     /**
-     * @brief Get RecipeDictionary linked with this crafter
+     * @brief Property. RecipeDictionary linked with this crafter
      * @return RecipeDictionary object
      */
-    virtual const URecipeDictionary *get_recipe_dictionary() const;
+    const URecipeDictionary *recipe_dictionary;
 
     // Engine code
   public:
@@ -155,18 +156,12 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
     bool mPowerLevelError = false;
 
   protected:
-    UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-    const URecipeDictionary *mRecipeDictionary;
-
     friend class UBlockModdingLuaState;
 
     UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
     const URecipe *mCurrentRecipe = nullptr;
 
   public:
-    EVO_LUA_CODEGEN_DB_DERIVE_CAST(
-        UCrafterBase, UTieredBlockLogic, UBlockLogic, CrafterBase
-    );
-    static std::function<void(lua_State *)> GetRegisterLambda();
+    EVO_LUA_CODEGEN_DB(UCrafterBase, CrafterBase);
+    static void RegisterLua(lua_State * L);
 };
-EVO_REGISTER_STATIC(UCrafterBase, CrafterBase);

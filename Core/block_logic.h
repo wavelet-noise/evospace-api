@@ -2,6 +2,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/AccessorComponent.h"
+#include "Evospace/Blocks/BaseInventorySideAccessor.h"
 #include "Evospace/BreakResult.h"
 #include "Evospace/Common.h"
 #include "Evospace/CoordinateSystem.h"
@@ -42,6 +43,8 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
      */
     const UBlock *block = nullptr;
 
+    UBaseInventoryAccessor *lua_create_accessor(UClass *type);
+
     // Engine code
   public:
     UBlockLogic();
@@ -67,7 +70,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void HandleRecipeSelection(UItem *item);
 
     virtual void SetActor(AActor *actor);
-    void DefferedPaintApply();
+    void DeferredPaintApply();
     virtual void RemoveActor();
 
     virtual void Tick();
@@ -224,10 +227,9 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
     UMaterialInterface *mPaintMaterial;
 
   public:
-    EVO_LUA_CODEGEN_DB_DERIVE(UBlockLogic, UPrototype, BlockLogic);
-    static std::function<void(lua_State *)> GetRegisterLambda();
+    EVO_LUA_CODEGEN_DB(UBlockLogic, BlockLogic);
+    static void RegisterLua(lua_State * L);
 };
-EVO_REGISTER_STATIC(UBlockLogic, BlockLogic);
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UPartBlockLogic : public UBlockLogic {

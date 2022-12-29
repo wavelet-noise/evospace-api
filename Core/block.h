@@ -37,6 +37,14 @@ class EVOSPACE_API UBlock : public UEntity {
     UPROPERTY(BlueprintReadOnly)
     const UTesselator *tesselator;
 
+    UPROPERTY()
+    UClass *actor = nullptr;
+
+    UPROPERTY()
+    UClass *selector = nullptr;
+
+    std::string replace_tag;
+
     // Engine code
   public:
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
@@ -44,16 +52,7 @@ class EVOSPACE_API UBlock : public UEntity {
 
     const UTesselator *GetTesselator() const;
 
-    UPROPERTY(BlueprintReadOnly)
-    TSubclassOf<AActor> mActorClass = nullptr;
-
-    UPROPERTY(BlueprintReadOnly)
-    TSubclassOf<AActor> mSelectorClass = nullptr;
-
-    UPROPERTY(BlueprintReadOnly)
-    FName replace_tag;
-
-    virtual AActor *SpawnActorAndLuaDeffered(
+    virtual AActor *SpawnActorAndLuaDeferred(
         ADimension *world, UBlockLogic *bloc_logic, const FTransform &tr
     ) const;
 
@@ -63,7 +62,7 @@ class EVOSPACE_API UBlock : public UEntity {
     UPROPERTY(BlueprintReadOnly)
     FVector color_top = FVector(1);
 
-    TArray<FVector3i> mPositions;
+    std::vector<FVector3i> sub_blocks;
 
     //===================================
 
@@ -86,7 +85,6 @@ class EVOSPACE_API UBlock : public UEntity {
     TSharedPtr<FJsonObject> mLogicJson;
 
   public:
-    EVO_LUA_CODEGEN_DB_DERIVE(UBlock, UPrototype, Block);
-    static std::function<void(lua_State *)> GetRegisterLambda();
+    EVO_LUA_CODEGEN_DB(UBlock, Block);
+    static void RegisterLua(lua_State * L);
 };
-EVO_REGISTER_STATIC(UBlock, Block);

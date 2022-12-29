@@ -6,16 +6,44 @@ bool UeLogger::sendLogMessage(LogData *logData) {
     std::string out_string = m_stream.str().c_str();
     switch (logData->level) {
     case WARN:
-        UE_LOG(LogTemp, Warning, TEXT("%s"), UTF8_TO_TCHAR(out_string.data()));
+        FMsg::Logf_Internal(
+            UE_LOG_SOURCE_FILE(__FILE__),
+            __LINE__,
+            LogTemp.GetCategoryName(),
+            ELogVerbosity::Warning,
+            TEXT("%s"),
+            UTF8_TO_TCHAR(out_string.data())
+        );
         break;
     case ERROR:
-        UE_LOG(LogTemp, Error, TEXT("%s"), UTF8_TO_TCHAR(out_string.data()));
+        FMsg::Logf_Internal(
+            UE_LOG_SOURCE_FILE(__FILE__),
+            __LINE__,
+            LogTemp.GetCategoryName(),
+            ELogVerbosity::Error,
+            TEXT("%s"),
+            UTF8_TO_TCHAR(out_string.data())
+        );
         break;
     case FATAL:
-        UE_LOG(LogTemp, Fatal, TEXT("%s"), UTF8_TO_TCHAR(out_string.data()));
+        FMsg::Logf_Internal(
+            UE_LOG_SOURCE_FILE(__FILE__),
+            __LINE__,
+            LogTemp.GetCategoryName(),
+            ELogVerbosity::Fatal,
+            TEXT("%s"),
+            UTF8_TO_TCHAR(out_string.data())
+        );
         break;
     default:
-        UE_LOG(LogTemp, Display, TEXT("%s"), UTF8_TO_TCHAR(out_string.data()));
+        FMsg::Logf_Internal(
+            UE_LOG_SOURCE_FILE(__FILE__),
+            __LINE__,
+            LogTemp.GetCategoryName(),
+            ELogVerbosity::Display,
+            TEXT("%s"),
+            UTF8_TO_TCHAR(out_string.data())
+        );
         break;
     }
     m_stream.str("");

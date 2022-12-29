@@ -104,19 +104,14 @@ class UItem : public UPrototype, public ISerializableJson {
     KeyTable label_format;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    UClass *actor_class;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     UItemLogic *logic;
-
-    std::string actor_bytecode;
 
     // Engine code
   public:
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
     AItemLogicActor *
-    SpawnLogicItemDeffered(UWorld *world, const FTransform &transform) const;
+    SpawnLogicItemDeferred(UWorld *world, const FTransform &transform) const;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     TArray<UMaterialInterface *> mMaterials;
@@ -137,6 +132,5 @@ class UItem : public UPrototype, public ISerializableJson {
     bool mSolid = true;
 
     EVO_LUA_CODEGEN_DB(UItem, Item);
-    static std::function<void(lua_State *)> GetRegisterLambda();
+    static void RegisterLua(lua_State * L);
 };
-EVO_REGISTER_STATIC(UItem, Item);
