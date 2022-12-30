@@ -21,12 +21,20 @@ class EVOSPACE_API USelectCrafter : public UCrafterBase {
 
     // Lua api
   public:
-    /**
-     * @brief Static function.
-     * @param bl BlockLogic object
-     * @return SelectCrafter object or nil
-     */
-    static USelectCrafter *cast(UBlockLogic *bl);
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UInventoryContainer *mAutoCrafterInputContainer;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UInventoryContainer *mAutoCrafterOutputContainer;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UCoreAccessor *mAutoCrafterCoreAccessor;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UInventoryContainer *mAutoCrafterCoreInput;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UInventoryContainer *mAutoCrafterCoreOutput;
 
   public:
     USelectCrafter();
@@ -60,22 +68,6 @@ class EVOSPACE_API USelectCrafter : public UCrafterBase {
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
   public:
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    UInventoryContainer *mAutoCrafterInputContainer;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    UInventoryContainer *mAutoCrafterOutputContainer;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    UCoreAccessor *mAutoCrafterCoreAccessor;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    UInventoryContainer *mAutoCrafterCoreInput;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    UInventoryContainer *mAutoCrafterCoreOutput;
-
-  public:
     EVO_LUA_CODEGEN_DB(USelectCrafter, SelectCrafter);
-    static void RegisterLua(lua_State * L);
+    static void RegisterLua(lua_State *L);
 };

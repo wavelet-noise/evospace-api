@@ -8,6 +8,7 @@
 #include "Evospace/Shared/Core/static_research.h"
 #include "Evospace/Shared/lua_state_error.h"
 #include "Evospace/Shared/static_logger.h"
+#include "Evospace/Shared/Core/recipe.h"
 
 namespace evo {
 
@@ -115,6 +116,9 @@ int LuaState::l_my_print(lua_State *L) {
         } else if (luabridge::isInstance<UItem>(L, i)) {
             auto item = luabridge::Stack<UItem *>::get(L, i);
             LOG(INFO) << "Lua print: UItem " << item.value()->name;
+        } else if (luabridge::isInstance<FItemData>(L, i)) {
+            auto item = luabridge::Stack<FItemData>::get(L, i);
+            LOG(INFO) << "Lua print: ItemData {" << (item.value().item ? item.value().item->name : "nullptr") << ", " << item.value().count << "}";
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -188,12 +192,8 @@ LuaState::LuaState() {
     //     lua_pop(L, 1);
     // }
 
-    // constexpr luaL_Reg print_lib[] = {
-    //     {"print", l_my_print}, {nullptr, nullptr}};
-
-    // lua_getglobal(L, "_G");
-    // luaL_setfuncs(L, print_lib, 0);
-    // lua_pop(L, 1);
+    luabridge::getGlobalNamespace(L)
+        .addFunction("print", &LuaState::l_my_print);
 
     auto col = luabridge::getGlobal(L, "collectgarbage");
     col("setpause", 100);
@@ -237,10 +237,6 @@ LuaState::LuaState() {
     LOG(INFO) << ver.tostring();
 
     using namespace luabridge;
-
-    getGlobalNamespace(L)
-        .beginClass<UInventoryContainer>("InventoryContainer")
-        .endClass();
 
     getGlobalNamespace(L)
         .beginClass<UIcoGenerator>("IcoGenerator")
@@ -287,6 +283,30 @@ LuaState::LuaState() {
         .beginClass<KeyTable>("Loc")
         .addStaticFunction("new", &KeyTable::create)
         .addStaticFunction("new_param", &KeyTable::create_param)
+        .endClass();
+
+    getGlobalNamespace(L)
+        .beginClass<FItemData>("ItemData")
+        .addStaticFunction("new", +[]() { return FItemData(); })
+        .addProperty("count", &FItemData::count)
+        .addProperty("item", &FItemData::item)
+        .endClass();
+
+    getGlobalNamespace(L)
+        .beginClass<URecipe>("Recipe")
+        .addStaticFunction("new", &URecipe::lua_new)
+        .addProperty("loss", &URecipe::loss)
+        .addProperty("ticks", &URecipe::ticks)
+        .addProperty("input", &URecipe::input, false)
+        .addProperty("output", &URecipe::output, false)
+        .addProperty("res_input", &URecipe::res_input)
+        .addProperty("res_output", &URecipe::res_output)
+        .addProperty("name", &URecipe::get_name, &URecipe::set_name)
+        .endClass();
+
+    luabridge::getGlobalNamespace(L)
+        .beginClass<UPrototype>("Prototype")
+        .addProperty("name", &UPrototype::name, false)
         .endClass();
 
     RunCode(

@@ -131,6 +131,7 @@ class UItem : public UPrototype, public ISerializableJson {
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     bool mSolid = true;
 
+  public:
     EVO_LUA_CODEGEN_DB(UItem, Item);
-    static void RegisterLua(lua_State * L);
+    static void RegisterLua(lua_State *L);
 };

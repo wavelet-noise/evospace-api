@@ -2,6 +2,7 @@
 
 namespace cpplog {
 bool UeLogger::sendLogMessage(LogData *logData) {
+#ifdef WITH_EDITOR
     OstreamLogger::sendLogMessage(logData);
     std::string out_string = m_stream.str().c_str();
     switch (logData->level) {
@@ -48,6 +49,7 @@ bool UeLogger::sendLogMessage(LogData *logData) {
     }
     m_stream.str("");
     m_stream.clear();
+#endif
 
     return true;
 }

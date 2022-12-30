@@ -124,5 +124,5 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
     UInventory *mUsedInInventory;
 
     EVO_LUA_CODEGEN_DB(URecipeDictionary, RecipeDictionary);
-    static void RegisterLua(lua_State * L);
+    static void RegisterLua(lua_State *L);
 };

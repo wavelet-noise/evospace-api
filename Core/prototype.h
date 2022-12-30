@@ -35,14 +35,14 @@ class Base;
     static type *lua_codegen_cast(UPrototype *parent_inst) {                   \
         return Cast<type>(parent_inst);                                        \
     }                                                                          \
-    static void RegisterCommonLua(lua_State *L) {        \
-            luabridge::getGlobalNamespace(L)                                   \
-                .beginClass<type>(#name)                                       \
-                .addStaticFunction("find", &evo::DB::find_mut<type>)           \
-                .addStaticFunction("reg", &evo::DB::reg<type>)                 \
-                .addStaticFunction("reg_derived", &evo::DB::reg_derived<type>) \
-                .addStaticFunction("cast", &type::lua_codegen_cast)            \
-                .endClass();                                                   \
+    static void RegisterCommonLua(lua_State *L) {                              \
+        luabridge::getGlobalNamespace(L)                                       \
+            .beginClass<type>(#name)                                           \
+            .addStaticFunction("find", &evo::DB::find_mut<type>)               \
+            .addStaticFunction("get", &evo::DB::get<type>)                     \
+            .addStaticFunction("get_derived", &evo::DB::get_derived<type>)     \
+            .addStaticFunction("cast", &type::lua_codegen_cast)                \
+            .endClass();                                                       \
     }
 
 UCLASS(Abstract)
@@ -88,7 +88,7 @@ class DB {
     }
 
     template <typename TReturned, typename TCreated>
-    static TReturned *reg(std::string_view name) {
+    static TReturned *get(std::string_view name) {
         using TReturnedNormalized = typename std::remove_cv<TReturned>::type;
         static_assert(std::is_base_of<TReturned, TCreated>());
         auto &gs = get_storage<TReturnedNormalized>();
@@ -113,7 +113,7 @@ class DB {
         get_storage<TReturned>().clear();
     }
 
-    template <typename TReturned> static TReturned *reg(std::string_view name) {
+    template <typename TReturned> static TReturned *get(std::string_view name) {
         auto &gs = get_storage<TReturned>();
         if (gs.find(name.data()) == gs.end()) {
             auto u =
@@ -138,7 +138,7 @@ class DB {
     }
 
     template <typename TReturned>
-    static TReturned *reg_derived(std::string_view name, UClass *class_ptr) {
+    static TReturned *get_derived(std::string_view name, UClass *class_ptr) {
         auto &gs = get_storage<TReturned>();
         if (gs.find(name.data()) == gs.end()) {
             if (!class_ptr) {

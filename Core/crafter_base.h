@@ -163,5 +163,5 @@ class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
 
   public:
     EVO_LUA_CODEGEN_DB(UCrafterBase, CrafterBase);
-    static void RegisterLua(lua_State * L);
+    static void RegisterLua(lua_State *L);
 };

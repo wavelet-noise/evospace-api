@@ -6,6 +6,7 @@
 #include "Evospace/IcoGenerator.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BaseBuildingItemLogicActor.h"
 #include "Evospace/JsonObjectLibrary.h"
+#include "Evospace/Item/RecipeInventory.h"
 #include "Evospace/Shared/Core/auto_crafter.h"
 #include "Evospace/Shared/Core/block.h"
 #include "Evospace/Shared/Core/block_logic.h"
@@ -46,18 +47,6 @@ template <typename T> void registerCall(lua_State *L) {
 ModLoadingLuaState::ModLoadingLuaState() {
 
     using namespace luabridge;
-
-    getGlobalNamespace(L)
-        .beginClass<URecipe>("Recipe")
-        .addProperty("loss", &URecipe::loss)
-        .addProperty("ticks", &URecipe::ticks)
-        .addProperty("name", &URecipe::get_name, &URecipe::set_name)
-        .endClass();
-
-    luabridge::getGlobalNamespace(L)
-        .beginClass<UPrototype>("Prototype")
-        .addProperty("name", &UPrototype::name, false)
-        .endClass();
 
     std::apply(
         [this](auto... args) {

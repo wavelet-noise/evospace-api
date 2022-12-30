@@ -175,7 +175,7 @@ class UStaticResearch : public UPrototype, public ISerializableJson {
     virtual void ApplyToController(AMainPlayerController *apply_to);
 
     EVO_LUA_CODEGEN_DB(UStaticResearch, StaticResearch);
-    static void RegisterLua(lua_State * L);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS(BlueprintType)

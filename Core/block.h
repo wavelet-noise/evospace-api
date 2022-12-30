@@ -86,5 +86,5 @@ class EVOSPACE_API UBlock : public UEntity {
 
   public:
     EVO_LUA_CODEGEN_DB(UBlock, Block);
-    static void RegisterLua(lua_State * L);
+    static void RegisterLua(lua_State *L);
 };

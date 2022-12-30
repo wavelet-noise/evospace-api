@@ -228,7 +228,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
 
   public:
     EVO_LUA_CODEGEN_DB(UBlockLogic, BlockLogic);
-    static void RegisterLua(lua_State * L);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS(BlueprintType)

@@ -37,7 +37,7 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
 
   public:
     EVO_LUA_CODEGEN_DB(UAutoCrafter, AutoCrafter);
-    static void RegisterLua(lua_State * L);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS(BlueprintType)

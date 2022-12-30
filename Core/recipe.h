@@ -67,18 +67,27 @@ class URecipe : public UObject, public ISerializableJson {
      * @endcode
      */
     void set_name(std::string_view val) { name = UTF8_TO_TCHAR(val.data()); }
+    
+    static URecipe * lua_new() { return NewObject<URecipe>(); }
+
+    
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    /**
+     * @brief 
+     */
+    URecipeInventory *input;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    /**
+     * @brief 
+     */
+    URecipeInventory *output;
 
     // Engine code
   public:
     URecipe();
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    URecipeInventory *input;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    URecipeInventory *output;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FItemData res_input;
@@ -110,3 +119,4 @@ class URecipe : public UObject, public ISerializableJson {
 
     int32 dictionary_index = INDEX_NONE;
 };
+
