@@ -102,23 +102,23 @@ int LuaState::l_my_print(lua_State *L) {
 
     for (int i = 1; i <= nargs; i++) {
         if (lua_isstring(L, i)) {
-            LOG(INFO) << "Lua print: " << lua_tostring(L, i);
+            LOG(TRACE) << "Lua print: " << lua_tostring(L, i);
         } else if (lua_isnumber(L, i)) {
-            LOG(INFO) << "Lua print: " << lua_tonumber(L, i);
+            LOG(TRACE) << "Lua print: " << lua_tonumber(L, i);
         } else if (lua_isboolean(L, i)) {
-            LOG(INFO) << "Lua print: "
+            LOG(TRACE) << "Lua print: "
                       << (lua_toboolean(L, i) ? "true" : "false");
         } else if (lua_isnil(L, i)) {
-            LOG(INFO) << "Lua print: nil";
+            LOG(TRACE) << "Lua print: nil";
         } else if (luabridge::isInstance<UBlock>(L, i)) {
             auto block = luabridge::Stack<UBlock *>::get(L, i);
-            LOG(INFO) << "Lua print: UBlock " << block.value()->name;
+            LOG(TRACE) << "Lua print: UBlock " << block.value()->name;
         } else if (luabridge::isInstance<UItem>(L, i)) {
             auto item = luabridge::Stack<UItem *>::get(L, i);
-            LOG(INFO) << "Lua print: UItem " << item.value()->name;
+            LOG(TRACE) << "Lua print: UItem " << item.value()->name;
         } else if (luabridge::isInstance<FItemData>(L, i)) {
             auto item = luabridge::Stack<FItemData>::get(L, i);
-            LOG(INFO) << "Lua print: ItemData {" << (item.value().item ? item.value().item->name : "nullptr") << ", " << item.value().count << "}";
+            LOG(TRACE) << "Lua print: ItemData {" << (item.value().item ? item.value().item->name : "nullptr") << ", " << item.value().count << "}";
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -127,7 +127,7 @@ int LuaState::l_my_print(lua_State *L) {
         // }
         // if (luabridge::Stack<UPrototype *>::isInstance(L, i)) {
         //     auto stat = luabridge::Stack<UPrototype *>::get(L, i);
-        //     LOG(INFO) << "Lua print: "
+        //     LOG(TRACE) << "Lua print: "
         //               << TCHAR_TO_UTF8(*stat->GetClass()->GetName()) << ""
         //               << stat->name;
         // }
@@ -231,10 +231,10 @@ LuaState::LuaState() {
     //
     // lua_pop(L, 1);
 
-    LOG(INFO) << "Lua state initialized";
+    LOG(TRACE) << "Lua state initialized";
 
     auto ver = luabridge::getGlobal(L, "_VERSION");
-    LOG(INFO) << ver.tostring();
+    LOG(TRACE) << ver.tostring();
 
     using namespace luabridge;
 
