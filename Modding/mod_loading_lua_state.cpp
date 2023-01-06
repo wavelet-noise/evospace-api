@@ -39,18 +39,17 @@ namespace evo {
 //         std::make_index_sequence<std::tuple_size_v<std::remove_reference_t<Tuple>>>{});
 // }
 
+namespace {
 template <typename T> void registerCall(lua_State *L) {
     T::RegisterLua(L);
     T::RegisterCommonLua(L);
 }
+}
 
 ModLoadingLuaState::ModLoadingLuaState() {
-
-    using namespace luabridge;
-
     std::apply(
         [this](auto... args) {
-            (evo::registerCall<
+            (registerCall<
                  typename std::remove_pointer<decltype(args)>::type>(L),
              ...);
         },
