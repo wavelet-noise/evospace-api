@@ -86,6 +86,10 @@ class EVOSPACE_API UStaticChapter : public UPrototype,
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
     virtual void PostDeserializeJson() override;
+    
+public:
+    EVO_LUA_CODEGEN_DB(UStaticChapter, StaticChapter);
+    static void RegisterLua(lua_State *L);
 };
 
 /** @def UStaticResearch
@@ -174,6 +178,7 @@ class UStaticResearch : public UPrototype, public ISerializableJson {
 
     virtual void ApplyToController(AMainPlayerController *apply_to);
 
+  public:
     EVO_LUA_CODEGEN_DB(UStaticResearch, StaticResearch);
     static void RegisterLua(lua_State *L);
 };

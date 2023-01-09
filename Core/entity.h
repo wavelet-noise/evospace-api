@@ -28,4 +28,8 @@ class EVOSPACE_API UEntity : public UPrototype, public ISerializableJson {
     };
 
     bool is_surface = false;
+    
+public:
+    EVO_LUA_CODEGEN_DB(UEntity, Entity);
+    static void RegisterLua(lua_State *L);
 };

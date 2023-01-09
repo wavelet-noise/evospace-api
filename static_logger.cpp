@@ -23,7 +23,3 @@ StaticLogger &StaticLogger::Get() {
 }
 
 cpplog::BaseLogger &StaticLogger::get_logger() { return *Get().logger; }
-
-void StaticLogger::Log(std::string_view sw) { lines.push_back(sw.data()); }
-
-void StaticLogger::Clear() { lines.clear(); }

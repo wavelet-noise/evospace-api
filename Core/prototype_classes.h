@@ -1,5 +1,6 @@
 #pragma once
 
+class UEntity;
 class UBlockLogic;
 class UTieredBlockLogic;
 class UCrafterBase;
@@ -10,6 +11,7 @@ class URecipeDictionary;
 class UBlock;
 class UTesselator;
 class UTesselatorCube;
+class UTesselatorMarching;
 class UItemLogic;
 class UBlockBuilder;
 class UBaseAccessor;
@@ -22,13 +24,21 @@ class UInventoryContainer;
 class UInternalInventory;
 class URecipeInventory;
 
+class UPropsGenerator;
+class ULayeringGenerator;
+class UBiome;
+class UStaticAttach;
+class UPropList;
+class UStaticResearch;
+class UStaticChapter;
+
 namespace evo { namespace prototype_helper {
 inline std::tuple<
-    UBlockLogic *, UTieredBlockLogic *, UCrafterBase *, USelectCrafter *,
+    UEntity *, UBlockLogic *, UTieredBlockLogic *, UCrafterBase *, USelectCrafter *,
     UAutoCrafter *, UItem *, URecipeDictionary *, UBlock *, UTesselator *,
-    UTesselatorCube *, UItemLogic *, UBlockBuilder *, UBaseAccessor *,
+    UTesselatorCube *, UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBaseAccessor *,
     UBaseInventoryAccessor *, UInventoryReader *, UInventoryAccess *, UBaseInventory *,
     UInventory *, UInventoryContainer *, UInternalInventory *,
-    URecipeInventory *>
+    URecipeInventory *, UPropsGenerator *, ULayeringGenerator *, UBiome*, UStaticAttach *, UPropList *, UStaticResearch *, UStaticChapter * >
     classes;
 }} // namespace evo::prototype_helper
