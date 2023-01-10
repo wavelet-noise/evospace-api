@@ -39,6 +39,14 @@ class Base;
             .endClass();                                                       \
     }
 
+#define EVO_LUA_CODEGEN_EMPTY(type, parent, name)           \
+    public: \
+void RegisterLua(lua_State *L){ \
+    luabridge::getGlobalNamespace(L) \
+    .deriveClass<type, parent>(#name) \
+    .endClass(); \
+} 
+
 UCLASS(Abstract)
 /**
  * @brief Super class for all objects stored in database

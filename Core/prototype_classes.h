@@ -32,6 +32,14 @@ class UPropList;
 class UStaticResearch;
 class UStaticChapter;
 
+class UBedBlockLogic;
+class UDoorBlockLogic;
+class ULampBlockLogic;
+class UFenceBlockLogic;
+
+class USurfaceBuilder;
+class UPlaneBuilder;
+
 namespace evo { namespace prototype_helper {
 inline std::tuple<
     UEntity *, UBlockLogic *, UTieredBlockLogic *, UCrafterBase *, USelectCrafter *,
@@ -39,6 +47,9 @@ inline std::tuple<
     UTesselatorCube *, UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBaseAccessor *,
     UBaseInventoryAccessor *, UInventoryReader *, UInventoryAccess *, UBaseInventory *,
     UInventory *, UInventoryContainer *, UInternalInventory *,
-    URecipeInventory *, UPropsGenerator *, ULayeringGenerator *, UBiome*, UStaticAttach *, UPropList *, UStaticResearch *, UStaticChapter * >
+    URecipeInventory *, UPropsGenerator *, ULayeringGenerator *, UBiome*, UStaticAttach *,
+    UPropList *, UStaticResearch *, UStaticChapter * , UBedBlockLogic *, UDoorBlockLogic *,
+    ULampBlockLogic *, UFenceBlockLogic *, USurfaceBuilder * , UPlaneBuilder *
+>
     classes;
 }} // namespace evo::prototype_helper
