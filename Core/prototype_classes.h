@@ -39,7 +39,7 @@ class UFenceBlockLogic;
 
 class USurfaceBuilder;
 class UPlaneBuilder;
-
+ 
 namespace evo { namespace prototype_helper {
 inline std::tuple<
     UEntity *, UBlockLogic *, UTieredBlockLogic *, UCrafterBase *, USelectCrafter *,

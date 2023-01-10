@@ -16,6 +16,8 @@
 #include "Evospace/Shared/Core/recipe_dictionary.h"
 #include "Evospace/Shared/Core/select_crafter.h"
 #include "Evospace/Tesselator/TesselatorCube.h"
+#include "Evospace/Blocks/Vanilla/FenceBlockLogic.h"
+#include "Evospace/Item/Implementation/ObjectBuild/BuildingSurfaceBlockItemLogic.h"
 
 #include <tuple>
 

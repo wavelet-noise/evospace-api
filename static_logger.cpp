@@ -4,12 +4,17 @@
 #include <memory>
 
 StaticLogger::StaticLogger(std::string_view filename)
-#ifdef WITH_EDITOR
-    : logger(std::make_unique<cpplog::UeLogger>())
-#else
-    : logger(std::make_unique<cpplog::FileLogger>(filename.data()))
-#endif
 {
+    errors_log = new cpplog::StringLogger();
+#ifdef WITH_EDITOR
+    logger = std::make_unique<cpplog::MultiplexLogger>(
+        new cpplog::UeLogger(), true,
+        new cpplog::FilteringLogger(ERROR, errors_log, true), true);
+#else
+    logger = std::make_unique<cpplog::MultiplexLogger>(
+        new cpplog::FileLogger(filename.data()), true,
+        new cpplog::FilteringLogger(ERROR, errors_log, true), true);
+#endif 
 }
 
 StaticLogger &StaticLogger::Get() {

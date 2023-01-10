@@ -20,6 +20,8 @@ class StaticLogger {
     StaticLogger(std::string_view filename);
 
     std::unique_ptr<cpplog::BaseLogger> logger;
+    
+    cpplog::StringLogger * errors_log;
 
     static StaticLogger &Get();
     static cpplog::BaseLogger &get_logger();
