@@ -392,8 +392,6 @@ UTexture2D *LuaState::GetTexture(std::string_view name) {
 }
 
 UMaterialInterface *LuaState::GetMaterial(std::string_view name) {
-
-    return nullptr;
     auto type = LoadObject<UMaterialInterface>(
         nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data()))
     );
