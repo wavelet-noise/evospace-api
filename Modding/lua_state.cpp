@@ -2,6 +2,7 @@
 #include "lua_state.h"
 
 #include "Evospace/IcoGenerator.h"
+#include "Evospace/MainGameModLoader.h"
 #include "Evospace/Item/InventoryContainer.h"
 #include "Evospace/Shared/Core/block.h"
 #include "Evospace/Shared/Core/item.h"
@@ -24,14 +25,15 @@ void LuaState::add_lua_path(const std::string &path) {
 }
 
 bool LuaState::RunCode(
-    std::string_view Code, std::string_view CodePath, int NRet
-) noexcept {
-    if (luaL_loadbuffer(L, Code.data(), Code.size(), CodePath.data())) {
-        LOG(ERROR) << "Lua loading error: " << lua_tostring(L, -1);
+    std::string_view code, std::string_view path, int NRet
+) {
+    std::string path_decorated = std::string("@") + path.data();
+    if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
+        LOG(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
         return false;
     } else {
         if (lua_pcall(L, 0, NRet, 0)) {
-            LOG(ERROR) << "Lua execution error: " << lua_tostring(L, -1);
+            LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
             return false;
         }
     }
@@ -40,16 +42,34 @@ bool LuaState::RunCode(
 }
 
 bool LuaState::RunCode(
-    std::string_view Code, std::string_view CodePath, int NArg,
+    AsyncMessageObject & msg, std::string_view code, std::string_view path, int NRet
+) {
+    std::string path_decorated = std::string("@") + path.data();
+    if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
+        msg.Log(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
+        return false;
+    } else {
+        if (lua_pcall(L, 0, NRet, 0)) {
+            msg.Log(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool LuaState::RunCode(
+    std::string_view code, std::string_view path, int NArg,
     std::function<void(lua_State *L)> push_args, int NRet
-) noexcept {
-    if (luaL_loadbuffer(L, Code.data(), Code.size(), CodePath.data())) {
-        LOG(ERROR) << "Lua loading error: " << lua_tostring(L, -1);
+) {
+    std::string path_decorated = std::string("@") + path.data();
+    if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
+        LOG(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
         return false;
     } else {
         push_args(L);
         if (lua_pcall(L, NArg, NRet, 0)) {
-            LOG(ERROR) << "Lua execution error: " << lua_tostring(L, -1);
+            LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
             return false;
         }
     }
@@ -69,32 +89,37 @@ std::vector<std::string> split(std::string_view s, char delim) {
     return result;
 }
 
-auto LuaState::to_byte_code(std::string_view code) noexcept -> std::string {
-    const char *CodeRaw = code.data();
-    std::string Output;
+int LuaState::ToByteCode_Writer(lua_State *L, const void *ptr, size_t size, void *user_data){
+        const auto output = static_cast<std::string *>(user_data);
+        const auto ptr_u8 = static_cast<const uint8_t *>(ptr);
 
+        output->insert(output->end(), ptr_u8, ptr_u8 + size);
+        return 0;
+    }auto LuaState::to_byte_code(std::string_view code, std::string_view path) -> std::string {
+    std::string output;
+    std::string path_decorated = std::string("@") + path.data();
     lua_State *L = luaL_newstate();
-    if (auto err = luaL_loadbuffer(L, CodeRaw, code.length(), "@string")) {
+    if (auto err = luaL_loadbuffer(L, code.data(), code.length(), path_decorated.data())) {
         std::string error = lua_tostring(L, -1);
         lua_close(L);
         auto splited_error = split(error, ':');
         auto index = std::stoi(splited_error[1]);
         auto splitted_source = split(code, '\n');
         auto in_error = splitted_source[index - 1];
-        LOG(ERROR) << "Load buffer error: " << error << "; line " << index
+        LOG(ERROR_LL) << "Load buffer error: " << error << "; line " << index
                    << ": " << in_error;
         return "";
     }
 
-    if (lua_dump(L, ToByteCode_Writer, &Output)) {
+    if (lua_dump(L, ToByteCode_Writer, &output)) {
         auto error = lua_tostring(L, -1);
         lua_close(L);
-        LOG(ERROR) << "Dump error: " << error;
+        LOG(ERROR_LL) << "Dump error: " << error;
         return "";
     }
 
     lua_close(L);
-    return Output;
+    return output;
 }
 
 int LuaState::l_my_print(lua_State *L) {
@@ -102,23 +127,23 @@ int LuaState::l_my_print(lua_State *L) {
 
     for (int i = 1; i <= nargs; i++) {
         if (lua_isstring(L, i)) {
-            LOG(TRACE) << "Lua print: " << lua_tostring(L, i);
+            LOG(TRACE_LL) << "Lua print: " << lua_tostring(L, i);
         } else if (lua_isnumber(L, i)) {
-            LOG(TRACE) << "Lua print: " << lua_tonumber(L, i);
+            LOG(TRACE_LL) << "Lua print: " << lua_tonumber(L, i);
         } else if (lua_isboolean(L, i)) {
-            LOG(TRACE) << "Lua print: "
+            LOG(TRACE_LL) << "Lua print: "
                       << (lua_toboolean(L, i) ? "true" : "false");
         } else if (lua_isnil(L, i)) {
-            LOG(TRACE) << "Lua print: nil";
+            LOG(TRACE_LL) << "Lua print: nil";
         } else if (luabridge::isInstance<UBlock>(L, i)) {
             auto block = luabridge::Stack<UBlock *>::get(L, i);
-            LOG(TRACE) << "Lua print: UBlock " << block.value()->name;
+            LOG(TRACE_LL) << "Lua print: UBlock " << block.value()->name;
         } else if (luabridge::isInstance<UItem>(L, i)) {
             auto item = luabridge::Stack<UItem *>::get(L, i);
-            LOG(TRACE) << "Lua print: UItem " << item.value()->name;
+            LOG(TRACE_LL) << "Lua print: UItem " << item.value()->name;
         } else if (luabridge::isInstance<FItemData>(L, i)) {
             auto item = luabridge::Stack<FItemData>::get(L, i);
-            LOG(TRACE) << "Lua print: ItemData {" << (item.value().item ? item.value().item->name : "nullptr") << ", " << item.value().count << "}";
+            LOG(TRACE_LL) << "Lua print: ItemData {" << (item.value().item ? item.value().item->name : "nullptr") << ", " << item.value().count << "}";
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -127,12 +152,12 @@ int LuaState::l_my_print(lua_State *L) {
         // }
         // if (luabridge::Stack<UPrototype *>::isInstance(L, i)) {
         //     auto stat = luabridge::Stack<UPrototype *>::get(L, i);
-        //     LOG(TRACE) << "Lua print: "
+        //     LOG(TRACE_LL) << "Lua print: "
         //               << TCHAR_TO_UTF8(*stat->GetClass()->GetName()) << ""
         //               << stat->name;
         // }
         else {
-            LOG(WARN) << "Lua print: print not implemented type";
+            LOG(WARN_LL) << "Lua print: print not implemented type";
         }
     }
 
@@ -231,10 +256,10 @@ LuaState::LuaState() {
     //
     // lua_pop(L, 1);
 
-    LOG(TRACE) << "Lua state initialized";
+    LOG(TRACE_LL) << "Lua state initialized";
 
     auto ver = luabridge::getGlobal(L, "_VERSION");
-    LOG(TRACE) << ver.tostring();
+    LOG(TRACE_LL) << ver.tostring();
 
     using namespace luabridge;
 
@@ -317,7 +342,7 @@ LuaState::LuaState() {
     );
 }
 
-int AppendPath(lua_State *L, std::string_view path) noexcept {
+int LuaState::AppendPath(lua_State *L, std::string_view path) {
     lua_getglobal(L, "package");
     lua_getfield(L, -1, "path");
     std::string npath = path.data();
@@ -334,9 +359,9 @@ UClass *LuaState::FindClass(std::string_view name) {
     auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
-        LOG(ERROR) << "Class not found " << name;
+        LOG(ERROR_LL) << "Class not found " << name;
     } else {
-        LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+        LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }
 
     return type;
@@ -346,9 +371,9 @@ UClass *LuaState::LoadClass(std::string_view name) {
     auto type = LoadObject<UClass>(nullptr, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
-        LOG(ERROR) << "Class not found " << name;
+        LOG(ERROR_LL) << "Class not found " << name;
     } else {
-        LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+        LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }
 
     return type;
@@ -358,23 +383,25 @@ UTexture2D *LuaState::GetTexture(std::string_view name) {
     auto type = FindObject<UTexture2D>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
-        LOG(ERROR) << "Texture not found " << name;
+        LOG(ERROR_LL) << "Texture not found " << name;
     } else {
-        LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+        LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }
 
     return type;
 }
 
 UMaterialInterface *LuaState::GetMaterial(std::string_view name) {
+
+    return nullptr;
     auto type = LoadObject<UMaterialInterface>(
         nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data()))
     );
 
     if (type == nullptr) {
-        LOG(ERROR) << "Material not found " << name;
+        LOG(ERROR_LL) << "Material not found " << name;
     } else {
-        LOG(TRACE) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+        LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }
 
     return type;
@@ -387,24 +414,24 @@ LuaState::~LuaState() {
     }
 }
 
-Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) noexcept {
+Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) {
     return Vec3i(x, y, z);
 }
 
-Vec3i LuaState::Vec3i_zero() noexcept { return Vec3i(0, 0, 0); }
+Vec3i LuaState::Vec3i_zero() { return Vec3i(0, 0, 0); }
 
-Vec3i LuaState::Vec3i_one() noexcept { return Vec3i(1, 1, 1); }
+Vec3i LuaState::Vec3i_one() { return Vec3i(1, 1, 1); }
 
-Vec3i LuaState::Vec3i_left() noexcept { return Side::Left; }
+Vec3i LuaState::Vec3i_left() { return Side::Left; }
 
-Vec3i LuaState::Vec3i_right() noexcept { return Side::Right; }
+Vec3i LuaState::Vec3i_right() { return Side::Right; }
 
-Vec3i LuaState::Vec3i_up() noexcept { return Side::Up; }
+Vec3i LuaState::Vec3i_up() { return Side::Up; }
 
-Vec3i LuaState::Vec3i_down() noexcept { return Side::Down; }
+Vec3i LuaState::Vec3i_down() { return Side::Down; }
 
-Vec3i LuaState::Vec3i_front() noexcept { return Side::Front; }
+Vec3i LuaState::Vec3i_front() { return Side::Front; }
 
-Vec3i LuaState::Vec3i_back() noexcept { return Side::Back; }
+Vec3i LuaState::Vec3i_back() { return Side::Back; }
 
 } // namespace evo

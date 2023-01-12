@@ -15,7 +15,7 @@ USTRUCT(BlueprintType)
 /**
  * @brief Inventory slot data
  */
-struct EVOSPACE_API FItemData {
+struct  FItemData {
     GENERATED_BODY()
 
     // Lua api

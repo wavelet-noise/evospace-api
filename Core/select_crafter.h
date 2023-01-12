@@ -16,7 +16,7 @@ UENUM(BlueprintType)
 enum class ECanAccomodate : uint8 { Unknown, Yes, No };
 
 UCLASS(BlueprintType)
-class EVOSPACE_API USelectCrafter : public UCrafterBase {
+class  USelectCrafter : public UCrafterBase {
     GENERATED_BODY()
 
     // Lua api

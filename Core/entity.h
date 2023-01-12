@@ -15,7 +15,7 @@ UCLASS(Abstract)
 /**
  * @brief Placeable entity in world. Can be block or prop
  */
-class EVOSPACE_API UEntity : public UPrototype, public ISerializableJson {
+class  UEntity : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
   public:

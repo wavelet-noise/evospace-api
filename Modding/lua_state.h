@@ -7,6 +7,7 @@
 #include <string>
 
 struct lua_State;
+class AsyncMessageObject;
 
 namespace evo {
 
@@ -46,7 +47,7 @@ class LuaState {
      * @param z
      * @return Constructed Vec3i(x, y, z) object
      */
-    static Vec3i Vec3i_new(int32 x, int32 y, int32 z) noexcept;
+    static Vec3i Vec3i_new(int32 x, int32 y, int32 z);
 
     /**
      * @brief Construct Vec3i from (0, 0, 0)
@@ -56,7 +57,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, 0, 0) object
      */
-    static Vec3i Vec3i_zero() noexcept;
+    static Vec3i Vec3i_zero();
 
     /**
      * @brief Construct Vec3i from (1, 1, 1)
@@ -66,7 +67,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(1, 1, 1) object
      */
-    static Vec3i Vec3i_one() noexcept;
+    static Vec3i Vec3i_one();
 
     /**
      * @brief Construct Vec3i from up (0, 0, 1)
@@ -76,7 +77,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, 0, 1) object
      */
-    static Vec3i Vec3i_up() noexcept;
+    static Vec3i Vec3i_up();
 
     /**
      * @brief Construct Vec3i from (0, 0, -1)
@@ -86,7 +87,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, 0, -1) object
      */
-    static Vec3i Vec3i_down() noexcept;
+    static Vec3i Vec3i_down();
 
     /**
      * @brief Construct Vec3i from (0, 1, 0)
@@ -96,7 +97,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, 1, 0) object
      */
-    static Vec3i Vec3i_left() noexcept;
+    static Vec3i Vec3i_left();
 
     /**
      * @brief Construct Vec3i from (0, -1, 0)
@@ -106,7 +107,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(0, -1, 0) object
      */
-    static Vec3i Vec3i_right() noexcept;
+    static Vec3i Vec3i_right();
 
     /**
      * @brief Construct Vec3i from (-1, 0, 0)
@@ -116,7 +117,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(-1, 0, 0) object
      */
-    static Vec3i Vec3i_back() noexcept;
+    static Vec3i Vec3i_back();
 
     /**
      * @brief Construct Vec3i from (1, 0, 0)
@@ -126,7 +127,7 @@ class LuaState {
      * @endcode
      * @return Constructed Vec3i(1, 0, 0) object
      */
-    static Vec3i Vec3i_front() noexcept;
+    static Vec3i Vec3i_front();
 
     void doFile(std::string_view s) { luaL_dofile(L, s.data()); }
 
@@ -138,32 +139,27 @@ class LuaState {
     lua_State *L = nullptr;
 
     static int ToByteCode_Writer(
-        lua_State *L, const void *Ptr, size_t Size, void *UserData
-    ) {
-        const auto output = static_cast<std::string *>(UserData);
-        const auto ptr = static_cast<const uint8_t *>(Ptr);
+        lua_State *L, const void *ptr, size_t size, void *user_data
+    ) ;
 
-        output->insert(output->end(), ptr, ptr + Size);
-        return 0;
-    }
-
-    static auto to_byte_code(std::string_view code) noexcept -> std::string;
+    static auto to_byte_code(std::string_view code, std::string_view path) -> std::string;
 
     /**
      * @brief
-     * @param Code
+     * @param code
      * @param CodePath
      * @param NRet
      * @return
      */
     bool RunCode(
-        std::string_view Code, std::string_view CodePath = "", int NRet = 0
-    ) noexcept;
+        std::string_view code, std::string_view CodePath = "", int NRet = 0
+    );
     bool RunCode(
-        std::string_view Code, std::string_view CodePath, int NArg,
+        std::string_view code, std::string_view path, int NArg,
         std::function<void(lua_State *L)> push_args, int NRet = 0
-    ) noexcept;
+    );
+    bool RunCode(AsyncMessageObject & msg, std::string_view code, std::string_view path, int NRet);
 
-    int AppendPath(lua_State *L, std::string_view path) noexcept;
+    int AppendPath(lua_State *L, std::string_view path);
 };
 } // namespace evo

@@ -21,7 +21,7 @@ UCLASS(BlueprintType)
 /**
  * @brief Object for storing research progress
  */
-class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
+class  UOldResearch : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
   public:
@@ -33,7 +33,7 @@ class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
 };
 
 USTRUCT(BlueprintType)
-struct EVOSPACE_API FResearchUnlock {
+struct  FResearchUnlock {
     GENERATED_BODY()
 
   public:
@@ -42,7 +42,7 @@ struct EVOSPACE_API FResearchUnlock {
 };
 
 USTRUCT(BlueprintType)
-struct EVOSPACE_API FResearchUnlockLevel {
+struct  FResearchUnlockLevel {
     GENERATED_BODY()
 
   public:
@@ -60,7 +60,7 @@ UCLASS(BlueprintType)
  * @brief Object for research chapter data (example of chapter is "decorative"
  * or "production")
  */
-class EVOSPACE_API UStaticChapter : public UPrototype,
+class  UStaticChapter : public UPrototype,
                                     public ISerializableJson {
     GENERATED_BODY()
 
@@ -184,7 +184,7 @@ class UStaticResearch : public UPrototype, public ISerializableJson {
 };
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {
+class  UStaticResearchBonusInventory : public UStaticResearch {
     GENERATED_BODY()
 
   public:

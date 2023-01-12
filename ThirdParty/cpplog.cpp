@@ -1,12 +1,20 @@
 #include "cpplog.h"
 
 namespace cpplog {
+
+bool UeStringArrayLogger::sendLogMessage(LogData *logData) {
+    OstreamLogger::sendLogMessage(logData);
+    std::string out_string = m_stream.str().c_str();
+    log.Add(UTF8_TO_TCHAR(out_string.data()));
+    return true;
+}
+
 bool UeLogger::sendLogMessage(LogData *logData) {
 #ifdef WITH_EDITOR
     OstreamLogger::sendLogMessage(logData);
     std::string out_string = m_stream.str().c_str();
     switch (logData->level) {
-    case WARN:
+    case WARN_LL:
         FMsg::Logf_Internal(
             UE_LOG_SOURCE_FILE(__FILE__),
             __LINE__,
@@ -16,7 +24,7 @@ bool UeLogger::sendLogMessage(LogData *logData) {
             UTF8_TO_TCHAR(out_string.data())
         );
         break;
-    case ERROR:
+    case ERROR_LL:
         FMsg::Logf_Internal(
             UE_LOG_SOURCE_FILE(__FILE__),
             __LINE__,
@@ -26,7 +34,7 @@ bool UeLogger::sendLogMessage(LogData *logData) {
             UTF8_TO_TCHAR(out_string.data())
         );
         break;
-    case FATAL:
+    case FATAL_LL:
         FMsg::Logf_Internal(
             UE_LOG_SOURCE_FILE(__FILE__),
             __LINE__,

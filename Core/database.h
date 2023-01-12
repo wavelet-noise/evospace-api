@@ -69,12 +69,12 @@ class DB {
             TReturned *u_ptr = u.get();
             UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
             gs.insert(std::make_pair(name, std::move(u)));
-            LOG(TRACE) << "Registering "
+            LOG(TRACE_LL) << "Registering "
                        << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName())
                        << " with name " << name;
             return u_ptr;
         } else {
-            LOG(TRACE) << "Appending "
+            LOG(TRACE_LL) << "Appending "
                        << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName())
                        << " with name " << name;
             return gs.find(name.data())->second.get();
@@ -86,11 +86,11 @@ class DB {
         auto &gs = get_storage<TReturned>();
         if (gs.find(name.data()) == gs.end()) {
             if (!class_ptr) {
-                LOG(ERROR) << "trying to register nullptr";
+                LOG(ERROR_LL) << "trying to register nullptr";
                 return nullptr;
             }
             if (!class_ptr->IsChildOf(TReturned::StaticClass())) {
-                LOG(ERROR) << TCHAR_TO_UTF8(*class_ptr->GetName())
+                LOG(ERROR_LL) << TCHAR_TO_UTF8(*class_ptr->GetName())
                            << " is not a child of "
                            << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName()
                               );
@@ -107,12 +107,12 @@ class DB {
             TReturned *u_ptr = u.get();
             UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
             gs.insert(std::make_pair(name, std::move(u)));
-            LOG(TRACE) << "Registering "
+            LOG(TRACE_LL) << "Registering "
                        << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName())
                        << " with name " << name;
             return u_ptr;
         } else {
-            LOG(TRACE) << "Appending "
+            LOG(TRACE_LL) << "Appending "
                        << TCHAR_TO_UTF8(*TReturned::StaticClass()->GetName())
                        << " with name " << name;
             return gs.find(name.data())->second.get();

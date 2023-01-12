@@ -26,7 +26,7 @@ class UBlock;
 class UBaseAccessor;
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
+class  UBlockLogic : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -232,7 +232,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype, public ISerializableJson {
 };
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UPartBlockLogic : public UBlockLogic {
+class  UPartBlockLogic : public UBlockLogic {
     GENERATED_BODY()
 
   public:

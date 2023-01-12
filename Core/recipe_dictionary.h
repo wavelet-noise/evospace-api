@@ -14,7 +14,7 @@ class URecipe;
 class UInventoryReader;
 
 USTRUCT(BlueprintType)
-struct EVOSPACE_API FUsedIn {
+struct  FUsedIn {
     GENERATED_BODY()
 
   public:

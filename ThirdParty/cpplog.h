@@ -60,12 +60,12 @@
 //  4 - Error
 //  5 - Fatal (always logged)
 
-#define TRACE 0
-#define DEBUG 1
-#define INFO 2
-#define WARN 3
-#define ERROR 4
-#define FATAL 5
+#define TRACE_LL 0
+#define DEBUG_LL 1
+#define INFO_LL 2
+#define WARN_LL 3
+#define ERROR_LL 4
+#define FATAL_LL 5
 
 // ------------------------------ CONFIGURATION ------------------------------
 
@@ -92,10 +92,6 @@
 #include "concurrent_queue.hpp"
 
 #include <boost/thread.hpp>
-#endif
-
-#ifdef _WIN32
-#include "outputdebugstream.hpp"
 #endif
 
 #ifdef CPPLOG_WITH_SCRIBE_LOGGER
@@ -466,7 +462,7 @@ class LogMessage {
             // time it returns, we have to assume it has already been freed.
 
             // If this is a fatal message...
-            if (savedLogLevel == FATAL && !getSetFatal(true, true)) {
+            if (savedLogLevel == FATAL_LL && !getSetFatal(true, true)) {
                 // Set our fatal flag.
                 getSetFatal(false, true);
 
@@ -487,17 +483,17 @@ class LogMessage {
   public:
     static const char *getLevelName(loglevel_t level) {
         switch (level) {
-        case TRACE:
+        case TRACE_LL:
             return "TRACE";
-        case DEBUG:
+        case DEBUG_LL:
             return "DEBUG";
-        case INFO:
+        case INFO_LL:
             return "INFO";
-        case WARN:
+        case WARN_LL:
             return "WARN";
-        case ERROR:
+        case ERROR_LL:
             return "ERROR";
-        case FATAL:
+        case FATAL_LL:
             return "FATAL";
         default:
             return "OTHER";
@@ -524,6 +520,18 @@ class OstreamLogger : public BaseLogger {
     virtual ~OstreamLogger() {}
 };
 
+class UeStringArrayLogger : public OstreamLogger {
+private:
+    std::ostringstream m_stream;
+
+public:
+    TArray<FString> log;
+    
+    UeStringArrayLogger() : OstreamLogger(m_stream) {}
+
+    virtual bool sendLogMessage(LogData *logData);
+};
+
 class UeLogger : public OstreamLogger {
   private:
     std::ostringstream m_stream;
@@ -543,10 +551,10 @@ class StdErrLogger : public OstreamLogger {
 // Simple implementation - logs to a string, provides the ability to get that
 // string.
 class StringLogger : public OstreamLogger {
-  private:
+
+public:
     std::ostringstream m_stream;
 
-  public:
     StringLogger() : OstreamLogger(m_stream) {}
 
     std::string getString() { return m_stream.str(); }
@@ -556,16 +564,6 @@ class StringLogger : public OstreamLogger {
         m_stream.clear();
     }
 };
-
-#ifdef _WIN32
-class OutputDebugStringLogger : public OstreamLogger {
-  private:
-    dbgwin_stream m_stream;
-
-  public:
-    OutputDebugStringLogger() : OstreamLogger(m_stream) {}
-};
-#endif
 
 // Log to file.
 class FileLogger : public OstreamLogger {
@@ -977,7 +975,7 @@ namespace templated {
 // This will be slightly faster at runtime, as the if statement will
 // be performed on a constant value, as opposed to needing a memory
 // lookup (as with FilteringLogger)
-template <loglevel_t lowestLevel = TRACE>
+template <loglevel_t lowestLevel = TRACE_LL>
 class TFilteringLogger : public BaseLogger {
     BaseLogger *m_forwardTo;
 

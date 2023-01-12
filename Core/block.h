@@ -23,7 +23,7 @@ UCLASS(BlueprintType)
 /**
  * @brief Block in world. Can be cube, machine or smooth surface segment
  */
-class EVOSPACE_API UBlock : public UEntity {
+class  UBlock : public UEntity {
     GENERATED_BODY()
 
     // Lua api
@@ -65,10 +65,6 @@ class EVOSPACE_API UBlock : public UEntity {
     std::vector<FVector3i> sub_blocks;
 
     //===================================
-
-    // Transfer all block actor_class specific data from this block object to
-    // given block actor_class object
-    void move_data_to_proto(evo::LuaState &state, UBlockLogic *logic);
 
     UBlockLogic *spawn_block(ADimension *dim, const FTransform &tr) const;
 

@@ -10,7 +10,7 @@ class UInternalInventory;
 class URecipeDictionary;
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UCrafterBase : public UTieredBlockLogic,
+class  UCrafterBase : public UTieredBlockLogic,
                                   public ISwitchInterface {
     GENERATED_BODY()
 
