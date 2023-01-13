@@ -10,7 +10,7 @@ bool UeStringArrayLogger::sendLogMessage(LogData *logData) {
 }
 
 bool UeLogger::sendLogMessage(LogData *logData) {
-#ifndef UE_BUILD_SHIPPING
+#if WITH_EDITOR
     OstreamLogger::sendLogMessage(logData);
     std::string out_string = m_stream.str().c_str();
     switch (logData->level) {

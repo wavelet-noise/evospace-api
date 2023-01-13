@@ -39,6 +39,16 @@ class UFenceBlockLogic;
 
 class USurfaceBuilder;
 class UPlaneBuilder;
+
+class UFissionReactor;
+class UFusionReactor;
+
+class URobotArm;
+class UFilteringRobotArm;
+
+class UPump;
+class UDiode;
+class UFilteringPump;
  
 namespace evo { namespace prototype_helper {
 inline std::tuple<
@@ -49,7 +59,9 @@ inline std::tuple<
     UInventory *, UInventoryContainer *, UInternalInventory *,
     URecipeInventory *, UPropsGenerator *, ULayeringGenerator *, UBiome*, UStaticAttach *,
     UPropList *, UStaticResearch *, UStaticChapter * , UBedBlockLogic *, UDoorBlockLogic *,
-    ULampBlockLogic *, UFenceBlockLogic *, USurfaceBuilder * , UPlaneBuilder *
+    ULampBlockLogic *, UFenceBlockLogic *, USurfaceBuilder * , UPlaneBuilder *,
+    UFissionReactor *, UFusionReactor *, URobotArm *,
+    UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *
 >
     classes;
 }} // namespace evo::prototype_helper

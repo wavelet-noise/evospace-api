@@ -5,7 +5,7 @@
 
 StaticLogger::StaticLogger()
 {
-#ifdef WITH_EDITOR
+#if WITH_EDITOR
     logger = std::make_unique<cpplog::UeLogger>();
 #else
     logger = std::make_unique<cpplog::FileLogger>("log.txt");

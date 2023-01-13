@@ -18,6 +18,9 @@
 #include "Evospace/Tesselator/TesselatorCube.h"
 #include "Evospace/Blocks/Vanilla/FenceBlockLogic.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BuildingSurfaceBlockItemLogic.h"
+#include "Evospace/Blocks/Vanilla/FissionReactorBlockLogic.h"
+#include "Evospace/Blocks/Vanilla/Pump.h"
+#include "Evospace/Blocks/Vanilla/RobotArm.h"
 
 #include <tuple>
 
