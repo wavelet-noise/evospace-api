@@ -11,7 +11,7 @@ class UInternalInventory;
 class UInventory;
 
 UCLASS(BlueprintType)
-class  UAutoCrafter : public USelectCrafter {
+class UAutoCrafter : public USelectCrafter {
     GENERATED_BODY()
 
     // Lua api
@@ -41,7 +41,7 @@ class  UAutoCrafter : public USelectCrafter {
 };
 
 UCLASS(BlueprintType)
-class  UDeconstructorCrafterBlockLogic : public UAutoCrafter {
+class UDeconstructorCrafterBlockLogic : public UAutoCrafter {
     GENERATED_BODY()
 
   public:
@@ -49,8 +49,7 @@ class  UDeconstructorCrafterBlockLogic : public UAutoCrafter {
 };
 
 UCLASS(BlueprintType)
-class  UDumpAnyBlockLogic : public UTieredBlockLogic,
-                                        public ISwitchInterface {
+class UDumpAnyBlockLogic : public UTieredBlock, public ISwitchInterface {
     GENERATED_BODY()
 
   public:
@@ -87,7 +86,7 @@ class  UDumpAnyBlockLogic : public UTieredBlockLogic,
 };
 
 UCLASS(BlueprintType)
-class  UDumpCrafterBlockLogic : public USelectCrafter {
+class UDumpCrafterBlockLogic : public USelectCrafter {
     GENERATED_BODY()
 
   protected:

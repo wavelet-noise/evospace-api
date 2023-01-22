@@ -2,14 +2,14 @@
 #include "lua_state.h"
 
 #include "Evospace/IcoGenerator.h"
-#include "Evospace/MainGameModLoader.h"
 #include "Evospace/Item/InventoryContainer.h"
+#include "Evospace/MainGameModLoader.h"
 #include "Evospace/Shared/Core/block.h"
 #include "Evospace/Shared/Core/item.h"
+#include "Evospace/Shared/Core/recipe.h"
 #include "Evospace/Shared/Core/static_research.h"
 #include "Evospace/Shared/lua_state_error.h"
 #include "Evospace/Shared/static_logger.h"
-#include "Evospace/Shared/Core/recipe.h"
 
 namespace evo {
 
@@ -24,9 +24,7 @@ void LuaState::add_lua_path(const std::string &path) {
     lua_pop(L, 1);
 }
 
-bool LuaState::RunCode(
-    std::string_view code, std::string_view path, int NRet
-) {
+bool LuaState::RunCode(std::string_view code, std::string_view path, int NRet) {
     std::string path_decorated = std::string("@") + path.data();
     if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
         LOG(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
@@ -34,6 +32,18 @@ bool LuaState::RunCode(
     } else {
         if (lua_pcall(L, 0, NRet, 0)) {
             LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+
+            LOG(ERROR_LL) << "Call stack:";
+            int level = 0;
+            lua_Debug debug_info;
+            while (lua_getstack(L, level, &debug_info)) {
+                lua_getinfo(L, "nSlf", &debug_info);
+                std::cerr << "    " << debug_info.short_src << ":" << debug_info.currentline;
+                if (debug_info.name != nullptr)
+                    LOG(ERROR_LL) << " in function " << debug_info.name;
+                ++level;
+            }
+            
             return false;
         }
     }
@@ -42,7 +52,8 @@ bool LuaState::RunCode(
 }
 
 bool LuaState::RunCode(
-    AsyncMessageObject & msg, std::string_view code, std::string_view path, int NRet
+    AsyncMessageObject &msg, std::string_view code, std::string_view path,
+    int NRet
 ) {
     std::string path_decorated = std::string("@") + path.data();
     if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
@@ -51,6 +62,18 @@ bool LuaState::RunCode(
     } else {
         if (lua_pcall(L, 0, NRet, 0)) {
             msg.Log(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+
+            msg.Log(ERROR_LL) << "Call stack:";
+            int level = 0;
+            lua_Debug debug_info;
+            while (lua_getstack(L, level, &debug_info)) {
+                lua_getinfo(L, "nSlf", &debug_info);
+                std::cerr << "    " << debug_info.short_src << ":" << debug_info.currentline;
+                if (debug_info.name != nullptr)
+                    msg.Log(ERROR_LL) << " in function " << debug_info.name;
+                ++level;
+            }
+            
             return false;
         }
     }
@@ -70,6 +93,18 @@ bool LuaState::RunCode(
         push_args(L);
         if (lua_pcall(L, NArg, NRet, 0)) {
             LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+
+            LOG(ERROR_LL) << "Call stack:" << std::endl;
+            int level = 0;
+            lua_Debug debug_info;
+            while (lua_getstack(L, level, &debug_info)) {
+                lua_getinfo(L, "nSlf", &debug_info);
+                std::cerr << "    " << debug_info.short_src << ":" << debug_info.currentline;
+                if (debug_info.name != nullptr)
+                    LOG(ERROR_LL) << " in function " << debug_info.name;
+                ++level;
+            }
+            
             return false;
         }
     }
@@ -89,17 +124,23 @@ std::vector<std::string> split(std::string_view s, char delim) {
     return result;
 }
 
-int LuaState::ToByteCode_Writer(lua_State *L, const void *ptr, size_t size, void *user_data){
-        const auto output = static_cast<std::string *>(user_data);
-        const auto ptr_u8 = static_cast<const uint8_t *>(ptr);
+int LuaState::ToByteCode_Writer(
+    lua_State *L, const void *ptr, size_t size, void *user_data
+) {
+    const auto output = static_cast<std::string *>(user_data);
+    const auto ptr_u8 = static_cast<const uint8_t *>(ptr);
 
-        output->insert(output->end(), ptr_u8, ptr_u8 + size);
-        return 0;
-    }auto LuaState::to_byte_code(std::string_view code, std::string_view path) -> std::string {
+    output->insert(output->end(), ptr_u8, ptr_u8 + size);
+    return 0;
+}
+auto LuaState::to_byte_code(std::string_view code, std::string_view path)
+    -> std::string {
     std::string output;
     std::string path_decorated = std::string("@") + path.data();
     lua_State *L = luaL_newstate();
-    if (auto err = luaL_loadbuffer(L, code.data(), code.length(), path_decorated.data())) {
+    if (auto err = luaL_loadbuffer(
+            L, code.data(), code.length(), path_decorated.data()
+        )) {
         std::string error = lua_tostring(L, -1);
         lua_close(L);
         auto splited_error = split(error, ':');
@@ -107,7 +148,7 @@ int LuaState::ToByteCode_Writer(lua_State *L, const void *ptr, size_t size, void
         auto splitted_source = split(code, '\n');
         auto in_error = splitted_source[index - 1];
         LOG(ERROR_LL) << "Load buffer error: " << error << "; line " << index
-                   << ": " << in_error;
+                      << ": " << in_error;
         return "";
     }
 
@@ -132,7 +173,7 @@ int LuaState::l_my_print(lua_State *L) {
             LOG(TRACE_LL) << "Lua print: " << lua_tonumber(L, i);
         } else if (lua_isboolean(L, i)) {
             LOG(TRACE_LL) << "Lua print: "
-                      << (lua_toboolean(L, i) ? "true" : "false");
+                          << (lua_toboolean(L, i) ? "true" : "false");
         } else if (lua_isnil(L, i)) {
             LOG(TRACE_LL) << "Lua print: nil";
         } else if (luabridge::isInstance<UBlock>(L, i)) {
@@ -143,7 +184,10 @@ int LuaState::l_my_print(lua_State *L) {
             LOG(TRACE_LL) << "Lua print: UItem " << item.value()->name;
         } else if (luabridge::isInstance<FItemData>(L, i)) {
             auto item = luabridge::Stack<FItemData>::get(L, i);
-            LOG(TRACE_LL) << "Lua print: ItemData {" << (item.value().item ? item.value().item->name : "nullptr") << ", " << item.value().count << "}";
+            LOG(TRACE_LL) << "Lua print: ItemData {"
+                          << (item.value().item ? item.value().item->name
+                                                : "nullptr")
+                          << ", " << item.value().count << "}";
         }
         // else if (Stack<FVector2D>::isInstance(L, i)) {
         // 	auto vec = Stack<glm::ivec2>::get(L, i);
@@ -217,8 +261,9 @@ LuaState::LuaState() {
     //     lua_pop(L, 1);
     // }
 
-    luabridge::getGlobalNamespace(L)
-        .addFunction("print", &LuaState::l_my_print);
+    luabridge::getGlobalNamespace(L).addFunction(
+        "print", &LuaState::l_my_print
+    );
 
     auto col = luabridge::getGlobal(L, "collectgarbage");
     col("setpause", 100);
@@ -312,7 +357,9 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L)
         .beginClass<FItemData>("ItemData")
-        .addStaticFunction("new", +[]() { return FItemData(); })
+        .addStaticFunction(
+            "new", +[]() { return FItemData(); }
+        )
         .addProperty("count", &FItemData::count)
         .addProperty("item", &FItemData::item)
         .endClass();
@@ -327,11 +374,6 @@ LuaState::LuaState() {
         .addProperty("res_input", &URecipe::res_input)
         .addProperty("res_output", &URecipe::res_output)
         .addProperty("name", &URecipe::get_name, &URecipe::set_name)
-        .endClass();
-
-    luabridge::getGlobalNamespace(L)
-        .beginClass<UPrototype>("Prototype")
-        .addProperty("name", &UPrototype::name, false)
         .endClass();
 
     RunCode(
@@ -412,9 +454,7 @@ LuaState::~LuaState() {
     }
 }
 
-Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) {
-    return Vec3i(x, y, z);
-}
+Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) { return Vec3i(x, y, z); }
 
 Vec3i LuaState::Vec3i_zero() { return Vec3i(0, 0, 0); }
 

@@ -3,6 +3,7 @@
 
 #include "../static_logger.h"
 #include "database.h"
+
 #include "prototype.generated.h"
 
 class Base;
@@ -30,6 +31,7 @@ class Base;
         return Cast<type>(parent_inst);                                        \
     }                                                                          \
     static void RegisterCommonLua(lua_State *L) {                              \
+        LOG(TRACE_LL) << "Registering lua " << #name; \
         luabridge::getGlobalNamespace(L)                                       \
             .beginClass<type>(#name)                                           \
             .addStaticFunction("find", &evo::DB::find_mut<type>)               \
@@ -39,13 +41,33 @@ class Base;
             .endClass();                                                       \
     }
 
-#define EVO_LUA_CODEGEN_EMPTY(type, parent, name)           \
-    public: \
-static void RegisterLua(lua_State *L){ \
-    luabridge::getGlobalNamespace(L) \
-    .deriveClass<type, parent>(#name) \
-    .endClass(); \
-} 
+#define EVO_LUA_CODEGEN_DB_EX(type)                                            \
+  public:                                                                      \
+    static U##type *lua_codegen_cast(UPrototype *parent_inst) {                \
+        return Cast<U##type>(parent_inst);                                     \
+    }                                                                          \
+    static void RegisterCommonLua(lua_State *L) {                              \
+        LOG(TRACE_LL) << "Registering lua " << #type; \
+        luabridge::getGlobalNamespace(L)                                       \
+            .beginClass<U##type>(#type)                                        \
+            .addStaticFunction("find", &evo::DB::find_mut<U##type>)            \
+            .addStaticFunction("get", &evo::DB::get<U##type>)                  \
+            .addStaticFunction("get_derived", &evo::DB::get_derived<U##type>)  \
+            .addStaticFunction("cast", &U##type::lua_codegen_cast)             \
+            .endClass();                                                       \
+    }
+
+#define EVO_LUA_CODEGEN_EMPTY(type, parent, name)                              \
+  public:                                                                      \
+    static void RegisterLua(lua_State *L) {                                    \
+        LOG(TRACE_LL) << "Registering lua " << #name; \
+        luabridge::getGlobalNamespace(L)                                       \
+            .deriveClass<type, parent>(#name)                                  \
+            .addStaticProperty(                                                \
+                "class_name", +[]() { return #type; }                          \
+            )                                                                  \
+            .endClass();                                                       \
+    }
 
 UCLASS(Abstract)
 /**
@@ -63,4 +85,8 @@ class UPrototype
      * @brief Object name in database
      */
     std::string name;
+
+  public:
+    EVO_LUA_CODEGEN_DB_EX(Prototype);
+    static void RegisterLua(lua_State *L);
 };

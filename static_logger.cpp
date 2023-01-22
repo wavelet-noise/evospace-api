@@ -3,8 +3,7 @@
 
 #include <memory>
 
-StaticLogger::StaticLogger()
-{
+StaticLogger::StaticLogger() {
 #if WITH_EDITOR
     logger = std::make_unique<cpplog::UeLogger>();
 #else
@@ -13,7 +12,8 @@ StaticLogger::StaticLogger()
 }
 
 StaticLogger &StaticLogger::Get() {
-    static std::unique_ptr<StaticLogger> inst = std::make_unique<StaticLogger>();
+    static std::unique_ptr<StaticLogger> inst =
+        std::make_unique<StaticLogger>();
     return *inst;
 }
 

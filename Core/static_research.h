@@ -21,7 +21,7 @@ UCLASS(BlueprintType)
 /**
  * @brief Object for storing research progress
  */
-class  UOldResearch : public UObject, public ISerializableJson {
+class UOldResearch : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
   public:
@@ -33,7 +33,7 @@ class  UOldResearch : public UObject, public ISerializableJson {
 };
 
 USTRUCT(BlueprintType)
-struct  FResearchUnlock {
+struct FResearchUnlock {
     GENERATED_BODY()
 
   public:
@@ -42,7 +42,7 @@ struct  FResearchUnlock {
 };
 
 USTRUCT(BlueprintType)
-struct  FResearchUnlockLevel {
+struct FResearchUnlockLevel {
     GENERATED_BODY()
 
   public:
@@ -60,8 +60,7 @@ UCLASS(BlueprintType)
  * @brief Object for research chapter data (example of chapter is "decorative"
  * or "production")
  */
-class  UStaticChapter : public UPrototype,
-                                    public ISerializableJson {
+class UStaticChapter : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -86,8 +85,8 @@ class  UStaticChapter : public UPrototype,
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
     virtual void PostDeserializeJson() override;
-    
-public:
+
+  public:
     EVO_LUA_CODEGEN_DB(UStaticChapter, StaticChapter);
     static void RegisterLua(lua_State *L);
 };
@@ -184,7 +183,7 @@ class UStaticResearch : public UPrototype, public ISerializableJson {
 };
 
 UCLASS(BlueprintType)
-class  UStaticResearchBonusInventory : public UStaticResearch {
+class UStaticResearchBonusInventory : public UStaticResearch {
     GENERATED_BODY()
 
   public:

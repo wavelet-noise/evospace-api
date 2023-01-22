@@ -67,19 +67,18 @@ class URecipe : public UObject, public ISerializableJson {
      * @endcode
      */
     void set_name(std::string_view val) { name = UTF8_TO_TCHAR(val.data()); }
-    
-    static URecipe * lua_new() { return NewObject<URecipe>(); }
 
-    
+    static URecipe *lua_new() { return NewObject<URecipe>(); }
+
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     /**
-     * @brief 
+     * @brief
      */
     URecipeInventory *input;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     /**
-     * @brief 
+     * @brief
      */
     URecipeInventory *output;
 
@@ -119,4 +118,3 @@ class URecipe : public UObject, public ISerializableJson {
 
     int32 dictionary_index = INDEX_NONE;
 };
-

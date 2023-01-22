@@ -15,7 +15,7 @@ UCLASS(Abstract)
 /**
  * @brief Placeable entity in world. Can be block or prop
  */
-class  UEntity : public UPrototype, public ISerializableJson {
+class UEntity : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
   public:
@@ -28,8 +28,8 @@ class  UEntity : public UPrototype, public ISerializableJson {
     };
 
     bool is_surface = false;
-    
-public:
+
+  public:
     EVO_LUA_CODEGEN_DB(UEntity, Entity);
     static void RegisterLua(lua_State *L);
 };

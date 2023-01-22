@@ -14,7 +14,7 @@ class URecipe;
 class UInventoryReader;
 
 USTRUCT(BlueprintType)
-struct  FUsedIn {
+struct FUsedIn {
     GENERATED_BODY()
 
   public:

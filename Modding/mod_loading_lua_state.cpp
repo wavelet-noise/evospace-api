@@ -2,11 +2,16 @@
 #include "mod_loading_lua_state.h"
 
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
-#include "Evospace/Blocks/TieredBlockLogic.h"
+#include "Evospace/Blocks/TieredBlock.h"
+#include "Evospace/Blocks/Vanilla/FenceBlockLogic.h"
+#include "Evospace/Blocks/Vanilla/FissionReactorBlockLogic.h"
+#include "Evospace/Blocks/Vanilla/Pump.h"
+#include "Evospace/Blocks/Vanilla/RobotArm.h"
 #include "Evospace/IcoGenerator.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BaseBuildingItemLogicActor.h"
-#include "Evospace/JsonObjectLibrary.h"
+#include "Evospace/Item/Implementation/ObjectBuild/BuildingSurfaceBlockItemLogic.h"
 #include "Evospace/Item/RecipeInventory.h"
+#include "Evospace/JsonObjectLibrary.h"
 #include "Evospace/Shared/Core/auto_crafter.h"
 #include "Evospace/Shared/Core/block.h"
 #include "Evospace/Shared/Core/block_logic.h"
@@ -16,11 +21,14 @@
 #include "Evospace/Shared/Core/recipe_dictionary.h"
 #include "Evospace/Shared/Core/select_crafter.h"
 #include "Evospace/Tesselator/TesselatorCube.h"
-#include "Evospace/Blocks/Vanilla/FenceBlockLogic.h"
-#include "Evospace/Item/Implementation/ObjectBuild/BuildingSurfaceBlockItemLogic.h"
-#include "Evospace/Blocks/Vanilla/FissionReactorBlockLogic.h"
-#include "Evospace/Blocks/Vanilla/Pump.h"
-#include "Evospace/Blocks/Vanilla/RobotArm.h"
+#include "Evospace/Blocks/Vanilla/Conductor.h"
+#include "Evospace/Blocks/Vanilla/Portal.h"
+#include "Evospace/Blocks/Vanilla/Conveyor.h"
+#include "Evospace/Blocks/Vanilla/ConductorStorages.h"
+#include "Evospace/Blocks/Vanilla/Monitor.h"
+#include "Evospace/Blocks/Vanilla/Chest.h"
+#include "Evospace/Blocks/Vanilla/Computer.h"
+#include "Evospace/Blocks/Vanilla/ItemRack.h"
 
 #include <tuple>
 
@@ -49,13 +57,13 @@ template <typename T> void registerCall(lua_State *L) {
     T::RegisterLua(L);
     T::RegisterCommonLua(L);
 }
-}
+} // namespace
 
 ModLoadingLuaState::ModLoadingLuaState() {
     std::apply(
         [this](auto... args) {
-            (registerCall<
-                 typename std::remove_pointer<decltype(args)>::type>(L),
+            (registerCall<typename std::remove_pointer<decltype(args)>::type>(L
+             ),
              ...);
         },
         prototype_helper::classes

@@ -140,9 +140,10 @@ class LuaState {
 
     static int ToByteCode_Writer(
         lua_State *L, const void *ptr, size_t size, void *user_data
-    ) ;
+    );
 
-    static auto to_byte_code(std::string_view code, std::string_view path) -> std::string;
+    static auto to_byte_code(std::string_view code, std::string_view path)
+        -> std::string;
 
     /**
      * @brief
@@ -158,7 +159,10 @@ class LuaState {
         std::string_view code, std::string_view path, int NArg,
         std::function<void(lua_State *L)> push_args, int NRet = 0
     );
-    bool RunCode(AsyncMessageObject & msg, std::string_view code, std::string_view path, int NRet);
+    bool RunCode(
+        AsyncMessageObject &msg, std::string_view code, std::string_view path,
+        int NRet
+    );
 
     int AppendPath(lua_State *L, std::string_view path);
 };

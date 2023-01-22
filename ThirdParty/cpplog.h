@@ -521,12 +521,12 @@ class OstreamLogger : public BaseLogger {
 };
 
 class UeStringArrayLogger : public OstreamLogger {
-private:
+  private:
     std::ostringstream m_stream;
 
-public:
+  public:
     TArray<FString> log;
-    
+
     UeStringArrayLogger() : OstreamLogger(m_stream) {}
 
     virtual bool sendLogMessage(LogData *logData);
@@ -552,7 +552,7 @@ class StdErrLogger : public OstreamLogger {
 // string.
 class StringLogger : public OstreamLogger {
 
-public:
+  public:
     std::ostringstream m_stream;
 
     StringLogger() : OstreamLogger(m_stream) {}

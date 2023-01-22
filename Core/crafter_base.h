@@ -2,7 +2,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
-#include "Evospace/Blocks/TieredBlockLogic.h"
+#include "Evospace/Blocks/TieredBlock.h"
 
 #include "crafter_base.generated.h"
 
@@ -10,8 +10,7 @@ class UInternalInventory;
 class URecipeDictionary;
 
 UCLASS(BlueprintType)
-class  UCrafterBase : public UTieredBlockLogic,
-                                  public ISwitchInterface {
+class UCrafterBase : public UTieredBlock, public ISwitchInterface {
     GENERATED_BODY()
 
     // Lua api

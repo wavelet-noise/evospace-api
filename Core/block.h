@@ -23,7 +23,7 @@ UCLASS(BlueprintType)
 /**
  * @brief Block in world. Can be cube, machine or smooth surface segment
  */
-class  UBlock : public UEntity {
+class UBlock : public UEntity {
     GENERATED_BODY()
 
     // Lua api

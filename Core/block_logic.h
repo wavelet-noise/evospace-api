@@ -1,11 +1,11 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
+#include "Evospace/BlockWidgetType.h"
 #include "Evospace/Blocks/AccessorComponent.h"
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
 #include "Evospace/BreakResult.h"
-#include "Evospace/Common.h"
-#include "Evospace/CoordinateSystem.h"
+#include "Evospace/CoordinateMinimal.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Shared/Core/prototype.h"
 
@@ -26,7 +26,7 @@ class UBlock;
 class UBaseAccessor;
 
 UCLASS(BlueprintType)
-class  UBlockLogic : public UPrototype, public ISerializableJson {
+class UBlockLogic : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
@@ -232,7 +232,7 @@ class  UBlockLogic : public UPrototype, public ISerializableJson {
 };
 
 UCLASS(BlueprintType)
-class  UPartBlockLogic : public UBlockLogic {
+class UPartBlockLogic : public UBlockLogic {
     GENERATED_BODY()
 
   public:
