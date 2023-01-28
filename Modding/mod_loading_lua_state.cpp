@@ -21,6 +21,7 @@
 #include "Evospace/Shared/Core/recipe_dictionary.h"
 #include "Evospace/Shared/Core/select_crafter.h"
 #include "Evospace/Tesselator/TesselatorCube.h"
+#include "Evospace/Blocks/Vanilla/StorageBlock.h"
 #include "Evospace/Blocks/Vanilla/Conductor.h"
 #include "Evospace/Blocks/Vanilla/Portal.h"
 #include "Evospace/Blocks/Vanilla/Conveyor.h"
@@ -66,7 +67,7 @@ ModLoadingLuaState::ModLoadingLuaState() {
              ),
              ...);
         },
-        prototype_helper::classes
+        prototype_helper::classes 
     );
 }
 

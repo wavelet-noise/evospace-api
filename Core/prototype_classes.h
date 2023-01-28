@@ -53,6 +53,7 @@ class UFilteringPump;
 
 class UStorageBlock;
 class UChest;
+class UFluidContainer;
 class UItemRack;
 
 class UConductor;
@@ -61,6 +62,8 @@ class UKineticConductor;
 class UFluidConductor;
 class UDataConductor;
 class UElectricConductor;
+
+class USwitch;
 class UKineticSwitch;
 class UHeatSwitch;
 class UFluidSwitch;
@@ -93,10 +96,12 @@ inline std::tuple<
     UPropList *, UStaticResearch *, UStaticChapter *, UBedBlockLogic *,
     UDoorBlockLogic *, ULampBlockLogic *, UFenceBlockLogic *, USurfaceBuilder *,
     UPlaneBuilder *, UFissionReactor *, UFusionReactor *, URobotArm *,
-    UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *, UStorageBlock *, UChest *, UItemRack *,
+    UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *, UStorageBlock *,
+    UChest *, UFluidContainer *, UItemRack *,
     UConductor *, UHeatConductor *, UKineticConductor *, UFluidConductor *,
-    UDataConductor *, UElectricConductor *, UKineticSwitch *, UHeatSwitch *,
+    UDataConductor *, UElectricConductor *, USwitch *, UKineticSwitch *, UHeatSwitch *,
     UFluidSwitch *, UDataSwitch *, UElectricSwitch *,
-    UBatteryBox *, UConveyor *, USplitter *, USorter *, UPortal *, USignBlock *, UMonitor *, UComputer *, UQuantumComputer *>
+    UBatteryBox *, UConveyor *, USplitter *, USorter *, UPortal *, USignBlock *,
+    UMonitor *, UComputer *, UQuantumComputer *>
     classes;
 }} // namespace evo::prototype_helper
