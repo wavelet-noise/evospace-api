@@ -18,17 +18,6 @@ for root, dirs, files in os.walk("./"):
                 content = file.read()
                 regex = '^(\s*)((?:UFUNCTION|UCLASS|UPROPERTY|UENUM|GENERATED_BODY)\s*\('+paren_matcher(25)+'\))'
                 content = re.sub(regex, r'\1', content, flags=re.MULTILINE)
-                content = content.replace('URecipe','Recipe')
-                content = content.replace('UPrototype','Prototype')
-                content = content.replace("UOldResearch",'OldResearch')
-                content = content.replace("UBlock",'Block')
-                content = content.replace("UItem",'Item')
-                content = content.replace("UBlockLogic",'BlockLogic')
-                content = content.replace("UClass","Class")
-                content = content.replace("UObject","Object")
-                content = content.replace("UStaticMesh","StaticMesh")
-                content = content.replace("UStaticResearch","StaticResearch")
-                content = content.replace("UStaticChapter","StaticChapter")
-                content = content.replace("UCrafterBase","CrafterBase")
+                content = re.sub(r'\bU[A-Z]\w+', lambda x: x.group().replace("U", ""), content)
             with open(namepath, 'w') as file:
                 file.write(content)
