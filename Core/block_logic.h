@@ -26,6 +26,9 @@ class UBlock;
 class UBaseAccessor;
 
 UCLASS(BlueprintType)
+/**
+ * @brief Vanilla most basic BlockLogic
+ */
 class UBlockLogic : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
 
@@ -39,7 +42,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     UPROPERTY(BlueprintReadOnly)
     /**
-     * @brief Readonly property
+     * @brief Readonly property.
      */
     const UBlock *block = nullptr;
 
