@@ -97,11 +97,11 @@ inline std::tuple<
     UDoorBlockLogic *, ULampBlockLogic *, UFenceBlockLogic *, USurfaceBuilder *,
     UPlaneBuilder *, UFissionReactor *, UFusionReactor *, URobotArm *,
     UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *, UStorageBlock *,
-    UChest *, UFluidContainer *, UItemRack *,
-    UConductor *, UHeatConductor *, UKineticConductor *, UFluidConductor *,
-    UDataConductor *, UElectricConductor *, USwitch *, UKineticSwitch *, UHeatSwitch *,
-    UFluidSwitch *, UDataSwitch *, UElectricSwitch *,
-    UBatteryBox *, UConveyor *, USplitter *, USorter *, UPortal *, USignBlock *,
-    UMonitor *, UComputer *, UQuantumComputer *>
+    UChest *, UFluidContainer *, UItemRack *, UConductor *, UHeatConductor *,
+    UKineticConductor *, UFluidConductor *, UDataConductor *,
+    UElectricConductor *, USwitch *, UKineticSwitch *, UHeatSwitch *,
+    UFluidSwitch *, UDataSwitch *, UElectricSwitch *, UBatteryBox *,
+    UConveyor *, USplitter *, USorter *, UPortal *, USignBlock *, UMonitor *,
+    UComputer *, UQuantumComputer *>
     classes;
 }} // namespace evo::prototype_helper

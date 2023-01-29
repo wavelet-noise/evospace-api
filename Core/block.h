@@ -29,21 +29,56 @@ class UBlock : public UEntity {
     // Lua api
   public:
     UPROPERTY(BlueprintReadWrite)
+    /**
+     * @brief Object for this block in inventory
+     */
     const UItem *item;
 
     UPROPERTY(BlueprintReadOnly)
-    UBlockLogic *logic;
+    /**
+     * @brief Object for this block in dimension logics
+     */
+    const UBlockLogic *logic;
 
     UPROPERTY(BlueprintReadOnly)
+    /**
+     * @brief Object for this block in sector mesh
+     */
     const UTesselator *tesselator;
 
     UPROPERTY()
+    /**
+     * @brief Object for this block in user view as BlockActor
+     */
     UClass *actor = nullptr;
 
     UPROPERTY()
+    /**
+     * @brief Object for this block while building by player
+     */
     UClass *selector = nullptr;
 
+    /**
+     * @brief Block replace tag
+     */
     std::string replace_tag;
+
+    UPROPERTY(BlueprintReadOnly)
+    /**
+     * @brief Color on sides of this block in sector mesh, while it is a surface
+     */
+    FVector color_side = FVector(1);
+
+    UPROPERTY(BlueprintReadOnly)
+    /**
+     * @brief Color on top of this block in sector mesh, while it is a surface
+     */
+    FVector color_top = FVector(1);
+
+    /**
+     * @brief All sub cells for this block object in dimension logics
+     */
+    std::vector<FVector3i> sub_blocks;
 
     // Engine code
   public:
@@ -56,14 +91,6 @@ class UBlock : public UEntity {
         ADimension *world, UBlockLogic *bloc_logic, const FTransform &tr
     ) const;
 
-    UPROPERTY(BlueprintReadOnly)
-    FVector ColorSide = FVector(1);
-
-    UPROPERTY(BlueprintReadOnly)
-    FVector color_top = FVector(1);
-
-    std::vector<FVector3i> sub_blocks;
-
     //===================================
 
     UBlockLogic *spawn_block(ADimension *dim, const FTransform &tr) const;
@@ -72,13 +99,6 @@ class UBlock : public UEntity {
     UPartBlockLogic *spawn_part(
         ADimension *dim, const FTransform &tr, UBlockLogic *parent
     ) const;
-
-  private:
-    std::string actor_bytecode;
-    std::string block_bytecode;
-    std::string tick_bytecode;
-
-    TSharedPtr<FJsonObject> mLogicJson;
 
   public:
     EVO_LUA_CODEGEN_DB(UBlock, Block);

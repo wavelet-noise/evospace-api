@@ -31,7 +31,7 @@ class Base;
         return Cast<type>(parent_inst);                                        \
     }                                                                          \
     static void RegisterCommonLua(lua_State *L) {                              \
-        LOG(TRACE_LL) << "Registering lua " << #name; \
+        LOG(TRACE_LL) << "Registering lua " << #name;                          \
         luabridge::getGlobalNamespace(L)                                       \
             .beginClass<type>(#name)                                           \
             .addStaticFunction("find", &evo::DB::find_mut<type>)               \
@@ -47,7 +47,7 @@ class Base;
         return Cast<U##type>(parent_inst);                                     \
     }                                                                          \
     static void RegisterCommonLua(lua_State *L) {                              \
-        LOG(TRACE_LL) << "Registering lua " << #type; \
+        LOG(TRACE_LL) << "Registering lua " << #type;                          \
         luabridge::getGlobalNamespace(L)                                       \
             .beginClass<U##type>(#type)                                        \
             .addStaticFunction("find", &evo::DB::find_mut<U##type>)            \
@@ -60,7 +60,7 @@ class Base;
 #define EVO_LUA_CODEGEN_EMPTY(type, parent, name)                              \
   public:                                                                      \
     static void RegisterLua(lua_State *L) {                                    \
-        LOG(TRACE_LL) << "Registering lua " << #name; \
+        LOG(TRACE_LL) << "Registering lua " << #name;                          \
         luabridge::getGlobalNamespace(L)                                       \
             .deriveClass<type, parent>(#name)                                  \
             .addStaticProperty(                                                \

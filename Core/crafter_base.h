@@ -2,7 +2,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
-#include "Evospace/Blocks/TieredBlock.h"
+#include "Evospace/Shared/Vanilla/tiered_block.h"
 
 #include "crafter_base.generated.h"
 

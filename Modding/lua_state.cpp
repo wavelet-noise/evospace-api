@@ -38,12 +38,13 @@ bool LuaState::RunCode(std::string_view code, std::string_view path, int NRet) {
             lua_Debug debug_info;
             while (lua_getstack(L, level, &debug_info)) {
                 lua_getinfo(L, "nSlf", &debug_info);
-                std::cerr << "    " << debug_info.short_src << ":" << debug_info.currentline;
+                std::cerr << "    " << debug_info.short_src << ":"
+                          << debug_info.currentline;
                 if (debug_info.name != nullptr)
                     LOG(ERROR_LL) << " in function " << debug_info.name;
                 ++level;
             }
-            
+
             return false;
         }
     }
@@ -68,12 +69,13 @@ bool LuaState::RunCode(
             lua_Debug debug_info;
             while (lua_getstack(L, level, &debug_info)) {
                 lua_getinfo(L, "nSlf", &debug_info);
-                std::cerr << "    " << debug_info.short_src << ":" << debug_info.currentline;
+                std::cerr << "    " << debug_info.short_src << ":"
+                          << debug_info.currentline;
                 if (debug_info.name != nullptr)
                     msg.Log(ERROR_LL) << " in function " << debug_info.name;
                 ++level;
             }
-            
+
             return false;
         }
     }
@@ -99,12 +101,13 @@ bool LuaState::RunCode(
             lua_Debug debug_info;
             while (lua_getstack(L, level, &debug_info)) {
                 lua_getinfo(L, "nSlf", &debug_info);
-                std::cerr << "    " << debug_info.short_src << ":" << debug_info.currentline;
+                std::cerr << "    " << debug_info.short_src << ":"
+                          << debug_info.currentline;
                 if (debug_info.name != nullptr)
                     LOG(ERROR_LL) << " in function " << debug_info.name;
                 ++level;
             }
-            
+
             return false;
         }
     }

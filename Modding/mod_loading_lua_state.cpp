@@ -2,11 +2,16 @@
 #include "mod_loading_lua_state.h"
 
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
-#include "Evospace/Blocks/TieredBlock.h"
+#include "Evospace/Blocks/Vanilla/ConductorStorages.h"
 #include "Evospace/Blocks/Vanilla/FenceBlockLogic.h"
 #include "Evospace/Blocks/Vanilla/FissionReactorBlockLogic.h"
-#include "Evospace/Blocks/Vanilla/Pump.h"
+#include "Evospace/Blocks/Vanilla/ItemRack.h"
+#include "Evospace/Blocks/Vanilla/Monitor.h"
+#include "Evospace/Blocks/Vanilla/Portal.h"
 #include "Evospace/Blocks/Vanilla/RobotArm.h"
+#include "Evospace/Shared/Vanilla/chest.h"
+#include "Evospace/Shared/Vanilla/computer.h"
+#include "Evospace/Shared/Vanilla/conveyor.h"
 #include "Evospace/IcoGenerator.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BaseBuildingItemLogicActor.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BuildingSurfaceBlockItemLogic.h"
@@ -20,16 +25,11 @@
 #include "Evospace/Shared/Core/recipe.h"
 #include "Evospace/Shared/Core/recipe_dictionary.h"
 #include "Evospace/Shared/Core/select_crafter.h"
+#include "Evospace/Shared/Vanilla/conductor.h"
+#include "Evospace/Shared/Vanilla/pump.h"
+#include "Evospace/Shared/Vanilla/storage_block.h"
+#include "Evospace/Shared/Vanilla/tiered_block.h"
 #include "Evospace/Tesselator/TesselatorCube.h"
-#include "Evospace/Blocks/Vanilla/StorageBlock.h"
-#include "Evospace/Blocks/Vanilla/Conductor.h"
-#include "Evospace/Blocks/Vanilla/Portal.h"
-#include "Evospace/Blocks/Vanilla/Conveyor.h"
-#include "Evospace/Blocks/Vanilla/ConductorStorages.h"
-#include "Evospace/Blocks/Vanilla/Monitor.h"
-#include "Evospace/Blocks/Vanilla/Chest.h"
-#include "Evospace/Blocks/Vanilla/Computer.h"
-#include "Evospace/Blocks/Vanilla/ItemRack.h"
 
 #include <tuple>
 
@@ -67,7 +67,7 @@ ModLoadingLuaState::ModLoadingLuaState() {
              ),
              ...);
         },
-        prototype_helper::classes 
+        prototype_helper::classes
     );
 }
 
