@@ -5,9 +5,8 @@
 #include "TesselatorCube.generated.h"
 
 class UMaterialInterface;
-
 /**
- *
+ * @brief Tesselator cube
  */
 UCLASS()
 class UTesselatorCube : public UTesselator {

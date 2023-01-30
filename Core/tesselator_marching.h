@@ -23,10 +23,10 @@ struct GRIDCELL {
     float color_mask[8];
 };
 
-/**
- *
- */
 UCLASS()
+/**
+ * @brief Tesselator marching surface
+ */
 class UTesselatorMarching : public UTesselator {
     GENERATED_BODY()
 

@@ -8,10 +8,10 @@
 class UStaticMesh;
 class UMaterialInterface;
 
-/**
- *
- */
 UCLASS()
+/**
+ * @brief Tesselator static mesh copy
+ */
 class UTesselatorStaticMesh : public UTesselator {
     GENERATED_BODY()
 
