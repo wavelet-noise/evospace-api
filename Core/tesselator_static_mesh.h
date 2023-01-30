@@ -17,7 +17,7 @@ class UTesselatorStaticMesh : public UTesselator {
 
   public:
     virtual int GenerateMesh(
-        const struct SectorCompilerData &in, Data &data, const Vec3i &pos
+        const struct SectorCompilerData &in, MeshDataArray &data, const Vec3i &pos
     ) const override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
@@ -34,5 +34,5 @@ class UTesselatorStaticMesh : public UTesselator {
     UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
     UMaterialInterface *mMaterial;
 
-    int32 GetSectionMaterial(Data &data, UMaterialInterface *material) const;
+    int32 GetSectionMaterial(MeshDataArray &data, UMaterialInterface *material) const;
 };
