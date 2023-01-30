@@ -4,6 +4,8 @@
 
 #include "static_decoration.generated.h"
 
+class ADecorationLogic;
+
 UCLASS()
 /**
  * @brief World decoration object
@@ -20,7 +22,4 @@ class UStaticDecoration : public UStaticAttach {
     const UItem *mStaticItem;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-
-    UPROPERTY()
-    TSubclassOf<ADecorationLogic> mActorClass;
 };

@@ -1,9 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "CoreMinimal.h"
 #include "tesselator.h"
 
-#include "TesselatorStaticMesh.generated.h"
+#include "tesselator_static_mesh.generated.h"
 
 class UStaticMesh;
 class UMaterialInterface;
@@ -17,7 +16,8 @@ class UTesselatorStaticMesh : public UTesselator {
 
   public:
     virtual int GenerateMesh(
-        const struct SectorCompilerData &in, MeshDataArray &data, const Vec3i &pos
+        const struct SectorCompilerData &in, MeshDataArray &data,
+        const Vec3i &pos
     ) const override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
@@ -34,5 +34,6 @@ class UTesselatorStaticMesh : public UTesselator {
     UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
     UMaterialInterface *mMaterial;
 
-    int32 GetSectionMaterial(MeshDataArray &data, UMaterialInterface *material) const;
+    int32
+    GetSectionMaterial(MeshDataArray &data, UMaterialInterface *material) const;
 };

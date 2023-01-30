@@ -80,6 +80,8 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void TickAccessor();
 
     virtual void EvospacePostDuplicate(const UBlockLogic *proto) {}
+    virtual void LuaPostprocess() {}
+    virtual void LuaPrepare() override {}
 
     /**
      * @brief Test if position is suitable for this block placing

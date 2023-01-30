@@ -3,7 +3,7 @@
 #pragma once
 #include "Evospace/Shared/Vanilla/base_inventory.h"
 
-#include "SingleSlotInventory.generated.h"
+#include "single_slot_inventory.generated.h"
 
 UCLASS()
 /**

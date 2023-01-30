@@ -1,13 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "../../Item/SingleSlotInventory.h"
-#include "../../SerializableJson.h"
-#include "../../Shared/Modding/legacy_lua_state.h"
-#include "../BlockWidget.h"
-#include "CoreMinimal.h"
 #include "Evospace/Shared/Vanilla/tiered_block.h"
 
-#include "LogicCircuitBlockLogic.generated.h"
+#include "logic_circuit.generated.h"
 
 class ADimension;
 class UDataOutputAccessor;

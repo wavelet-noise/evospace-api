@@ -4,7 +4,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Shared/Core/item_data.h"
 
-#include "InventoryFilter.generated.h"
+#include "inventory_filter.generated.h"
 
 class UInventoryAccess;
 class UItem;

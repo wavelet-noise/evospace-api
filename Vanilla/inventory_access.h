@@ -16,10 +16,9 @@ class UInventoryAccess : public UInventoryReader {
     GENERATED_BODY()
 
   public:
-
     /**
      * @brief Try to add given slot to this inventory
-     * @return 
+     * @return
      */
     virtual int64 add(const FItemData &other) {
         checkNoEntry();
@@ -28,16 +27,16 @@ class UInventoryAccess : public UInventoryReader {
 
     /**
      * @brief Try to add given slot to specific slot in this inventory
-     * @return 
+     * @return
      */
     virtual int64 add(int32 index, const FItemData &other) {
         checkNoEntry();
         return 0;
     };
-    
+
     /**
      * @brief Try to add given slot to this inventory
-     * @return 
+     * @return
      */
     virtual int64 add_with_limit(const FItemData &other) {
         checkNoEntry();
@@ -45,8 +44,8 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     virtual int64 sub(const FItemData &other) {
         checkNoEntry();
@@ -54,8 +53,8 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     virtual int64 sub(int32 index, const FItemData &other) {
         checkNoEntry();
@@ -64,14 +63,14 @@ class UInventoryAccess : public UInventoryReader {
 
     UFUNCTION(BlueprintCallable)
     /**
-     * @brief 
+     * @brief
      */
     virtual void set_limit(int32 _l) { mLimit = _l; };
 
     UFUNCTION(BlueprintCallable)
     /**
-     * @brief 
-     * @return 
+     * @brief
+     * @return
      */
     virtual int32 get_limit() const { return mLimit; };
 

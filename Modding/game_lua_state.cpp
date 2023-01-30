@@ -1,5 +1,5 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
-#include "mod_loading_lua_state.h"
+#include "game_lua_state.h"
 
 #include "Evospace/Shared/Core/prototype_classes.h"
 #include "Evospace/Shared/Core/prototype_includes.h"
@@ -33,7 +33,7 @@ template <typename T> void registerCall(lua_State *L) {
 }
 } // namespace
 
-ModLoadingLuaState::ModLoadingLuaState() {
+GameLuaState::GameLuaState() {
     std::apply(
         [this](auto... args) {
             (registerCall<typename std::remove_pointer<decltype(args)>::type>(L
@@ -44,11 +44,11 @@ ModLoadingLuaState::ModLoadingLuaState() {
     );
 }
 
-ModLoadingLuaState &ModLoadingLuaState::Get() {
-    static std::unique_ptr<ModLoadingLuaState> inst;
+GameLuaState &GameLuaState::Get() {
+    static std::unique_ptr<GameLuaState> inst;
 
     if (inst == nullptr) {
-        inst = std::make_unique<ModLoadingLuaState>();
+        inst = std::make_unique<GameLuaState>();
     }
 
     return *inst;

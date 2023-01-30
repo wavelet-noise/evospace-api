@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Shared/Vanilla/storage_block.h"
 
-#include "ItemRack.generated.h"
+#include "item_rack.generated.h"
 
 class USingleSlotInventory;
 class AActor;

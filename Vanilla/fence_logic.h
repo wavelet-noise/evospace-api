@@ -8,7 +8,7 @@
 
 #include <Engine/EngineTypes.h>
 
-#include "FenceLogic.generated.h"
+#include "fence_logic.generated.h"
 
 class AItemLogicActor;
 
@@ -39,12 +39,12 @@ class UFenceLogic : public UBlockLogic {
     void UpdateSides(UBlockLogic *except = nullptr);
 
   public:
-    EVO_LUA_CODEGEN_DB(UFenceLogic, FenceBlockLogic);
+    EVO_LUA_CODEGEN_DB_EX(FenceLogic);
     static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
-class UDoorBlockLogic : public UBlockLogic {
+class UDoorLogic : public UBlockLogic {
     GENERATED_BODY()
 
   public:
@@ -60,12 +60,12 @@ class UDoorBlockLogic : public UBlockLogic {
     virtual void SetActor(AActor *actor) override;
 
   public:
-    EVO_LUA_CODEGEN_DB(UDoorBlockLogic, DoorBlockLogic);
+    EVO_LUA_CODEGEN_DB_EX(DoorLogic);
     static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
-class ULampBlockLogic : public UTieredBlock {
+class ULampLogic : public UTieredBlock {
     GENERATED_BODY()
 
   public:
@@ -81,12 +81,12 @@ class ULampBlockLogic : public UTieredBlock {
     virtual void SetActor(AActor *actor) override;
 
   public:
-    EVO_LUA_CODEGEN_DB(ULampBlockLogic, LampBlockLogic);
+    EVO_LUA_CODEGEN_DB_EX(LampLogic);
     static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
-class UBedBlockLogic : public UBlockLogic {
+class UBedLogic : public UBlockLogic {
     GENERATED_BODY()
 
   public:
@@ -94,6 +94,6 @@ class UBedBlockLogic : public UBlockLogic {
     OnAction(const FHitResult &hit, const Vec3i &side, AItemLogicActor *item);
 
   public:
-    EVO_LUA_CODEGEN_DB(UBedBlockLogic, BedBlockLogic);
+    EVO_LUA_CODEGEN_DB_EX(BedLogic);
     static void RegisterLua(lua_State *L);
 };

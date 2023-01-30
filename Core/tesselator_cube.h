@@ -1,8 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
-#include "CoreMinimal.h"
+#pragma once
+#include "tesselator.h"
 #include "Evospace/Shared/Core/prototype.h"
 
-#include "TesselatorCube.generated.h"
+#include "tesselator_cube.generated.h"
 
 class UMaterialInterface;
 /**
@@ -14,7 +15,7 @@ class UTesselatorCube : public UTesselator {
 
   public:
     virtual int GenerateMesh(
-        const struct SectorCompilerData &in, Data &data, const Vec3i &pos
+        const struct SectorCompilerData &in, MeshDataArray &data, const Vec3i &pos
     ) const override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
@@ -43,7 +44,7 @@ class UTesselatorCube : public UTesselator {
     UMaterialInterface *mMaterialDown = nullptr;
 
   private:
-    static int32 GetSectionMaterial(Data &data, UMaterialInterface *material);
+    static int32 GetSectionMaterial(MeshDataArray &data, UMaterialInterface *material);
 
   public:
     EVO_LUA_CODEGEN_DB(UTesselatorCube, TesselatorCube);

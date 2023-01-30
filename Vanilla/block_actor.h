@@ -1,11 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 
 #pragma once
-
-#include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
-#include "BlockActor.generated.h"
+#include "block_actor.generated.h"
 
 class UBlock;
 class UBlockLogic;

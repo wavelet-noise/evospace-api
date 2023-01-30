@@ -6,7 +6,7 @@
 
 #include <string>
 
-#include "StaticAttach.generated.h"
+#include "static_attach.generated.h"
 
 class ASector;
 

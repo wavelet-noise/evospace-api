@@ -115,6 +115,21 @@ bool LuaState::RunCode(
     return true;
 }
 
+luabridge::LuaRef LuaState::LoadCode(
+    std::string_view code, std::string_view path, int NArg,
+    std::function<void(lua_State *L)> push_args, int NRet
+) {
+    std::string path_decorated = std::string("@") + path.data();
+    if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
+        LOG(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
+        return nullptr;
+    }
+    auto ref = luabridge::get<luabridge::LuaRef>(L, 1);
+    lua_pop(L, 1);
+
+    return ref.error() ? nullptr : ref.value();
+}
+
 std::vector<std::string> split(std::string_view s, char delim) {
     std::vector<std::string> result;
     std::stringstream ss(s.data());

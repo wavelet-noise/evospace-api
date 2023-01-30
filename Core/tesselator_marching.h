@@ -5,7 +5,7 @@
 
 #include <Math/Vector.h>
 
-#include "TesselatorMarching.generated.h"
+#include "tesselator_marching.generated.h"
 
 class UMaterialInterface;
 struct SectorCompilerData;
@@ -35,7 +35,8 @@ class UTesselatorMarching : public UTesselator {
 
   public:
     virtual int GenerateMesh(
-        const struct SectorCompilerData &in, MeshDataArray &data, const Vec3i &pos
+        const struct SectorCompilerData &in, MeshDataArray &data,
+        const Vec3i &pos
     ) const override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
@@ -54,11 +55,13 @@ class UTesselatorMarching : public UTesselator {
   private:
     void Polygonise(
         const struct SectorCompilerData &in, const GRIDCELL &grid,
-        double isolevel, MeshDataArray &data, const Vec3f &pos, const Vec3f &size
+        double isolevel, MeshDataArray &data, const Vec3f &pos,
+        const Vec3f &size
     ) const;
 
     void PolygoniseCube(
-        const struct SectorCompilerData &in, MeshDataArray &data, const Vec3i &bpos
+        const struct SectorCompilerData &in, MeshDataArray &data,
+        const Vec3i &bpos
     ) const;
 
     FVector VertexInterp(
@@ -71,7 +74,8 @@ class UTesselatorMarching : public UTesselator {
     ) const;
 
   private:
-    int32 GetSectionMaterial(MeshDataArray &data, UMaterialInterface *material) const;
+    int32
+    GetSectionMaterial(MeshDataArray &data, UMaterialInterface *material) const;
 
   public:
     EVO_LUA_CODEGEN_DB(UTesselatorMarching, TesselatorMarching);

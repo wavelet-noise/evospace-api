@@ -53,11 +53,10 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     void SetMaxSlotFunctor(TFunction<int64(const FItemData &)> func);
 
   public:
-    
     virtual int32 min() const override;
-    
+
     virtual int32 max() const override;
-    
+
     virtual int32 find(const UItem *item) const override;
 
     virtual int32 find_empty() const override;

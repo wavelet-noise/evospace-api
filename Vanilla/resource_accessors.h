@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
 
-#include "resource_accessors.generated.h
+#include "resource_accessors.generated.h"
 
 UCLASS()
 /**

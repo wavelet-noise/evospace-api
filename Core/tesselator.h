@@ -41,7 +41,8 @@ class UTesselator : public UPrototype, public ISerializableJson {
     virtual bool TempIsMarching() const { return false; }
 
     virtual int GenerateMesh(
-        const struct SectorCompilerData &in, MeshDataArray &arr, const Vec3i &pos
+        const struct SectorCompilerData &in, MeshDataArray &arr,
+        const Vec3i &pos
     ) const {
         return 0;
     }

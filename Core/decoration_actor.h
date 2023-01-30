@@ -1,6 +1,7 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
+
 #include "decoration_actor.generated.h"
 
 class UStaticDecoration;

@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Shared/Core/select_crafter.h"
 
-#include "FissionReactorBlockLogic.generated.h"
+#include "endgame_reactors.generated.h"
 
 UCLASS()
 /**

@@ -1,5 +1,6 @@
 #pragma once
 
+
 class UPrototype;
 class UEntity;
 class UBlockLogic;
@@ -33,9 +34,9 @@ class UPropList;
 class UStaticResearch;
 class UStaticChapter;
 
-class UBedBlockLogic;
-class UDoorBlockLogic;
-class ULampBlockLogic;
+class UBedLogic;
+class UDoorLogic;
+class ULampLogic;
 class UFenceLogic;
 
 class USurfaceBuilder;
@@ -84,6 +85,8 @@ class UMonitor;
 class UComputer;
 class UQuantumComputer;
 
+class ULuaBlock;
+
 namespace evo { namespace prototype_helper {
 inline std::tuple<
     UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UCrafterBase *,
@@ -93,8 +96,8 @@ inline std::tuple<
     UInventoryReader *, UInventoryAccess *, UBaseInventory *, UInventory *,
     UInventoryContainer *, UInternalInventory *, URecipeInventory *,
     UPropsGenerator *, ULayeringGenerator *, UBiome *, UStaticAttach *,
-    UPropList *, UStaticResearch *, UStaticChapter *, UBedBlockLogic *,
-    UDoorBlockLogic *, ULampBlockLogic *, UFenceLogic *, USurfaceBuilder *,
+    UPropList *, UStaticResearch *, UStaticChapter *, UBedLogic *,
+    UDoorLogic *, ULampLogic *, UFenceLogic *, USurfaceBuilder *,
     UPlaneBuilder *, UFissionReactor *, UFusionReactor *, URobotArm *,
     UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *, UStorageBlock *,
     UChest *, UFluidContainer *, UItemRack *, UConductor *, UHeatConductor *,
@@ -102,6 +105,6 @@ inline std::tuple<
     UElectricConductor *, USwitch *, UKineticSwitch *, UHeatSwitch *,
     UFluidSwitch *, UDataSwitch *, UElectricSwitch *, UBatteryBox *,
     UConveyor *, USplitter *, USorter *, UPortal *, USignBlock *, UMonitor *,
-    UComputer *, UQuantumComputer *>
+    UComputer *, UQuantumComputer *, ULuaBlock *>
     classes;
 }} // namespace evo::prototype_helper
