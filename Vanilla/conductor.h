@@ -245,7 +245,7 @@ class UFluidConductor : public UConductor {
 
 UCLASS()
 /**
- * @brief Vanilla vanilla electric conductor BlockLogic
+ * @brief Vanilla electric conductor BlockLogic
  */
 class UElectricConductor : public UConductor {
     GENERATED_BODY()
@@ -264,7 +264,7 @@ class UElectricConductor : public UConductor {
 
 UCLASS()
 /**
- * @brief Vanilla vanilla data conductor BlockLogic
+ * @brief Vanilla data conductor BlockLogic
  */
 class UDataConductor : public UConductor {
     GENERATED_BODY()
@@ -287,7 +287,7 @@ class UDataConductor : public UConductor {
 
 UCLASS()
 /**
- * @brief Vanilla vanilla heat conductor BlockLogic
+ * @brief Vanilla heat conductor BlockLogic
  */
 class UHeatConductor : public UConductor {
     GENERATED_BODY()
@@ -322,7 +322,7 @@ class UHeatConductor : public UConductor {
 
 UCLASS()
 /**
- * @brief Vanilla vanilla kinetic conductor BlockLogic
+ * @brief Vanilla kinetic conductor BlockLogic
  */
 class UKineticConductor : public UConductor {
     GENERATED_BODY()

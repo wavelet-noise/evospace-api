@@ -15,7 +15,8 @@ class UTieredBlock : public UBlockLogic {
   public:
     UPROPERTY(BlueprintReadOnly, EditAnywhere)
     /**
-     * @brief tier of block ( 0 - stone, 1 - copper, 2 - steel, 3 - aluminium, 4 - stainless steel, 5 - titanium, 6 - hard metal, 7 - neutronium )
+     * @brief tier of block ( 0 - stone, 1 - copper, 2 - steel, 3 - aluminium, 4
+     * - stainless steel, 5 - titanium, 6 - hard metal, 7 - neutronium )
      */
     int32 tier = 0;
 

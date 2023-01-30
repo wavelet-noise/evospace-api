@@ -36,7 +36,7 @@ class UStaticChapter;
 class UBedBlockLogic;
 class UDoorBlockLogic;
 class ULampBlockLogic;
-class UFenceBlockLogic;
+class UFenceLogic;
 
 class USurfaceBuilder;
 class UPlaneBuilder;
@@ -94,7 +94,7 @@ inline std::tuple<
     UInventoryContainer *, UInternalInventory *, URecipeInventory *,
     UPropsGenerator *, ULayeringGenerator *, UBiome *, UStaticAttach *,
     UPropList *, UStaticResearch *, UStaticChapter *, UBedBlockLogic *,
-    UDoorBlockLogic *, ULampBlockLogic *, UFenceBlockLogic *, USurfaceBuilder *,
+    UDoorBlockLogic *, ULampBlockLogic *, UFenceLogic *, USurfaceBuilder *,
     UPlaneBuilder *, UFissionReactor *, UFusionReactor *, URobotArm *,
     UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *, UStorageBlock *,
     UChest *, UFluidContainer *, UItemRack *, UConductor *, UHeatConductor *,
