@@ -6,6 +6,9 @@
 #include "FissionReactorBlockLogic.generated.h"
 
 UCLASS()
+/**
+ * @brief Fission reactor crafter
+ */
 class UFissionReactor : public USelectCrafter {
     GENERATED_BODY()
 
@@ -36,6 +39,9 @@ class UFissionReactor : public USelectCrafter {
 };
 
 UCLASS()
+/**
+ * @brief Fusion reactor crafter
+ */
 class UFusionReactor : public USelectCrafter {
     GENERATED_BODY()
 

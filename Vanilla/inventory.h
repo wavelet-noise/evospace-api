@@ -4,7 +4,6 @@
 #include "Evospace/Shared/Core/item_data.h"
 #include "Evospace/Shared/Core/prototype.h"
 #include "Evospace/Shared/Vanilla/base_inventory.h"
-#include "InventoryWidget.h"
 
 #include <Containers/Array.h>
 #include <Templates/SubclassOf.h>
