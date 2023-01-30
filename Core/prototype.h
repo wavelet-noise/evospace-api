@@ -73,14 +73,10 @@ UCLASS(Abstract)
 /**
  * @brief Super class for all objects stored in database
  */
-class UPrototype
-    : public UObject { // : public std::enable_shared_from_this<Static> {
+class UPrototype : public UObject {
     GENERATED_BODY()
 
   public:
-    // Static(const Static &) = delete;
-    // Static &operator=(const Static &) = delete;
-
     /**
      * @brief Object name in database
      */

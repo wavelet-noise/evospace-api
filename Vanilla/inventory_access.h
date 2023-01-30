@@ -16,36 +16,64 @@ class UInventoryAccess : public UInventoryReader {
     GENERATED_BODY()
 
   public:
-    virtual int64 _Add(const FItemData &other) {
+
+    /**
+     * @brief Try to add given slot to this inventory
+     * @return 
+     */
+    virtual int64 add(const FItemData &other) {
         checkNoEntry();
         return 0;
     };
 
-    virtual int64 _Add(int32 index, const FItemData &other) {
+    /**
+     * @brief Try to add given slot to specific slot in this inventory
+     * @return 
+     */
+    virtual int64 add(int32 index, const FItemData &other) {
+        checkNoEntry();
+        return 0;
+    };
+    
+    /**
+     * @brief Try to add given slot to this inventory
+     * @return 
+     */
+    virtual int64 add_with_limit(const FItemData &other) {
         checkNoEntry();
         return 0;
     };
 
-    virtual int64 _AddWithLimit(const FItemData &other) {
+    /**
+     * @brief 
+     * @return 
+     */
+    virtual int64 sub(const FItemData &other) {
         checkNoEntry();
         return 0;
     };
 
-    virtual int64 _Sub(const FItemData &other) {
-        checkNoEntry();
-        return 0;
-    };
-
-    virtual int64 _Sub(int32 index, const FItemData &other) {
+    /**
+     * @brief 
+     * @return 
+     */
+    virtual int64 sub(int32 index, const FItemData &other) {
         checkNoEntry();
         return 0;
     };
 
     UFUNCTION(BlueprintCallable)
-    virtual void SetLimit(int32 _l) { mLimit = _l; };
+    /**
+     * @brief 
+     */
+    virtual void set_limit(int32 _l) { mLimit = _l; };
 
     UFUNCTION(BlueprintCallable)
-    virtual int32 GetLimit() const { return mLimit; };
+    /**
+     * @brief 
+     * @return 
+     */
+    virtual int32 get_limit() const { return mLimit; };
 
     UPROPERTY(BlueprintReadOnly, EditAnywhere)
     int32 mLimit = INDEX_NONE;

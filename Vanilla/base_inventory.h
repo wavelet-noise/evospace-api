@@ -1,16 +1,14 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "../SerializableJson.h"
 #include "CoreMinimal.h"
 #include "Evospace/Shared/Core/item_data.h"
 #include "Evospace/Shared/Core/prototype.h"
 #include "Evospace/Shared/Vanilla/inventory_access.h"
-#include "InventoryWidget.h"
 
 #include <Templates/Function.h>
 #include <Templates/SubclassOf.h>
 
-#include "BaseInventory.generated.h"
+#include "base_inventory.generated.h"
 
 class UInventoryFilter;
 class UBaseInventory;
@@ -39,7 +37,7 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
 
     virtual void Sanitize() override;
 
-    virtual int64 _AddWithLimit(const FItemData &other) override;
+    virtual int64 add_with_limit(const FItemData &other) override;
 
   public:
     virtual TSubclassOf<UBaseInventoryWidgetBase>
@@ -55,36 +53,37 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     void SetMaxSlotFunctor(TFunction<int64(const FItemData &)> func);
 
   public:
-    virtual int32 _Min() const override;
+    
+    virtual int32 min() const override;
+    
+    virtual int32 max() const override;
+    
+    virtual int32 find(const UItem *item) const override;
 
-    virtual int32 _Max() const override;
-
-    virtual int32 _Find(const UItem *item) const override;
-
-    virtual int32 _FindEmpty() const override;
+    virtual int32 find_empty() const override;
 
     virtual int32 _FindNotEmpty() const override;
 
-    const FItemData &_SafeGet(int32 index) const;
+    const FItemData &safe_get(int32 index) const;
 
     UFUNCTION(BlueprintCallable)
     virtual bool IsEmpty() const override;
 
-    virtual int64 _Sum(const UItem *item) const override;
+    virtual int64 sum(const UItem *item) const override;
 
-    virtual const FItemData &_Get(int32 index) const override;
+    virtual const FItemData &get(int32 index) const override;
 
     virtual int64 GetSlotCapacity(int32 index) const override;
 
     virtual int32 _Num() const override;
 
-    virtual int64 _Add(const FItemData &other) override;
+    virtual int64 add(const FItemData &other) override;
 
-    virtual int64 _Add(int32 index, const FItemData &other) override;
+    virtual int64 add(int32 index, const FItemData &other) override;
 
-    virtual int64 _Sub(const FItemData &other) override;
+    virtual int64 sub(const FItemData &other) override;
 
-    virtual int64 _Sub(int32 index, const FItemData &other) override;
+    virtual int64 sub(int32 index, const FItemData &other) override;
 
   protected:
     bool CheckFilter(const FItemData &data);

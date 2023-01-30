@@ -7,7 +7,7 @@
 
 #include <Templates/SubclassOf.h>
 
-#include "InventoryReader.generated.h"
+#include "inventory_reader.generated.h"
 
 class UBaseInventoryWidget;
 class UItem;
@@ -22,22 +22,22 @@ class UInventoryReader : public UPrototype {
     // Add interface functions to this class. This is the class that will be
     // inherited to implement this interface.
   public:
-    virtual int32 _Min() const {
+    virtual int32 min() const {
         checkNoEntry();
         return 0;
     };
 
-    virtual int32 _Max() const {
+    virtual int32 max() const {
         checkNoEntry();
         return 0;
     };
 
-    virtual int32 _Find(const UItem *item) const {
+    virtual int32 find(const UItem *item) const {
         checkNoEntry();
         return 0;
     };
 
-    virtual int32 _FindEmpty() const {
+    virtual int32 find_empty() const {
         checkNoEntry();
         return 0;
     };
@@ -52,18 +52,18 @@ class UInventoryReader : public UPrototype {
         return true;
     };
 
-    virtual int64 _Sum(const UItem *item) const {
+    virtual int64 sum(const UItem *item) const {
         checkNoEntry();
         return 0;
     };
 
-    virtual const FItemData &_Get(int32 index) const {
+    virtual const FItemData &get(int32 index) const {
         checkNoEntry();
         const static FItemData dummy;
         return dummy;
     };
 
-    virtual const FItemData &_SafeGet(int32 index) const {
+    virtual const FItemData &safe_get(int32 index) const {
         checkNoEntry();
         const static FItemData dummy;
         return dummy;
