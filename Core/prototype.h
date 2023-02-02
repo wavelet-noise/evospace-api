@@ -87,4 +87,21 @@ class UPrototype : public UObject {
   public:
     EVO_LUA_CODEGEN_DB_EX(Prototype);
     static void RegisterLua(lua_State *L);
+
+    /**
+     * @fn static This * find(std::string_view name)
+     * @brief Try to find object of type This with given name
+     * If there is no such object nullptr will be returned
+     */
+
+    /**
+     * @fn static This * get(std::string_view name)
+     * @brief Find or create new object of type This with given name
+     */
+    
+    /**
+     * @fn static This * cast(UPrototype * proto)
+     * @brief Try to cast any prototype object to This type
+     * If it is impossible nullptr will be returned
+     */
 };

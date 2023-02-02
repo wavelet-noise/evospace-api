@@ -25,7 +25,6 @@ UCLASS(BlueprintType)
 /**
  * @brief Static part of every item
  *
- * @see FItemData
  * FItemData {
  *      count: per instance data,
  *      item: static part pointer
@@ -128,7 +127,7 @@ class UItem : public UPrototype, public ISerializableJson {
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     TArray<UMaterialInterface *> mMaterials;
 
-    // Ingame effects color
+    // In-game effects color
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     FLinearColor mColor = FLinearColor(.5, .5, .5, 1);
 
