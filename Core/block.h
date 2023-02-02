@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "Evospace/Shared/Core/entity.h"
 #include "Evospace/Shared/Core/prototype.h"
-#include "Evospace/Tesselator/Tesselator.h"
 #include "Evospace/Vector.h"
 
 #include <UObject/ScriptInterface.h>
@@ -101,6 +100,6 @@ class UBlock : public UEntity {
     ) const;
 
   public:
-    EVO_LUA_CODEGEN_DB(UBlock, Block);
+    EVO_LUA_CODEGEN_DB_EX(Block);
     static void RegisterLua(lua_State *L);
 };

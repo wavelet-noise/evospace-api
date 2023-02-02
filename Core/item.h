@@ -13,6 +13,8 @@
 #include <Math/TransformNonVectorized.h>
 #include <Templates/SubclassOf.h>
 
+#include <vector>
+
 #include "item.generated.h"
 
 struct FItemData;
@@ -23,12 +25,13 @@ UCLASS(BlueprintType)
 /**
  * @brief Static part of every item
  *
- * Item Instance {
- *      per instance data,
- *      static part pointer
+ * @see FItemData
+ * FItemData {
+ *      count: per instance data,
+ *      item: static part pointer
  * }
  *
- * Not modifiable part of item
+ * Not modifiable in game part of item
  */
 class UItem : public UPrototype, public ISerializableJson {
     GENERATED_BODY()
@@ -42,8 +45,9 @@ class UItem : public UPrototype, public ISerializableJson {
      * Default value: nil
      *
      * @code{.lua}
-     * image = static_item.image
-     * static_item.image = image
+     * local coal = Item.get("Coal")
+     * image = coal.image
+     * coal.image = image
      * @endcode
      */
     UTexture2D *image = nullptr;
@@ -58,8 +62,9 @@ class UItem : public UPrototype, public ISerializableJson {
      * Default value: 1.0
      *
      * @code{.lua}
-     * mul = static_item.unit_mul
-     * static_item.unit_mul = 1.0
+     * local coal = Item.get("Coal")
+     * mul = coal.unit_mul
+     * coal.unit_mul = 1.0
      * @endcode
      */
     float unit_mul = 1.f;
@@ -72,8 +77,9 @@ class UItem : public UPrototype, public ISerializableJson {
      * Default value: 0
      *
      * @code{.lua}
-     * count = static_item.max_count
-     * static_item.max_count = 64
+     * local coal = Item.get("Coal")
+     * count = coal.max_count
+     * coal.max_count = 64
      * @endcode
      */
     int64 max_count = 0;
@@ -91,6 +97,12 @@ class UItem : public UPrototype, public ISerializableJson {
      */
     bool craftable = true;
 
+    /**
+     * @brief KeyTable array with (Key, Table) pairs.
+     *
+     * ("Copper", "misc")
+     * ("Sign", "blocks")
+     */
     std::vector<KeyTable> label_parts = {};
 
     // Database page tag

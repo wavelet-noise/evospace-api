@@ -46,7 +46,7 @@ class UPump : public UTieredBlock {
 
   protected:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-    USingleSlotInventory *mFluidInventory;
+    UInventoryAccess *mFluidInventory;
 
   private:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

@@ -19,8 +19,6 @@ class UInventoryContainer : public UInventoryAccess {
 
     virtual int32 min() const override;
 
-    virtual int32 find() const override;
-
     virtual int32 find(const UItem *item) const override;
 
     virtual int32 find_empty() const override;
@@ -31,12 +29,13 @@ class UInventoryContainer : public UInventoryAccess {
 
     virtual int64 sum(const UItem *item) const override;
 
-    virtual const FItemData &_Get(int32 index) const override;
+    virtual const FItemData &get(int32 index) const override;
 
-    virtual const FItemData &_SafeGet(int32 index) const override;
+    virtual const FItemData &safe_get(int32 index) const override;
 
     virtual int64 GetSlotCapacity(int32 index) const override;
 
+    //TODO: rename num
     virtual int32 _Num() const override;
 
     virtual void SortKeyAZ() override;

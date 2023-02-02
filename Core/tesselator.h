@@ -1,6 +1,6 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "../CoordinateSystem.h"
+#include "Evospace/CoordinateMinimal.h"
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Shared/Core/prototype.h"

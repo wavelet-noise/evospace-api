@@ -1,6 +1,6 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "../../CoordinateSystem.h"
+#include "Evospace/CoordinateMinimal.h"
 #include "../BlockWidget.h"
 #include "CoreMinimal.h"
 #include "Evospace/Shared/Vanilla/tiered_block.h"

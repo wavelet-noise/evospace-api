@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "Evospace/Shared/Core/item_data.h"
 #include "Evospace/Shared/Core/prototype.h"
-#include "InventoryWidget.h"
 
 #include <Templates/SubclassOf.h>
 

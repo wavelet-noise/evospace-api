@@ -1,6 +1,6 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "Evospace/CoordinateSystem.h"
+#include "Evospace/CoordinateMinimal.h"
 #include "Evospace/Shared/ThirdParty/luabridge.h"
 #include "Evospace/Shared/abstract_error.h"
 

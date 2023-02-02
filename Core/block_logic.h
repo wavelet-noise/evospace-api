@@ -2,7 +2,6 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/BlockWidgetType.h"
-#include "Evospace/Blocks/AccessorComponent.h"
 #include "Evospace/Blocks/BaseInventorySideAccessor.h"
 #include "Evospace/BreakResult.h"
 #include "Evospace/CoordinateMinimal.h"
