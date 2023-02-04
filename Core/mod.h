@@ -63,16 +63,30 @@ class UMod : public UObject, public ISerializableJson {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     bool DeserializeFromDirectory(const FString &s);
 
+    UFUNCTION(BlueprintCallable)
     FString Name() const { return UTF8_TO_TCHAR(name.data()); }
+
+    UFUNCTION(BlueprintCallable)
     FString Version() const { return UTF8_TO_TCHAR(version.data()); }
+
+    UFUNCTION(BlueprintCallable)
     FString Title() const { return UTF8_TO_TCHAR(title.data()); }
+
+    UFUNCTION(BlueprintCallable)
     FString EvospaceVersion() const {
         return UTF8_TO_TCHAR(evospace_version.data());
     }
+
+    UFUNCTION(BlueprintCallable)
     FString CreatedBy() const { return UTF8_TO_TCHAR(created_by.data()); }
+
+    UFUNCTION(BlueprintCallable)
     FString Description() const { return UTF8_TO_TCHAR(description.data()); }
+
+    UFUNCTION(BlueprintCallable)
     FString Author() const { return UTF8_TO_TCHAR(author.data()); }
 
+    UFUNCTION(BlueprintCallable)
     TArray<FString> Dependencies() const {
         TArray<FString> arr;
         for (auto &a : dependencies) {

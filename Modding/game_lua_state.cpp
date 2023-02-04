@@ -26,13 +26,6 @@ namespace evo {
 //         std::make_index_sequence<std::tuple_size_v<std::remove_reference_t<Tuple>>>{});
 // }
 
-namespace {
-template <typename T> void registerCall(lua_State *L) {
-    T::RegisterLua(L);
-    T::RegisterCommonLua(L);
-}
-} // namespace
-
 GameLuaState::GameLuaState() {
     std::apply(
         [this](auto... args) {

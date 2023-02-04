@@ -16,5 +16,10 @@ class ModLoadingLuaState : public LuaState {
 
   private:
     UJsonObjectLibrary *mLibrary = nullptr;
+
+    template <typename T> void registerCall(lua_State *L) {
+        T::RegisterLua(L);
+        T::RegisterCommonLua(L);
+    }
 };
 } // namespace evo

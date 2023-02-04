@@ -159,10 +159,6 @@ class LuaState {
         std::string_view code, std::string_view path, int NArg,
         std::function<void(lua_State *L)> push_args, int NRet = 0
     );
-    luabridge::LuaRef LoadCode(
-        std::string_view code, std::string_view path, int NArg,
-        std::function<void(lua_State *L)> push_args, int NRet
-    );
     bool RunCode(
         AsyncMessageObject &msg, std::string_view code, std::string_view path,
         int NRet

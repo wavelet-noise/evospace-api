@@ -1023,7 +1023,7 @@ int mz_deflate(mz_streamp pStream, int flush) {
         pStream->avail_out -= (mz_uint)out_bytes;
         pStream->total_out += (mz_uint)out_bytes;
 
-        if (defl_status < 0) {
+        if (defl_status < tdefl_status(0)) {
             mz_status = MZ_STREAM_ERROR;
             break;
         } else if (defl_status == TDEFL_STATUS_DONE) {
@@ -1177,7 +1177,7 @@ int mz_inflate(mz_streamp pStream, int flush) {
 
     first_call = pState->m_first_call;
     pState->m_first_call = 0;
-    if (pState->m_last_status < 0)
+    if (pState->m_last_status < tinfl_status(0))
         return MZ_DATA_ERROR;
 
     if (pState->m_has_flushed && (flush != MZ_FINISH))
@@ -1208,7 +1208,7 @@ int mz_inflate(mz_streamp pStream, int flush) {
         pStream->avail_out -= (mz_uint)out_bytes;
         pStream->total_out += (mz_uint)out_bytes;
 
-        if (status < 0)
+        if (status < tinfl_status(0))
             return MZ_DATA_ERROR;
         else if (status != TINFL_STATUS_DONE) {
             pState->m_last_status = TINFL_STATUS_FAILED;
@@ -1266,7 +1266,7 @@ int mz_inflate(mz_streamp pStream, int flush) {
         pState->m_dict_ofs =
             (pState->m_dict_ofs + n) & (TINFL_LZ_DICT_SIZE - 1);
 
-        if (status < 0)
+        if (status < tinfl_status(0))
             return MZ_DATA_ERROR; // Stream is corrupted (there could be some
                                   // uncompressed data left in the output
                                   // dictionary - oh well).
@@ -1925,7 +1925,7 @@ common_exit:
     *pOut_buf_size = pOut_buf_cur - pOut_buf_next;
     if ((decomp_flags &
          (TINFL_FLAG_PARSE_ZLIB_HEADER | TINFL_FLAG_COMPUTE_ADLER32)) &&
-        (status >= 0)) {
+        (status >= tinfl_status(0))) {
         const mz_uint8 *ptr = pOut_buf_next;
         size_t buf_len = *pOut_buf_size;
         mz_uint32 i, s1 = r->m_check_adler32 & 0xffff,
@@ -1984,7 +1984,7 @@ void *tinfl_decompress_mem_to_heap(
             (flags & ~TINFL_FLAG_HAS_MORE_INPUT) |
                 TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF
         );
-        if ((status < 0) || (status == TINFL_STATUS_NEEDS_MORE_INPUT)) {
+        if ((status < tinfl_status(0)) || (status == TINFL_STATUS_NEEDS_MORE_INPUT)) {
             MZ_FREE(pBuf);
             *pOut_len = 0;
             return NULL;

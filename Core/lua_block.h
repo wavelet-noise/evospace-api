@@ -13,9 +13,9 @@ class ULuaBlock : public UBlockLogic {
     GENERATED_BODY()
 
   public:
-    std::optional<luabridge::LuaRef> self_static;
-    std::optional<luabridge::LuaRef> tick_static;
-    std::optional<luabridge::LuaRef> self;
+    luabridge::LuaRef self_static = {nullptr};
+    luabridge::LuaRef tick_static = {nullptr};
+    luabridge::LuaRef self = {nullptr};
 
   public:
     ULuaBlock();

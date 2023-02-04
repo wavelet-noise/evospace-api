@@ -15,4 +15,6 @@ class UStaticDecoration : public UStaticAttach {
     virtual bool Create(
         ASector *sector, const FTransform &transform, bool ignored = false
     ) const;
+
+    UClass * mActorClass = nullptr;
 };
