@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/Core/item_data.h"
+#include "Core/item_data.h"
 
 #include <Dom/JsonObject.h>
 

@@ -6,7 +6,7 @@
 #include "Evospace/BreakResult.h"
 #include "Evospace/CoordinateMinimal.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/prototype.h"
 
 #include "block_logic.generated.h"
 

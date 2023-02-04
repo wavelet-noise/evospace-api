@@ -3,7 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
-#include "Evospace/Shared/Core/select_crafter.h"
+#include "Core/select_crafter.h"
 
 #include "auto_crafter.generated.h"
 

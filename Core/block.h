@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Core/entity.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/entity.h"
+#include "Core/prototype.h"
 #include "Evospace/Vector.h"
 
 #include <UObject/ScriptInterface.h>
@@ -17,6 +17,7 @@ class LuaState;
 class UBlockLogic;
 class UPartBlockLogic;
 class ADimension;
+class UTesselator;
 
 UCLASS(BlueprintType)
 /**

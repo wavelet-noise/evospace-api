@@ -1,5 +1,5 @@
 #pragma once
-#include "Evospace/Shared/Vanilla/tiered_block.h"
+#include "Vanilla/tiered_block.h"
 
 #include "lua_block.generated.h"
 
@@ -13,9 +13,9 @@ class ULuaBlock : public UBlockLogic {
     GENERATED_BODY()
 
   public:
-    luabridge::LuaRef self_static;
-    luabridge::LuaRef tick_static;
-    luabridge::LuaRef self;
+    std::optional<luabridge::LuaRef> self_static;
+    std::optional<luabridge::LuaRef> tick_static;
+    std::optional<luabridge::LuaRef> self;
 
   public:
     ULuaBlock();

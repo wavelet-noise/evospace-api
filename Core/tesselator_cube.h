@@ -1,7 +1,7 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "tesselator.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/prototype.h"
 
 #include "tesselator_cube.generated.h"
 

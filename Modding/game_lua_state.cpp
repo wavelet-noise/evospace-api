@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #include "game_lua_state.h"
 
-#include "Evospace/Shared/Core/prototype_classes.h"
-#include "Evospace/Shared/Core/prototype_includes.h"
+#include "Core/prototype_classes.h"
+#include "Core/prototype_includes.h"
 
 #include <tuple>
 

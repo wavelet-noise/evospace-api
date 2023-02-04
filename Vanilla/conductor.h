@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
 #include "Evospace/Common.h"
-#include "Evospace/Shared/Vanilla/storage_block.h"
+#include "Vanilla/storage_block.h"
 
 #include "Conductor.generated.h"
 

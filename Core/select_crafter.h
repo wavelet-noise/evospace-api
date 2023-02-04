@@ -2,7 +2,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/BlockWidget.h"
-#include "Evospace/Shared/Core/crafter_base.h"
+#include "Core/crafter_base.h"
 
 #include <Dom/JsonObject.h>
 

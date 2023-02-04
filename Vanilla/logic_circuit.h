@@ -1,6 +1,6 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "Evospace/Shared/Vanilla/tiered_block.h"
+#include "Vanilla/tiered_block.h"
 
 #include "logic_circuit.generated.h"
 
@@ -11,6 +11,7 @@ class UDataInputAccessor;
 class UItem;
 class AMainPlayerController;
 class UInternalInventory;
+class USingleSlotInventory;
 
 /**
  * @brief LogicNetworkState

@@ -3,8 +3,8 @@
 #include "Containers/Map.h"
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/Core/prototype.h"
-#include "Evospace/Shared/Core/recipe.h"
+#include "Core/prototype.h"
+#include "Core/recipe.h"
 
 #include "recipe_dictionary.generated.h"
 

@@ -2,7 +2,7 @@
 
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Vanilla/tiered_block.h"
+#include "Vanilla/tiered_block.h"
 
 #include "led_logic.generated.h"
 

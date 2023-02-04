@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Core/item_data.h"
-#include "Evospace/Shared/Core/prototype.h"
-#include "Evospace/Shared/Vanilla/base_inventory.h"
+#include "Core/item_data.h"
+#include "Core/prototype.h"
+#include "Core/base_inventory.h"
 
 #include <Containers/Array.h>
 #include <Templates/SubclassOf.h>
@@ -75,9 +75,9 @@ class USubscriptionInventory : public UInventory {
     GENERATED_BODY()
 
   public:
-    int64 _Add(const FItemData &other) override;
+    virtual int64 add(const FItemData &other) override;
 
-    int64 _Add(int32 index, const FItemData &other) override;
+    virtual int64 add(int32 index, const FItemData &other) override;
 
     std::function<void(const FItemData &)> mOnAdd;
 };

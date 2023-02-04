@@ -1,7 +1,7 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/prototype.h"
 #include "inventory_reader.h"
 
 #include "inventory_access.generated.h"

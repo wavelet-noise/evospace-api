@@ -3,7 +3,7 @@
 #include "Evospace/CoordinateMinimal.h"
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/prototype.h"
 
 #include <Math/Color.h>
 #include <Math/Vector.h>

@@ -1,7 +1,7 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 
 #pragma once
-#include "Evospace/Shared/Vanilla/base_inventory.h"
+#include "Core/base_inventory.h"
 
 #include "single_slot_inventory.generated.h"
 

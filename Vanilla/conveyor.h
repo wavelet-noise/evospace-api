@@ -4,7 +4,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/Accessors/ConveyorInventorySideAccessor.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
-#include "Evospace/Shared/Vanilla/tiered_block.h"
+#include "Vanilla/tiered_block.h"
 
 #include "conveyor.generated.h"
 

@@ -2,7 +2,7 @@
 #pragma once
 #include "Containers/Array.h"
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Core/item_data.h"
+#include "Core/item_data.h"
 
 #include "inventory_filter.generated.h"
 

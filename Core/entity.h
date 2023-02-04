@@ -3,7 +3,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/prototype.h"
 
 #include "entity.generated.h"
 

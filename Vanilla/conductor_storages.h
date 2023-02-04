@@ -1,7 +1,7 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Vanilla/conductor.h"
+#include "Vanilla/conductor.h"
 
 #include "conductor_storages.generated.h"
 

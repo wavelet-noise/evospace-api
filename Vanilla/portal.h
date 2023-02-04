@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FissionReactorBlockLogic.h"
+#include "Vanilla/endgame_reactors.h"
 
 #include "Portal.generated.h"
 

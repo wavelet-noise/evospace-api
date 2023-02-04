@@ -1,12 +1,10 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "Evospace/CoordinateMinimal.h"
-#include "../BlockWidget.h"
-#include "../ItemHopperInterface.h"
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Core/item.h"
-#include "Evospace/Shared/Vanilla/inventory.h"
-#include "Evospace/Shared/Vanilla/tiered_block.h"
+#include "Evospace/Blocks/ItemHopperInterface.h"
+#include "Core/item.h"
+#include "Vanilla/inventory.h"
+#include "Vanilla/tiered_block.h"
 
 #include "robot_arm.generated.h"
 

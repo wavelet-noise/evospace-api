@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Evospace/Common.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/prototype.h"
 #include "Evospace/Vector.h"
 
 #include <string>

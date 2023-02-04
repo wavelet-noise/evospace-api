@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Core/item_data.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/item_data.h"
+#include "Core/prototype.h"
 
 #include <Templates/SubclassOf.h>
 

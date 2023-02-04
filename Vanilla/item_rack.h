@@ -1,7 +1,7 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "Evospace/Shared/Vanilla/storage_block.h"
+#include "Vanilla/storage_block.h"
 
 #include "item_rack.generated.h"
 

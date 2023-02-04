@@ -5,8 +5,8 @@
 #include "Evospace/Blocks/BlockDeserializeLegacyLuaState.h"
 #include "Evospace/Item/ItemLogicActor.h"
 #include "Evospace/SerializableJson.h"
-#include "Evospace/Shared/Core/loc.h"
-#include "Evospace/Shared/Core/prototype.h"
+#include "Core/loc.h"
+#include "Core/prototype.h"
 
 #include <Engine/World.h>
 #include <Internationalization/Text.h>
