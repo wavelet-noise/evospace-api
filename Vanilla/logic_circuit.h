@@ -104,11 +104,11 @@ enum class ELogicDisplayMode : uint8 {
 };
 
 UCLASS()
-class ULogicInterfaceBlockLogic : public UTieredBlock {
+class ULogicInterface : public UTieredBlock {
     GENERATED_BODY()
 
   public:
-    ULogicInterfaceBlockLogic();
+    ULogicInterface();
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
@@ -161,14 +161,18 @@ class ULogicInterfaceBlockLogic : public UTieredBlock {
 
     UPROPERTY()
     UItem *mSwitchedItem;
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(LogicInterface);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
-class ULogicControllerBlockLogic : public UFilteringBlock {
+class ULogicController : public UFilteringBlock {
     GENERATED_BODY()
 
   public:
-    ULogicControllerBlockLogic();
+    ULogicController();
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
@@ -205,14 +209,18 @@ class ULogicControllerBlockLogic : public UFilteringBlock {
 
     UPROPERTY()
     UBaseAccessor *mAccessorRight;
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(LogicController);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
-class ULogicDisplayBlockLogic : public UFilteringBlock {
+class ULogicDisplay : public UFilteringBlock {
     GENERATED_BODY()
 
   public:
-    ULogicDisplayBlockLogic();
+    ULogicDisplay();
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
@@ -255,6 +263,10 @@ class ULogicDisplayBlockLogic : public UFilteringBlock {
   private:
     UPROPERTY()
     UDataInputAccessor *mAccessorLeft;
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(LogicDisplay);
+    static void RegisterLua(lua_State *L);
 };
 
 UENUM(BlueprintType)
@@ -414,11 +426,11 @@ class AbsFunctor : public TLogicFunctor<1> {
 };
 
 UCLASS()
-class ULogicCircuitBlockLogic : public UFilteringBlock {
+class ULogicCircuit : public UFilteringBlock {
     GENERATED_BODY()
 
   public:
-    ULogicCircuitBlockLogic();
+    ULogicCircuit();
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
@@ -467,4 +479,8 @@ class ULogicCircuitBlockLogic : public UFilteringBlock {
     virtual bool is_block_tick() const override;
 
     void ChangeFilter(int32 inventory, int32 slot, UItem *item) override;
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(LogicCircuit);
+    static void RegisterLua(lua_State *L);
 };

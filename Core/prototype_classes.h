@@ -4,6 +4,7 @@ class UPrototype;
 class UEntity;
 class UBlockLogic;
 class UTieredBlock;
+class UFilteringBlock;
 class UCrafterBase;
 class USelectCrafter;
 class UAutoCrafter;
@@ -95,9 +96,14 @@ class UDeconstructorCrafter;
 class UDumpCrafter;
 class UDumpAnyCrafter;
 
+class ULogicCircuit;
+class ULogicDisplay;
+class ULogicController;
+class ULogicInterface;
+
 namespace evo { namespace prototype_helper {
 inline std::tuple<
-    UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UCrafterBase *,
+    UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UFilteringBlock *, UCrafterBase *,
     USelectCrafter *, UAutoCrafter *, UItem *, URecipeDictionary *, UBlock *,
     UTesselator *, UTesselatorCube *, UTesselatorMarching *, UItemLogic *,
     UBlockBuilder *, UBaseAccessor *, UBaseInventoryAccessor *,
@@ -113,6 +119,7 @@ inline std::tuple<
     UKineticSwitch *, UHeatSwitch *, UFluidSwitch *, UDataSwitch *,
     UElectricSwitch *, UBatteryBox *, UConveyor *, USplitter *, USorter *,
     UPortal *, USignBlock *, UMonitor *, UComputer *, UQuantumComputer *,
-    ULuaBlock *, UMinerBase *, UDrillingRig *, UPumpjack *, UDeconstructorCrafter *, UDumpCrafter *, UDumpAnyCrafter *>
+    ULuaBlock *, UMinerBase *, UDrillingRig *, UPumpjack *, UDeconstructorCrafter *,
+    UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *, ULogicDisplay *, ULogicController *, ULogicInterface *>
     classes;
 }} // namespace evo::prototype_helper

@@ -30,3 +30,4 @@
 #include "tesselator.h"
 #include "tesselator_cube.h"
 #include "tesselator_marching.h"
+#include "Vanilla/logic_circuit.h"
