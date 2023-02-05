@@ -3,6 +3,7 @@
 
 #include "Core/prototype_classes.h"
 #include "Core/prototype_includes.h"
+#include "Core/recipe_dictionary.h"
 
 #include <tuple>
 

@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "CoreMinimal.h"
 #include "Core/item_data.h"
 #include "Core/prototype.h"
+#include "CoreMinimal.h"
 #include "Vanilla/inventory_access.h"
 
 #include <Templates/Function.h>

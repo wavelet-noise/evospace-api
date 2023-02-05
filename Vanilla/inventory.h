@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "CoreMinimal.h"
+#include "Core/base_inventory.h"
 #include "Core/item_data.h"
 #include "Core/prototype.h"
-#include "Core/base_inventory.h"
+#include "CoreMinimal.h"
 
 #include <Containers/Array.h>
 #include <Templates/SubclassOf.h>

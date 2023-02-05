@@ -1,10 +1,10 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "Containers/Map.h"
-#include "CoreMinimal.h"
-#include "Evospace/SerializableJson.h"
 #include "Core/prototype.h"
 #include "Core/recipe.h"
+#include "CoreMinimal.h"
+#include "Evospace/SerializableJson.h"
 
 #include "recipe_dictionary.generated.h"
 

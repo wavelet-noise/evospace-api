@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #include "legacy_lua_state.h"
 
-#include "Evospace/Blocks/BaseInventorySideAccessor.h"
 #include "Core/block_logic.h"
 #include "Core/select_crafter.h"
+#include "Evospace/Blocks/BaseInventorySideAccessor.h"
 #include "Vanilla/inventory_container.h"
 
 using namespace luabridge;

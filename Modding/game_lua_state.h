@@ -6,6 +6,7 @@
 class ULuaBlock;
 class UPrototype;
 class UJsonObjectLibrary;
+class URecipeDictionary;
 
 namespace evo {
 /**

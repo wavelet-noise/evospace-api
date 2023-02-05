@@ -1,12 +1,12 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #include "lua_state.h"
 
-#include "Evospace/IcoGenerator.h"
-#include "Evospace/MainGameModLoader.h"
 #include "Core/block.h"
 #include "Core/item.h"
 #include "Core/recipe.h"
 #include "Core/static_research.h"
+#include "Evospace/IcoGenerator.h"
+#include "Evospace/MainGameModLoader.h"
 #include "Evospace/Shared/static_logger.h"
 
 namespace evo {

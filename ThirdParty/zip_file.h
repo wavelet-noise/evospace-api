@@ -1984,7 +1984,8 @@ void *tinfl_decompress_mem_to_heap(
             (flags & ~TINFL_FLAG_HAS_MORE_INPUT) |
                 TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF
         );
-        if ((status < tinfl_status(0)) || (status == TINFL_STATUS_NEEDS_MORE_INPUT)) {
+        if ((status < tinfl_status(0)) ||
+            (status == TINFL_STATUS_NEEDS_MORE_INPUT)) {
             MZ_FREE(pBuf);
             *pOut_len = 0;
             return NULL;

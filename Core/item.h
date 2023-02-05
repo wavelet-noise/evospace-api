@@ -2,11 +2,11 @@
 
 #pragma once
 
+#include "Core/loc.h"
+#include "Core/prototype.h"
 #include "Evospace/Blocks/BlockDeserializeLegacyLuaState.h"
 #include "Evospace/Item/ItemLogicActor.h"
 #include "Evospace/SerializableJson.h"
-#include "Core/loc.h"
-#include "Core/prototype.h"
 
 #include <Engine/World.h>
 #include <Internationalization/Text.h>

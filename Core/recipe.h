@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Evospace/SerializableJson.h"
 #include "Core/item_data.h"
+#include "Evospace/SerializableJson.h"
 
 #include <Dom/JsonObject.h>
 

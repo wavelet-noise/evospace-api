@@ -16,5 +16,5 @@ class UStaticDecoration : public UStaticAttach {
         ASector *sector, const FTransform &transform, bool ignored = false
     ) const;
 
-    UClass * mActorClass = nullptr;
+    UClass *mActorClass = nullptr;
 };

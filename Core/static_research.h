@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/prototype.h"
 #include "CoreMinimal.h"
 #include "Evospace/Common.h"
 #include "Evospace/SerializableJson.h"
-#include "Core/prototype.h"
 #include "Evospace/Vector.h"
 
 #include <string>

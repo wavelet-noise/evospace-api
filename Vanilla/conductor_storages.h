@@ -41,7 +41,7 @@ class UBatteryBox : public UElectricConductor {
 
 UCLASS()
 /**
- * @brief Vanilla fluid conteiner BlockLogic
+ * @brief Vanilla fluid container BlockLogic
  */
 class UFluidContainer : public UFluidConductor {
     GENERATED_BODY()

@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 
+#include "Core/select_crafter.h"
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
-#include "Core/select_crafter.h"
 
 #include "auto_crafter.generated.h"
 
@@ -41,19 +41,23 @@ class UAutoCrafter : public USelectCrafter {
 };
 
 UCLASS(BlueprintType)
-class UDeconstructorCrafterBlockLogic : public UAutoCrafter {
+class UDeconstructorCrafter : public UAutoCrafter {
     GENERATED_BODY()
 
   public:
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+
+  public:
+    EVO_LUA_CODEGEN_DB_EX(DeconstructorCrafter);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS(BlueprintType)
-class UDumpAnyBlockLogic : public UTieredBlock, public ISwitchInterface {
+class UDumpAnyCrafter : public UTieredBlock, public ISwitchInterface {
     GENERATED_BODY()
 
   public:
-    UDumpAnyBlockLogic();
+    UDumpAnyCrafter();
 
     virtual void Tick() override;
 
@@ -83,10 +87,14 @@ class UDumpAnyBlockLogic : public UTieredBlock, public ISwitchInterface {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
+
+  public:
+    EVO_LUA_CODEGEN_DB_EX(DumpAnyCrafter);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS(BlueprintType)
-class UDumpCrafterBlockLogic : public USelectCrafter {
+class UDumpCrafter : public USelectCrafter {
     GENERATED_BODY()
 
   protected:
@@ -105,4 +113,8 @@ class UDumpCrafterBlockLogic : public USelectCrafter {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
     int32 AnimationTicks = 0;
+
+  public:
+    EVO_LUA_CODEGEN_DB_EX(DumpCrafter);
+    static void RegisterLua(lua_State *L);
 };

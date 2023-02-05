@@ -98,7 +98,7 @@ class UPrototype : public UObject {
      * @fn static This * get(std::string_view name)
      * @brief Find or create new object of type This with given name
      */
-    
+
     /*!
      * @fn static This * cast(UPrototype * proto)
      * @brief Try to cast any prototype object to This type

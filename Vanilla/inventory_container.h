@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
-#include "CoreMinimal.h"
 #include "Core/item_data.h"
 #include "Core/prototype.h"
+#include "CoreMinimal.h"
 #include "Vanilla/inventory_access.h"
 
 #include "inventory_container.generated.h"
@@ -35,7 +35,7 @@ class UInventoryContainer : public UInventoryAccess {
 
     virtual int64 GetSlotCapacity(int32 index) const override;
 
-    //TODO: rename num
+    // TODO: rename num
     virtual int32 _Num() const override;
 
     virtual void SortKeyAZ() override;

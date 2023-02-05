@@ -1,6 +1,5 @@
 #pragma once
 
-
 class UPrototype;
 class UEntity;
 class UBlockLogic;
@@ -54,7 +53,6 @@ class UFilteringPump;
 
 class UStorageBlock;
 class UChest;
-class UFluidContainer;
 class UItemRack;
 
 class UConductor;
@@ -63,6 +61,8 @@ class UKineticConductor;
 class UFluidConductor;
 class UDataConductor;
 class UElectricConductor;
+
+class UFluidContainer;
 
 class USwitch;
 class UKineticSwitch;
@@ -85,7 +85,15 @@ class UMonitor;
 class UComputer;
 class UQuantumComputer;
 
+class UMinerBase;
+class UDrillingRig;
+class UPumpjack;
+
 class ULuaBlock;
+
+class UDeconstructorCrafter;
+class UDumpCrafter;
+class UDumpAnyCrafter;
 
 namespace evo { namespace prototype_helper {
 inline std::tuple<
@@ -96,15 +104,15 @@ inline std::tuple<
     UInventoryReader *, UInventoryAccess *, UBaseInventory *, UInventory *,
     UInventoryContainer *, UInternalInventory *, URecipeInventory *,
     UPropsGenerator *, ULayeringGenerator *, UBiome *, UStaticAttach *,
-    UPropList *, UStaticResearch *, UStaticChapter *, UBedLogic *,
-    UDoorLogic *, ULampLogic *, UFenceLogic *, USurfaceBuilder *,
-    UPlaneBuilder *, UFissionReactor *, UFusionReactor *, URobotArm *,
-    UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *, UStorageBlock *,
-    UChest *, UFluidContainer *, UItemRack *, UConductor *, UHeatConductor *,
-    UKineticConductor *, UFluidConductor *, UDataConductor *,
-    UElectricConductor *, USwitch *, UKineticSwitch *, UHeatSwitch *,
-    UFluidSwitch *, UDataSwitch *, UElectricSwitch *, UBatteryBox *,
-    UConveyor *, USplitter *, USorter *, UPortal *, USignBlock *, UMonitor *,
-    UComputer *, UQuantumComputer *, ULuaBlock *>
+    UPropList *, UStaticResearch *, UStaticChapter *, UBedLogic *, UDoorLogic *,
+    ULampLogic *, UFenceLogic *, USurfaceBuilder *, UPlaneBuilder *,
+    UFissionReactor *, UFusionReactor *, URobotArm *, UFilteringRobotArm *,
+    UPump *, UDiode *, UFilteringPump *, UStorageBlock *, UChest *, UItemRack *,
+    UConductor *, UHeatConductor *, UKineticConductor *, UFluidConductor *,
+    UDataConductor *, UElectricConductor *, UFluidContainer *, USwitch *,
+    UKineticSwitch *, UHeatSwitch *, UFluidSwitch *, UDataSwitch *,
+    UElectricSwitch *, UBatteryBox *, UConveyor *, USplitter *, USorter *,
+    UPortal *, USignBlock *, UMonitor *, UComputer *, UQuantumComputer *,
+    ULuaBlock *, UMinerBase *, UDrillingRig *, UPumpjack *, UDeconstructorCrafter *, UDumpCrafter *, UDumpAnyCrafter *>
     classes;
 }} // namespace evo::prototype_helper

@@ -2,8 +2,8 @@
 #pragma once
 #include "../../Blocks/SidesArray.h"
 #include "../../CoordinateMinimal.h"
-#include "CoreMinimal.h"
 #include "Core/block_logic.h"
+#include "CoreMinimal.h"
 #include "Vanilla/tiered_block.h"
 
 #include <Engine/EngineTypes.h>
