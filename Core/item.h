@@ -112,6 +112,8 @@ class UItem : public UPrototype, public ISerializableJson {
     // Description common keys
     std::vector<KeyTable> description_parts = {};
 
+    void append_description(KeyTable & kt);
+
     KeyTable label_format;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
