@@ -14,11 +14,9 @@ class ULuaBlock : public UTieredBlock {
 
   public:
     luabridge::LuaRef get_self_static() const;
-    luabridge::LuaRef get_tick_static() const;
     luabridge::LuaRef get_self() const;
 
     void set_self_static(luabridge::LuaRef ref);
-    void set_tick_static(luabridge::LuaRef ref);
     void set_self(luabridge::LuaRef ref);
 
   public:
@@ -41,8 +39,6 @@ class ULuaBlock : public UTieredBlock {
     evo::GameLuaState *parent;
 
     std::optional<luabridge::LuaRef> self_static;
-    std::optional<luabridge::LuaRef> tick_static;
-    std::optional<luabridge::LuaRef> self;
 
     bool ready_to_tick = false;
 
