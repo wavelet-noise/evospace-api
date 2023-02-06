@@ -30,6 +30,10 @@ class USingleSlotInventory : public UBaseInventory {
   private:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     int64 mCapacity = 0;
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(SingleSlotInventory);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS(BlueprintType)

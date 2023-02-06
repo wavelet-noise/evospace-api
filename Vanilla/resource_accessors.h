@@ -17,6 +17,10 @@ class UElectricAccessor : public UBaseInventoryAccessor {
 
   protected:
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(ElectricAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -25,14 +29,24 @@ UCLASS()
  */
 class UElectricConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(ElectricConductorAccessor);
+    static void RegisterLua(lua_State *L);
 };
+
 UCLASS()
 /**
  * @brief Vanilla electric input BlockLogic
  */
 class UElectricInputAccessor : public UElectricAccessor {
     GENERATED_BODY()
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(ElectricInputAccessor);
+    static void RegisterLua(lua_State *L);
 };
+
 UCLASS()
 /**
  * @brief Vanilla electric output BlockLogic
@@ -41,6 +55,10 @@ class UElectricOutputAccessor : public UElectricAccessor {
     GENERATED_BODY()
   public:
     UElectricOutputAccessor();
+    
+public:
+    EVO_LUA_CODEGEN_DB_EX(ElectricOutputAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -55,6 +73,10 @@ class UFluidAccessor : public UBaseInventoryAccessor {
 
   protected:
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
+    
+public:
+    EVO_LUA_CODEGEN_DB_EX(FluidAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -63,6 +85,10 @@ UCLASS()
  */
 class UFluidConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(FluidConductorAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -71,7 +97,12 @@ UCLASS()
  */
 class UFluidInputAccessor : public UFluidAccessor {
     GENERATED_BODY()
+    
+public:
+    EVO_LUA_CODEGEN_DB_EX(FluidInputAccessor);
+    static void RegisterLua(lua_State *L);
 };
+
 UCLASS()
 /**
  * @brief Vanilla fluid output BlockLogic
@@ -80,6 +111,10 @@ class UFluidOutputAccessor : public UFluidAccessor {
     GENERATED_BODY()
   public:
     UFluidOutputAccessor();
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(FluidOutputAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -94,6 +129,10 @@ class UHeatAccessor : public UBaseInventoryAccessor {
 
   protected:
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(HeatAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -102,13 +141,22 @@ UCLASS()
  */
 class UHeatConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(HeatConductorAccessor);
+    static void RegisterLua(lua_State *L);
 };
+
 UCLASS()
 /**
  * @brief Vanilla heat input BlockLogic
  */
 class UHeatInputAccessor : public UHeatAccessor {
     GENERATED_BODY()
+    
+public:
+    EVO_LUA_CODEGEN_DB_EX(HeatInputAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -119,6 +167,10 @@ class UHeatOutputAccessor : public UHeatAccessor {
     GENERATED_BODY()
   public:
     UHeatOutputAccessor();
+    
+public:
+    EVO_LUA_CODEGEN_DB_EX(HeatOutputAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -134,6 +186,10 @@ class UKineticAccessor : public UBaseInventoryAccessor {
 
   protected:
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
+    
+public:
+    EVO_LUA_CODEGEN_DB_EX(KineticAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -142,6 +198,10 @@ UCLASS()
  */
 class UKineticConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
+    
+public:
+    EVO_LUA_CODEGEN_DB_EX(KineticConductorAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -150,6 +210,10 @@ UCLASS()
  */
 class UKineticInputAccessor : public UKineticAccessor {
     GENERATED_BODY()
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(KineticInputAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -161,6 +225,10 @@ class UKineticOutputAccessor : public UKineticAccessor {
 
   public:
     UKineticOutputAccessor();
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(KineticOutputAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -175,6 +243,10 @@ class UDataAccessor : public UDataInventoryAccessor {
 
   protected:
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(DataAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -183,6 +255,10 @@ UCLASS()
  */
 class UDataConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(DataConductorAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -191,6 +267,10 @@ UCLASS()
  */
 class UDataInputAccessor : public UDataAccessor {
     GENERATED_BODY()
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(DataInputAccessor);
+    static void RegisterLua(lua_State *L);
 };
 
 UCLASS()
@@ -201,4 +281,8 @@ class UDataOutputAccessor : public UDataAccessor {
     GENERATED_BODY()
   public:
     UDataOutputAccessor();
+
+public:
+    EVO_LUA_CODEGEN_DB_EX(DataOutputAccessor);
+    static void RegisterLua(lua_State *L);
 };
