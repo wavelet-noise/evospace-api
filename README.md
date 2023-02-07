@@ -6,6 +6,7 @@ This site link:
 Repository: 
 [https://github.com/wavelet-noise/evospace-api](https://github.com/wavelet-noise/evospace-api)
 
+* [LuaBlock](Doc/LuaBlock.md)
 * [Class list](https://wavelet-noise.github.io/evospace-api/annotated.html)
 * [Mod structure](Doc/ModStructure.md)
 * [Mod example](Doc/Example.md)
