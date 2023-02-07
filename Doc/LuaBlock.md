@@ -1,6 +1,6 @@
 ### LuaBlock logic customization
 
-You can use 
+You can use this funstions to configure block structure and behavour
 
 ```lua
 local function_table = table()
