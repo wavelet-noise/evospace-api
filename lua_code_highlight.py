@@ -6,17 +6,19 @@ import shutil
 
 LUATOKENS = [
     (r'--[^\n]*', 'comment'),
+    (r'[ \t]', 'whitespace'),
     (r'\b(and|break|do|else|elseif|end|false|for|function|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b', 'keyword'),
     (r'[+-]?\d+\.\d+', 'number'),
     (r'[+-]?\d+', 'number'),
     (r'".*?"', 'string'),
-    (r'\'.*?\'', 'string'),
+    (r"'.*?'", 'string'),
     (r'[\+\-\*\/\^%%#=<>~]', 'operator'),
     (r'[\[\]\{\}\(\)\.,;:]', 'punctuation'),
     (r'\b(and|or)\b', 'boolean'),
     (r'\b(nil)\b', 'null'),
     (r'[a-zA-Z_][a-zA-Z0-9_]*', 'identifier'),
-    (r'\n', 'newline')
+    (r'\n', 'newline'),
+    
 ]
 
 def tokenize_lua(code):
@@ -37,12 +39,13 @@ def tokenize_lua(code):
     return tokens
 
 JSONTOKENS = [
+    (r'[ \t]', 'whitespace'),
     (r'\b(true|false|null)\b', 'boolean'),
     (r'-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?', 'number'),
     (r'"(?:\\.|[^"\\])*"', 'string'),
     (r'[\[\]\{\}\:,]', 'punctuation'),
     (r'\n', 'newline'),
-    (r' ', 'whitespace')
+    
 ]
 
 def tokenize_json(code):
@@ -94,11 +97,15 @@ def extract_code_blocks(text):
         pos = match.end()
     return code_blocks
 
-def decorate_tokens(tokens):
+def decorate_tokens(tokens, spaces):
     html = ""
+    space_n = 0
+    html += ' ' * spaces[space_n]
     for token in tokens:
         if token[0] == 'newline':
             html += '<br>\n'
+            space_n += 1
+            html += '<span>' + '&nbsp;' * spaces[space_n] + '</span>'
         elif token[0] == 'whitespace':
             html += ' '
         elif token[0] == 'string':
@@ -116,17 +123,29 @@ def decorate_codeblocks(code_blocks):
         if code_block[0] == 'lua':
             md += '<div class="fragment">\n'
             tokens = tokenize_lua(code_block[1])
-            md += decorate_tokens(tokens)
+            spaces = count_leading_spaces(code_block[1])
+            md += decorate_tokens(tokens, spaces)
             md += '</div">\n'
         elif code_block[0] == 'json':
             md += '<div class="fragment">\n'
             tokens = tokenize_json(code_block[1])
-            md += decorate_tokens(tokens)
+            spaces = count_leading_spaces(code_block[1])
+            md += decorate_tokens(tokens, spaces)
             md += '</div">\n'
         else:
             md += code_block[1]
     return md
 
+
+def count_leading_spaces(text):
+    lines = text.splitlines()
+    leading_spaces = []
+    for line in lines:
+        stripped_line = line.lstrip()
+        leading_spaces.append(len(line) - len(stripped_line))
+    leading_spaces.append(0)
+
+    return leading_spaces
 
 for root, dirs, files in os.walk('./'):
     for filename in files:
@@ -135,6 +154,7 @@ for root, dirs, files in os.walk('./'):
             print('ckecking lua ' + namepath)
             with open(namepath, 'r') as file:
                 code = file.read()
+
                 if code.find('<div class="fragment">') != -1:
                     print('already decorated')
                     continue
