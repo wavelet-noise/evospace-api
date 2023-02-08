@@ -2,20 +2,21 @@
 
 import os
 import re
+import shutil
 
 LUATOKENS = [
+    (r'--[^\n]*', 'comment'),
     (r'\b(and|break|do|else|elseif|end|false|for|function|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b', 'keyword'),
     (r'[+-]?\d+\.\d+', 'number'),
     (r'[+-]?\d+', 'number'),
     (r'".*?"', 'string'),
-    (r"'.*?'", 'string'),
+    (r'\'.*?\'', 'string'),
     (r'[\+\-\*\/\^%%#=<>~]', 'operator'),
     (r'[\[\]\{\}\(\)\.,;:]', 'punctuation'),
     (r'\b(and|or)\b', 'boolean'),
     (r'\b(nil)\b', 'null'),
     (r'[a-zA-Z_][a-zA-Z0-9_]*', 'identifier'),
-    (r'\n', 'newline'),
-    (r'--[^\n]*', 'comment')
+    (r'\n', 'newline')
 ]
 
 def tokenize_lua(code):
@@ -40,7 +41,8 @@ JSONTOKENS = [
     (r'-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?', 'number'),
     (r'"(?:\\.|[^"\\])*"', 'string'),
     (r'[\[\]\{\}\:,]', 'punctuation'),
-    (r'\n', 'newline')
+    (r'\n', 'newline'),
+    (r' ', 'whitespace')
 ]
 
 def tokenize_json(code):
@@ -64,14 +66,14 @@ TOKEN_COLORS = {
     'text': '#D4D4D4',
     'newline': '#D4D4D4',
     'keyword': '#569CD6',
-    'string': '#CE9178',
+    'string': '#C5947C',
     'number': '#B5CEA8',
-    'operator': '#D4D4D4',
+    'operator': '#C7C7C7',
     'punctuation': '#D4D4D4',
-    'boolean': '#B5CEA8',
+    'boolean': '#6DBEF9',
     'null': '#CE9178',
     'identifier': '#DCDCAA',
-    'comment': '#DCFFAA',
+    'comment': '#74975D',
 }
 TOKEN_DEFAULT_COLOR = '#D4D4D4'
 
@@ -99,6 +101,9 @@ def decorate_tokens(tokens):
             html += '<br>\n'
         elif token[0] == 'whitespace':
             html += ' '
+        elif token[0] == 'string':
+            color = TOKEN_COLORS[token[0]]
+            html += '<span style="color: ' + color + '">"' + token[1] + '"</span>'
         else:
             color = TOKEN_COLORS[token[0]]
             html += '<span style="color: ' + color + '">' + token[1] + '</span>'
@@ -127,15 +132,25 @@ for root, dirs, files in os.walk('./'):
     for filename in files:
         namepath = os.path.join(root, filename)
         if namepath.find('.md') != -1:
-            print('prepare lua ' + namepath)
-            # Slurp file into a single string
-            new_content = ''
-            now_parsing = 'none'
+            print('ckecking lua ' + namepath)
             with open(namepath, 'r') as file:
                 code = file.read()
-                
+                if code.find('<div class="fragment">') != -1:
+                    print('already decorated')
+                    continue
+
                 code_blocks = extract_code_blocks(code)
                 md = decorate_codeblocks(code_blocks)
                 
             with open(namepath, 'w') as file:
                 file.write(md)
+
+# try:
+#     os.remove('lua_block.html')
+# except Exception as err:
+#     print(err)
+
+# try:
+#     shutil.copy('LuaBlock.md','lua_block.html')
+# except Exception as err:
+#     print(err)
