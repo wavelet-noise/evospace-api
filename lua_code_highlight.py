@@ -15,9 +15,11 @@ def replace_with_span(line, word, color):
 def replace_quotes(line, color):
     quotes = re.findall(r'"(.*?)"', line)
     for quote in quotes:
-        line = line.replace('"' + quote +  + '"', '<span class=“line” style="color: ' + color + '>"' + quote  + '"</span>')
+        line = line.replace('"' + quote + '"', '<span class=“line” style="color: ' + color + '>"' + quote  + '"</span>')
     
     return line
+
+red_color = '#E17873'
 
 for root, dirs, files in os.walk('./'):
     for filename in files:
@@ -47,12 +49,13 @@ for root, dirs, files in os.walk('./'):
                     line = replace_quotes(line, '#C89682')
 
                     if now_parsing == 'lua':
-                        line = replace_with_span(line, 'function', '#5555ff')
-                        line = replace_with_span(line, 'print', '#5555ff')
-                        line = replace_with_span(line, 'end', '#ff55ff')
-                        line = replace_with_span(line, 'then', '#ff55ff')
-                        line = replace_with_span(line, 'do', '#ff55ff')
-                        line = replace_with_span(line, 'local', '#5555ff')
+                        line = replace_with_span(line, 'function', red_color)
+                        line = replace_with_span(line, 'print', red_color)
+                        line = replace_with_span(line, 'end', red_color)
+                        line = replace_with_span(line, 'then', red_color)
+                        line = replace_with_span(line, 'do', red_color)
+                        line = replace_with_span(line, 'local', red_color)
+                        line = replace_with_span(line, '=', red_color)
 
                     new_content += line
                     new_content += '\n'
