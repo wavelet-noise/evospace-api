@@ -106,7 +106,10 @@ def decorate_tokens(tokens, spaces):
             html += ' '
         elif token[0] == 'comment': # small fix to replace - with --
             color = TOKEN_COLORS[token[0]]
-            html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">--' + token[1][1:] + '</span>'
+            minus = '<span class="' +  token[0] + '_code_block" style="color: ' + color + '''">-</span>
+            -' + token[1][1:] + '</span>'''
+            html += minus * 2
+            html += '<span class="' + token[0] + '_code_block" style="color: ' + color + '">' + token[1][1:] + '</span>'
         else:
             color = TOKEN_COLORS[token[0]]
             html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">' + token[1] + '</span>'
