@@ -54,8 +54,6 @@ def tokenize_json(code):
             match = re.match(pattern, code[i:])
             if match:
                 value = match.group(0)
-                if token_type == 'string':
-                    value = value[1:-1].replace('\\"', '"')
                 tokens.append((token_type, value))
                 i += len(value)
                 break
