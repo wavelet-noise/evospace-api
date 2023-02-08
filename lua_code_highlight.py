@@ -110,10 +110,10 @@ def decorate_tokens(tokens, spaces):
             html += ' '
         elif token[0] == 'string':
             color = TOKEN_COLORS[token[0]]
-            html += '<span style="color: ' + color + '">"' + token[1] + '"</span>'
+            html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">"' + token[1] + '"</span>'
         else:
             color = TOKEN_COLORS[token[0]]
-            html += '<span style="color: ' + color + '">' + token[1] + '</span>'
+            html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">' + token[1] + '</span>'
             
     return html
 
