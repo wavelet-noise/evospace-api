@@ -108,7 +108,7 @@ def decorate_tokens(tokens, spaces):
             color = TOKEN_COLORS[token[0]]
             minus = '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">-</span>'
             html += minus * 2
-            html += '<span class="' + token[0] + '_code_block" style="color: ' + color + '">' + token[1][1:] + '</span>'
+            html += '<span class="' + token[0] + '_code_block" style="color: ' + color + '">' + token[1][2:] + '</span>'
         else:
             color = TOKEN_COLORS[token[0]]
             html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">' + token[1] + '</span>'
