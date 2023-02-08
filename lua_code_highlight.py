@@ -37,8 +37,8 @@ for root, dirs, files in os.walk('./'):
                         replace_with_span(line, 'end', '#ff55ff')
                         replace_with_span(line, 'then', '#ff55ff')
                         replace_with_span(line, 'do', '#ff55ff')
-                    else:
-                        new_content += line
-                        new_content += '\n'
+
+                    new_content += line
+                    new_content += '\n'
             with open(namepath, 'w') as file:
                 file.write(new_content)
