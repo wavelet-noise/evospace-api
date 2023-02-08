@@ -120,13 +120,13 @@ def decorate_codeblocks(code_blocks):
             tokens = tokenize_lua(code_block[1])
             spaces = count_leading_spaces(code_block[1])
             md += decorate_tokens(tokens, spaces)
-            md += '</div">\n'
+            md += '</div>\n'
         elif code_block[0] == 'json':
             md += '<div class="fragment">\n'
             tokens = tokenize_json(code_block[1])
             spaces = count_leading_spaces(code_block[1])
             md += decorate_tokens(tokens, spaces)
-            md += '</div">\n'
+            md += '</div>\n'
         else:
             md += code_block[1]
     return md
