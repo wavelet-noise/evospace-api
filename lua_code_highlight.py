@@ -68,7 +68,7 @@ def tokenize_json(code):
 TOKEN_COLORS = {
     'text': '#D4D4D4',
     'newline': '#D4D4D4',
-    'keyword': '#569CD6',
+    'keyword': '#B988BA',
     'string': '#C5947C',
     'number': '#B5CEA8',
     'operator': '#C7C7C7',
