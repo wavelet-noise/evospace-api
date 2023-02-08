@@ -10,7 +10,14 @@ def paren_matcher (n):
     return r'[^()]*?(?:\("*n+r"[^()]*?"+r"\)[^()]*?)*?'*n
 
 def replace_with_span(line, word, color):
-    return line.replace(word, '<span class=“line” style="color: ' + color + '">function</span>')
+    return line.replace(word, '<span class=“line” style="color: ' + color + '">' + word + '</span>')
+
+def replace_quotes(line, color):
+    quotes = re.findall(r'"(.*?)"', line)
+    for quote in quotes:
+        line = line.replace('"' + quote +  + '"', '<span class=“line” style="color: ' + color + '>"' + quote  + '"</span>')
+    
+    return line
 
 for root, dirs, files in os.walk('./'):
     for filename in files:
@@ -36,6 +43,8 @@ for root, dirs, files in os.walk('./'):
                         now_parsing = 'none'
                         new_content += '\n</div>'
                         line = line.replace('```', '')
+
+                    line = replace_quotes(line, '#C89682')
 
                     if now_parsing == 'lua':
                         line = replace_with_span(line, 'function', '#5555ff')
