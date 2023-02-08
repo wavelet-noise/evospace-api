@@ -10,12 +10,12 @@ def paren_matcher (n):
     return r'[^()]*?(?:\("*n+r"[^()]*?"+r"\)[^()]*?)*?'*n
 
 def replace_with_span(line, word, color):
-    return line.replace(word, '<span class=“line” style="color: ' + color + '">' + word + '</span>')
+    return line.replace(word, '<span class=\“line\” style=\"color: ' + color + '\">' + word + '</span>')
 
 def replace_quotes(line, color):
     quotes = re.findall(r'"(.*?)"', line)
     for quote in quotes:
-        line = line.replace('"' + quote + '"', '<span class=“line” style="color: ' + color + '>"' + quote  + '"</span>')
+        line = line.replace('\"' + quote + '\"', '<span class=\“line\” style=\"color: ' + color + '\">\"' + quote  + '\"</span>')
     
     return line
 
