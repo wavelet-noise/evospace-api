@@ -7,7 +7,7 @@ import shutil
 LUATOKENS = [
     (r'--[^\n]*', 'comment'),
     (r'[ \t]', 'whitespace'),
-    (r'\b(and|break|do|else|elseif|end|false|for|function|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b', 'keyword'),
+    (r'\b(print|and|break|do|else|elseif|end|false|for|function|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b', 'keyword'),
     (r'[+-]?\d+\.\d+', 'number'),
     (r'[+-]?\d+', 'number'),
     (r'".*?"', 'string'),
