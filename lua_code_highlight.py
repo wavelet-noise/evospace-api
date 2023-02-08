@@ -75,7 +75,7 @@ TOKEN_COLORS = {
     'punctuation': '#D4D4D4',
     'boolean': '#6DBEF9',
     'null': '#CE9178',
-    'identifier': '#DCDCAA',
+    'identifier': '#9CC9FA',
     'comment': '#74975D',
 }
 TOKEN_DEFAULT_COLOR = '#D4D4D4'
