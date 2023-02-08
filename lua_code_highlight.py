@@ -149,13 +149,14 @@ for root, dirs, files in os.walk('./'):
     for filename in files:
         namepath = os.path.join(root, filename)
         if namepath.find('.md') != -1:
-            print('ckecking lua ' + namepath)
             with open(namepath, 'r') as file:
                 code = file.read()
 
                 if code.find('<div class="fragment">') != -1:
                     print('already decorated')
                     continue
+
+                print('colorize code in ' + namepath)
 
                 code_blocks = extract_code_blocks(code)
                 md = decorate_codeblocks(code_blocks)
