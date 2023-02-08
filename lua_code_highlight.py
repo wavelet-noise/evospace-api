@@ -10,7 +10,7 @@ def paren_matcher (n):
     return r'[^()]*?(?:\("*n+r"[^()]*?"+r"\)[^()]*?)*?'*n
 
 def replace_with_span(line, word, color):
-    line = line.replace(word, '<span class=“line” style="color: ' + color + '">function</span>')
+    return line.replace(word, '<span class=“line” style="color: ' + color + '">function</span>')
 
 for root, dirs, files in os.walk('./'):
     for filename in files:
@@ -19,26 +19,31 @@ for root, dirs, files in os.walk('./'):
             print('prepare lua ' + namepath)
             # Slurp file into a single string
             new_content = ''
-            now_lua = False
+            now_parsing = 'none'
             with open(namepath, 'r') as file:
                 content = file.read()
                 lines = content.splitlines()
                 for line in lines:
                     if line.find('```lua') != -1:
-                        now_lua = True
+                        now_parsing = 'lua'
                         new_content += '\n<div class="fragment">'
                         line = line.replace('```lua', '')
+                    elif line.find('```json') != -1:
+                        now_parsing = 'json'
+                        new_content += '\n<div class="fragment">'
+                        line = line.replace('```json', '')
                     elif line.find('```') != -1:
-                        now_lua = False
+                        now_parsing = 'none'
                         new_content += '\n</div>'
                         line = line.replace('```', '')
 
-                    if now_lua:
-                        replace_with_span(line, 'function', '#5555ff')
-                        replace_with_span(line, 'print', '#5555ff')
-                        replace_with_span(line, 'end', '#ff55ff')
-                        replace_with_span(line, 'then', '#ff55ff')
-                        replace_with_span(line, 'do', '#ff55ff')
+                    if now_parsing == 'lua':
+                        line = replace_with_span(line, 'function', '#5555ff')
+                        line = replace_with_span(line, 'print', '#5555ff')
+                        line = replace_with_span(line, 'end', '#ff55ff')
+                        line = replace_with_span(line, 'then', '#ff55ff')
+                        line = replace_with_span(line, 'do', '#ff55ff')
+                        line = replace_with_span(line, 'local', '#5555ff')
 
                     new_content += line
                     new_content += '\n'
