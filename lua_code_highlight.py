@@ -10,13 +10,13 @@ LUATOKENS = [
     (r'\b(print|and|break|do|else|elseif|end|false|for|function|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b', 'keyword'),
     (r'[+-]?\d+\.\d+', 'number'),
     (r'[+-]?\d+', 'number'),
+    (r'[a-zA-Z_][a-zA-Z0-9_]*', 'identifier'),
     (r'".*?"', 'string'),
     (r"'.*?'", 'string'),
     (r'[\+\-\*\/\^%%#=<>~]', 'operator'),
     (r'[\[\]\{\}\(\)\.,;:]', 'punctuation'),
     (r'\b(and|or)\b', 'boolean'),
     (r'\b(nil)\b', 'null'),
-    (r'[a-zA-Z_][a-zA-Z0-9_]*', 'identifier'),
     (r'\n', 'newline'),
     
 ]
