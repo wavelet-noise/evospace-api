@@ -46,16 +46,16 @@ for root, dirs, files in os.walk('./'):
                         new_content += '\n</div>'
                         line = line.replace('```', '')
 
-                    line = replace_quotes(line, '#C89682')
-
                     if now_parsing == 'lua':
+                        line = replace_quotes(line, '#C89682')
+
                         line = replace_with_span(line, 'function', red_color)
                         line = replace_with_span(line, 'print', red_color)
                         line = replace_with_span(line, 'end', red_color)
                         line = replace_with_span(line, 'then', red_color)
                         line = replace_with_span(line, 'do', red_color)
                         line = replace_with_span(line, 'local', red_color)
-                        line = replace_with_span(line, '=', red_color)
+                        #line = replace_with_span(line, '=', red_color)
 
                     new_content += line
                     new_content += '\n'
