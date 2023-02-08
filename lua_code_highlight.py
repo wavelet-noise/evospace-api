@@ -21,7 +21,7 @@ for root, dirs, files in os.walk('./'):
             new_content = ''
             with open(namepath, 'r') as file:
                 content = file.read()
-                lines = string.splitlines(content)
+                lines = content.splitlines()
                 for line in lines:
                     if line.find('```lua') != -1:
                         now_lua = True
