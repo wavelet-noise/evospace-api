@@ -10,7 +10,7 @@ def paren_matcher (n):
     return r'[^()]*?(?:\("*n+r"[^()]*?"+r"\)[^()]*?)*?'*n
 
 def replace_with_span(line, word, color):
-    line = line.replace(word,'<span class=“line” style="color: ' + color + '">function</span>')
+    line = line.replace(word, '<span class=“line” style="color: ' + color + '">function</span>')
 
 for root, dirs, files in os.walk('./'):
     for filename in files:
@@ -26,10 +26,10 @@ for root, dirs, files in os.walk('./'):
                 for line in lines:
                     if line.find('```lua') != -1:
                         now_lua = True
-                        content += '\n<div class="fragment">'
+                        new_content += '\n<div class="fragment">'
                     elif line.find('```') != -1:
                         now_lua = False
-                        content += '\n</div>'
+                        new_content += '\n</div>'
 
                     if now_lua:
                         replace_with_span(line, 'function', '#5555ff')
