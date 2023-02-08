@@ -19,6 +19,7 @@ for root, dirs, files in os.walk('./'):
             print(namepath)
             # Slurp file into a single string
             new_content = ''
+            now_lua = False
             with open(namepath, 'r') as file:
                 content = file.read()
                 lines = content.splitlines()
