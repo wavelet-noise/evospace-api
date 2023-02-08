@@ -104,6 +104,9 @@ def decorate_tokens(tokens, spaces):
             html += '<span>' + '&nbsp;' * spaces[space_n] + '</span>'
         elif token[0] == 'whitespace':
             html += ' '
+        elif token[0] == 'comment': # small fix to replace - with --
+            color = TOKEN_COLORS[token[0]]
+            html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">-' + token[1] + '</span>'
         else:
             color = TOKEN_COLORS[token[0]]
             html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">' + token[1] + '</span>'
