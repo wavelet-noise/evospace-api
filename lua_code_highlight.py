@@ -16,7 +16,7 @@ for root, dirs, files in os.walk('./'):
     for filename in files:
         namepath = os.path.join(root, filename)
         if namepath.find('.md') != -1:
-            print(namepath)
+            print('prepare lua ' + namepath)
             # Slurp file into a single string
             new_content = ''
             now_lua = False
@@ -27,9 +27,11 @@ for root, dirs, files in os.walk('./'):
                     if line.find('```lua') != -1:
                         now_lua = True
                         new_content += '\n<div class="fragment">'
+                        line = line.replace('```lua', '')
                     elif line.find('```') != -1:
                         now_lua = False
                         new_content += '\n</div>'
+                        line = line.replace('```', '')
 
                     if now_lua:
                         replace_with_span(line, 'function', '#5555ff')
