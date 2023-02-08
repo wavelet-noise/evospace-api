@@ -29,8 +29,6 @@ def tokenize_lua(code):
             match = re.match(pattern, code[i:])
             if match:
                 value = match.group(0)
-                if token_type == 'string':
-                    value = value[1:-1]
                 tokens.append((token_type, value))
                 i += len(value)
                 break
@@ -108,9 +106,6 @@ def decorate_tokens(tokens, spaces):
             html += '<span>' + '&nbsp;' * spaces[space_n] + '</span>'
         elif token[0] == 'whitespace':
             html += ' '
-        elif token[0] == 'string':
-            color = TOKEN_COLORS[token[0]]
-            html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">"' + token[1] + '"</span>'
         else:
             color = TOKEN_COLORS[token[0]]
             html += '<span class="' +  token[0] + '_code_block" style="color: ' + color + '">' + token[1] + '</span>'
