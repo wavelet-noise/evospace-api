@@ -10,12 +10,20 @@ def paren_matcher (n):
     return r'[^()]*?(?:\("*n+r"[^()]*?"+r"\)[^()]*?)*?'*n
 
 def replace_with_span(line, word, color):
-    return line.replace(word, '<span class=\“line\” style=\"color: ' + color + '\">' + word + '</span>')
+    return re.sub(r'(?<!<.*)text(?!.*>)', 
+    lambda x: x.group().replace(word, r'<span class=“line” style="color: ' + color + '">' + word + r'</span>'), line)
 
 def replace_quotes(line, color):
     quotes = re.findall(r'"(.*?)"', line)
     for quote in quotes:
-        line = line.replace('\"' + quote + '\"', '<span class=\“line\” style=\"color: ' + color + '\">\"' + quote  + '\"</span>')
+        line = line.replace('"' + quote + '"', r'<span class=“line” style="color: ' + color + '">"' + quote  + r'"</span>')
+    
+    return line
+
+def replace_comment(line, color):
+    quotes = re.findall(r'^--.*$', line)
+    for quote in quotes:
+        line = line.replace(quote, r'<span class=“line” style="color: ' + color + '">"' + quote  + r'"</span>')
     
     return line
 
@@ -48,16 +56,17 @@ for root, dirs, files in os.walk('./'):
 
                     if now_parsing == 'lua':
                         line = replace_quotes(line, '#C89682')
+                        line = replace_comment(line, '#C8FF82')
 
-                        line = replace_with_span(line, 'function', red_color)
-                        line = replace_with_span(line, 'print', red_color)
-                        line = replace_with_span(line, 'end', red_color)
-                        line = replace_with_span(line, 'then', red_color)
-                        line = replace_with_span(line, 'do', red_color)
-                        line = replace_with_span(line, 'local', red_color)
+                        #line = replace_with_span(line, 'function', red_color)
+                        #line = replace_with_span(line, 'print', red_color)
+                        #line = replace_with_span(line, 'end', red_color)
+                        #line = replace_with_span(line, 'then', red_color)
+                        #line = replace_with_span(line, 'do', red_color)
+                        #line = replace_with_span(line, 'local', red_color)
                         #line = replace_with_span(line, '=', red_color)
 
                     new_content += line
-                    new_content += '\n'
+                    new_content += '\n<div>'
             with open(namepath, 'w') as file:
                 file.write(new_content)
