@@ -54,7 +54,6 @@ UCLASS()
 class UElectricOutputAccessor : public UElectricAccessor {
     GENERATED_BODY()
   public:
-    UElectricOutputAccessor();
     
 public:
     EVO_LUA_CODEGEN_DB_EX(ElectricOutputAccessor);
@@ -110,7 +109,6 @@ UCLASS()
 class UFluidOutputAccessor : public UFluidAccessor {
     GENERATED_BODY()
   public:
-    UFluidOutputAccessor();
 
 public:
     EVO_LUA_CODEGEN_DB_EX(FluidOutputAccessor);
@@ -166,7 +164,6 @@ UCLASS()
 class UHeatOutputAccessor : public UHeatAccessor {
     GENERATED_BODY()
   public:
-    UHeatOutputAccessor();
     
 public:
     EVO_LUA_CODEGEN_DB_EX(HeatOutputAccessor);
@@ -224,7 +221,6 @@ class UKineticOutputAccessor : public UKineticAccessor {
     GENERATED_BODY()
 
   public:
-    UKineticOutputAccessor();
 
 public:
     EVO_LUA_CODEGEN_DB_EX(KineticOutputAccessor);
@@ -280,7 +276,6 @@ UCLASS()
 class UDataOutputAccessor : public UDataAccessor {
     GENERATED_BODY()
   public:
-    UDataOutputAccessor();
 
 public:
     EVO_LUA_CODEGEN_DB_EX(DataOutputAccessor);

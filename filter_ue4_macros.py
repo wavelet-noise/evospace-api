@@ -19,5 +19,6 @@ for root, dirs, files in os.walk("./"):
                 regex = '^(\s*)((?:UFUNCTION|UCLASS|UPROPERTY|UENUM|GENERATED_BODY)\s*\('+paren_matcher(25)+'\))'
                 content = re.sub(regex, r'\1', content, flags=re.MULTILINE)
                 content = re.sub(r'\bU[A-Z]\w+', lambda x: x.group().replace("U", ""), content)
+                content = re.sub(r'\bF[A-Z]\w+', lambda x: x.group().replace("F", ""), content)
             with open(namepath, 'w') as file:
                 file.write(content)
