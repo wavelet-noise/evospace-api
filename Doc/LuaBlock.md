@@ -7,8 +7,7 @@ local function_table = table()
 
 -- self is Prototype object
 function_table.proto_construction = function(self)
-    local inventory = SingleSlotInventory.new()
-    self:add_component(inventory, "inventory")
+    local inventory = self:add_component(SingleSlotInventory.new(), "inventory")
     local sides = {Vec3i.front, Vec3i.left, Vec3i.right. Vec3i.up, Vec3i.down, Vec3i.back}
     for _, side in pairs(sides) do
         local acc = ElecticOutputAccessor.new()
