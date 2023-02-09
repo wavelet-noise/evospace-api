@@ -47,6 +47,18 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     UBaseInventoryAccessor *lua_create_accessor(UClass *type);
 
+    /**
+     * @brief
+     * @param accessor
+     */
+    void add_accessor(UBaseAccessor *accessor);
+
+    /**
+     * @brief
+     * @param com
+     */
+    void add_component(UPrototype *com);
+
     // Engine code
   public:
     UBlockLogic();
@@ -79,8 +91,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void TickAccessor();
 
     virtual void EvospacePostDuplicate(const UBlockLogic *proto) {}
-    virtual void LuaPostprocess() {}
-    virtual void LuaPrepare() override {}
+    virtual void LuaPostprocess(AsyncMessageObject &msg) {}
 
     /**
      * @brief Test if position is suitable for this block placing
@@ -166,16 +177,9 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
         return Cast<Ty_>(GetCoreAccessor(Ty_::StaticClass()));
     }
 
-    template <typename Ty_>
-    Ty_ *CreateDefaultAccessor(UObject *Outer, FName SubobjectFName) {
-        auto v = CreateDefaultSubobject<Ty_>(Outer, SubobjectFName);
-        AddAccessor(v);
-        return v;
-    }
-
     template <typename Ty_> Ty_ *CreateDefaultAccessor(FName SubobjectFName) {
         auto v = CreateDefaultSubobject<Ty_>(SubobjectFName);
-        AddAccessor(v);
+        add_accessor(v);
         return v;
     }
 
@@ -208,8 +212,6 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     virtual int32 DropItems(UInventoryAccess *inventory);
 
-    void AddAccessor(UBaseAccessor *c);
-
     virtual TArray<UBaseAccessor *> &GetAccessors();
 
     virtual AActor *GetActor();
@@ -222,13 +224,17 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     FQuat mQuat = FQuat(EForceInit::ForceInitToZero);
 
     UPROPERTY()
-    TArray<UBaseAccessor *> mAccessors;
-
-    UPROPERTY()
-    ADimension *mDimension;
+    TArray<UBaseAccessor *> accessors;
 
     UPROPERTY()
     UMaterialInterface *mPaintMaterial;
+
+  private:
+    UPROPERTY()
+    TArray<UObject *> components;
+
+    UPROPERTY()
+    ADimension *dim;
 
   public:
     EVO_LUA_CODEGEN_DB(UBlockLogic, BlockLogic);

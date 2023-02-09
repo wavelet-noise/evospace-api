@@ -3,10 +3,10 @@
 You can use this funstions to configure block structure and behavour
 
 ```lua
-local function_table = table()
+local class_cache = {}
 
 -- self is Prototype object
-function_table.proto_construction = function(self)
+class_cache.proto_construction = function(self)
     local inventory = self:add_component(SingleSlotInventory.new(), "inventory")
     local sides = {Vec3i.front, Vec3i.left, Vec3i.right. Vec3i.up, Vec3i.down, Vec3i.back}
     for _, side in pairs(sides) do
@@ -19,7 +19,7 @@ end
 print("Custom proto_construction function is registered")
 
 --  self is Prototype object clone, cache is per instance Table to use in tick
-function_table.proto_clone = function(self, cache)
+class_cache.proto_clone = function(self, cache)
     local inventory = SingleSlotInventory.cast(self:get_component("inventory"))
     cache.inventory = inventory
 
@@ -32,7 +32,7 @@ end
 print("Custom proto_clone function is registered")
 
 --  self is Prototype object clone, cache is per instance Table to use in tick
-function_table.tick = function(self, cache)
+class_cache.tick = function(self, cache)
     cache.inventory.add_item(cache.slot)
 end
 print("Custom tick function is registered")

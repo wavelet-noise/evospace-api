@@ -4,20 +4,23 @@
 #include "lua_block.generated.h"
 
 namespace evo {
-class GameLuaState;
+class ModLoadingLuaState;
 }
 class USingleSlotInventory;
 
 UCLASS()
+/**
+ * @brief Lua scriptable block.
+ */
 class ULuaBlock : public UTieredBlock {
     GENERATED_BODY()
 
   public:
-    luabridge::LuaRef get_self_static() const;
-    luabridge::LuaRef get_self() const;
+    luabridge::LuaRef get_class_cache() const;
+    luabridge::LuaRef get_cache() const;
 
-    void set_self_static(luabridge::LuaRef ref);
-    void set_self(luabridge::LuaRef ref);
+    void set_class_cache(luabridge::LuaRef ref);
+    void set_cache(luabridge::LuaRef ref);
 
   public:
     ULuaBlock();
@@ -26,9 +29,8 @@ class ULuaBlock : public UTieredBlock {
 
     virtual void BlockBeginPlay() override;
     virtual void BlockEndPlay() override;
-
-    virtual void LuaPrepare() override;
-    virtual void LuaPostprocess() override;
+    
+    virtual void LuaPostprocess(AsyncMessageObject &msg) override;
 
     virtual void EvospacePostDuplicate(const UBlockLogic *proto) override;
 
@@ -36,11 +38,14 @@ class ULuaBlock : public UTieredBlock {
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
-    evo::GameLuaState *parent;
+    evo::ModLoadingLuaState *parent;
 
-    std::optional<luabridge::LuaRef> self_static;
+    std::optional<luabridge::LuaRef> class_cache;
+    std::optional<luabridge::LuaRef> cache;
 
     bool ready_to_tick = false;
+    bool ready_to_proto_construction = false;
+    bool ready_proto_clone = false;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(LuaBlock);

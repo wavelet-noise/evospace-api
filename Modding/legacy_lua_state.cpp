@@ -75,7 +75,7 @@ int LegacyLuaState::BlockLogic_create_accessor(lua_State *l) {
     if (type && type.value()->IsChildOf(UBaseAccessor::StaticClass())) {
         auto accessor =
             NewObject<UBaseInventoryAccessor>(self.value(), type.value());
-        self.value()->AddAccessor(accessor);
+        self.value()->add_accessor(accessor);
         auto result = push(l, accessor);
     } else {
         auto result = push(l, luabridge::LuaNil());

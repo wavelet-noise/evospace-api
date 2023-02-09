@@ -47,7 +47,6 @@ class DB {
             TReturnedNormalized *u_ptr = u.get();
             UMainGameInstance::GetMainGameInstance()->mDBStorage.Add(u_ptr);
             gs.insert(std::make_pair(name, std::move(u)));
-            u_ptr->LuaPrepare();
             return u_ptr;
         } else {
             return gs.find(name.data())->second.get();
