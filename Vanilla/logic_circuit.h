@@ -162,7 +162,7 @@ class ULogicInterface : public UTieredBlock {
     UPROPERTY()
     UItem *mSwitchedItem;
 
-public:
+  public:
     EVO_LUA_CODEGEN_DB_EX(LogicInterface);
     static void RegisterLua(lua_State *L);
 };
@@ -210,7 +210,7 @@ class ULogicController : public UFilteringBlock {
     UPROPERTY()
     UBaseAccessor *mAccessorRight;
 
-public:
+  public:
     EVO_LUA_CODEGEN_DB_EX(LogicController);
     static void RegisterLua(lua_State *L);
 };
@@ -264,7 +264,7 @@ class ULogicDisplay : public UFilteringBlock {
     UPROPERTY()
     UDataInputAccessor *mAccessorLeft;
 
-public:
+  public:
     EVO_LUA_CODEGEN_DB_EX(LogicDisplay);
     static void RegisterLua(lua_State *L);
 };
@@ -480,7 +480,7 @@ class ULogicCircuit : public UFilteringBlock {
 
     void ChangeFilter(int32 inventory, int32 slot, UItem *item) override;
 
-public:
+  public:
     EVO_LUA_CODEGEN_DB_EX(LogicCircuit);
     static void RegisterLua(lua_State *L);
 };

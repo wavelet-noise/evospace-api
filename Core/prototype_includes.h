@@ -14,6 +14,7 @@
 #include "Vanilla/endgame_reactors.h"
 #include "Vanilla/fence_logic.h"
 #include "Vanilla/item_rack.h"
+#include "Vanilla/logic_circuit.h"
 #include "Vanilla/monitor.h"
 #include "Vanilla/portal.h"
 #include "Vanilla/pump.h"
@@ -30,4 +31,3 @@
 #include "tesselator.h"
 #include "tesselator_cube.h"
 #include "tesselator_marching.h"
-#include "Vanilla/logic_circuit.h"

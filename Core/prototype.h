@@ -63,10 +63,10 @@ class Base;
         LOG(TRACE_LL) << "Registering lua " << #name;                          \
         luabridge::getGlobalNamespace(L)                                       \
             .deriveClass<type, parent>(#name)                                  \
-            .addStaticFunction("find", &evo::DB::find_mut<type>)            \
-            .addStaticFunction("get", &evo::DB::get<type>)                  \
-            .addStaticFunction("get_derived", &evo::DB::get_derived<type>)  \
-            .addStaticFunction("cast", &type::lua_codegen_cast)             \
+            .addStaticFunction("find", &evo::DB::find_mut<type>)               \
+            .addStaticFunction("get", &evo::DB::get<type>)                     \
+            .addStaticFunction("get_derived", &evo::DB::get_derived<type>)     \
+            .addStaticFunction("cast", &type::lua_codegen_cast)                \
             .addStaticProperty(                                                \
                 "class_name", +[]() { return #name; }                          \
             )                                                                  \

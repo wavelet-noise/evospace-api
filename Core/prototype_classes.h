@@ -103,23 +103,24 @@ class ULogicInterface;
 
 namespace evo { namespace prototype_helper {
 inline std::tuple<
-    UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UFilteringBlock *, UCrafterBase *,
-    USelectCrafter *, UAutoCrafter *, UItem *, URecipeDictionary *, UBlock *,
-    UTesselator *, UTesselatorCube *, UTesselatorMarching *, UItemLogic *,
-    UBlockBuilder *, UBaseAccessor *, UBaseInventoryAccessor *,
-    UInventoryReader *, UInventoryAccess *, UBaseInventory *, UInventory *,
-    UInventoryContainer *, UInternalInventory *, URecipeInventory *,
-    UPropsGenerator *, ULayeringGenerator *, UBiome *, UStaticAttach *,
-    UPropList *, UStaticResearch *, UStaticChapter *, UBedLogic *, UDoorLogic *,
-    ULampLogic *, UFenceLogic *, USurfaceBuilder *, UPlaneBuilder *,
-    UFissionReactor *, UFusionReactor *, URobotArm *, UFilteringRobotArm *,
-    UPump *, UDiode *, UFilteringPump *, UStorageBlock *, UChest *, UItemRack *,
-    UConductor *, UHeatConductor *, UKineticConductor *, UFluidConductor *,
-    UDataConductor *, UElectricConductor *, UFluidContainer *, USwitch *,
-    UKineticSwitch *, UHeatSwitch *, UFluidSwitch *, UDataSwitch *,
-    UElectricSwitch *, UBatteryBox *, UConveyor *, USplitter *, USorter *,
-    UPortal *, USignBlock *, UMonitor *, UComputer *, UQuantumComputer *,
-    ULuaBlock *, UMinerBase *, UDrillingRig *, UPumpjack *, UDeconstructorCrafter *,
-    UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *, ULogicDisplay *, ULogicController *, ULogicInterface *>
+    UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UFilteringBlock *,
+    UCrafterBase *, USelectCrafter *, UAutoCrafter *, UItem *,
+    URecipeDictionary *, UBlock *, UTesselator *, UTesselatorCube *,
+    UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBaseAccessor *,
+    UBaseInventoryAccessor *, UInventoryReader *, UInventoryAccess *,
+    UBaseInventory *, UInventory *, UInventoryContainer *, UInternalInventory *,
+    URecipeInventory *, UPropsGenerator *, ULayeringGenerator *, UBiome *,
+    UStaticAttach *, UPropList *, UStaticResearch *, UStaticChapter *,
+    UBedLogic *, UDoorLogic *, ULampLogic *, UFenceLogic *, USurfaceBuilder *,
+    UPlaneBuilder *, UFissionReactor *, UFusionReactor *, URobotArm *,
+    UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *, UStorageBlock *,
+    UChest *, UItemRack *, UConductor *, UHeatConductor *, UKineticConductor *,
+    UFluidConductor *, UDataConductor *, UElectricConductor *,
+    UFluidContainer *, USwitch *, UKineticSwitch *, UHeatSwitch *,
+    UFluidSwitch *, UDataSwitch *, UElectricSwitch *, UBatteryBox *,
+    UConveyor *, USplitter *, USorter *, UPortal *, USignBlock *, UMonitor *,
+    UComputer *, UQuantumComputer *, ULuaBlock *, UMinerBase *, UDrillingRig *,
+    UPumpjack *, UDeconstructorCrafter *, UDumpCrafter *, UDumpAnyCrafter *,
+    ULogicCircuit *, ULogicDisplay *, ULogicController *, ULogicInterface *>
     classes;
 }} // namespace evo::prototype_helper

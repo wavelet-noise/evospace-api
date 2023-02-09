@@ -72,7 +72,8 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
      */
     bool add_recipe(URecipe *recipe) {
         if (mNameChache.Contains(recipe->name)) {
-            LOG(ERROR_LL) << "RecipeDictionary is already contains " << TCHAR_TO_UTF8(*recipe->name.ToString());
+            LOG(ERROR_LL) << "RecipeDictionary is already contains "
+                          << TCHAR_TO_UTF8(*recipe->name.ToString());
             return false;
         }
         mRecipes.Add(recipe);
