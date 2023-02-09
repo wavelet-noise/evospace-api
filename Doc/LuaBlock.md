@@ -10,7 +10,7 @@ function_table.proto_construction = function(self)
     local inventory = self:add_component(SingleSlotInventory.new(), "inventory")
     local sides = {Vec3i.front, Vec3i.left, Vec3i.right. Vec3i.up, Vec3i.down, Vec3i.back}
     for _, side in pairs(sides) do
-        local acc = ElecticOutputAccessor.new()
+        local acc = ElectricOutputAccessor.new()
         acc.side, acc.pos = side, Vec3i.zero
         acc:bind(inventory)
         self:add_accessor(acc)
