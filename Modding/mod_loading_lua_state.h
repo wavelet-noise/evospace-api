@@ -12,7 +12,9 @@ class ModLoadingLuaState : public LuaState {
   public:
     ModLoadingLuaState();
     
-    static ModLoadingLuaState &Get();
+    static ModLoadingLuaState &get();
+
+    static void clear();
 
   private:
     UJsonObjectLibrary *mLibrary = nullptr;
@@ -21,5 +23,8 @@ class ModLoadingLuaState : public LuaState {
         T::RegisterLua(L);
         T::RegisterCommonLua(L);
     }
+
+private:
+    static std::unique_ptr<ModLoadingLuaState> inst;
 };
 } // namespace evo

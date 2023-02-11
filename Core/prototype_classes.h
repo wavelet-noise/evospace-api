@@ -22,6 +22,7 @@ class UInventoryReader;
 class UInventoryAccess;
 class UBaseInventory;
 class UInventory;
+class USingleSlotInventory;
 class UInventoryContainer;
 class UInternalInventory;
 class URecipeInventory;
@@ -101,6 +102,21 @@ class ULogicDisplay;
 class ULogicController;
 class ULogicInterface;
 
+#define ACCESSOR_FORWARD_CODEGEN(NAME) class U##NAME##Accessor; \
+    class U##NAME##InputAccessor; \
+    class U##NAME##OutputAccessor; \
+    class U##NAME##ConductorAccessor;
+
+#define ACCESSOR_CLASS_CODEGEN(NAME) U##NAME##Accessor *, \
+    U##NAME##InputAccessor *, \
+    U##NAME##OutputAccessor *, \
+    U##NAME##ConductorAccessor *
+
+ACCESSOR_FORWARD_CODEGEN(Fluid) ACCESSOR_FORWARD_CODEGEN(Electric)
+    ACCESSOR_FORWARD_CODEGEN(Heat) ACCESSOR_FORWARD_CODEGEN(Kinetic)
+        ACCESSOR_FORWARD_CODEGEN(Data)
+
+
 namespace evo { namespace prototype_helper {
 inline std::tuple<
     UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UFilteringBlock *,
@@ -108,7 +124,7 @@ inline std::tuple<
     URecipeDictionary *, UBlock *, UTesselator *, UTesselatorCube *,
     UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBaseAccessor *,
     UBaseInventoryAccessor *, UInventoryReader *, UInventoryAccess *,
-    UBaseInventory *, UInventory *, UInventoryContainer *, UInternalInventory *,
+    UBaseInventory *, UInventory *, USingleSlotInventory *, UInventoryContainer *, UInternalInventory *,
     URecipeInventory *, UPropsGenerator *, ULayeringGenerator *, UBiome *,
     UStaticAttach *, UPropList *, UStaticResearch *, UStaticChapter *,
     UBedLogic *, UDoorLogic *, ULampLogic *, UFenceLogic *, USurfaceBuilder *,
@@ -121,6 +137,13 @@ inline std::tuple<
     UConveyor *, USplitter *, USorter *, UPortal *, USignBlock *, UMonitor *,
     UComputer *, UQuantumComputer *, ULuaBlock *, UMinerBase *, UDrillingRig *,
     UPumpjack *, UDeconstructorCrafter *, UDumpCrafter *, UDumpAnyCrafter *,
-    ULogicCircuit *, ULogicDisplay *, ULogicController *, ULogicInterface *>
+    ULogicCircuit *, ULogicDisplay *, ULogicController *, ULogicInterface *,
+    ACCESSOR_CLASS_CODEGEN(Fluid), ACCESSOR_CLASS_CODEGEN(Electric),
+    ACCESSOR_CLASS_CODEGEN(Heat), ACCESSOR_CLASS_CODEGEN(Kinetic),
+    ACCESSOR_CLASS_CODEGEN(Data)>
     classes;
+
+#undef ACCESSOR_FORWARD_CODEGEN
+#undef ACCESSOR_CLASS_CODEGEN
+
 }} // namespace evo::prototype_helper

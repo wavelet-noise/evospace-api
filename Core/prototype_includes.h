@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/base_inventory.h"
+#include "Vanilla/single_slot_inventory.h"
 #include "Core/recipe_inventory.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BaseBuildingItemLogicActor.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BuildingSurfaceBlockItemLogic.h"
@@ -31,3 +32,4 @@
 #include "tesselator.h"
 #include "tesselator_cube.h"
 #include "tesselator_marching.h"
+#include "Vanilla/resource_accessors.h"
