@@ -66,6 +66,7 @@
 #define WARN_LL 3
 #define ERROR_LL 4
 #define FATAL_LL 5
+#define MAX_LL 6
 
 // ------------------------------ CONFIGURATION ------------------------------
 

@@ -29,20 +29,7 @@ bool LuaState::RunCode(std::string_view code, std::string_view path, int NRet) {
         return false;
     } else {
         if (lua_pcall(L, 0, NRet, 0)) {
-            LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
-
-            LOG(ERROR_LL) << "Call stack:";
-            int level = 0;
-            lua_Debug debug_info;
-            while (lua_getstack(L, level, &debug_info)) {
-                lua_getinfo(L, "nSlf", &debug_info);
-                std::cerr << "    " << debug_info.short_src << ":"
-                          << debug_info.currentline;
-                if (debug_info.name != nullptr)
-                    LOG(ERROR_LL) << " in function " << debug_info.name;
-                ++level;
-            }
-
+            handle_lua_error();
             return false;
         }
     }
@@ -56,24 +43,11 @@ bool LuaState::RunCode(
 ) {
     std::string path_decorated = std::string("@") + path.data();
     if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
-        msg.Log(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
+        msg.log(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
         return false;
     } else {
         if (lua_pcall(L, 0, NRet, 0)) {
-            msg.Log(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
-
-            msg.Log(ERROR_LL) << "Call stack:";
-            int level = 0;
-            lua_Debug debug_info;
-            while (lua_getstack(L, level, &debug_info)) {
-                lua_getinfo(L, "nSlf", &debug_info);
-                std::cerr << "    " << debug_info.short_src << ":"
-                          << debug_info.currentline;
-                if (debug_info.name != nullptr)
-                    msg.Log(ERROR_LL) << " in function " << debug_info.name;
-                ++level;
-            }
-
+            handle_lua_error();
             return false;
         }
     }
@@ -92,20 +66,7 @@ bool LuaState::RunCode(
     } else {
         push_args(L);
         if (lua_pcall(L, NArg, NRet, 0)) {
-            LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
-
-            LOG(ERROR_LL) << "Call stack:" << std::endl;
-            int level = 0;
-            lua_Debug debug_info;
-            while (lua_getstack(L, level, &debug_info)) {
-                lua_getinfo(L, "nSlf", &debug_info);
-                std::cerr << "    " << debug_info.short_src << ":"
-                          << debug_info.currentline;
-                if (debug_info.name != nullptr)
-                    LOG(ERROR_LL) << " in function " << debug_info.name;
-                ++level;
-            }
-
+            handle_lua_error();
             return false;
         }
     }
@@ -144,10 +105,10 @@ auto LuaState::to_byte_code(std::string_view code, std::string_view path)
         )) {
         std::string error = lua_tostring(L, -1);
         lua_close(L);
-        auto splited_error = split(error, ':');
-        auto index = std::stoi(splited_error[1]);
-        auto splitted_source = split(code, '\n');
-        auto in_error = splitted_source[index - 1];
+        auto split_error = split(error, ':');
+        auto index = std::stoi(split_error[1]);
+        auto split_source = split(code, '\n');
+        auto in_error = split_source[index - 1];
         LOG(ERROR_LL) << "Load buffer error: " << error << "; line " << index
                       << ": " << in_error;
         return "";
@@ -162,6 +123,38 @@ auto LuaState::to_byte_code(std::string_view code, std::string_view path)
 
     lua_close(L);
     return output;
+}
+
+void LuaState::handle_lua_error(AsyncMessageObject &msg) {
+    msg.log(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+
+    msg.log(ERROR_LL) << "Call stack:";
+    int level = 0;
+    lua_Debug debug_info;
+    while (lua_getstack(L, level, &debug_info)) {
+        lua_getinfo(L, "nSlf", &debug_info);
+        msg.log(ERROR_LL) << "    " << debug_info.short_src << ":"
+                  << debug_info.currentline;
+        if (debug_info.name != nullptr)
+            msg.log(ERROR_LL) << " in function " << debug_info.name;
+        ++level;
+    }
+}
+
+void LuaState::handle_lua_error() {
+    LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+
+    LOG(ERROR_LL) << "Call stack:";
+    int level = 0;
+    lua_Debug debug_info;
+    while (lua_getstack(L, level, &debug_info)) {
+        lua_getinfo(L, "nSlf", &debug_info);
+        LOG(ERROR_LL) << "    " << debug_info.short_src << ":"
+                  << debug_info.currentline;
+        if (debug_info.name != nullptr)
+            LOG(ERROR_LL) << " in function " << debug_info.name;
+        ++level;
+    }
 }
 
 int LuaState::l_my_print(lua_State *L) {

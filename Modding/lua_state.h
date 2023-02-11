@@ -145,6 +145,8 @@ class LuaState {
     static auto to_byte_code(std::string_view code, std::string_view path)
         -> std::string;
 
+    void handle_lua_error(AsyncMessageObject &msg);void handle_lua_error();
+
     /**
      * @brief
      * @param code

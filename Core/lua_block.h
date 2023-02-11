@@ -29,7 +29,7 @@ class ULuaBlock : public UTieredBlock {
 
     virtual void BlockBeginPlay() override;
     virtual void BlockEndPlay() override;
-    
+
     virtual void LuaPostprocess(AsyncMessageObject &msg) override;
 
     virtual void EvospacePostDuplicate(const UBlockLogic *proto) override;

@@ -2,13 +2,17 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
+#include "ThirdParty/luabridge.h"
 
 #include <Dom/JsonObject.h>
 
+#include <optional>
 #include <string>
 #include <vector>
 
 #include "Mod.generated.h"
+
+class AsyncMessageObject;
 
 UCLASS(BlueprintType)
 /**
@@ -58,10 +62,10 @@ class UMod : public UObject, public ISerializableJson {
      */
     std::vector<std::string> dependencies;
 
-    std::string bytecode;
+    std::optional<luabridge::LuaRef> init;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-    bool DeserializeFromDirectory(const FString &s);
+    bool DeserializeFromDirectory(const FString &s, AsyncMessageObject &msg);
 
     UFUNCTION(BlueprintCallable)
     FString Name() const { return UTF8_TO_TCHAR(name.data()); }
