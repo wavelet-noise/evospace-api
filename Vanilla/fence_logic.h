@@ -24,7 +24,8 @@ class UFenceLogic : public UBlockLogic {
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual void OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos);
-    virtual void OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
+    virtual void
+    OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
 
     virtual Vec3i GetRotationLocks() const override;
 

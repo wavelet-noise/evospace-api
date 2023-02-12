@@ -20,8 +20,8 @@ class LuaState {
 
     LuaState();
 
-    LuaState(const LuaState & v) = delete;
-    LuaState & operator = (const LuaState & v) = delete;
+    LuaState(const LuaState &v) = delete;
+    LuaState &operator=(const LuaState &v) = delete;
 
     /**
      * @brief Find Unreal Engine UClass
@@ -151,7 +151,8 @@ class LuaState {
 
     /**
      * @brief
-     * @param code string with lua code; it will be running in all loaded context in this lua state
+     * @param code string with lua code; it will be running in all loaded
+     * context in this lua state
      * @param CodePath label in error log for this code fragment execution
      * @return true if there is no errors
      */

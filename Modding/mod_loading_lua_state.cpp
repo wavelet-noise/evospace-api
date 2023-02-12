@@ -18,13 +18,13 @@ ModLoadingLuaState::ModLoadingLuaState() {
     );
 }
 
-ModLoadingLuaState::~ModLoadingLuaState(){
+ModLoadingLuaState::~ModLoadingLuaState() {
     std::apply(
-    [this](auto... args) {
-        (clearCall<typename std::remove_pointer<decltype(args)>::type>(L),
-         ...);
-    },
-    evo::prototype_helper::classes
-);
+        [this](auto... args) {
+            (clearCall<typename std::remove_pointer<decltype(args)>::type>(L),
+             ...);
+        },
+        evo::prototype_helper::classes
+    );
 }
 } // namespace evo

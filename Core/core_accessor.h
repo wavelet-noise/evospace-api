@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/base_accessor.h"
+#include "Core/base_inventory_accessor.h"
 #include "Core/item_data.h"
 #include "CoreMinimal.h"
-#include "Evospace/Blocks/Accessors/InventoryAccessor.h"
-#include "Evospace/Blocks/Accessors/base_accessor.h"
 
 #include "core_accessor.generated.h"
 
@@ -15,7 +15,7 @@ UCLASS()
 /**
  * @brief Vanilla core accessor BlockLogic
  */
-class UCoreAccessor : public UBaseAccessor, public IInventoryAccessor {
+class UCoreAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
   public:
     virtual UInventoryReader *GetInput() override;
@@ -25,9 +25,9 @@ class UCoreAccessor : public UBaseAccessor, public IInventoryAccessor {
     virtual void BindInput(UInventoryAccess *inventory) override;
     virtual void BindOutput(UInventoryAccess *inventory) override;
 
-    void Unbind() override;
-    void UnbindInput() override;
-    void UnbindOutput() override;
+    virtual void Unbind() override;
+    virtual void UnbindInput() override;
+    virtual void UnbindOutput() override;
 
     virtual bool Push(UInventoryAccess *from) override;
     virtual bool Push(UInventoryAccess *from, int32 max_count) override;
@@ -43,9 +43,7 @@ class UCoreAccessor : public UBaseAccessor, public IInventoryAccessor {
     virtual FItemData
     PopItem(UInventoryAccess *to, const UItem *item, float percent) override;
 
-  protected:
-    UPROPERTY(Instanced)
-    UObject *mInput;
-    UPROPERTY(Instanced)
-    UObject *mOutput;
+  public:
+    EVO_LUA_CODEGEN_DB_EX(CoreAccessor);
+    static void RegisterLua(lua_State *L);
 };

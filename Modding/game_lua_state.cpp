@@ -30,7 +30,8 @@ namespace evo {
 GameLuaState::GameLuaState() {
     // std::apply(
     //     [this](auto... args) {
-    //         (registerCall<typename std::remove_pointer<decltype(args)>::type>(L
+    //         (registerCall<typename
+    //         std::remove_pointer<decltype(args)>::type>(L
     //          ),
     //          ...);
     //     },

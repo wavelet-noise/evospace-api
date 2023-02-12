@@ -1,5 +1,6 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Modding/legacy_lua_state.h"
 #include "Vanilla/tiered_block.h"
 
 #include "logic_circuit.generated.h"

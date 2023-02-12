@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Core/base_inventory.h"
-#include "Vanilla/single_slot_inventory.h"
+#include "Core/base_inventory_accessor.h"
+#include "Core/core_accessor.h"
 #include "Core/recipe_inventory.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BaseBuildingItemLogicActor.h"
 #include "Evospace/Item/Implementation/ObjectBuild/BuildingSurfaceBlockItemLogic.h"
@@ -19,7 +20,9 @@
 #include "Vanilla/monitor.h"
 #include "Vanilla/portal.h"
 #include "Vanilla/pump.h"
+#include "Vanilla/resource_accessors.h"
 #include "Vanilla/robot_arm.h"
+#include "Vanilla/single_slot_inventory.h"
 #include "Vanilla/storage_block.h"
 #include "Vanilla/tiered_block.h"
 #include "auto_crafter.h"
@@ -32,4 +35,3 @@
 #include "tesselator.h"
 #include "tesselator_cube.h"
 #include "tesselator_marching.h"
-#include "Vanilla/resource_accessors.h"

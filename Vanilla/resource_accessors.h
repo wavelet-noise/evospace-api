@@ -1,7 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/base_inventory_accessor.h"
+#include "Core/prototype.h"
 #include "CoreMinimal.h"
-#include "Evospace/Blocks/BaseInventorySideAccessor.h"
 
 #include "resource_accessors.generated.h"
 

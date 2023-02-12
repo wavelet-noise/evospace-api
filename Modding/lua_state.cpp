@@ -96,8 +96,8 @@ void LuaState::handle_lua_error(ModLoadingContext &context) {
     lua_Debug debug_info;
     while (lua_getstack(L, level, &debug_info)) {
         lua_getinfo(L, "nSlf", &debug_info);
-        context.log(ERROR_LL) << "    " << debug_info.short_src << ":"
-                  << debug_info.currentline;
+        context.log(ERROR_LL)
+            << "    " << debug_info.short_src << ":" << debug_info.currentline;
         if (debug_info.name != nullptr)
             context.log(ERROR_LL) << " in function " << debug_info.name;
         ++level;
@@ -113,7 +113,7 @@ void LuaState::handle_lua_error() {
     while (lua_getstack(L, level, &debug_info)) {
         lua_getinfo(L, "nSlf", &debug_info);
         LOG(ERROR_LL) << "    " << debug_info.short_src << ":"
-                  << debug_info.currentline;
+                      << debug_info.currentline;
         if (debug_info.name != nullptr)
             LOG(ERROR_LL) << " in function " << debug_info.name;
         ++level;
@@ -391,10 +391,11 @@ UMaterialInterface *LuaState::GetMaterial(std::string_view name) {
 }
 
 LuaState::~LuaState() {
-    if (L != nullptr) {
-        lua_close(L);
-        L = nullptr;
-    }
+    // if (L != nullptr) {
+    //
+    //     lua_close(L);
+    //     L = nullptr;
+    // }
 }
 
 Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) { return Vec3i(x, y, z); }

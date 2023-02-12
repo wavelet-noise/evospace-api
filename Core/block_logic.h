@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/base_inventory_accessor.h"
 #include "Core/prototype.h"
 #include "CoreMinimal.h"
 #include "Evospace/BlockWidgetType.h"
-#include "Evospace/Blocks/BaseInventorySideAccessor.h"
 #include "Evospace/BreakResult.h"
 #include "Evospace/CoordinateMinimal.h"
 #include "Evospace/SerializableJson.h"
@@ -45,6 +45,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
      */
     const UBlock *block = nullptr;
 
+    // Legacy from 0.18.3
     UBaseInventoryAccessor *lua_create_accessor(UClass *type);
 
     /**
@@ -66,7 +67,8 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     // Events
   public:
     virtual void OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos);
-    virtual void OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
+    virtual void
+    OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
     virtual void OnSideAccessorAdded(
         UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
     );

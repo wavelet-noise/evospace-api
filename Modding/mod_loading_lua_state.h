@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/database.h"
 #include "CoreMinimal.h"
 #include "lua_state.h"
-#include "Core/database.h"
 
 namespace evo {
 /**
