@@ -30,7 +30,7 @@ class ULuaBlock : public UTieredBlock {
     virtual void BlockBeginPlay() override;
     virtual void BlockEndPlay() override;
 
-    virtual void LuaPostprocess(AsyncMessageObject &msg) override;
+    virtual void lua_postprocess(ModLoadingContext &context) override;
 
     virtual void EvospacePostDuplicate(const UBlockLogic *proto) override;
 
@@ -38,6 +38,7 @@ class ULuaBlock : public UTieredBlock {
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
+  private:
     evo::ModLoadingLuaState *parent;
 
     std::optional<luabridge::LuaRef> class_cache;

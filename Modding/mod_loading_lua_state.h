@@ -1,30 +1,23 @@
 // Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "CoreMinimal.h"
-#include "legacy_lua_state.h"
+#include "lua_state.h"
+#include "Core/database.h"
 
-class UJsonObjectLibrary;
 namespace evo {
 /**
- * @brief Legacy lua state for BlockLogic lua script part executing
+ * @brief Mod loading process lua state
  */
 class ModLoadingLuaState : public LuaState {
   public:
     ModLoadingLuaState();
-    
-    static ModLoadingLuaState &get();
-
-    static void clear();
+    virtual ~ModLoadingLuaState() override;
 
   private:
-    UJsonObjectLibrary *mLibrary = nullptr;
-    
     template <typename T> void registerCall(lua_State *L) {
         T::RegisterLua(L);
         T::RegisterCommonLua(L);
     }
-
-private:
-    static std::unique_ptr<ModLoadingLuaState> inst;
+    template <typename T> void clearCall(lua_State *L) { evo::DB::clear<T>(); }
 };
 } // namespace evo

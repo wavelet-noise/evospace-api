@@ -150,9 +150,9 @@ class UConductor : public UStorageBlock {
 
   public:
     virtual void
-    OnNeighborBlockAdded(UBlockLogic *block, const Vec3i &pos) override;
+    OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos) override;
     virtual void
-    OnNeighborBlockRemoved(UBlockLogic *block, const Vec3i &pos) override;
+    OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos) override;
 
     virtual int64 GetCapacity() const override;
     virtual int64 GetCharge() const;
@@ -391,10 +391,10 @@ class USwitch : public UConductor, public ISwitchInterface {
     virtual bool is_block_tick() const override;
 
     virtual void
-    OnNeighborBlockAdded(UBlockLogic *block, const Vec3i &pos) override;
+    OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos) override;
 
     virtual void
-    OnNeighborBlockRemoved(UBlockLogic *block, const Vec3i &pos) override;
+    OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos) override;
 
     virtual void SetSwitched(bool val) override;
 

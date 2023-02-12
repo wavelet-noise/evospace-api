@@ -16,11 +16,7 @@ class GameLuaState : public LuaState {
   public:
     GameLuaState();
 
-    static GameLuaState &Get();
-
   private:
-    UJsonObjectLibrary *mLibrary = nullptr;
-
     template <typename T> void registerCall(lua_State *L) {
         T::RegisterLua(L);
         T::RegisterCommonLua(L);

@@ -53,7 +53,7 @@ class DB {
         }
     }
 
-    template <typename TReturned> static void Clear() {
+    template <typename TReturned> static void clear() {
         get_storage<TReturned>().clear();
     }
 

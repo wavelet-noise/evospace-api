@@ -22,50 +22,13 @@ void LuaState::add_lua_path(const std::string &path) {
     lua_pop(L, 1);
 }
 
-bool LuaState::RunCode(std::string_view code, std::string_view path, int NRet) {
+bool LuaState::run_code(std::string_view code, std::string_view path) {
     std::string path_decorated = std::string("@") + path.data();
     if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
         LOG(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
         return false;
     } else {
-        if (lua_pcall(L, 0, NRet, 0)) {
-            handle_lua_error();
-            return false;
-        }
-    }
-
-    return true;
-}
-
-bool LuaState::RunCode(
-    AsyncMessageObject &msg, std::string_view code, std::string_view path,
-    int NRet
-) {
-    std::string path_decorated = std::string("@") + path.data();
-    if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
-        msg.log(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
-        return false;
-    } else {
-        if (lua_pcall(L, 0, NRet, 0)) {
-            handle_lua_error();
-            return false;
-        }
-    }
-
-    return true;
-}
-
-bool LuaState::RunCode(
-    std::string_view code, std::string_view path, int NArg,
-    std::function<void(lua_State *L)> push_args, int NRet
-) {
-    std::string path_decorated = std::string("@") + path.data();
-    if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
-        LOG(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
-        return false;
-    } else {
-        push_args(L);
-        if (lua_pcall(L, NArg, NRet, 0)) {
+        if (lua_pcall(L, 0, LUA_MULTRET, 0)) {
             handle_lua_error();
             return false;
         }
@@ -125,18 +88,18 @@ auto LuaState::to_byte_code(std::string_view code, std::string_view path)
     return output;
 }
 
-void LuaState::handle_lua_error(AsyncMessageObject &msg) {
-    msg.log(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+void LuaState::handle_lua_error(ModLoadingContext &context) {
+    context.log(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
 
-    msg.log(ERROR_LL) << "Call stack:";
+    context.log(ERROR_LL) << "Call stack:";
     int level = 0;
     lua_Debug debug_info;
     while (lua_getstack(L, level, &debug_info)) {
         lua_getinfo(L, "nSlf", &debug_info);
-        msg.log(ERROR_LL) << "    " << debug_info.short_src << ":"
+        context.log(ERROR_LL) << "    " << debug_info.short_src << ":"
                   << debug_info.currentline;
         if (debug_info.name != nullptr)
-            msg.log(ERROR_LL) << " in function " << debug_info.name;
+            context.log(ERROR_LL) << " in function " << debug_info.name;
         ++level;
     }
 }
@@ -370,25 +333,11 @@ LuaState::LuaState() {
         .addProperty("name", &URecipe::get_name, &URecipe::set_name)
         .endClass();
 
-    RunCode(
+    run_code(
         "require('jit') if type(jit) == 'table' then print(jit.version) else "
         "print('jit fatal error') end",
-        "jit_test",
-        0
+        "jit_test"
     );
-}
-
-int LuaState::AppendPath(lua_State *L, std::string_view path) {
-    lua_getglobal(L, "package");
-    lua_getfield(L, -1, "path");
-    std::string npath = path.data();
-    npath.append(";");
-    npath.append(lua_tostring(L, -1));
-    lua_pop(L, 1);
-    lua_pushstring(L, npath.c_str());
-    lua_setfield(L, -2, "path");
-    lua_pop(L, 1);
-    return 0;
 }
 
 UClass *LuaState::FindClass(std::string_view name) {

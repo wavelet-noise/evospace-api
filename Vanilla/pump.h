@@ -34,9 +34,9 @@ class UPump : public UTieredBlock {
     void UpdateSides(UBlockLogic *except = nullptr);
     virtual void SetActor(AActor *actor) override;
     virtual void
-    OnNeighborBlockAdded(UBlockLogic *block, const Vec3i &pos) override;
+    OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos) override;
     virtual void
-    OnNeighborBlockRemoved(UBlockLogic *block, const Vec3i &pos) override;
+    OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos) override;
 
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     bool mRight = false;

@@ -65,8 +65,8 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     // Events
   public:
-    virtual void OnNeighborBlockAdded(UBlockLogic *block, const Vec3i &pos);
-    virtual void OnNeighborBlockRemoved(UBlockLogic *block, const Vec3i &pos);
+    virtual void OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos);
+    virtual void OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
     virtual void OnSideAccessorAdded(
         UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
     );
@@ -91,7 +91,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void TickAccessor();
 
     virtual void EvospacePostDuplicate(const UBlockLogic *proto) {}
-    virtual void LuaPostprocess(AsyncMessageObject &msg) {}
+    virtual void lua_postprocess(ModLoadingContext &context) {}
 
     /**
      * @brief Test if position is suitable for this block placing

@@ -12,7 +12,7 @@
 
 #include "Mod.generated.h"
 
-class AsyncMessageObject;
+class ModLoadingContext;
 
 UCLASS(BlueprintType)
 /**
@@ -65,7 +65,7 @@ class UMod : public UObject, public ISerializableJson {
     std::optional<luabridge::LuaRef> init;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-    bool DeserializeFromDirectory(const FString &s, AsyncMessageObject &msg);
+    bool DeserializeFromDirectory(const FString &s, ModLoadingContext &context);
 
     UFUNCTION(BlueprintCallable)
     FString Name() const { return UTF8_TO_TCHAR(name.data()); }

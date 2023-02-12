@@ -18,21 +18,13 @@ ModLoadingLuaState::ModLoadingLuaState() {
     );
 }
 
-ModLoadingLuaState &ModLoadingLuaState::get() {
-    if (inst == nullptr) {
-        inst = std::make_unique<ModLoadingLuaState>();
-    }
-
-    return *inst;
+ModLoadingLuaState::~ModLoadingLuaState(){
+    std::apply(
+    [this](auto... args) {
+        (clearCall<typename std::remove_pointer<decltype(args)>::type>(L),
+         ...);
+    },
+    evo::prototype_helper::classes
+);
 }
-
-void ModLoadingLuaState::clear(){
-    if (inst and inst->L) {
-        lua_close(inst->L);
-        inst->L = nullptr;
-        inst = nullptr;
-    }
-}
-
-std::unique_ptr<ModLoadingLuaState> ModLoadingLuaState::inst = nullptr;
 } // namespace evo

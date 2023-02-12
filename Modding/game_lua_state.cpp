@@ -28,23 +28,13 @@ namespace evo {
 // }
 
 GameLuaState::GameLuaState() {
-    std::apply(
-        [this](auto... args) {
-            (registerCall<typename std::remove_pointer<decltype(args)>::type>(L
-             ),
-             ...);
-        },
-        prototype_helper::classes
-    );
-}
-
-GameLuaState &GameLuaState::Get() {
-    static std::unique_ptr<GameLuaState> inst;
-
-    if (inst == nullptr) {
-        inst = std::make_unique<GameLuaState>();
-    }
-
-    return *inst;
+    // std::apply(
+    //     [this](auto... args) {
+    //         (registerCall<typename std::remove_pointer<decltype(args)>::type>(L
+    //          ),
+    //          ...);
+    //     },
+    //     prototype_helper::classes
+    // );
 }
 } // namespace evo

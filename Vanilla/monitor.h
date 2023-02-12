@@ -34,9 +34,9 @@ class UMonitor : public UTieredBlock {
 
   protected:
     virtual void
-    OnNeighborBlockAdded(UBlockLogic *block, const Vec3i &pos) override;
+    OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos) override;
     virtual void
-    OnNeighborBlockRemoved(UBlockLogic *block, const Vec3i &pos) override;
+    OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos) override;
 
   protected:
     virtual void Tick() override;

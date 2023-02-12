@@ -7,7 +7,7 @@
 #include <string>
 
 struct lua_State;
-class AsyncMessageObject;
+class ModLoadingContext;
 
 namespace evo {
 
@@ -19,6 +19,9 @@ class LuaState {
     static int l_my_print(lua_State *L);
 
     LuaState();
+
+    LuaState(const LuaState & v) = delete;
+    LuaState & operator = (const LuaState & v) = delete;
 
     /**
      * @brief Find Unreal Engine UClass
@@ -133,9 +136,6 @@ class LuaState {
 
     virtual ~LuaState();
 
-    LuaState(const LuaState &) = delete;
-    LuaState &operator=(const LuaState &) = delete;
-
     lua_State *L = nullptr;
 
     static int ToByteCode_Writer(
@@ -145,27 +145,16 @@ class LuaState {
     static auto to_byte_code(std::string_view code, std::string_view path)
         -> std::string;
 
-    void handle_lua_error(AsyncMessageObject &msg);void handle_lua_error();
+    void handle_lua_error(ModLoadingContext &context);
+
+    void handle_lua_error();
 
     /**
      * @brief
-     * @param code
-     * @param CodePath
-     * @param NRet
-     * @return
+     * @param code string with lua code; it will be running in all loaded context in this lua state
+     * @param CodePath label in error log for this code fragment execution
+     * @return true if there is no errors
      */
-    bool RunCode(
-        std::string_view code, std::string_view CodePath = "", int NRet = 0
-    );
-    bool RunCode(
-        std::string_view code, std::string_view path, int NArg,
-        std::function<void(lua_State *L)> push_args, int NRet = 0
-    );
-    bool RunCode(
-        AsyncMessageObject &msg, std::string_view code, std::string_view path,
-        int NRet
-    );
-
-    int AppendPath(lua_State *L, std::string_view path);
+    bool run_code(std::string_view code, std::string_view CodePath = "");
 };
 } // namespace evo
