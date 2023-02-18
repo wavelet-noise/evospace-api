@@ -12,6 +12,11 @@ UCLASS()
 class USingleSlotInventory : public UBaseInventory {
     GENERATED_BODY()
 
+    // Lua api
+public:
+    UPROPERTY(BlueprintReadOnly)
+    int64 capacity = 0;
+    
   public:
     USingleSlotInventory();
 
@@ -28,8 +33,6 @@ class USingleSlotInventory : public UBaseInventory {
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
   private:
-    UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-    int64 mCapacity = 0;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(SingleSlotInventory);

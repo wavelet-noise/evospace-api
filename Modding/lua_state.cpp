@@ -125,23 +125,23 @@ int LuaState::l_my_print(lua_State *L) {
 
     for (int i = 1; i <= nargs; i++) {
         if (lua_isstring(L, i)) {
-            LOG(TRACE_LL) << "Lua print: " << lua_tostring(L, i);
+            LOG(TRACE_LL) << "Lua: " << lua_tostring(L, i);
         } else if (lua_isnumber(L, i)) {
-            LOG(TRACE_LL) << "Lua print: " << lua_tonumber(L, i);
+            LOG(TRACE_LL) << "Lua: " << lua_tonumber(L, i);
         } else if (lua_isboolean(L, i)) {
-            LOG(TRACE_LL) << "Lua print: "
+            LOG(TRACE_LL) << "Lua: "
                           << (lua_toboolean(L, i) ? "true" : "false");
         } else if (lua_isnil(L, i)) {
-            LOG(TRACE_LL) << "Lua print: nil";
+            LOG(TRACE_LL) << "Lua: nil";
         } else if (luabridge::isInstance<UBlock>(L, i)) {
             auto block = luabridge::Stack<UBlock *>::get(L, i);
-            LOG(TRACE_LL) << "Lua print: UBlock " << block.value()->name;
+            LOG(TRACE_LL) << "Lua: UBlock " << block.value()->name;
         } else if (luabridge::isInstance<UItem>(L, i)) {
             auto item = luabridge::Stack<UItem *>::get(L, i);
-            LOG(TRACE_LL) << "Lua print: UItem " << item.value()->name;
+            LOG(TRACE_LL) << "Lua: UItem " << item.value()->name;
         } else if (luabridge::isInstance<FItemData>(L, i)) {
             auto item = luabridge::Stack<FItemData>::get(L, i);
-            LOG(TRACE_LL) << "Lua print: ItemData {"
+            LOG(TRACE_LL) << "Lua: ItemData {"
                           << (item.value().item ? item.value().item->name
                                                 : "nullptr")
                           << ", " << item.value().count << "}";
@@ -158,7 +158,7 @@ int LuaState::l_my_print(lua_State *L) {
         //               << stat->name;
         // }
         else {
-            LOG(WARN_LL) << "Lua print: print not implemented type";
+            LOG(WARN_LL) << "Lua: print not implemented type";
         }
     }
 

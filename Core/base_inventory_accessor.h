@@ -17,10 +17,12 @@ UCLASS()
 class UBaseInventoryAccessor : public UBaseAccessor {
     GENERATED_BODY()
 
+public:
+    UPROPERTY(VisibleAnywhere)
+    bool auto_output = false;
+
   public:
     UBaseInventoryAccessor();
-
-    void SetAutoOutput(bool value);
 
     virtual void Bind(UInventoryAccess *inventory);
     virtual void BindInput(UInventoryAccess *inventory);
@@ -60,13 +62,9 @@ class UBaseInventoryAccessor : public UBaseAccessor {
   protected:
     virtual void TickComponent() override;
 
-    void SetTickState(bool state);
-
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor();
 
   protected:
-    UPROPERTY(VisibleAnywhere)
-    bool mAutoOutput = false;
 
     UPROPERTY(VisibleAnywhere)
     UObject *mInput;

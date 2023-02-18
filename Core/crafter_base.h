@@ -80,7 +80,7 @@ class UCrafterBase : public UTieredBlock, public ISwitchInterface {
 
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
-    virtual bool DeserializeProtoJson(TSharedPtr<FJsonObject> json) override;
+    virtual bool DeserializeProtoJson(TSharedPtr<FJsonObject> json);
 
     std::vector<std::vector<uint16>> input_split;
     std::vector<std::vector<uint16>> output_split;

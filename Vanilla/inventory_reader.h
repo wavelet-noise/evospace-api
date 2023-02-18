@@ -31,19 +31,14 @@ class UInventoryReader : public UPrototype {
         return 0;
     };
 
+    /**
+     * @brief Find first slot with same item in inventory 
+     * @param item Item
+     * @return index of slot with item or -1
+     */
     virtual int32 find(const UItem *item) const {
         checkNoEntry();
-        return 0;
-    };
-
-    virtual int32 find_empty() const {
-        checkNoEntry();
-        return 0;
-    };
-
-    virtual int32 _FindNotEmpty() const {
-        checkNoEntry();
-        return 0;
+        return INDEX_NONE;
     };
 
     virtual bool IsEmpty() const {

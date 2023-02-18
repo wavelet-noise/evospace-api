@@ -28,7 +28,7 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     void Empty();
 
     UFUNCTION(BlueprintCallable)
-    void RemoveAllSlots() override;
+    void clear() override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
@@ -59,11 +59,7 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
 
     virtual int32 find(const UItem *item) const override;
 
-    virtual int32 find_empty() const override;
-
-    virtual int32 _FindNotEmpty() const override;
-
-    const FItemData &safe_get(int32 index) const;
+    virtual const FItemData &safe_get(int32 index) const override;
 
     UFUNCTION(BlueprintCallable)
     virtual bool IsEmpty() const override;
@@ -78,11 +74,11 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
 
     virtual int64 add(const FItemData &other) override;
 
-    virtual int64 add(int32 index, const FItemData &other) override;
+    virtual int64 add_to(int32 index, const FItemData &other) override;
 
     virtual int64 sub(const FItemData &other) override;
 
-    virtual int64 sub(int32 index, const FItemData &other) override;
+    virtual int64 sub_from(int32 index, const FItemData &other) override;
 
   protected:
     bool CheckFilter(const FItemData &data);
@@ -108,6 +104,8 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     TFunction<int64(const FItemData &)> mMaxSlotCount;
 
     bool mAutoSize = false;
+
+    FItemData lua_get_slot(int32 index);int32 lua_get_count();
 
   public:
     EVO_LUA_CODEGEN_DB(UBaseInventory, BaseInventory);

@@ -102,7 +102,6 @@ class ULogicDisplay;
 class ULogicController;
 class ULogicInterface;
 
-class UBaseInventoryAccessor;
 class UCoreAccessor;
 
 #define ACCESSOR_FORWARD_CODEGEN(NAME)                                         \
@@ -143,7 +142,7 @@ ACCESSOR_FORWARD_CODEGEN(Heat) ACCESSOR_FORWARD_CODEGEN(Kinetic)
         USignBlock *, UMonitor *, UComputer *, UQuantumComputer *, ULuaBlock *,
         UMinerBase *, UDrillingRig *, UPumpjack *, UDeconstructorCrafter *,
         UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *, ULogicDisplay *,
-        ULogicController *, ULogicInterface *, UBaseInventoryAccessor *,
+        ULogicController *, ULogicInterface *,
         UCoreAccessor *, ACCESSOR_CLASS_CODEGEN(Fluid),
         ACCESSOR_CLASS_CODEGEN(Electric), ACCESSOR_CLASS_CODEGEN(Heat),
         ACCESSOR_CLASS_CODEGEN(Kinetic), ACCESSOR_CLASS_CODEGEN(Data)>

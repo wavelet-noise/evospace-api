@@ -29,7 +29,7 @@ class UInventoryAccess : public UInventoryReader {
      * @brief Try to add given slot to specific slot in this inventory
      * @return
      */
-    virtual int64 add(int32 index, const FItemData &other) {
+    virtual int64 add_to(int32 index, const FItemData &other) {
         checkNoEntry();
         return 0;
     };
@@ -56,7 +56,7 @@ class UInventoryAccess : public UInventoryReader {
      * @brief
      * @return
      */
-    virtual int64 sub(int32 index, const FItemData &other) {
+    virtual int64 sub_from(int32 index, const FItemData &other) {
         checkNoEntry();
         return 0;
     };
@@ -99,7 +99,7 @@ class UInventoryAccess : public UInventoryReader {
     UFUNCTION(BlueprintCallable)
     virtual void SortKeyAZ() {}
 
-    virtual void RemoveAllSlots() { checkNoEntry(); }
+    virtual void clear() { checkNoEntry(); }
 
   protected:
     bool mCanHaveZeroSlot = false;

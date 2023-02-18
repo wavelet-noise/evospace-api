@@ -58,7 +58,13 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
      * @brief
      * @param com
      */
-    void add_component(UPrototype *com);
+    void add_component(UPrototype *com, std::string_view name);
+
+    /**
+     * @brief
+     * @param com
+     */
+    UPrototype * get_component(std::string_view name) const;
 
     // Engine code
   public:
@@ -191,10 +197,6 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     //=====================
 
-    virtual bool DeserializeProtoJson(TSharedPtr<FJsonObject> json) {
-        return true;
-    }
-
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
@@ -229,11 +231,12 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     TArray<UBaseAccessor *> accessors;
 
     UPROPERTY()
+    TArray<UPrototype *> components;
+
+    UPROPERTY()
     UMaterialInterface *mPaintMaterial;
 
-  private:
-    UPROPERTY()
-    TArray<UObject *> components;
+  protected:
 
     UPROPERTY()
     ADimension *dim;
