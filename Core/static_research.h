@@ -80,7 +80,7 @@ class UStaticChapter : public UPrototype, public ISerializableJson {
     FText GetDescription() const;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    TArray<UStaticResearch *> Researches;
+    mutable TArray<UStaticResearch *> Researches;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
@@ -136,7 +136,7 @@ class UStaticResearch : public UPrototype, public ISerializableJson {
     FName ChapterName;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    UStaticChapter *Chapter;
+    const UStaticChapter *Chapter;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FVector2D Position;
@@ -154,13 +154,13 @@ class UStaticResearch : public UPrototype, public ISerializableJson {
     UInventory *AlsoNewItemsCache;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    FResearchUnlockLevel AlsoUnlocks;
+    FResearchUnlockLevel also_unlocks;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    bool mCompleteByDefault = false;
+    bool complete_by_default = false;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    int Level = 0;
+    int level = 0;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FVector2i LevelMinMax;

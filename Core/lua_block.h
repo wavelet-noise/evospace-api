@@ -48,7 +48,6 @@ class ULuaBlock : public UTieredBlock {
     std::optional<luabridge::LuaRef> cache;
 
     bool ready_to_tick = false;
-    bool ready_to_proto_construction = false;
     bool ready_proto_clone = false;
 
   public:

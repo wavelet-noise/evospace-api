@@ -78,6 +78,7 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
         }
         mRecipes.Add(recipe);
         mNameChache.Add(recipe->name, recipe);
+        recipe->dictionary_index = mRecipes.Num() - 1;
         return true;
     }
 

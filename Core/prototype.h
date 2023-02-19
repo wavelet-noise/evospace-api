@@ -86,6 +86,8 @@ class UPrototype : public UObject {
      */
     std::string name;
 
+    virtual void lua_postprocess(ModLoadingContext &context);
+
   public:
     EVO_LUA_CODEGEN_DB_EX(Prototype);
     static void RegisterLua(lua_State *L);

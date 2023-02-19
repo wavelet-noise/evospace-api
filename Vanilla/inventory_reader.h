@@ -68,7 +68,7 @@ class UInventoryReader : public UPrototype {
         return 0;
     };
 
-    virtual int32 _Num() const {
+    virtual int32 size() const {
         checkNoEntry();
         return 0;
     };
@@ -80,7 +80,7 @@ class UInventoryReader : public UPrototype {
     };
 
     UFUNCTION(BlueprintCallable)
-    int32 Num() const { return _Num(); }
+    int32 Num() const { return size(); }
 
     /*UFUNCTION(BlueprintCallable)
             bool IsEmpty() const { return IsEmpty(); }*/

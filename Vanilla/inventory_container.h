@@ -32,7 +32,7 @@ class UInventoryContainer : public UInventoryAccess {
     virtual int64 GetSlotCapacity(int32 index) const override;
 
     // TODO: rename num
-    virtual int32 _Num() const override;
+    virtual int32 size() const override;
 
     virtual void SortKeyAZ() override;
 

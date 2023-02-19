@@ -87,6 +87,8 @@ class UCrafterBase : public UTieredBlock, public ISwitchInterface {
 
     virtual void EvospacePostDuplicate(const UBlockLogic *proto) override;
 
+    virtual void lua_postprocess(ModLoadingContext &context) override;
+
     UFUNCTION(BlueprintCallable)
     virtual const URecipe *GetCurrentRecipe() const;
 

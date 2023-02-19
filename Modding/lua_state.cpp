@@ -368,7 +368,7 @@ UTexture2D *LuaState::GetTexture(std::string_view name) {
     auto type = FindObject<UTexture2D>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
-        LOG(ERROR_LL) << "Texture not found " << name;
+        LOG(WARN_LL) << "Texture not found " << name;
     } else {
         LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
     }

@@ -117,7 +117,7 @@ class UItem : public UPrototype, public ISerializableJson {
     KeyTable label_format;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
-    UItemLogic *logic;
+    const UItemLogic *logic;
 
     // Engine code
   public:
@@ -132,8 +132,6 @@ class UItem : public UPrototype, public ISerializableJson {
     // In-game effects color
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     FLinearColor mColor = FLinearColor(.5, .5, .5, 1);
-
-    TSharedPtr<FJsonObject> mLogicJson;
 
     UFUNCTION(BlueprintCallable, BlueprintCosmetic)
     FText GetLabel() const;

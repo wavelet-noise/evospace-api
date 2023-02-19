@@ -70,7 +70,7 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
 
     virtual int64 GetSlotCapacity(int32 index) const override;
 
-    virtual int32 _Num() const override;
+    virtual int32 size() const override;
 
     virtual int64 add(const FItemData &other) override;
 
