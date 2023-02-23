@@ -17,7 +17,7 @@ UCLASS()
 class UBaseInventoryAccessor : public UBaseAccessor {
     GENERATED_BODY()
 
-public:
+  public:
     UPROPERTY(VisibleAnywhere)
     bool auto_output = false;
 
@@ -65,7 +65,6 @@ public:
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor();
 
   protected:
-
     UPROPERTY(VisibleAnywhere)
     UObject *mInput;
 

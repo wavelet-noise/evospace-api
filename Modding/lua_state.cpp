@@ -8,6 +8,7 @@
 #include "Evospace/IcoGenerator.h"
 #include "Evospace/MainGameModLoader.h"
 #include "Evospace/Shared/static_logger.h"
+#include "luabridge_extension.h"
 
 namespace evo {
 
@@ -272,12 +273,12 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L)
         .beginClass<UTexture2D>("Texture")
-        .addStaticFunction("find", &LuaState::GetTexture)
+        .addStaticFunction("find", &LuaState::find_texture)
         .endClass();
 
     getGlobalNamespace(L)
         .beginClass<UMaterialInterface>("Material")
-        .addStaticFunction("load", &LuaState::GetMaterial)
+        .addStaticFunction("load", &LuaState::find_material)
         .endClass();
 
     getGlobalNamespace(L).beginClass<UStaticMesh>("Mesh").endClass();
@@ -286,8 +287,8 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L)
         .beginClass<UClass>("Class")
-        .addStaticFunction("find", &LuaState::FindClass)
-        .addStaticFunction("load", &LuaState::LoadClass)
+        .addStaticFunction("find", &LuaState::find_class)
+        .addStaticFunction("load", &LuaState::load_class)
         .endClass();
 
     getGlobalNamespace(L)
@@ -340,7 +341,7 @@ LuaState::LuaState() {
     );
 }
 
-UClass *LuaState::FindClass(std::string_view name) {
+UClass *LuaState::find_class(std::string_view name) {
     auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
@@ -352,7 +353,7 @@ UClass *LuaState::FindClass(std::string_view name) {
     return type;
 }
 
-UClass *LuaState::LoadClass(std::string_view name) {
+UClass *LuaState::load_class(std::string_view name) {
     auto type = LoadObject<UClass>(nullptr, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
@@ -364,7 +365,7 @@ UClass *LuaState::LoadClass(std::string_view name) {
     return type;
 }
 
-UTexture2D *LuaState::GetTexture(std::string_view name) {
+UTexture2D *LuaState::find_texture(std::string_view name) {
     auto type = FindObject<UTexture2D>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
     if (type == nullptr) {
@@ -376,7 +377,7 @@ UTexture2D *LuaState::GetTexture(std::string_view name) {
     return type;
 }
 
-UMaterialInterface *LuaState::GetMaterial(std::string_view name) {
+UMaterialInterface *LuaState::find_material(std::string_view name) {
     auto type = LoadObject<UMaterialInterface>(
         nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data()))
     );

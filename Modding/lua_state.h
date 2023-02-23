@@ -32,10 +32,10 @@ class LuaState {
      * @param Class name
      * @return Class object
      */
-    static UClass *FindClass(std::string_view name);
-    static UClass *LoadClass(std::string_view name);
-    static UTexture2D *GetTexture(std::string_view name);
-    static UMaterialInterface *GetMaterial(std::string_view name);
+    static UClass *find_class(std::string_view name);
+    static UClass *load_class(std::string_view name);
+    static UTexture2D *find_texture(std::string_view name);
+    static UMaterialInterface *find_material(std::string_view name);
 
     void add_lua_path(const std::string &path);
 

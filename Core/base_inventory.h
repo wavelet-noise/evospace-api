@@ -105,7 +105,8 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
 
     bool mAutoSize = false;
 
-    FItemData lua_get_slot(int32 index);int32 lua_get_count();
+    FItemData lua_get_slot(int32 index);
+    int32 lua_get_count();
 
   public:
     EVO_LUA_CODEGEN_DB(UBaseInventory, BaseInventory);

@@ -32,7 +32,7 @@ class UInventoryReader : public UPrototype {
     };
 
     /**
-     * @brief Find first slot with same item in inventory 
+     * @brief Find first slot with same item in inventory
      * @param item Item
      * @return index of slot with item or -1
      */

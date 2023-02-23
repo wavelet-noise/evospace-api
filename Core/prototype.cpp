@@ -1,7 +1,6 @@
 #include "prototype.h"
 
-void UPrototype::lua_postprocess(ModLoadingContext &context){
-}
+void UPrototype::lua_postprocess(ModLoadingContext &context) {}
 
 void UPrototype::RegisterLua(lua_State *L) {
     luabridge::getGlobalNamespace(L)

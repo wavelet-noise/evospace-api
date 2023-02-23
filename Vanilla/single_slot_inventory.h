@@ -13,10 +13,10 @@ class USingleSlotInventory : public UBaseInventory {
     GENERATED_BODY()
 
     // Lua api
-public:
+  public:
     UPROPERTY(BlueprintReadOnly)
     int64 capacity = 0;
-    
+
   public:
     USingleSlotInventory();
 
@@ -33,7 +33,6 @@ public:
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
   private:
-
   public:
     EVO_LUA_CODEGEN_DB_EX(SingleSlotInventory);
     static void RegisterLua(lua_State *L);

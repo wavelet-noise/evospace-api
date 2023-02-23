@@ -116,10 +116,11 @@ class UCoreAccessor;
 
 ACCESSOR_FORWARD_CODEGEN(Fluid)
 ACCESSOR_FORWARD_CODEGEN(Electric)
-ACCESSOR_FORWARD_CODEGEN(Heat) ACCESSOR_FORWARD_CODEGEN(Kinetic)
-    ACCESSOR_FORWARD_CODEGEN(Data)
+ACCESSOR_FORWARD_CODEGEN(Heat)
+ACCESSOR_FORWARD_CODEGEN(Kinetic)
+ACCESSOR_FORWARD_CODEGEN(Data)
 
-        namespace evo {
+    namespace evo {
     namespace prototype_helper {
     inline std::tuple<
         UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *,
@@ -142,10 +143,10 @@ ACCESSOR_FORWARD_CODEGEN(Heat) ACCESSOR_FORWARD_CODEGEN(Kinetic)
         USignBlock *, UMonitor *, UComputer *, UQuantumComputer *, ULuaBlock *,
         UMinerBase *, UDrillingRig *, UPumpjack *, UDeconstructorCrafter *,
         UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *, ULogicDisplay *,
-        ULogicController *, ULogicInterface *,
-        UCoreAccessor *, ACCESSOR_CLASS_CODEGEN(Fluid),
-        ACCESSOR_CLASS_CODEGEN(Electric), ACCESSOR_CLASS_CODEGEN(Heat),
-        ACCESSOR_CLASS_CODEGEN(Kinetic), ACCESSOR_CLASS_CODEGEN(Data)>
+        ULogicController *, ULogicInterface *, UCoreAccessor *,
+        ACCESSOR_CLASS_CODEGEN(Fluid), ACCESSOR_CLASS_CODEGEN(Electric),
+        ACCESSOR_CLASS_CODEGEN(Heat), ACCESSOR_CLASS_CODEGEN(Kinetic),
+        ACCESSOR_CLASS_CODEGEN(Data)>
         classes;
 
 #undef ACCESSOR_FORWARD_CODEGEN

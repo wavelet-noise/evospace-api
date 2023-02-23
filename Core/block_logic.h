@@ -64,7 +64,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
      * @brief
      * @param com
      */
-    UPrototype * get_component(std::string_view name) const;
+    UPrototype *get_component(std::string_view name) const;
 
     // Engine code
   public:
@@ -236,7 +236,6 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     UMaterialInterface *mPaintMaterial;
 
   protected:
-
     UPROPERTY()
     ADimension *dim;
 

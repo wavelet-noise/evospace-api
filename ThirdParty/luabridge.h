@@ -3390,6 +3390,21 @@ struct UserdataGetter<T, std::void_t<T (*)()>>
     }
 };
 
+template <class T>
+struct UserdataGetter<T, std::optional<T>>
+{
+    using ReturnType = TypeResult<std::optional<T>>;
+
+    static ReturnType get(lua_State* L, int index)
+    {
+        auto result = StackHelper<T, IsContainer<T>::value>::get(L, index);
+        if (! result)
+            return {};
+
+        return *result;
+    }
+};
+
 } 
 
 template <class T, class = void>
