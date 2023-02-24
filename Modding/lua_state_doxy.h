@@ -1,6 +1,6 @@
 #pragma once
 
-/*! \file vec3.h
+/*! \file lua_state_doxy.h
     \brief Vec3 struct
 */
  
