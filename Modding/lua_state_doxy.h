@@ -1,24 +1,118 @@
 #pragma once
 
-/** @file lua_state_doxy.h
- *   @brief Vec3 struct
+/**
+ * @brief Vec3i
  */
+class Vec3i {
 
-/** @class Vec3
- *    @brief 3d float vector
- */
+    /**
+     * @brief 1 dim value
+     */
+    int32 x;
 
-/** @class Vec3i
- *    @brief 3d int vector
- */
+    /**
+     * @brief 2 dim value
+     */
+    int32 y;
 
-/** @class Vec2i
- *   @brief 2d int vector
- */
+    /**
+     * @brief 3 dim value
+     */
+    int32 z;
 
-/** @class cs
- *    @brief 3d int vector
- */
+    /**
+     * @brief Readonly function. Construct Vec3i from 3 numbers
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.new(x, y, z)
+     * @endcode
+     * @param x
+     * @param y
+     * @param z
+     * @return Constructed Vec3i(x, y, z) object
+     */
+    static Vec3i new(int32 x, int32 y, int32 z);
+
+    /**
+     * @brief Readonly property. Construct Vec3i from (0, 0, 0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.zero()
+     * @endcode
+     * @return Constructed Vec3i(0, 0, 0) object
+     */
+    static Vec3i zero();
+
+    /**
+     * @brief Readonly property. Construct Vec3i from (1, 1, 1)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.one()
+     * @endcode
+     * @return Constructed Vec3i(1, 1, 1) object
+     */
+    static Vec3i one();
+
+    /**
+     * @brief Readonly property. Construct Vec3i from up (0, 0, 1)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.up()
+     * @endcode
+     * @return Constructed Vec3i(0, 0, 1) object
+     */
+    static Vec3i up();
+
+    /**
+     * @brief Readonly property. Construct Vec3i from (0, 0, -1)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.down()
+     * @endcode
+     * @return Constructed Vec3i(0, 0, -1) object
+     */
+    static Vec3i down();
+
+    /**
+     * @brief Readonly property. Construct Vec3i from (0, 1, 0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.left()
+     * @endcode
+     * @return Constructed Vec3i(0, 1, 0) object
+     */
+    static Vec3i left();
+
+    /**
+     * @brief Readonly property. Construct Vec3i from (0, -1, 0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.right()
+     * @endcode
+     * @return Constructed Vec3i(0, -1, 0) object
+     */
+    static Vec3i right();
+
+    /**
+     * @fn static Vec3i back()
+     * @brief Readonly property. Construct Vec3i from (-1, 0, 0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.back()
+     * @endcode
+     * @return Constructed Vec3i(-1, 0, 0) object
+     */
+
+    /**
+     * @fn static Vec3i front()
+     * @brief Static function. Construct Vec3i from (1, 0, 0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3i.front()
+     * @endcode
+     * @return Constructed Vec3i(1, 0, 0) object
+     */
+};
 
 /**
  * @fn static FVector Vec3::new(float x, float y, float z)
@@ -63,108 +157,6 @@
  * vec = Vec2i.one()
  * @endcode
  * @return Constructed Vec2i(1, 1) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i new(int32 x, int32 y, int32 z)
- * @brief Readonly function. Construct Vec3i from 3 numbers
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.new(x, y, z)
- * @endcode
- * @param x
- * @param y
- * @param z
- * @return Constructed Vec3i(x, y, z) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i zero()
- * @brief Readonly property. Construct Vec3i from (0, 0, 0)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.zero()
- * @endcode
- * @return Constructed Vec3i(0, 0, 0) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i one()
- * @brief Readonly property. Construct Vec3i from (1, 1, 1)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.one()
- * @endcode
- * @return Constructed Vec3i(1, 1, 1) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i up()
- * @brief Readonly property. Construct Vec3i from up (0, 0, 1)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.up()
- * @endcode
- * @return Constructed Vec3i(0, 0, 1) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i down()
- * @brief Readonly property. Construct Vec3i from (0, 0, -1)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.down()
- * @endcode
- * @return Constructed Vec3i(0, 0, -1) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i left()
- * @brief Readonly property. Construct Vec3i from (0, 1, 0)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.left()
- * @endcode
- * @return Constructed Vec3i(0, 1, 0) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i right()
- * @brief Readonly property. Construct Vec3i from (0, -1, 0)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.right()
- * @endcode
- * @return Constructed Vec3i(0, -1, 0) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i back()
- * @brief Readonly property. Construct Vec3i from (-1, 0, 0)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.back()
- * @endcode
- * @return Constructed Vec3i(-1, 0, 0) object
- */
-
-/**
- * @class Vec3i
- * @fn static Vec3i front()
- * @brief Static function. Construct Vec3i from (1, 0, 0)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec3i.front()
- * @endcode
- * @return Constructed Vec3i(1, 0, 0) object
  */
 
 /**
