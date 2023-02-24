@@ -4,7 +4,8 @@
 /**
  * @brief Vec3 integer
  */
-struct Vec3i {
+class Vec3i {
+  public:
     /**
      * @brief Property. 1 dim value
      */
@@ -173,7 +174,8 @@ class Vec2i {
 /**
  * @brief Namespace for coordinate system translations
  */
-struct cs {
+class cs {
+  public:
     /**
      * @brief Static function. Convert block position to sector position
      * @details lua syntax
