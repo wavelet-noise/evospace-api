@@ -31,7 +31,7 @@ struct Vec3i {
      * @param z
      * @return Constructed Vec3i(x, y, z) object
      */
-    static Vec3i new(int32 x, int32 y, int32 z) {}
+    static Vec3i new(int32 x, int32 y, int32 z);
 
     /**
      * @brief Readonly property. Construct Vec3i from (0, 0, 0)
@@ -41,7 +41,7 @@ struct Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, 0, 0) object
      */
-    static Vec3i zero() {}
+    static Vec3i zero;
 
     /**
      * @brief Readonly property. Construct Vec3i from (1, 1, 1)
@@ -51,7 +51,7 @@ struct Vec3i {
      * @endcode
      * @return Constructed Vec3i(1, 1, 1) object
      */
-    static Vec3i one() {}
+    static Vec3i one;
 
     /**
      * @brief Readonly property. Construct Vec3i from up (0, 0, 1)
@@ -61,7 +61,7 @@ struct Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, 0, 1) object
      */
-    static Vec3i up() {}
+    static Vec3i up;
 
     /**
      * @brief Readonly property. Construct Vec3i from (0, 0, -1)
@@ -71,7 +71,7 @@ struct Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, 0, -1) object
      */
-    static Vec3i down() {}
+    static Vec3i down;
 
     /**
      * @brief Readonly property. Construct Vec3i from (0, 1, 0)
@@ -81,7 +81,7 @@ struct Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, 1, 0) object
      */
-    static Vec3i left() {}
+    static Vec3i left;
 
     /**
      * @brief Readonly property. Construct Vec3i from (0, -1, 0)
@@ -91,7 +91,7 @@ struct Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, -1, 0) object
      */
-    static Vec3i right() {}
+    static Vec3i right;
 
     /**
      * @brief Readonly property. Construct Vec3i from (-1, 0, 0)
@@ -101,7 +101,7 @@ struct Vec3i {
      * @endcode
      * @return Constructed Vec3i(-1, 0, 0) object
      */
-    static Vec3i back() {}
+    static Vec3i back;
 
     /**
      * @brief Static function. Construct Vec3i from (1, 0, 0)
@@ -111,7 +111,7 @@ struct Vec3i {
      * @endcode
      * @return Constructed Vec3i(1, 0, 0) object
      */
-    static Vec3i front() {}
+    static Vec3i front;
 };
 
 /**
@@ -129,7 +129,7 @@ struct Vec3 {
      * @param z
      * @return Vec3(x, y, z) object
      */
-    static FVector new(float x, float y, float z) {}
+    static FVector new(float x, float y, float z);
 };
 
 /**
@@ -147,7 +147,7 @@ class Vec2i {
      * @param y
      * @return Constructed Vec3i(x, y) object
      */
-    static Vec2i new(int32 x, int32 y) {}
+    static Vec2i new;
 
     /**
      * @brief Readonly property. Construct Vec2i from (0, 0)
@@ -157,7 +157,7 @@ class Vec2i {
      * @endcode
      * @return Constructed Vec2i(0, 0) object
      */
-    static Vec2i zero() {}
+    static Vec2i zero;
 
     /**
      * @brief Readonly property. Construct Vec3i from (1, 1)
@@ -167,7 +167,7 @@ class Vec2i {
      * @endcode
      * @return Constructed Vec2i(1, 1) object
      */
-    static Vec2i one() {}
+    static Vec2i one;
 };
 
 /**
@@ -183,7 +183,7 @@ struct cs {
      * @param bpos Vec3i block position
      * @return Vec3i sector position
      */
-    static Vec3i bp2sp(const Vec3i &bpos) {}
+    static Vec3i bp2sp(const Vec3i &bpos);
 
     /**
      * @brief Static function. Convert world position to sector position
@@ -194,7 +194,7 @@ struct cs {
      * @param bpos Vec3 world position
      * @return Vec3i block position
      */
-    static Vec3i w2bp(const FVector &world) {}
+    static Vec3i w2bp(const FVector &world);
 
     /**
      * @brief Static function. Convert block position to world position
@@ -205,7 +205,7 @@ struct cs {
      * @param bpos Vec3i block position
      * @return Vec3 world position
      */
-    static FVector bp2w(const Vec3i &bpos) {}
+    static FVector bp2w(const Vec3i &bpos);
 
     /**
      * @details lua syntax
@@ -215,5 +215,5 @@ struct cs {
      * @param bpos Vec3i world position
      * @return Vec3i sector position
      */
-    static Vec3i w2sp(const FVector &world) {}
+    static Vec3i w2sp(const FVector &world);
 };
