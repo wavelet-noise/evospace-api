@@ -4,8 +4,7 @@
 /**
  * @brief Vec3 integer
  */
-class Vec3i {
-public:
+struct Vec3i {
     /**
      * @brief Property. 1 dim value
      */
@@ -118,18 +117,18 @@ public:
 /**
  * @brief Vec3 float
  */
-class Vec3 {
-/**
- * @brief Static function. Construct Vec3 from 3 numbers
- * @details lua syntax
- * @code{.lua}
- * vec = Vec.new(x, y, z)
- * @endcode
- * @param x
- * @param y
- * @param z
- * @return Vec3(x, y, z) object
- */
+struct Vec3 {
+    /**
+     * @brief Static function. Construct Vec3 from 3 numbers
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec.new(x, y, z)
+     * @endcode
+     * @param x
+     * @param y
+     * @param z
+     * @return Vec3(x, y, z) object
+     */
     static FVector new(float x, float y, float z) {}
 };
 
@@ -137,55 +136,53 @@ class Vec3 {
  * @brief Vec2 integer
  */
 class Vec2i {
-public:
-/**
- * @brief Static function. Construct Vec2i from 2 numbers
- * @details lua syntax
- * @code{.lua}
- * vec = Vec2i.new(x, y)
- * @endcode
- * @param x
- * @param y
- * @return Constructed Vec3i(x, y) object
- */
+  public:
+    /**
+     * @brief Static function. Construct Vec2i from 2 numbers
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec2i.new(x, y)
+     * @endcode
+     * @param x
+     * @param y
+     * @return Constructed Vec3i(x, y) object
+     */
     static Vec2i new(int32 x, int32 y) {}
 
-/**
- * @brief Readonly property. Construct Vec2i from (0, 0)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec2i.zero()
- * @endcode
- * @return Constructed Vec2i(0, 0) object
- */
+    /**
+     * @brief Readonly property. Construct Vec2i from (0, 0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec2i.zero()
+     * @endcode
+     * @return Constructed Vec2i(0, 0) object
+     */
     static Vec2i zero() {}
 
-/**
- * @brief Readonly property. Construct Vec3i from (1, 1)
- * @details lua syntax
- * @code{.lua}
- * vec = Vec2i.one()
- * @endcode
- * @return Constructed Vec2i(1, 1) object
- */
+    /**
+     * @brief Readonly property. Construct Vec3i from (1, 1)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec2i.one()
+     * @endcode
+     * @return Constructed Vec2i(1, 1) object
+     */
     static Vec2i one() {}
 };
-
 
 /**
  * @brief Namespace for coordinate system translations
  */
-class cs {
-public:
+struct cs {
     /**
- * @brief Static function. Convert block position to sector position
- * @details lua syntax
- * @code{.lua}
- * vec = cs.bp2sp()
- * @endcode
- * @param bpos Vec3i block position
- * @return Vec3i sector position
- */
+     * @brief Static function. Convert block position to sector position
+     * @details lua syntax
+     * @code{.lua}
+     * vec = cs.bp2sp()
+     * @endcode
+     * @param bpos Vec3i block position
+     * @return Vec3i sector position
+     */
     static Vec3i bp2sp(const Vec3i &bpos) {}
 
     /**
@@ -209,7 +206,7 @@ public:
      * @return Vec3 world position
      */
     static FVector bp2w(const Vec3i &bpos) {}
-    
+
     /**
      * @details lua syntax
      * @code{.lua}
