@@ -374,15 +374,6 @@ LuaState::LuaState() {
     );
 }
 
-Vec3i LuaState::cs_bp2sp(const Vec3i &bpos) {
-    return cs::WBtoS(bpos, gSectorSize);
-}
-Vec3i LuaState::cs_w2bp(const FVector &world) { return cs::WtoWB(world); }
-FVector LuaState::cs_bp2w(const Vec3i &bpos) { return cs::WBtoW(bpos); }
-Vec3i LuaState::cs_w2sp(const FVector &world) {
-    return cs::WBtoS(world, gSectorSize);
-}
-
 UClass *LuaState::find_class(std::string_view name) {
     auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
