@@ -1,5 +1,5 @@
 // https://github.com/vinniefalco/LuaBridge
-// Copyright 2022, Stefan Frings
+// Copyright 2023, Stefan Frings
 // SPDX-License-Identifier: MIT
 
 #pragma once

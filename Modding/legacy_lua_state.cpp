@@ -1,4 +1,4 @@
-// Copyright (c) 2017 - 2022, Samsonov Andrey. All Rights Reserved.
+// Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #include "legacy_lua_state.h"
 
 #include "Core/base_inventory_accessor.h"
