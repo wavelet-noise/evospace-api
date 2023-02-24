@@ -18,8 +18,8 @@ class GameLuaState : public LuaState {
 
   private:
     template <typename T> void registerCall(lua_State *L) {
-        T::RegisterLua(L);
-        T::RegisterCommonLua(L);
+        T::lua_reg(L);
+        T::lua_reg_internal(L);
     }
 };
 } // namespace evo

@@ -688,12 +688,8 @@ class Namespace : public detail::Registrar {
             ); // Stack: const table (co), class table (cl), static table (st)
 
             if constexpr (sizeof...(Functions) == 1) {
-                (
-                    [&] {
-                        detail::push_function(L, std::move(functions));
-                    }(),
-                    ...
-                );
+                ([&] { detail::push_function(L, std::move(functions)); }(),
+                 ...);
             } else {
                 // create new closure of try_overloads with new table
                 lua_createtable(
@@ -2214,12 +2210,7 @@ class Namespace : public detail::Registrar {
         assert(lua_istable(L, -1)); // Stack: namespace table (ns)
 
         if constexpr (sizeof...(Functions) == 1) {
-            (
-                [&] {
-                    detail::push_function(L, std::move(functions));
-                }(),
-                ...
-            );
+            ([&] { detail::push_function(L, std::move(functions)); }(), ...);
         } else {
             // create new closure of try_overloads with new table
             lua_createtable(

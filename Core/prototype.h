@@ -30,7 +30,7 @@ class Base;
     static type *lua_codegen_cast(UPrototype *parent_inst) {                   \
         return Cast<type>(parent_inst);                                        \
     }                                                                          \
-    static void RegisterCommonLua(lua_State *L) {                              \
+    static void lua_reg_internal(lua_State *L) {                               \
         LOG(TRACE_LL) << "Registering lua " << #name;                          \
         luabridge::getGlobalNamespace(L)                                       \
             .beginClass<type>(#name)                                           \
@@ -46,7 +46,7 @@ class Base;
     static U##type *lua_codegen_cast(UPrototype *parent_inst) {                \
         return Cast<U##type>(parent_inst);                                     \
     }                                                                          \
-    static void RegisterCommonLua(lua_State *L) {                              \
+    static void lua_reg_internal(lua_State *L) {                               \
         LOG(TRACE_LL) << "Registering lua " << #type;                          \
         luabridge::getGlobalNamespace(L)                                       \
             .beginClass<U##type>(#type)                                        \

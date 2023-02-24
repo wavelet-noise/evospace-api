@@ -298,6 +298,7 @@ LuaState::LuaState() {
     getGlobalNamespace(L)
         .beginClass<Vec3i>("Vec3i")
         .addStaticFunction("new", &LuaState::Vec3i_new)
+        .addStaticFunction("one", &LuaState::Vec3i_one)
         .addStaticProperty("zero", &LuaState::Vec3i_zero)
         .addStaticProperty("up", &LuaState::Vec3i_up)
         .addStaticProperty("down", &LuaState::Vec3i_down)
@@ -306,6 +307,38 @@ LuaState::LuaState() {
         .addStaticProperty("back", &LuaState::Vec3i_back)
         .addStaticProperty("front", &LuaState::Vec3i_front)
         .endClass();
+
+    getGlobalNamespace(L)
+        .beginClass<Vec3i>("Vec2i")
+        .addStaticFunction("new", &LuaState::Vec2i_new)
+        .addStaticProperty("zero", &LuaState::Vec2i_zero)
+        .addStaticProperty("one", &LuaState::Vec2i_one)
+        .endClass();
+
+    getGlobalNamespace(L)
+        .beginClass<FVector>("Vec3")
+        .addStaticFunction("new", &LuaState::Vec_new)
+        .endClass();
+
+    getGlobalNamespace(L)
+        .beginNamespace("cs")
+        .addFunction(
+            "bp2sp",
+            +[](const Vec3i &bpos) { auto spos = cs::WBtoS(bpos, gSectorSize); }
+        )
+        .addFunction(
+            "w2bp", +[](const FVector &world) { auto spos = cs::WtoWB(world); }
+        )
+        .addFunction(
+            "bp2w", +[](const Vec3i &bpos) { auto spos = cs::WBtoW(bpos); }
+        )
+        .addFunction(
+            "w2sp",
+            +[](const FVector &world) {
+                auto spos = cs::WBtoS(world, gSectorSize);
+            }
+        )
+        .endNamespace();
 
     getGlobalNamespace(L)
         .beginClass<KeyTable>("Loc")
@@ -339,6 +372,15 @@ LuaState::LuaState() {
         "print('jit fatal error') end",
         "jit_test"
     );
+}
+
+Vec3i LuaState::cs_bp2sp(const Vec3i &bpos) {
+    return cs::WBtoS(bpos, gSectorSize);
+}
+Vec3i LuaState::cs_w2bp(const FVector &world) { return cs::WtoWB(world); }
+FVector LuaState::cs_bp2w(const Vec3i &bpos) { return cs::WBtoW(bpos); }
+Vec3i LuaState::cs_w2sp(const FVector &world) {
+    return cs::WBtoS(world, gSectorSize);
 }
 
 UClass *LuaState::find_class(std::string_view name) {
@@ -398,6 +440,16 @@ LuaState::~LuaState() {
     //     L = nullptr;
     // }
 }
+
+FVector LuaState::Vec_new(float x, float y, float z) {
+    return FVector(x, y, z);
+}
+
+Vec2i LuaState::Vec2i_new(int32 x, int32 y) { return Vec2i(x, y); }
+
+Vec2i LuaState::Vec2i_zero() { return Vec2i(0, 0); }
+
+Vec2i LuaState::Vec2i_one() { return Vec2i(1, 1); }
 
 Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) { return Vec3i(x, y, z); }
 

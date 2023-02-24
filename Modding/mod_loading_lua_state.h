@@ -15,8 +15,8 @@ class ModLoadingLuaState : public LuaState {
 
   private:
     template <typename T> void registerCall(lua_State *L) {
-        T::RegisterLua(L);
-        T::RegisterCommonLua(L);
+        T::lua_reg(L);
+        T::lua_reg_internal(L);
     }
     template <typename T> void clearCall(lua_State *L) { evo::DB::clear<T>(); }
 };
