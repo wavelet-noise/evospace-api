@@ -1,4 +1,6 @@
 #pragma once
+#if 0
+#include "CoreMinimal.h"
 
 /**
  * @brief Vec3i
@@ -6,17 +8,17 @@
 class Vec3i {
 
     /**
-     * @brief 1 dim value
+     * @brief Property. 1 dim value
      */
     int32 x;
 
     /**
-     * @brief 2 dim value
+     * @brief Property. 2 dim value
      */
     int32 y;
 
     /**
-     * @brief 3 dim value
+     * @brief Property. 3 dim value
      */
     int32 z;
 
@@ -31,7 +33,7 @@ class Vec3i {
      * @param z
      * @return Constructed Vec3i(x, y, z) object
      */
-    static Vec3i new(int32 x, int32 y, int32 z);
+    static Vec3i new(int32 x, int32 y, int32 z) {}
 
     /**
      * @brief Readonly property. Construct Vec3i from (0, 0, 0)
@@ -41,7 +43,7 @@ class Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, 0, 0) object
      */
-    static Vec3i zero();
+    static Vec3i zero() {}
 
     /**
      * @brief Readonly property. Construct Vec3i from (1, 1, 1)
@@ -51,7 +53,7 @@ class Vec3i {
      * @endcode
      * @return Constructed Vec3i(1, 1, 1) object
      */
-    static Vec3i one();
+    static Vec3i one() {}
 
     /**
      * @brief Readonly property. Construct Vec3i from up (0, 0, 1)
@@ -61,7 +63,7 @@ class Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, 0, 1) object
      */
-    static Vec3i up();
+    static Vec3i up() {}
 
     /**
      * @brief Readonly property. Construct Vec3i from (0, 0, -1)
@@ -71,7 +73,7 @@ class Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, 0, -1) object
      */
-    static Vec3i down();
+    static Vec3i down() {}
 
     /**
      * @brief Readonly property. Construct Vec3i from (0, 1, 0)
@@ -81,7 +83,7 @@ class Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, 1, 0) object
      */
-    static Vec3i left();
+    static Vec3i left() {}
 
     /**
      * @brief Readonly property. Construct Vec3i from (0, -1, 0)
@@ -91,10 +93,9 @@ class Vec3i {
      * @endcode
      * @return Constructed Vec3i(0, -1, 0) object
      */
-    static Vec3i right();
+    static Vec3i right() {}
 
     /**
-     * @fn static Vec3i back()
      * @brief Readonly property. Construct Vec3i from (-1, 0, 0)
      * @details lua syntax
      * @code{.lua}
@@ -102,9 +103,9 @@ class Vec3i {
      * @endcode
      * @return Constructed Vec3i(-1, 0, 0) object
      */
+    static Vec3i back() {}
 
     /**
-     * @fn static Vec3i front()
      * @brief Static function. Construct Vec3i from (1, 0, 0)
      * @details lua syntax
      * @code{.lua}
@@ -112,6 +113,7 @@ class Vec3i {
      * @endcode
      * @return Constructed Vec3i(1, 0, 0) object
      */
+    static Vec3i front() {}
 };
 
 /**
@@ -205,3 +207,5 @@ class Vec3i {
  * @param bpos Vec3i world position
  * @return Vec3i sector position
  */
+
+#endif
