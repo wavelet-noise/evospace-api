@@ -5,7 +5,7 @@
 /**
  * @brief Vec3i
  */
-class Vec3i {
+struct Vec3i {
 
     /**
      * @brief Property. 1 dim value
