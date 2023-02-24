@@ -147,7 +147,7 @@ class Vec2i {
      * @param y
      * @return Constructed Vec3i(x, y) object
      */
-    static Vec2i new;
+    static Vec2i new(int32 x, int32 y);
 
     /**
      * @brief Readonly property. Construct Vec2i from (0, 0)
