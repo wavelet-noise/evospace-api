@@ -16,9 +16,12 @@
  *   @brief 2d int vector
  */
 
+/** @class cs
+ *    @brief 3d int vector
+ */
+
 /**
- * @class Vec3
- * @fn static FVector new(float x, float y, float z)
+ * @fn static FVector Vec3::new(float x, float y, float z)
  * @brief Static function. Construct Vec3 from 3 numbers
  * @details lua syntax
  * @code{.lua}
@@ -201,8 +204,7 @@
  */
 
 /**
- * @class cs
- * @fn static Vec3i w2sp(const FVector &world)
+ * @fn static Vec3i cs::w2sp(const FVector &world)
  * @brief Static function. Convert world position to sector position
  * @details lua syntax
  * @code{.lua}
