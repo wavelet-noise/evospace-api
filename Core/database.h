@@ -2,7 +2,7 @@
 
 #include "Evospace/Common.h" //TODO: remove
 #include "Evospace/MainGameInstance.h"
-#include "Evospace/Shared/ThirdParty/luabridge.h"
+#include "ThirdParty/luabridge/luabridge.h"
 
 #include <unordered_map>
 #include <vector>

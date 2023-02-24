@@ -3,8 +3,8 @@
 #pragma once
 
 #include "Containers/Array.h"
+#include "Core/inventory.h"
 #include "Core/item_data.h"
-#include "Vanilla/inventory.h"
 
 #include <Dom/JsonObject.h>
 #include <Templates/SharedPointer.h>

@@ -2,7 +2,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
-#include "ThirdParty/luabridge.h"
+#include "ThirdParty/luabridge/luabridge.h"
 
 #include <Dom/JsonObject.h>
 

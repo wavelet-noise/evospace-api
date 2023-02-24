@@ -120,37 +120,34 @@ ACCESSOR_FORWARD_CODEGEN(Heat)
 ACCESSOR_FORWARD_CODEGEN(Kinetic)
 ACCESSOR_FORWARD_CODEGEN(Data)
 
-    namespace evo {
-    namespace prototype_helper {
-    inline std::tuple<
-        UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *,
-        UFilteringBlock *, UCrafterBase *, USelectCrafter *, UAutoCrafter *,
-        UItem *, URecipeDictionary *, UBlock *, UTesselator *,
-        UTesselatorCube *, UTesselatorMarching *, UItemLogic *, UBlockBuilder *,
-        UBaseAccessor *, UBaseInventoryAccessor *, UInventoryReader *,
-        UInventoryAccess *, UBaseInventory *, UInventory *,
-        USingleSlotInventory *, UInventoryContainer *, UInternalInventory *,
-        URecipeInventory *, UPropsGenerator *, ULayeringGenerator *, UBiome *,
-        UStaticAttach *, UPropList *, UStaticResearch *, UStaticChapter *,
-        UBedLogic *, UDoorLogic *, ULampLogic *, UFenceLogic *,
-        USurfaceBuilder *, UPlaneBuilder *, UFissionReactor *, UFusionReactor *,
-        URobotArm *, UFilteringRobotArm *, UPump *, UDiode *, UFilteringPump *,
-        UStorageBlock *, UChest *, UItemRack *, UConductor *, UHeatConductor *,
-        UKineticConductor *, UFluidConductor *, UDataConductor *,
-        UElectricConductor *, UFluidContainer *, USwitch *, UKineticSwitch *,
-        UHeatSwitch *, UFluidSwitch *, UDataSwitch *, UElectricSwitch *,
-        UBatteryBox *, UConveyor *, USplitter *, USorter *, UPortal *,
-        USignBlock *, UMonitor *, UComputer *, UQuantumComputer *, ULuaBlock *,
-        UMinerBase *, UDrillingRig *, UPumpjack *, UDeconstructorCrafter *,
-        UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *, ULogicDisplay *,
-        ULogicController *, ULogicInterface *, UCoreAccessor *,
-        ACCESSOR_CLASS_CODEGEN(Fluid), ACCESSOR_CLASS_CODEGEN(Electric),
-        ACCESSOR_CLASS_CODEGEN(Heat), ACCESSOR_CLASS_CODEGEN(Kinetic),
-        ACCESSOR_CLASS_CODEGEN(Data)>
-        classes;
+namespace evo { namespace prototype_helper {
+inline std::tuple<
+    UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UFilteringBlock *,
+    UCrafterBase *, USelectCrafter *, UAutoCrafter *, UItem *,
+    URecipeDictionary *, UBlock *, UTesselator *, UTesselatorCube *,
+    UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBaseAccessor *,
+    UBaseInventoryAccessor *, UInventoryReader *, UInventoryAccess *,
+    UBaseInventory *, UInventory *, USingleSlotInventory *,
+    UInventoryContainer *, UInternalInventory *, URecipeInventory *,
+    UPropsGenerator *, ULayeringGenerator *, UBiome *, UStaticAttach *,
+    UPropList *, UStaticResearch *, UStaticChapter *, UBedLogic *, UDoorLogic *,
+    ULampLogic *, UFenceLogic *, USurfaceBuilder *, UPlaneBuilder *,
+    UFissionReactor *, UFusionReactor *, URobotArm *, UFilteringRobotArm *,
+    UPump *, UDiode *, UFilteringPump *, UStorageBlock *, UChest *, UItemRack *,
+    UConductor *, UHeatConductor *, UKineticConductor *, UFluidConductor *,
+    UDataConductor *, UElectricConductor *, UFluidContainer *, USwitch *,
+    UKineticSwitch *, UHeatSwitch *, UFluidSwitch *, UDataSwitch *,
+    UElectricSwitch *, UBatteryBox *, UConveyor *, USplitter *, USorter *,
+    UPortal *, USignBlock *, UMonitor *, UComputer *, UQuantumComputer *,
+    ULuaBlock *, UMinerBase *, UDrillingRig *, UPumpjack *,
+    UDeconstructorCrafter *, UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *,
+    ULogicDisplay *, ULogicController *, ULogicInterface *, UCoreAccessor *,
+    ACCESSOR_CLASS_CODEGEN(Fluid), ACCESSOR_CLASS_CODEGEN(Electric),
+    ACCESSOR_CLASS_CODEGEN(Heat), ACCESSOR_CLASS_CODEGEN(Kinetic),
+    ACCESSOR_CLASS_CODEGEN(Data)>
+    classes;
 
 #undef ACCESSOR_FORWARD_CODEGEN
 #undef ACCESSOR_CLASS_CODEGEN
 
-    } // namespace prototype_helper
-} // namespace evo::prototype_helper
+}} // namespace evo::prototype_helper
