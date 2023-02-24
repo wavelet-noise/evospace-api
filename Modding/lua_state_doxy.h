@@ -1,5 +1,4 @@
 #pragma once
-#if 0
 #include "CoreMinimal.h"
 
 /**
@@ -207,5 +206,3 @@ public:
  * @param bpos Vec3i world position
  * @return Vec3i sector position
  */
-
-#endif
