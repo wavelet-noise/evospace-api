@@ -74,11 +74,11 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
 
     virtual int64 add(const FItemData &other) override;
 
-    virtual int64 add_to(int32 index, const FItemData &other) override;
+    virtual int64 add_to(const FItemData &other, int32 index) override;
 
     virtual int64 sub(const FItemData &other) override;
 
-    virtual int64 sub_from(int32 index, const FItemData &other) override;
+    virtual int64 sub_from(const FItemData &other, int32 index) override;
 
   protected:
     bool CheckFilter(const FItemData &data);
@@ -105,7 +105,14 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
 
     bool mAutoSize = false;
 
-    FItemData lua_get_slot(int32 index);
+    /**
+     * @fn std::optional<ItemData> get(int32 index)
+     * @brief Function. Get ItemData for specific BaseInventory slot
+     * @param index BaseInventory slot index
+     * @return ItemData from this slot or nil
+     */
+
+    std::optional<FItemData> lua_get_slot(int32 index);
     int32 lua_get_count();
 
   public:

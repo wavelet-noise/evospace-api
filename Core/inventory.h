@@ -77,7 +77,7 @@ class USubscriptionInventory : public UInventory {
   public:
     virtual int64 add(const FItemData &other) override;
 
-    virtual int64 add_to(int32 index, const FItemData &other) override;
+    virtual int64 add_to(const FItemData &other, int32 index) override;
 
     std::function<void(const FItemData &)> mOnAdd;
 };

@@ -38,11 +38,11 @@ class UInventoryContainer : public UInventoryAccess {
 
     virtual int64 add(const FItemData &other) override;
 
-    virtual int64 add_to(int32 index, const FItemData &other) override;
+    virtual int64 add_to(const FItemData &other, int32 index) override;
 
     virtual int64 sub(const FItemData &other) override;
 
-    virtual int64 sub_from(int32 index, const FItemData &from) override;
+    virtual int64 sub_from(const FItemData &from, int32 index) override;
 
     virtual void TrySetFilter(int32 index, UInventoryFilter *filter) override;
 
