@@ -5,8 +5,8 @@
 /**
  * @brief Vec3i
  */
-struct Vec3i {
-
+class Vec3i {
+public:
     /**
      * @brief Property. 1 dim value
      */
