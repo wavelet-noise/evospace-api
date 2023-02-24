@@ -119,7 +119,7 @@ class Vec3i {
  * @brief Vec3 float
  */
 struct Vec3 {
-public:
+  public:
     /**
      * @brief Property. First dim value
      */
@@ -134,7 +134,7 @@ public:
      * @brief Property. Third dim value
      */
     float z;
-    
+
     /**
      * @brief Static function. Construct Vec3 from 3 numbers
      * @details lua syntax
@@ -154,7 +154,6 @@ public:
  */
 class Vec2i {
   public:
-public:
     /**
      * @brief Property. First dim value
      */
@@ -164,7 +163,7 @@ public:
      * @brief Property. Second dim value
      */
     int32 y;
-    
+
     /**
      * @brief Static function. Construct Vec2i from 2 numbers
      * @details lua syntax
