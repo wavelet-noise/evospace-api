@@ -37,7 +37,7 @@ struct Vec3i {
      * @brief Readonly property. Construct Vec3i from (0, 0, 0)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec3i.zero()
+     * vec = Vec3i.zero
      * @endcode
      * @return Constructed Vec3i(0, 0, 0) object
      */
@@ -47,7 +47,7 @@ struct Vec3i {
      * @brief Readonly property. Construct Vec3i from (1, 1, 1)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec3i.one()
+     * vec = Vec3i.one
      * @endcode
      * @return Constructed Vec3i(1, 1, 1) object
      */
@@ -57,7 +57,7 @@ struct Vec3i {
      * @brief Readonly property. Construct Vec3i from up (0, 0, 1)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec3i.up()
+     * vec = Vec3i.up
      * @endcode
      * @return Constructed Vec3i(0, 0, 1) object
      */
@@ -67,7 +67,7 @@ struct Vec3i {
      * @brief Readonly property. Construct Vec3i from (0, 0, -1)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec3i.down()
+     * vec = Vec3i.down
      * @endcode
      * @return Constructed Vec3i(0, 0, -1) object
      */
@@ -77,7 +77,7 @@ struct Vec3i {
      * @brief Readonly property. Construct Vec3i from (0, 1, 0)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec3i.left()
+     * vec = Vec3i.left
      * @endcode
      * @return Constructed Vec3i(0, 1, 0) object
      */
@@ -87,7 +87,7 @@ struct Vec3i {
      * @brief Readonly property. Construct Vec3i from (0, -1, 0)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec3i.right()
+     * vec = Vec3i.right
      * @endcode
      * @return Constructed Vec3i(0, -1, 0) object
      */
@@ -97,7 +97,7 @@ struct Vec3i {
      * @brief Readonly property. Construct Vec3i from (-1, 0, 0)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec3i.back()
+     * vec = Vec3i.back
      * @endcode
      * @return Constructed Vec3i(-1, 0, 0) object
      */
@@ -107,7 +107,7 @@ struct Vec3i {
      * @brief Static function. Construct Vec3i from (1, 0, 0)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec3i.front()
+     * vec = Vec3i.front
      * @endcode
      * @return Constructed Vec3i(1, 0, 0) object
      */
@@ -153,7 +153,7 @@ class Vec2i {
      * @brief Readonly property. Construct Vec2i from (0, 0)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec2i.zero()
+     * vec = Vec2i.zero
      * @endcode
      * @return Constructed Vec2i(0, 0) object
      */
@@ -163,7 +163,7 @@ class Vec2i {
      * @brief Readonly property. Construct Vec3i from (1, 1)
      * @details lua syntax
      * @code{.lua}
-     * vec = Vec2i.one()
+     * vec = Vec2i.one
      * @endcode
      * @return Constructed Vec2i(1, 1) object
      */
