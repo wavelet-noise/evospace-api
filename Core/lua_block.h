@@ -36,8 +36,6 @@ class ULuaBlock : public UTieredBlock {
 
     virtual bool is_block_tick() const override;
 
-    void lua_state_close();
-
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
   private:
@@ -52,5 +50,5 @@ class ULuaBlock : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(LuaBlock);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

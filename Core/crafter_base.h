@@ -164,5 +164,5 @@ class UCrafterBase : public UTieredBlock, public ISwitchInterface {
 
   public:
     EVO_LUA_CODEGEN_DB(UCrafterBase, CrafterBase);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

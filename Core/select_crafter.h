@@ -69,5 +69,5 @@ class USelectCrafter : public UCrafterBase {
 
   public:
     EVO_LUA_CODEGEN_DB(USelectCrafter, SelectCrafter);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

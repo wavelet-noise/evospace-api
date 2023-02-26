@@ -23,5 +23,5 @@ class UStorageBlock : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(StorageBlock);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

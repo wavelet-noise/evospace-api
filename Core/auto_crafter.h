@@ -37,7 +37,7 @@ class UAutoCrafter : public USelectCrafter {
 
   public:
     EVO_LUA_CODEGEN_DB(UAutoCrafter, AutoCrafter);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS(BlueprintType)
@@ -49,7 +49,7 @@ class UDeconstructorCrafter : public UAutoCrafter {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DeconstructorCrafter);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS(BlueprintType)
@@ -90,7 +90,7 @@ class UDumpAnyCrafter : public UTieredBlock, public ISwitchInterface {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DumpAnyCrafter);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS(BlueprintType)
@@ -116,5 +116,5 @@ class UDumpCrafter : public USelectCrafter {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DumpCrafter);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

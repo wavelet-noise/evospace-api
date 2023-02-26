@@ -50,5 +50,5 @@ class UTesselatorCube : public UTesselator {
 
   public:
     EVO_LUA_CODEGEN_DB(UTesselatorCube, TesselatorCube);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

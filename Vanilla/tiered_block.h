@@ -33,7 +33,7 @@ class UTieredBlock : public UBlockLogic {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(TieredBlock);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS(BlueprintType)
@@ -49,5 +49,5 @@ class UFilteringBlock : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FilteringBlock);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

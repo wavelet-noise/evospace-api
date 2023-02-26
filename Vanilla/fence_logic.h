@@ -41,7 +41,7 @@ class UFenceLogic : public UBlockLogic {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FenceLogic);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -62,7 +62,7 @@ class UDoorLogic : public UBlockLogic {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DoorLogic);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -83,7 +83,7 @@ class ULampLogic : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(LampLogic);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -96,5 +96,5 @@ class UBedLogic : public UBlockLogic {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(BedLogic);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

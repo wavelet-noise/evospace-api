@@ -59,7 +59,7 @@ class UComputer : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(Computer);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -76,5 +76,5 @@ class UQuantumComputer : public UComputer {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(QuantumComputer);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

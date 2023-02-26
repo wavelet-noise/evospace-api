@@ -57,7 +57,7 @@ class UPump : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB(UPump, Pump);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -81,7 +81,7 @@ class UDiode : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB(UDiode, Diode);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -118,5 +118,5 @@ class UFilteringPump : public UPump {
 
   public:
     EVO_LUA_CODEGEN_DB(UFilteringPump, FilteringPump);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

@@ -221,7 +221,7 @@ class UConductor : public UStorageBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(Conductor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -240,7 +240,7 @@ class UFluidConductor : public UConductor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FluidConductor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -259,7 +259,7 @@ class UElectricConductor : public UConductor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(ElectricConductor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -282,7 +282,7 @@ class UDataConductor : public UConductor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DataConductor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -317,7 +317,7 @@ class UHeatConductor : public UConductor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(HeatConductor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -357,7 +357,7 @@ class UKineticConductor : public UConductor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(KineticConductor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 /// Switches
@@ -402,7 +402,7 @@ class USwitch : public UConductor, public ISwitchInterface {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(Switch);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -422,7 +422,7 @@ class UElectricSwitch : public USwitch {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(ElectricSwitch);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -442,7 +442,7 @@ class UFluidSwitch : public USwitch {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FluidSwitch);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -462,7 +462,7 @@ class UHeatSwitch : public USwitch {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(HeatSwitch);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -482,7 +482,7 @@ class UKineticSwitch : public USwitch {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(KineticSwitch);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -502,5 +502,5 @@ class UDataSwitch : public USwitch {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DataSwitch);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

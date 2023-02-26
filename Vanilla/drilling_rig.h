@@ -82,7 +82,7 @@ class UMinerBase : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(MinerBase);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -99,7 +99,7 @@ class UDrillingRig : public UMinerBase {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DrillingRig);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -116,5 +116,5 @@ class UPumpjack : public UMinerBase {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(Pumpjack);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

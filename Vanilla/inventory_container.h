@@ -17,8 +17,6 @@ class UInventoryContainer : public UInventoryAccess {
     virtual TSubclassOf<UBaseInventoryWidgetBase>
     GetWidgetClass() const override;
 
-    virtual int32 min() const override;
-
     virtual int32 find(const UItem *item) const override;
 
     virtual bool is_empty() const override;
@@ -78,5 +76,5 @@ class UInventoryContainer : public UInventoryAccess {
 
   public:
     EVO_LUA_CODEGEN_DB(UInventoryContainer, InventoryContainer);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

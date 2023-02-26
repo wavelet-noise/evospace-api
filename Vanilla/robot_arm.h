@@ -64,7 +64,7 @@ class URobotArm : public UTieredBlock, public ISwitchInterface {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(RobotArm);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -85,5 +85,5 @@ class UFilteringRobotArm : public URobotArm {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FilteringRobotArm);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

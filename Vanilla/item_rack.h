@@ -37,5 +37,5 @@ class UItemRack : public UStorageBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(ItemRack);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

@@ -21,7 +21,7 @@ class UElectricAccessor : public UBaseInventoryAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(ElectricAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -33,7 +33,7 @@ class UElectricConductorAccessor : public UBaseAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(ElectricConductorAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -45,7 +45,7 @@ class UElectricInputAccessor : public UElectricAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(ElectricInputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -59,7 +59,7 @@ class UElectricOutputAccessor : public UElectricAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(ElectricOutputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -77,7 +77,7 @@ class UFluidAccessor : public UBaseInventoryAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FluidAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -89,7 +89,7 @@ class UFluidConductorAccessor : public UBaseAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FluidConductorAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -101,7 +101,7 @@ class UFluidInputAccessor : public UFluidAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FluidInputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -115,7 +115,7 @@ class UFluidOutputAccessor : public UFluidAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FluidOutputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -133,7 +133,7 @@ class UHeatAccessor : public UBaseInventoryAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(HeatAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -145,7 +145,7 @@ class UHeatConductorAccessor : public UBaseAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(HeatConductorAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -157,7 +157,7 @@ class UHeatInputAccessor : public UHeatAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(HeatInputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -171,7 +171,7 @@ class UHeatOutputAccessor : public UHeatAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(HeatOutputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -190,7 +190,7 @@ class UKineticAccessor : public UBaseInventoryAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(KineticAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -202,7 +202,7 @@ class UKineticConductorAccessor : public UBaseAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(KineticConductorAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -214,7 +214,7 @@ class UKineticInputAccessor : public UKineticAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(KineticInputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -229,7 +229,7 @@ class UKineticOutputAccessor : public UKineticAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(KineticOutputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -247,7 +247,7 @@ class UDataAccessor : public UDataInventoryAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DataAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -259,7 +259,7 @@ class UDataConductorAccessor : public UBaseAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DataConductorAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -271,7 +271,7 @@ class UDataInputAccessor : public UDataAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DataInputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -285,5 +285,5 @@ class UDataOutputAccessor : public UDataAccessor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DataOutputAccessor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

@@ -102,7 +102,7 @@ class UConveyor : public UTieredBlock,
 
   public:
     EVO_LUA_CODEGEN_DB_EX(Conveyor);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -183,7 +183,7 @@ class USplitter : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(Splitter);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -215,5 +215,5 @@ class USorter : public USplitter {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(Sorter);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
