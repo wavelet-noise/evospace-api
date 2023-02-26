@@ -7,7 +7,7 @@ struct FOreData {
     GENERATED_BODY()
 
     // Lua api
-    public:
+  public:
     UPROPERTY(BlueprintReadOnly)
     /**
      * @brief ore Item
@@ -26,7 +26,7 @@ struct FOreData {
      */
     int64 capacity;
 
-public:
+  public:
     bool SerializeJson(TSharedPtr<FJsonObject> json);
     bool DeserializeJson(TSharedPtr<FJsonObject> json);
 };

@@ -54,4 +54,3 @@ class ULuaBlock : public UTieredBlock {
     EVO_LUA_CODEGEN_DB_EX(LuaBlock);
     static void RegisterLua(lua_State *L);
 };
-

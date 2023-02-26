@@ -32,6 +32,24 @@ struct FItemData {
      */
     const UItem *item = nullptr;
 
+    /**
+     * @fn FItemData static new_empty ()
+     * @brief empty ItemData constructor
+     */
+    // described in lua_state.cpp
+
+    /**
+     * @fn FItemData static new_zero (UItem * item)
+     * @brief 0 count ItemData constructor
+     */
+    // described in lua_state.cpp
+
+    /**
+     * @fn FItemData static new (UItem * item, int64 count)
+     * @brief ItemData constructor
+     */
+    // described in lua_state.cpp
+
   public:
     FItemData() = default;
     FItemData(const UItem *item, int64 _count);
@@ -39,11 +57,7 @@ struct FItemData {
 
     FItemData &operator=(const FItemData &val);
 
-    bool Swap(FItemData &other);
-
-    bool IsNull() const;
-
-    void Clear();
+    void clear();
 
     bool operator==(const FItemData &other) const;
     bool operator!=(const FItemData &other) const;

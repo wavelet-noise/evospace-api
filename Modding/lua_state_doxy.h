@@ -1,6 +1,8 @@
 #pragma once
 #include "CoreMinimal.h"
 
+// all of these described in lua_state.cpp
+
 /**
  * @brief Vec3 integer
  */
@@ -149,13 +151,13 @@ struct Vec3 {
     static FVector new(float x, float y, float z);
 
     /**
-    * @brief Readonly property. Construct Vec3 from (0.0, 0.0, 0.0)
-    * @details lua syntax
-    * @code{.lua}
-    * vec = Vec3.zero
-    * @endcode
-    * @return Vec3(0.0, 0.0, 0.0) struct
-    */
+     * @brief Readonly property. Construct Vec3 from (0.0, 0.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.zero
+     * @endcode
+     * @return Vec3(0.0, 0.0, 0.0) struct
+     */
     static Vec3i zero;
 
     /**

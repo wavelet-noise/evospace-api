@@ -15,8 +15,7 @@ struct KeyTable {
         return kt;
     }
 
-    static KeyTable
-    create_param(std::string_view k, std::string_view t, float p) {
+    static KeyTable new_param(std::string_view k, std::string_view t, float p) {
         auto kt = KeyTable();
         kt.key = k;
         kt.table = t;

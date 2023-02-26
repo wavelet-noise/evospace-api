@@ -175,7 +175,7 @@ LuaState::LuaState() {
     luabridge::setGlobal(L, nullptr, "coroutine");
     luabridge::setGlobal(L, nullptr, "io");
     luabridge::setGlobal(L, nullptr, "utf8");
-    
+
     luabridge::setGlobal(L, &LuaState::l_my_print, "print");
 
     auto col = luabridge::getGlobal(L, "collectgarbage");
@@ -252,15 +252,33 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L)
         .beginClass<Vec3i>("Vec3i")
-        .addStaticFunction("new", +[](int32 x, int32 y, int32 z){ return Vec3i(x,y,z); })
-        .addStaticFunction("one", +[](){ return Vec3i(1); })
-        .addStaticProperty("zero", +[](){ return Vec3i(0); })
-        .addStaticProperty("up", +[](){ return Side::Up; })
-        .addStaticProperty("down", +[](){ return Side::Down; })
-        .addStaticProperty("left", +[](){ return Side::Left; })
-        .addStaticProperty("right", +[](){ return Side::Right; })
-        .addStaticProperty("back", +[](){ return Side::Back; })
-        .addStaticProperty("front", +[](){ return Side::Front; })
+        .addStaticFunction(
+            "new", +[](int32 x, int32 y, int32 z) { return Vec3i(x, y, z); }
+        )
+        .addStaticFunction(
+            "one", +[]() { return Vec3i(1); }
+        )
+        .addStaticProperty(
+            "zero", +[]() { return Vec3i(0); }
+        )
+        .addStaticProperty(
+            "up", +[]() { return Side::Up; }
+        )
+        .addStaticProperty(
+            "down", +[]() { return Side::Down; }
+        )
+        .addStaticProperty(
+            "left", +[]() { return Side::Left; }
+        )
+        .addStaticProperty(
+            "right", +[]() { return Side::Right; }
+        )
+        .addStaticProperty(
+            "back", +[]() { return Side::Back; }
+        )
+        .addStaticProperty(
+            "front", +[]() { return Side::Front; }
+        )
         .addProperty("x", &Vec3i::X, true)
         .addProperty("y", &Vec3i::Y, true)
         .addProperty("z", &Vec3i::Z, true)
@@ -268,24 +286,48 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L)
         .beginClass<Vec2i>("Vec2i")
-        .addStaticFunction("new", +[](int32 x, int32 y){ return Vec2i(x,y); })
-        .addStaticProperty("zero", +[](){ return Vec2i(0); })
-        .addStaticProperty("one", +[](){ return Vec2i(1); })
+        .addStaticFunction(
+            "new", +[](int32 x, int32 y) { return Vec2i(x, y); }
+        )
+        .addStaticProperty(
+            "zero", +[]() { return Vec2i(0); }
+        )
+        .addStaticProperty(
+            "one", +[]() { return Vec2i(1); }
+        )
         .addProperty("x", &Vec2i::X, true)
         .addProperty("y", &Vec2i::Y, true)
         .endClass();
 
     getGlobalNamespace(L)
         .beginClass<FVector>("Vec3")
-        .addStaticFunction("new", +[](float x, float y, float z){ return FVector(x,y,z); })
-        .addStaticFunction("one", +[](){ return FVector(1); })
-        .addStaticProperty("zero", +[](){ return FVector(0); })
-        .addStaticProperty("up", +[](){ return FVector(Side::Up); })
-        .addStaticProperty("down", +[](){ return FVector(Side::Down); })
-        .addStaticProperty("left", +[](){ return FVector(Side::Left); })
-        .addStaticProperty("right", +[](){ return FVector(Side::Right); })
-        .addStaticProperty("back", +[](){ return FVector(Side::Back); })
-        .addStaticProperty("front", +[](){ return FVector(Side::Front); })
+        .addStaticFunction(
+            "new", +[](float x, float y, float z) { return FVector(x, y, z); }
+        )
+        .addStaticFunction(
+            "one", +[]() { return FVector(1); }
+        )
+        .addStaticProperty(
+            "zero", +[]() { return FVector(0); }
+        )
+        .addStaticProperty(
+            "up", +[]() { return FVector(Side::Up); }
+        )
+        .addStaticProperty(
+            "down", +[]() { return FVector(Side::Down); }
+        )
+        .addStaticProperty(
+            "left", +[]() { return FVector(Side::Left); }
+        )
+        .addStaticProperty(
+            "right", +[]() { return FVector(Side::Right); }
+        )
+        .addStaticProperty(
+            "back", +[]() { return FVector(Side::Back); }
+        )
+        .addStaticProperty(
+            "front", +[]() { return FVector(Side::Front); }
+        )
         .addProperty("x", &FVector::X, true)
         .addProperty("y", &FVector::Y, true)
         .addProperty("z", &FVector::Z, true)
@@ -314,13 +356,20 @@ LuaState::LuaState() {
     getGlobalNamespace(L)
         .beginClass<KeyTable>("Loc")
         .addStaticFunction("new", &KeyTable::create)
-        .addStaticFunction("new_param", &KeyTable::create_param)
+        .addStaticFunction("new_param", &KeyTable::new_param)
         .endClass();
 
     getGlobalNamespace(L)
         .beginClass<FItemData>("ItemData")
         .addStaticFunction(
-            "new", +[]() { return FItemData(); }
+            "new_empty", +[]() { return FItemData(); }
+        )
+        .addStaticFunction(
+            "new",
+            +[](UItem *item, int64 count) { return FItemData(item, count); }
+        )
+        .addStaticFunction(
+            "new_zero", +[](UItem *item) { return FItemData(item); }
         )
         .addProperty("count", &FItemData::count)
         .addProperty("item", &FItemData::item)
@@ -402,33 +451,4 @@ LuaState::~LuaState() {
     //     L = nullptr;
     // }
 }
-
-FVector LuaState::Vec_new(float x, float y, float z) {
-    return FVector(x, y, z);
-}
-
-Vec2i LuaState::Vec2i_new(int32 x, int32 y) { return Vec2i(x, y); }
-
-Vec2i LuaState::Vec2i_zero() { return Vec2i(0, 0); }
-
-Vec2i LuaState::Vec2i_one() { return Vec2i(1, 1); }
-
-Vec3i LuaState::Vec3i_new(int32 x, int32 y, int32 z) { return Vec3i(x, y, z); }
-
-Vec3i LuaState::Vec3i_zero() { return Vec3i(0, 0, 0); }
-
-Vec3i LuaState::Vec3i_one() { return Vec3i(1, 1, 1); }
-
-Vec3i LuaState::Vec3i_left() { return Side::Left; }
-
-Vec3i LuaState::Vec3i_right() { return Side::Right; }
-
-Vec3i LuaState::Vec3i_up() { return Side::Up; }
-
-Vec3i LuaState::Vec3i_down() { return Side::Down; }
-
-Vec3i LuaState::Vec3i_front() { return Side::Front; }
-
-Vec3i LuaState::Vec3i_back() { return Side::Back; }
-
 } // namespace evo

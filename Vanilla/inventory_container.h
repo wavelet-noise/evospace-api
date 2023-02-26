@@ -21,7 +21,7 @@ class UInventoryContainer : public UInventoryAccess {
 
     virtual int32 find(const UItem *item) const override;
 
-    virtual bool IsEmpty() const override;
+    virtual bool is_empty() const override;
 
     virtual int64 sum(const UItem *item) const override;
 

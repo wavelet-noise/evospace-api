@@ -21,14 +21,25 @@ UCLASS(Abstract, BlueprintType)
 class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     GENERATED_BODY()
 
+    // Lua api
+public:
+    UFUNCTION(BlueprintCallable)
+    /**
+     * @brief 
+     */
+    void clear();
+
+    // Lua api override
+public:
+    virtual const FItemData &safe_get(int32 index) const override;
+    virtual const FItemData &get(int32 index) const override;
+    virtual int32 find(const UItem *item) const override;
+
+    UFUNCTION(BlueprintCallable)
+    virtual void reset() override;
+
   public:
     UBaseInventory();
-
-    UFUNCTION(BlueprintCallable)
-    void Empty();
-
-    UFUNCTION(BlueprintCallable)
-    void clear() override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
@@ -53,20 +64,11 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     void SetMaxSlotFunctor(TFunction<int64(const FItemData &)> func);
 
   public:
-    virtual int32 min() const override;
-
-    virtual int32 max() const override;
-
-    virtual int32 find(const UItem *item) const override;
-
-    virtual const FItemData &safe_get(int32 index) const override;
-
+    
     UFUNCTION(BlueprintCallable)
-    virtual bool IsEmpty() const override;
+    virtual bool is_empty() const override;
 
     virtual int64 sum(const UItem *item) const override;
-
-    virtual const FItemData &get(int32 index) const override;
 
     virtual int64 GetSlotCapacity(int32 index) const override;
 

@@ -17,8 +17,8 @@ class UInventoryAccess : public UInventoryReader {
 
   public:
     /**
-     * @brief Try to add given slot to this inventory
-     * @return
+     * @brief Function. Try to add given slot to this inventory
+     * @return remainder after addition. 0 if all count in slot is transferred
      */
     virtual int64 add(const FItemData &other) {
         checkNoEntry();
@@ -26,8 +26,8 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief Try to add given slot to specific slot in this inventory
-     * @return
+     * @brief Function. Try to add given slot to specific slot in this inventory
+     * @return remainder after addition. 0 if all count in slot is transferred
      */
     virtual int64 add_to(const FItemData &other, int32 index) {
         checkNoEntry();
@@ -35,8 +35,8 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief Try to add given slot to this inventory
-     * @return
+     * @brief Function. Try to add given slot to this inventory but using only [0, limit) slots
+     * @return remainder after addition. 0 if all count in slot is transferred
      */
     virtual int64 add_with_limit(const FItemData &other) {
         checkNoEntry();
@@ -44,8 +44,8 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief
-     * @return
+     * @brief Function. 
+     * @return remainder after subtraction. 0 if all count in slot is transferred
      */
     virtual int64 sub(const FItemData &other) {
         checkNoEntry();
@@ -53,7 +53,7 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief
+     * @brief Function. 
      * @return
      */
     virtual int64 sub_from(const FItemData &other, int32 index) {
@@ -61,30 +61,22 @@ class UInventoryAccess : public UInventoryReader {
         return 0;
     };
 
-    UFUNCTION(BlueprintCallable)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere);
     /**
-     * @brief
+     * @brief Property. Slot count that can be accessed with add_with_limit() function or -1 for no limit
      */
-    virtual void set_limit(int32 _l) { mLimit = _l; };
+    int32 limit = INDEX_NONE;
 
-    UFUNCTION(BlueprintCallable)
     /**
-     * @brief
-     * @return
+     * @brief Function. remove all slots from inventory
      */
-    virtual int32 get_limit() const { return mLimit; };
+    virtual void reset() { checkNoEntry(); }
 
-    UPROPERTY(BlueprintReadOnly, EditAnywhere)
-    int32 mLimit = INDEX_NONE;
-
-    UPROPERTY(BlueprintReadOnly, EditAnywhere)
-    int32 mHighlight = INDEX_NONE;
-
-    UFUNCTION(BlueprintCallable)
-    virtual void SetHighlight(int32 _l) { mHighlight = _l; };
-
-    UFUNCTION(BlueprintCallable)
-    virtual int32 GetHighlight() const { return mHighlight; };
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    /**
+     * @brief Property. currently hovered slot or -1 for nothing
+     */
+    int32 hovered = INDEX_NONE;
 
     virtual void SetCanHaveZeroSlot(bool value) {
         if (!mZeroLocked)
@@ -98,8 +90,6 @@ class UInventoryAccess : public UInventoryReader {
 
     UFUNCTION(BlueprintCallable)
     virtual void SortKeyAZ() {}
-
-    virtual void clear() { checkNoEntry(); }
 
   protected:
     bool mCanHaveZeroSlot = false;
