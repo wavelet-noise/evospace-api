@@ -171,57 +171,12 @@ LuaState::LuaState() {
 
     luaL_openlibs(L);
 
-    // luaL_requiref(L, "package", luaopen_package, 1);
-    // lua_pop(L, 1);
-
-    // {
-    //     luaL_requiref(L, "_G", luaopen_base, 1);
-    //     lua_pop(L, 1);
-    // }
-    //
-    // //{
-    // //	luaL_requiref(L, "coroutine", luaopen_coroutine, 1);
-    // //	lua_pop(L, 1);
-    // //}
-    //
-    // {
-    //     luaL_requiref(L, "table", luaopen_table, 1);
-    //     lua_pop(L, 1);
-    // }
-    //
-    // //{
-    // //	luaL_requiref(L, "io", luaopen_io, 1);
-    // //	lua_pop(L, 1);
-    // //}
-    //
-    // //{
-    // //	luaL_requiref(L, "os", luaopen_os, 1);
-    // //	lua_pop(L, 1);
-    // //}
-    //
-    // {
-    //     luaL_requiref(L, "string", luaopen_string, 1);
-    //     lua_pop(L, 1);
-    // }
-    //
-    // {
-    //     luaL_requiref(L, "math", luaopen_math, 1);
-    //     lua_pop(L, 1);
-    // }
-    //
-    // // {
-    // //     luaL_requiref(L, "utf8", luaopen_utf8, 1);
-    // //     lua_pop(L, 1);
-    // // }
-    //
-    // {
-    //     luaL_requiref(L, "debug", luaopen_debug, 1);
-    //     lua_pop(L, 1);
-    // }
-
-    luabridge::getGlobalNamespace(L).addFunction(
-        "print", &LuaState::l_my_print
-    );
+    luabridge::setGlobal(L, nullptr, "os");
+    luabridge::setGlobal(L, nullptr, "coroutine");
+    luabridge::setGlobal(L, nullptr, "io");
+    luabridge::setGlobal(L, nullptr, "utf8");
+    
+    luabridge::setGlobal(L, &LuaState::l_my_print, "print");
 
     auto col = luabridge::getGlobal(L, "collectgarbage");
     col("setpause", 100);
@@ -297,27 +252,43 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L)
         .beginClass<Vec3i>("Vec3i")
-        .addStaticFunction("new", &LuaState::Vec3i_new)
-        .addStaticFunction("one", &LuaState::Vec3i_one)
-        .addStaticProperty("zero", &LuaState::Vec3i_zero)
-        .addStaticProperty("up", &LuaState::Vec3i_up)
-        .addStaticProperty("down", &LuaState::Vec3i_down)
-        .addStaticProperty("left", &LuaState::Vec3i_left)
-        .addStaticProperty("right", &LuaState::Vec3i_right)
-        .addStaticProperty("back", &LuaState::Vec3i_back)
-        .addStaticProperty("front", &LuaState::Vec3i_front)
+        .addStaticFunction("new", +[](int32 x, int32 y, int32 z){ return Vec3i(x,y,z); })
+        .addStaticFunction("one", +[](){ return Vec3i(1); })
+        .addStaticProperty("zero", +[](){ return Vec3i(0); })
+        .addStaticProperty("up", +[](){ return Side::Up; })
+        .addStaticProperty("down", +[](){ return Side::Down; })
+        .addStaticProperty("left", +[](){ return Side::Left; })
+        .addStaticProperty("right", +[](){ return Side::Right; })
+        .addStaticProperty("back", +[](){ return Side::Back; })
+        .addStaticProperty("front", +[](){ return Side::Front; })
+        .addProperty("x", &Vec3i::X, true)
+        .addProperty("y", &Vec3i::Y, true)
+        .addProperty("z", &Vec3i::Z, true)
         .endClass();
 
     getGlobalNamespace(L)
-        .beginClass<Vec3i>("Vec2i")
-        .addStaticFunction("new", &LuaState::Vec2i_new)
-        .addStaticProperty("zero", &LuaState::Vec2i_zero)
-        .addStaticProperty("one", &LuaState::Vec2i_one)
+        .beginClass<Vec2i>("Vec2i")
+        .addStaticFunction("new", +[](int32 x, int32 y){ return Vec2i(x,y); })
+        .addStaticProperty("zero", +[](){ return Vec2i(0); })
+        .addStaticProperty("one", +[](){ return Vec2i(1); })
+        .addProperty("x", &Vec2i::X, true)
+        .addProperty("y", &Vec2i::Y, true)
         .endClass();
 
     getGlobalNamespace(L)
         .beginClass<FVector>("Vec3")
-        .addStaticFunction("new", &LuaState::Vec_new)
+        .addStaticFunction("new", +[](float x, float y, float z){ return FVector(x,y,z); })
+        .addStaticFunction("one", +[](){ return FVector(1); })
+        .addStaticProperty("zero", +[](){ return FVector(0); })
+        .addStaticProperty("up", +[](){ return FVector(Side::Up); })
+        .addStaticProperty("down", +[](){ return FVector(Side::Down); })
+        .addStaticProperty("left", +[](){ return FVector(Side::Left); })
+        .addStaticProperty("right", +[](){ return FVector(Side::Right); })
+        .addStaticProperty("back", +[](){ return FVector(Side::Back); })
+        .addStaticProperty("front", +[](){ return FVector(Side::Front); })
+        .addProperty("x", &FVector::X, true)
+        .addProperty("y", &FVector::Y, true)
+        .addProperty("z", &FVector::Z, true)
         .endClass();
 
     getGlobalNamespace(L)

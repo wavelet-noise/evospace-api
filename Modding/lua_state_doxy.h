@@ -30,7 +30,7 @@ class Vec3i {
      * @param x
      * @param y
      * @param z
-     * @return Constructed Vec3i(x, y, z) object
+     * @return Vec3i(x, y, z) struct
      */
     static Vec3i new(int32 x, int32 y, int32 z);
 
@@ -40,7 +40,7 @@ class Vec3i {
      * @code{.lua}
      * vec = Vec3i.zero
      * @endcode
-     * @return Constructed Vec3i(0, 0, 0) object
+     * @return Vec3i(0, 0, 0) struct
      */
     static Vec3i zero;
 
@@ -50,7 +50,7 @@ class Vec3i {
      * @code{.lua}
      * vec = Vec3i.one
      * @endcode
-     * @return Constructed Vec3i(1, 1, 1) object
+     * @return Vec3i(1, 1, 1) struct
      */
     static Vec3i one;
 
@@ -60,7 +60,7 @@ class Vec3i {
      * @code{.lua}
      * vec = Vec3i.up
      * @endcode
-     * @return Constructed Vec3i(0, 0, 1) object
+     * @return Vec3i(0, 0, 1) struct
      */
     static Vec3i up;
 
@@ -70,7 +70,7 @@ class Vec3i {
      * @code{.lua}
      * vec = Vec3i.down
      * @endcode
-     * @return Constructed Vec3i(0, 0, -1) object
+     * @return Vec3i(0, 0, -1) struct
      */
     static Vec3i down;
 
@@ -80,7 +80,7 @@ class Vec3i {
      * @code{.lua}
      * vec = Vec3i.left
      * @endcode
-     * @return Constructed Vec3i(0, 1, 0) object
+     * @return Vec3i(0, 1, 0) struct
      */
     static Vec3i left;
 
@@ -90,7 +90,7 @@ class Vec3i {
      * @code{.lua}
      * vec = Vec3i.right
      * @endcode
-     * @return Constructed Vec3i(0, -1, 0) object
+     * @return Vec3i(0, -1, 0) struct
      */
     static Vec3i right;
 
@@ -100,7 +100,7 @@ class Vec3i {
      * @code{.lua}
      * vec = Vec3i.back
      * @endcode
-     * @return Constructed Vec3i(-1, 0, 0) object
+     * @return Vec3i(-1, 0, 0) struct
      */
     static Vec3i back;
 
@@ -110,7 +110,7 @@ class Vec3i {
      * @code{.lua}
      * vec = Vec3i.front
      * @endcode
-     * @return Constructed Vec3i(1, 0, 0) object
+     * @return Vec3i(1, 0, 0) struct
      */
     static Vec3i front;
 };
@@ -144,9 +144,89 @@ struct Vec3 {
      * @param x
      * @param y
      * @param z
-     * @return Vec3(x, y, z) object
+     * @return Vec3(x, y, z) struct
      */
     static FVector new(float x, float y, float z);
+
+    /**
+    * @brief Readonly property. Construct Vec3 from (0.0, 0.0, 0.0)
+    * @details lua syntax
+    * @code{.lua}
+    * vec = Vec3.zero
+    * @endcode
+    * @return Vec3(0.0, 0.0, 0.0) struct
+    */
+    static Vec3i zero;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (1.0, 1.0, 1.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.one
+     * @endcode
+     * @return Vec3(1.0, 1.0, 1.0) struct
+     */
+    static Vec3i one;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from up (0.0, 0.0, 1.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.up
+     * @endcode
+     * @return Vec3(0.0, 0.0, 1.0) struct
+     */
+    static Vec3i up;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (0.0, 0.0, -1.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.down
+     * @endcode
+     * @return Vec3(0.0, 0.0, -1.0) struct
+     */
+    static Vec3i down;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (0.0, 1.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.left
+     * @endcode
+     * @return Vec3(0.0, 1.0, 0.0) struct
+     */
+    static Vec3i left;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (0.0, -1.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.right
+     * @endcode
+     * @return Vec3(0.0, -1.0, 0.0) struct
+     */
+    static Vec3i right;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (-1.0, 0.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec.back
+     * @endcode
+     * @return Vec3(-1.0, 0.0, 0.0) struct
+     */
+    static Vec3 back;
+
+    /**
+     * @brief Static function. Construct Vec3 from (1.0, 0.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.front
+     * @endcode
+     * @return Vec3(1.0, 0.0, 0.0) struct
+     */
+    static Vec3 front;
 };
 
 /**
@@ -172,7 +252,7 @@ class Vec2i {
      * @endcode
      * @param x
      * @param y
-     * @return Constructed Vec3i(x, y) object
+     * @return Vec3i(x, y) struct
      */
     static Vec2i new(int32 x, int32 y);
 
@@ -182,7 +262,7 @@ class Vec2i {
      * @code{.lua}
      * vec = Vec2i.zero
      * @endcode
-     * @return Constructed Vec2i(0, 0) object
+     * @return Vec2i(0, 0) struct
      */
     static Vec2i zero;
 
@@ -192,7 +272,7 @@ class Vec2i {
      * @code{.lua}
      * vec = Vec2i.one
      * @endcode
-     * @return Constructed Vec2i(1, 1) object
+     * @return Vec2i(1, 1) struct
      */
     static Vec2i one;
 };
