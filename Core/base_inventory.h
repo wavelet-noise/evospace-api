@@ -22,15 +22,15 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     GENERATED_BODY()
 
     // Lua api
-public:
+  public:
     UFUNCTION(BlueprintCallable)
     /**
-     * @brief 
+     * @brief
      */
     void clear();
 
     // Lua api override
-public:
+  public:
     virtual const FItemData &safe_get(int32 index) const override;
     virtual const FItemData &get(int32 index) const override;
     virtual int32 find(const UItem *item) const override;
@@ -64,7 +64,6 @@ public:
     void SetMaxSlotFunctor(TFunction<int64(const FItemData &)> func);
 
   public:
-    
     UFUNCTION(BlueprintCallable)
     virtual bool is_empty() const override;
 

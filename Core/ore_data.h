@@ -1,5 +1,9 @@
 #pragma once
 
+#include "CoreMinimal.h"
+
+#include "ore_data.generated.h"
+
 class UItem;
 
 USTRUCT(BlueprintType)
@@ -27,6 +31,6 @@ struct FOreData {
     int64 capacity;
 
   public:
-    bool SerializeJson(TSharedPtr<FJsonObject> json);
+    bool SerializeJson(TSharedPtr<FJsonObject> json) const;
     bool DeserializeJson(TSharedPtr<FJsonObject> json);
 };

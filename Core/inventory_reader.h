@@ -19,7 +19,7 @@ class UInventoryReader : public UPrototype {
     GENERATED_BODY()
 
     // Lua api
-public:
+  public:
     /**
      * @brief Function. Find first slot with same item in inventory
      * @param item Item
@@ -31,8 +31,8 @@ public:
     };
 
     /**
-     * @brief Function. 
-     * @return 
+     * @brief Function.
+     * @return
      */
     virtual bool is_empty() const {
         checkNoEntry();
@@ -40,7 +40,8 @@ public:
     };
 
     /**
-     * @brief Function. Calculate sum of counts of all items with same UItem in this inventory
+     * @brief Function. Calculate sum of counts of all items with same UItem in
+     * this inventory
      * @param item UItem
      * @return item count
      */
@@ -50,9 +51,9 @@ public:
     };
 
     /**
-     * @brief Function. 
-     * @param index 
-     * @return 
+     * @brief Function.
+     * @param index
+     * @return
      */
     virtual const FItemData &get(int32 index) const {
         checkNoEntry();
@@ -61,9 +62,9 @@ public:
     };
 
     /**
-     * @brief Function. 
-     * @param index 
-     * @return 
+     * @brief Function.
+     * @param index
+     * @return
      */
     virtual const FItemData &safe_get(int32 index) const {
         checkNoEntry();

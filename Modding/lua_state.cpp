@@ -311,22 +311,31 @@ LuaState::LuaState() {
             "zero", +[]() { return FVector(0); }
         )
         .addStaticProperty(
-            "up", +[]() { return FVector(Side::Up); }
+            "up", +[]() { return FVector(Side::Up.X, Side::Up.Y, Side::Up.Z); }
         )
         .addStaticProperty(
-            "down", +[]() { return FVector(Side::Down); }
+            "down",
+            +[]() { return FVector(Side::Down.X, Side::Down.Y, Side::Down.Z); }
         )
         .addStaticProperty(
-            "left", +[]() { return FVector(Side::Left); }
+            "left",
+            +[]() { return FVector(Side::Left.X, Side::Left.Y, Side::Left.Z); }
         )
         .addStaticProperty(
-            "right", +[]() { return FVector(Side::Right); }
+            "right",
+            +[]() {
+                return FVector(Side::Right.X, Side::Right.Y, Side::Right.Z);
+            }
         )
         .addStaticProperty(
-            "back", +[]() { return FVector(Side::Back); }
+            "back",
+            +[]() { return FVector(Side::Back.X, Side::Back.Y, Side::Back.Z); }
         )
         .addStaticProperty(
-            "front", +[]() { return FVector(Side::Front); }
+            "front",
+            +[]() {
+                return FVector(Side::Front.X, Side::Front.Y, Side::Front.Z);
+            }
         )
         .addProperty("x", &FVector::X, true)
         .addProperty("y", &FVector::Y, true)

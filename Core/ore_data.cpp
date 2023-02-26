@@ -2,7 +2,7 @@
 
 #include "Evospace/JsonHelper.h"
 
-bool FOreData::SerializeJson(TSharedPtr<FJsonObject> json) {
+bool FOreData::SerializeJson(TSharedPtr<FJsonObject> json) const {
     json_helper::TrySet(json, TEXT("item"), item);
     json_helper::TrySet(json, TEXT("capacity"), capacity);
     json_helper::TrySet(json, TEXT("gathered"), gathered);

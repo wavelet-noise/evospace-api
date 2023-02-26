@@ -35,7 +35,8 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief Function. Try to add given slot to this inventory but using only [0, limit) slots
+     * @brief Function. Try to add given slot to this inventory but using only
+     * [0, limit) slots
      * @return remainder after addition. 0 if all count in slot is transferred
      */
     virtual int64 add_with_limit(const FItemData &other) {
@@ -44,8 +45,9 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief Function. 
-     * @return remainder after subtraction. 0 if all count in slot is transferred
+     * @brief Function.
+     * @return remainder after subtraction. 0 if all count in slot is
+     * transferred
      */
     virtual int64 sub(const FItemData &other) {
         checkNoEntry();
@@ -53,7 +55,7 @@ class UInventoryAccess : public UInventoryReader {
     };
 
     /**
-     * @brief Function. 
+     * @brief Function.
      * @return
      */
     virtual int64 sub_from(const FItemData &other, int32 index) {
@@ -63,7 +65,8 @@ class UInventoryAccess : public UInventoryReader {
 
     UPROPERTY(BlueprintReadWrite, EditAnywhere);
     /**
-     * @brief Property. Slot count that can be accessed with add_with_limit() function or -1 for no limit
+     * @brief Property. Slot count that can be accessed with add_with_limit()
+     * function or -1 for no limit
      */
     int32 limit = INDEX_NONE;
 
