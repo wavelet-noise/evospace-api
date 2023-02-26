@@ -1,22 +1,25 @@
 #pragma once
 #include "CoreMinimal.h"
 
+// all of these described in lua_state.cpp
+
 /**
  * @brief Vec3 integer
  */
-struct Vec3i {
+class Vec3i {
+  public:
     /**
-     * @brief Property. 1 dim value
+     * @brief Property. First dim value
      */
     int32 x;
 
     /**
-     * @brief Property. 2 dim value
+     * @brief Property. Second dim value
      */
     int32 y;
 
     /**
-     * @brief Property. 3 dim value
+     * @brief Property. Third dim value
      */
     int32 z;
 
@@ -29,7 +32,7 @@ struct Vec3i {
      * @param x
      * @param y
      * @param z
-     * @return Constructed Vec3i(x, y, z) object
+     * @return Vec3i(x, y, z) struct
      */
     static Vec3i new(int32 x, int32 y, int32 z);
 
@@ -39,7 +42,7 @@ struct Vec3i {
      * @code{.lua}
      * vec = Vec3i.zero
      * @endcode
-     * @return Constructed Vec3i(0, 0, 0) object
+     * @return Vec3i(0, 0, 0) struct
      */
     static Vec3i zero;
 
@@ -49,7 +52,7 @@ struct Vec3i {
      * @code{.lua}
      * vec = Vec3i.one
      * @endcode
-     * @return Constructed Vec3i(1, 1, 1) object
+     * @return Vec3i(1, 1, 1) struct
      */
     static Vec3i one;
 
@@ -59,7 +62,7 @@ struct Vec3i {
      * @code{.lua}
      * vec = Vec3i.up
      * @endcode
-     * @return Constructed Vec3i(0, 0, 1) object
+     * @return Vec3i(0, 0, 1) struct
      */
     static Vec3i up;
 
@@ -69,7 +72,7 @@ struct Vec3i {
      * @code{.lua}
      * vec = Vec3i.down
      * @endcode
-     * @return Constructed Vec3i(0, 0, -1) object
+     * @return Vec3i(0, 0, -1) struct
      */
     static Vec3i down;
 
@@ -79,7 +82,7 @@ struct Vec3i {
      * @code{.lua}
      * vec = Vec3i.left
      * @endcode
-     * @return Constructed Vec3i(0, 1, 0) object
+     * @return Vec3i(0, 1, 0) struct
      */
     static Vec3i left;
 
@@ -89,7 +92,7 @@ struct Vec3i {
      * @code{.lua}
      * vec = Vec3i.right
      * @endcode
-     * @return Constructed Vec3i(0, -1, 0) object
+     * @return Vec3i(0, -1, 0) struct
      */
     static Vec3i right;
 
@@ -99,7 +102,7 @@ struct Vec3i {
      * @code{.lua}
      * vec = Vec3i.back
      * @endcode
-     * @return Constructed Vec3i(-1, 0, 0) object
+     * @return Vec3i(-1, 0, 0) struct
      */
     static Vec3i back;
 
@@ -109,7 +112,7 @@ struct Vec3i {
      * @code{.lua}
      * vec = Vec3i.front
      * @endcode
-     * @return Constructed Vec3i(1, 0, 0) object
+     * @return Vec3i(1, 0, 0) struct
      */
     static Vec3i front;
 };
@@ -118,6 +121,22 @@ struct Vec3i {
  * @brief Vec3 float
  */
 struct Vec3 {
+  public:
+    /**
+     * @brief Property. First dim value
+     */
+    float x;
+
+    /**
+     * @brief Property. Second dim value
+     */
+    float y;
+
+    /**
+     * @brief Property. Third dim value
+     */
+    float z;
+
     /**
      * @brief Static function. Construct Vec3 from 3 numbers
      * @details lua syntax
@@ -127,9 +146,89 @@ struct Vec3 {
      * @param x
      * @param y
      * @param z
-     * @return Vec3(x, y, z) object
+     * @return Vec3(x, y, z) struct
      */
     static FVector new(float x, float y, float z);
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (0.0, 0.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.zero
+     * @endcode
+     * @return Vec3(0.0, 0.0, 0.0) struct
+     */
+    static Vec3i zero;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (1.0, 1.0, 1.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.one
+     * @endcode
+     * @return Vec3(1.0, 1.0, 1.0) struct
+     */
+    static Vec3i one;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from up (0.0, 0.0, 1.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.up
+     * @endcode
+     * @return Vec3(0.0, 0.0, 1.0) struct
+     */
+    static Vec3i up;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (0.0, 0.0, -1.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.down
+     * @endcode
+     * @return Vec3(0.0, 0.0, -1.0) struct
+     */
+    static Vec3i down;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (0.0, 1.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.left
+     * @endcode
+     * @return Vec3(0.0, 1.0, 0.0) struct
+     */
+    static Vec3i left;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (0.0, -1.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.right
+     * @endcode
+     * @return Vec3(0.0, -1.0, 0.0) struct
+     */
+    static Vec3i right;
+
+    /**
+     * @brief Readonly property. Construct Vec3 from (-1.0, 0.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec.back
+     * @endcode
+     * @return Vec3(-1.0, 0.0, 0.0) struct
+     */
+    static Vec3 back;
+
+    /**
+     * @brief Static function. Construct Vec3 from (1.0, 0.0, 0.0)
+     * @details lua syntax
+     * @code{.lua}
+     * vec = Vec3.front
+     * @endcode
+     * @return Vec3(1.0, 0.0, 0.0) struct
+     */
+    static Vec3 front;
 };
 
 /**
@@ -138,6 +237,16 @@ struct Vec3 {
 class Vec2i {
   public:
     /**
+     * @brief Property. First dim value
+     */
+    int32 x;
+
+    /**
+     * @brief Property. Second dim value
+     */
+    int32 y;
+
+    /**
      * @brief Static function. Construct Vec2i from 2 numbers
      * @details lua syntax
      * @code{.lua}
@@ -145,7 +254,7 @@ class Vec2i {
      * @endcode
      * @param x
      * @param y
-     * @return Constructed Vec3i(x, y) object
+     * @return Vec3i(x, y) struct
      */
     static Vec2i new(int32 x, int32 y);
 
@@ -155,7 +264,7 @@ class Vec2i {
      * @code{.lua}
      * vec = Vec2i.zero
      * @endcode
-     * @return Constructed Vec2i(0, 0) object
+     * @return Vec2i(0, 0) struct
      */
     static Vec2i zero;
 
@@ -165,7 +274,7 @@ class Vec2i {
      * @code{.lua}
      * vec = Vec2i.one
      * @endcode
-     * @return Constructed Vec2i(1, 1) object
+     * @return Vec2i(1, 1) struct
      */
     static Vec2i one;
 };
@@ -173,7 +282,8 @@ class Vec2i {
 /**
  * @brief Namespace for coordinate system translations
  */
-struct cs {
+class cs {
+  public:
     /**
      * @brief Static function. Convert block position to sector position
      * @details lua syntax
