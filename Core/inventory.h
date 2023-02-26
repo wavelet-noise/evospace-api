@@ -46,7 +46,7 @@ class UInventory : public UBaseInventory {
 
   public:
     EVO_LUA_CODEGEN_DB(UInventory, Inventory);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS(BlueprintType)
@@ -64,7 +64,7 @@ class UInternalInventory : public UInventory {
 
   public:
     EVO_LUA_CODEGEN_DB(UInternalInventory, InternalInventory);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS(BlueprintType)

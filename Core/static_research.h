@@ -88,7 +88,7 @@ class UStaticChapter : public UPrototype, public ISerializableJson {
 
   public:
     EVO_LUA_CODEGEN_DB(UStaticChapter, StaticChapter);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 /** @def UStaticResearch
@@ -179,7 +179,7 @@ class UStaticResearch : public UPrototype, public ISerializableJson {
 
   public:
     EVO_LUA_CODEGEN_DB(UStaticResearch, StaticResearch);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS(BlueprintType)

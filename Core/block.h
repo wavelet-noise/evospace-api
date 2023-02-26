@@ -102,5 +102,5 @@ class UBlock : public UEntity {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(Block);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

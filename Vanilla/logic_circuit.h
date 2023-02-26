@@ -165,7 +165,7 @@ class ULogicInterface : public UTieredBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(LogicInterface);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -213,7 +213,7 @@ class ULogicController : public UFilteringBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(LogicController);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -267,7 +267,7 @@ class ULogicDisplay : public UFilteringBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(LogicDisplay);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UENUM(BlueprintType)
@@ -483,5 +483,5 @@ class ULogicCircuit : public UFilteringBlock {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(LogicCircuit);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

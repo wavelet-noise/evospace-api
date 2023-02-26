@@ -79,5 +79,5 @@ class UTesselatorMarching : public UTesselator {
 
   public:
     EVO_LUA_CODEGEN_DB(UTesselatorMarching, TesselatorMarching);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

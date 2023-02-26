@@ -86,5 +86,5 @@ class UInventoryReader : public UPrototype {
             bool IsEmpty() const { return IsEmpty(); }*/
   public:
     EVO_LUA_CODEGEN_DB(UInventoryReader, InventoryReader);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

@@ -107,5 +107,5 @@ class UInventoryAccess : public UInventoryReader {
 
   public:
     EVO_LUA_CODEGEN_DB(UInventoryAccess, InventoryAccess);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };

@@ -36,7 +36,7 @@ class UBatteryBox : public UElectricConductor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(BatteryBox);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
 
 UCLASS()
@@ -66,5 +66,5 @@ class UFluidContainer : public UFluidConductor {
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FluidContainer);
-    static void RegisterLua(lua_State *L);
+    static void lua_reg(lua_State *L);
 };
