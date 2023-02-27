@@ -36,8 +36,6 @@ class ULuaBlock : public UTieredBlock {
 
     virtual bool is_block_tick() const override;
 
-    void lua_state_close();
-
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
   private:
