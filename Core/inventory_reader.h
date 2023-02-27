@@ -18,21 +18,10 @@ UCLASS(Abstract, BlueprintType)
 class UInventoryReader : public UPrototype {
     GENERATED_BODY()
 
-    // Add interface functions to this class. This is the class that will be
-    // inherited to implement this interface.
+    // Lua api
   public:
-    virtual int32 min() const {
-        checkNoEntry();
-        return 0;
-    };
-
-    virtual int32 max() const {
-        checkNoEntry();
-        return 0;
-    };
-
     /**
-     * @brief Find first slot with same item in inventory
+     * @brief Function. Find first slot with same item in inventory
      * @param item Item
      * @return index of slot with item or -1
      */
@@ -41,22 +30,42 @@ class UInventoryReader : public UPrototype {
         return INDEX_NONE;
     };
 
-    virtual bool IsEmpty() const {
+    /**
+     * @brief Function.
+     * @return
+     */
+    virtual bool is_empty() const {
         checkNoEntry();
         return true;
     };
 
+    /**
+     * @brief Function. Calculate sum of counts of all items with same UItem in
+     * this inventory
+     * @param item UItem
+     * @return item count
+     */
     virtual int64 sum(const UItem *item) const {
         checkNoEntry();
         return 0;
     };
 
+    /**
+     * @brief Function.
+     * @param index
+     * @return
+     */
     virtual const FItemData &get(int32 index) const {
         checkNoEntry();
         const static FItemData dummy;
         return dummy;
     };
 
+    /**
+     * @brief Function.
+     * @param index
+     * @return
+     */
     virtual const FItemData &safe_get(int32 index) const {
         checkNoEntry();
         const static FItemData dummy;
@@ -68,6 +77,10 @@ class UInventoryReader : public UPrototype {
         return 0;
     };
 
+    /**
+     * @brief Function. get this inventory slot count
+     * @return slot count
+     */
     virtual int32 size() const {
         checkNoEntry();
         return 0;
