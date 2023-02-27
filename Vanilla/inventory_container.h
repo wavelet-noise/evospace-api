@@ -17,11 +17,9 @@ class UInventoryContainer : public UInventoryAccess {
     virtual TSubclassOf<UBaseInventoryWidgetBase>
     GetWidgetClass() const override;
 
-    virtual int32 min() const override;
-
     virtual int32 find(const UItem *item) const override;
 
-    virtual bool IsEmpty() const override;
+    virtual bool is_empty() const override;
 
     virtual int64 sum(const UItem *item) const override;
 
@@ -42,7 +40,7 @@ class UInventoryContainer : public UInventoryAccess {
 
     virtual int64 sub(const FItemData &other) override;
 
-    virtual int64 sub_from(int32 index, const FItemData &from) override;
+    virtual int64 sub_from(const FItemData &from, int32 index) override;
 
     virtual void TrySetFilter(int32 index, UInventoryFilter *filter) override;
 

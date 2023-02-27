@@ -70,10 +70,17 @@ class UInventoryAccess : public UInventoryReader {
      */
     int32 limit = INDEX_NONE;
 
+    UFUNCTION(BlueprintCallable)
     /**
      * @brief Function. remove all slots from inventory
      */
     virtual void reset() { checkNoEntry(); }
+
+    UFUNCTION(BlueprintCallable)
+    /**
+     * @brief Function. Clear all slots in inventory
+     */
+    virtual void clear() { checkNoEntry(); }
 
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
     /**

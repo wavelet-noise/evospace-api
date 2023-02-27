@@ -31,7 +31,7 @@ class UInventoryWhiteFilter : public UInventoryFilter {
     virtual bool Check(const FItemData &data) override;
 
     void AddItem(const UItem *item);
-    void Empty();
+    void clear();
 
   private:
     UPROPERTY()
