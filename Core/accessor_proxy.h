@@ -7,14 +7,13 @@ class UBaseAccessor;
 namespace evo {
 struct AccessorProxy {
     UBaseAccessor &accessor;
-    EventBus &eb;
+    EventBus &bus;
+    
     std::optional<SubscriptionHandle> subscription;
 
-    AccessorProxy(UBaseAccessor &a, EventBus &e);
+    AccessorProxy(UBaseAccessor &acc, EventBus &bus);
     ~AccessorProxy();
 
-    void OnAccessorRemoved(const evo::AccessorEvent &eb) const {}
-
-    void invalidate() { subscription = {}; }
+    void invalidate() ;
 };
 } // namespace evo

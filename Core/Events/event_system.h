@@ -2,37 +2,23 @@
 
 #include <functional>
 #include <string>
-#include <type_traits>
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
 
 namespace evo {
 struct Name {
-    std::string_view eventName;
     size_t hash;
 
-    Name(std::string_view name) : eventName(name) {
-        hash = std::hash<std::string>{}(name.data());
+    Name(std::string_view name) : hash(std::hash<std::string>{}(name.data())) {
     }
 
     bool operator==(const Name &other) const { return hash == other.hash; }
 };
-class SubscriptionHandle {
-  public:
+struct SubscriptionHandle {
     int64 number;
     Name name;
-
-    SubscriptionHandle(int64 number, const Name &name)
-        : number(number), name(name) {}
-    SubscriptionHandle(const SubscriptionHandle &other)
-        : number(other.number), name(other.name) {}
-    SubscriptionHandle &operator=(const SubscriptionHandle &other) {
-        number = other.number;
-        name = other.name;
-        return *this;
-    }
-
+    
     bool operator==(const SubscriptionHandle &other) const { return number == other.number; }
 };
 } // namespace evo
@@ -69,9 +55,9 @@ class EventBus {
 
     template <typename EventType>
     SubscriptionHandle subscribe(
-        const Name &name, const std::function<void(const EventType &)> &callback
+        Name name, const std::function<void(const EventType &)> &callback
     ) {
-        auto handle = SubscriptionHandle(next_handle++, name);
+        SubscriptionHandle handle = {next_handle++, name};
         m_callbacks[name][handle] = [callback](const Event &event) {
             if constexpr (std::is_same_v<EventType, decltype(event)>) {
                 callback(static_cast<const EventType &>(event));
@@ -86,13 +72,13 @@ class EventBus {
     }
 
     template <typename EventType>
-    void publish(const Name &name, const EventType &event) {
+    void publish(Name name, const EventType &event) {
         auto typedEvent = TypedEvent<EventType>(event);
         publish(name, typedEvent);
     }
 
-    void publish(const Name &name, const Event &event) {
-        if (m_callbacks.count(name) == 0) {
+    void publish(Name name, const Event &event) {
+        if (!m_callbacks.count(name)) {
             return;
         }
         for (const auto &callback : m_callbacks[name]) {

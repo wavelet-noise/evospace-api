@@ -2,13 +2,13 @@
 
 #include "base_accessor.h"
 
-evo::AccessorProxy::AccessorProxy(UBaseAccessor &a, EventBus &e)
-    : accessor(a), eb(e) {
-    subscription = e.subscribe<evo::AccessorEvent>(
+evo::AccessorProxy::AccessorProxy(UBaseAccessor &acc, EventBus &bus)
+    : accessor(acc), bus(bus) {
+    subscription = bus.subscribe<evo::AccessorEvent>(
           events::accessor_removed(),
-          [&a, this](const evo::AccessorEvent &eb) {
-              auto &acc = eb.data();
-              if (&acc == &a) {
+          [&acc, this](const evo::AccessorEvent &event) {
+              auto & event_acc = event.data();
+              if (&event_acc == &acc) {
                   this->invalidate();
               }
           }
@@ -17,6 +17,8 @@ evo::AccessorProxy::AccessorProxy(UBaseAccessor &a, EventBus &e)
 
 evo::AccessorProxy::~AccessorProxy() {
     if (subscription) {
-        eb.unsubscribe<evo::AccessorEvent>(subscription.value());
+        bus.unsubscribe<evo::AccessorEvent>(subscription.value());
     }
 }
+
+void evo::AccessorProxy::invalidate(){ subscription = {}; }
