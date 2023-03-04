@@ -53,14 +53,14 @@ class UInventoryReader : public UPrototype {
     /**
      * @brief Function. Get ItemData for specific inventory slot
      * @param index inventory slot index
-     * @return ItemData from this slot 
+     * @return ItemData from this slot
      */
     virtual const FItemData &get(int32 index) const {
         checkNoEntry();
         const static FItemData dummy;
         return dummy;
     };
-    
+
     virtual const FItemData &safe_get(int32 index) const {
         checkNoEntry();
         const static FItemData dummy;

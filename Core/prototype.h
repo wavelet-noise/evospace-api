@@ -59,7 +59,7 @@ class Base;
 
 #define EVO_LUA_CODEGEN_EMPTY(type, parent, name)                              \
   public:                                                                      \
-    static void lua_reg(lua_State *L) {                                    \
+    static void lua_reg(lua_State *L) {                                        \
         LOG(TRACE_LL) << "Registering lua " << #name;                          \
         luabridge::getGlobalNamespace(L)                                       \
             .deriveClass<type, parent>(#name)                                  \
