@@ -16,7 +16,6 @@ struct Name {
 };
 struct SubscriptionHandle {
     int64 number;
-    Name name;
 
     bool operator==(const SubscriptionHandle &other) const {
         return number == other.number;
@@ -50,47 +49,36 @@ template <typename EventType> class TypedEvent : public Event {
     EventType m_data;
 };
 
-class EventBus {
+class EventSystem {
   public:
-    using EventCallback = std::function<void(const Event &)>;
+};
 
-    template <typename EventType>
-    SubscriptionHandle subscribe(
-        Name name, const std::function<void(const EventType &)> &callback
-    ) {
-        SubscriptionHandle handle = {next_handle++, name};
-        m_callbacks[name][handle] = [callback](const Event &event) {
-            if constexpr (std::is_same_v<EventType, decltype(event)>) {
-                callback(static_cast<const EventType &>(event));
-            }
-        };
+template <typename EventType> class EventBus {
+  public:
+    using EventCallback = std::function<void(const EventType &)>;
+
+    SubscriptionHandle
+    subscribe(const std::function<void(const EventType &)> &callback) {
+        SubscriptionHandle handle = {next_handle++};
+        m_callbacks[handle.number] = callback;
         return handle;
     }
 
-    template <typename EventType>
     void unsubscribe(const SubscriptionHandle &handle) {
-        m_callbacks[handle.name].erase(handle);
+        m_callbacks.erase(handle.number);
     }
 
-    template <typename EventType>
-    void publish(Name name, const EventType &event) {
-        auto typedEvent = TypedEvent<EventType>(event);
-        publish(name, typedEvent);
-    }
-
-    void publish(Name name, const Event &event) {
-        if (!m_callbacks.count(name)) {
+    void publish(const EventType &event) {
+        if (!m_callbacks.size()) {
             return;
         }
-        for (const auto &callback : m_callbacks[name]) {
+        for (const auto &callback : m_callbacks) {
             callback.second(event);
         }
     }
 
   private:
-    std::unordered_map<
-        Name, std::unordered_map<SubscriptionHandle, EventCallback>>
-        m_callbacks;
+    std::unordered_map<int64, EventCallback> m_callbacks = {};
     int64 next_handle = 0;
 };
 } // namespace evo

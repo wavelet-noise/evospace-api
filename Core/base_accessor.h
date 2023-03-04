@@ -25,7 +25,9 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
      */
     Vec3i side;
 
-    std::optional<evo::AccessorListener> opposite;
+    std::unique_ptr<evo::AccessorListener> opposite;
+
+    virtual bool is_active() const { return false; }
 
   public:
     UBaseAccessor();
@@ -54,7 +56,7 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
 
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
-    virtual bool test_outside(UBaseAccessor * acc) const;
+    virtual bool test_outside(UBaseAccessor *acc) const;
 
   public:
     virtual void TickComponent();

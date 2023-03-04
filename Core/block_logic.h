@@ -98,7 +98,11 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void Tick();
     virtual void TickAccessor();
 
-    virtual void EvospacePostDuplicate(const UBlockLogic *proto) {}
+    /**
+     * @brief dim is already exists here
+     * @param proto
+     */
+    virtual void EvospacePostDuplicate(const UBlockLogic *proto);
 
     /**
      * @brief Test if position is suitable for this block placing
@@ -173,6 +177,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     void SetActorRotation(FQuat param1);
 
     UBaseAccessor *GetSideAccessor(UClass *type, Vec3i side, Vec3i pos);
+    UBaseAccessor *GetSideAccessor(Vec3i side, Vec3i pos);
 
     template <class Ty_> Ty_ *GetSideAccessor(Vec3i side, Vec3i pos) {
         return Cast<Ty_>(GetSideAccessor(Ty_::StaticClass(), side, pos));

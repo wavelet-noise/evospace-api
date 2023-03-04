@@ -34,6 +34,8 @@ class UBaseInventoryAccessor : public UBaseAccessor {
 
     bool push_to_proxy();
 
+    virtual bool is_active() const override { return true; }
+
     virtual bool Push(UInventoryAccess *from);
     virtual bool Push(UInventoryAccess *from, int32 max_count);
     virtual bool Push(UInventoryAccess *from, float percent);
@@ -64,7 +66,7 @@ class UBaseInventoryAccessor : public UBaseAccessor {
 
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor();
 
-    virtual bool test_outside(UBaseAccessor*acc)const override;
+    virtual bool test_outside(UBaseAccessor *acc) const override;
 
   protected:
     UPROPERTY(VisibleAnywhere)

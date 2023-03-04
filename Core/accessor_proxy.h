@@ -8,24 +8,34 @@ class UBaseAccessor;
 namespace evo {
 struct AccessorProxy {
     UBaseAccessor *accessor;
-    EventBus *bus;
+    EventBus<evo::AccessorEvent> *remove_bus;
 
     std::optional<SubscriptionHandle> valid;
 
-    AccessorProxy(EventBus *bus);
-    AccessorProxy(UBaseAccessor *our_acc, EventBus *bus);
+    AccessorProxy(EventBus<evo::AccessorEvent> *bus);
+    AccessorProxy(UBaseAccessor *our_acc, EventBus<evo::AccessorEvent> *bus);
     ~AccessorProxy();
 
     void invalidate();
 };
 struct AccessorListener {
     UBaseAccessor *opposite_test;
-    EventBus *bus;
+    EventBus<evo::AccessorEvent> *added_bus;
+    EventBus<evo::AccessorEvent> *removed_bus;
 
     std::optional<SubscriptionHandle> valid;
     AccessorProxy proxy;
 
-    AccessorListener(UBaseAccessor *our_acc, EventBus *bus);
+    AccessorListener(
+        UBaseAccessor *our_acc, EventBus<evo::AccessorEvent> *add,
+        EventBus<evo::AccessorEvent> *rem
+    );
+
+    ~AccessorListener();
+
+    AccessorListener(const AccessorListener &l) = delete;
+
+    AccessorListener(AccessorListener &&l) noexcept;
 
     void update_proxy(UBaseAccessor *our_acc);
 };
