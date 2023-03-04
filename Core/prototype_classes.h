@@ -16,6 +16,7 @@ class UTesselatorCube;
 class UTesselatorMarching;
 class UItemLogic;
 class UBlockBuilder;
+class UBrushBreaker;
 class UBaseAccessor;
 class UBaseInventoryAccessor;
 class UInventoryReader;
@@ -125,7 +126,7 @@ inline std::tuple<
     UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UFilteringBlock *,
     UCrafterBase *, USelectCrafter *, UAutoCrafter *, UItem *,
     URecipeDictionary *, UBlock *, UTesselator *, UTesselatorCube *,
-    UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBaseAccessor *,
+    UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBrushBreaker *, UBaseAccessor *,
     UBaseInventoryAccessor *, UInventoryReader *, UInventoryAccess *,
     UBaseInventory *, UInventory *, USingleSlotInventory *,
     UInventoryContainer *, UInternalInventory *, URecipeInventory *,

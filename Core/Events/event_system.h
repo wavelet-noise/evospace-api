@@ -57,15 +57,14 @@ template <typename EventType> class EventBus {
   public:
     using EventCallback = std::function<void(const EventType &)>;
 
-    SubscriptionHandle
-    subscribe(const std::function<void(const EventType &)> &callback) {
-        SubscriptionHandle handle = {next_handle++};
-        m_callbacks[handle.number] = callback;
-        return handle;
+    SubscriptionHandle subscribe(const EventCallback &callback) {
+        return m_callbacks.emplace(SubscriptionHandle{next_handle++}, callback).first->first;
     }
 
     void unsubscribe(const SubscriptionHandle &handle) {
-        m_callbacks.erase(handle.number);
+        if (alive) {
+            m_callbacks.erase(handle);
+        }
     }
 
     void publish(const EventType &event) {
@@ -77,8 +76,14 @@ template <typename EventType> class EventBus {
         }
     }
 
+    void clear() {
+        alive = false;
+        m_callbacks = {};
+    }
+
   private:
-    std::unordered_map<int64, EventCallback> m_callbacks = {};
+    std::unordered_map<SubscriptionHandle, EventCallback> m_callbacks = {};
     int64 next_handle = 0;
+    bool alive = true;
 };
 } // namespace evo

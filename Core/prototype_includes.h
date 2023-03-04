@@ -35,3 +35,4 @@
 #include "tesselator.h"
 #include "tesselator_cube.h"
 #include "tesselator_marching.h"
+#include "Evospace/Item/Implementation/BreakingBrushItemLogic.h"
