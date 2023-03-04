@@ -2,6 +2,7 @@
 #pragma once
 #include "Core/prototype.h"
 #include "CoreMinimal.h"
+#include "accessor_proxy.h"
 
 #include "base_accessor.generated.h"
 
@@ -23,6 +24,8 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
      * @brief side of cube to interact with this accessor
      */
     Vec3i side;
+
+    std::optional<evo::AccessorListener> opposite;
 
   public:
     UBaseAccessor();
@@ -50,6 +53,8 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
+
+    virtual bool test_outside(UBaseAccessor * acc) const;
 
   public:
     virtual void TickComponent();

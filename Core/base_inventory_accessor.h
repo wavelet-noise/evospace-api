@@ -32,7 +32,7 @@ class UBaseInventoryAccessor : public UBaseAccessor {
     virtual void UnbindInput();
     virtual void UnbindOutput();
 
-    bool Push();
+    bool push_to_proxy();
 
     virtual bool Push(UInventoryAccess *from);
     virtual bool Push(UInventoryAccess *from, int32 max_count);
@@ -64,12 +64,14 @@ class UBaseInventoryAccessor : public UBaseAccessor {
 
     virtual UBaseInventoryAccessor *GetAutoOutsideAccessor();
 
+    virtual bool test_outside(UBaseAccessor*acc)const override;
+
   protected:
     UPROPERTY(VisibleAnywhere)
-    UObject *mInput;
+    UInventoryAccess *mInput;
 
     UPROPERTY(VisibleAnywhere)
-    UObject *mOutput;
+    UInventoryAccess *mOutput;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(BaseInventoryAccessor);

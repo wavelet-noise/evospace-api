@@ -10,16 +10,17 @@ namespace evo {
 struct Name {
     size_t hash;
 
-    Name(std::string_view name) : hash(std::hash<std::string>{}(name.data())) {
-    }
+    Name(std::string_view name) : hash(std::hash<std::string>{}(name.data())) {}
 
     bool operator==(const Name &other) const { return hash == other.hash; }
 };
 struct SubscriptionHandle {
     int64 number;
     Name name;
-    
-    bool operator==(const SubscriptionHandle &other) const { return number == other.number; }
+
+    bool operator==(const SubscriptionHandle &other) const {
+        return number == other.number;
+    }
 };
 } // namespace evo
 

@@ -4,7 +4,7 @@
 class UBaseAccessor;
 
 namespace evo {
-using AccessorEvent = TypedEvent<UBaseAccessor>;
+using AccessorEvent = TypedEvent<UBaseAccessor *>;
 }
 
 namespace events {
