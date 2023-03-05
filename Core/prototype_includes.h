@@ -36,3 +36,4 @@
 #include "tesselator_cube.h"
 #include "tesselator_marching.h"
 #include "Evospace/Item/Implementation/BreakingBrushItemLogic.h"
+#include "Vanilla/hand_generator.h"

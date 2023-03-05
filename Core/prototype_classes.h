@@ -105,6 +105,8 @@ class ULogicInterface;
 
 class UCoreAccessor;
 
+class UHandGenerator;
+
 #define ACCESSOR_FORWARD_CODEGEN(NAME)                                         \
     class U##NAME##Accessor;                                                   \
     class U##NAME##InputAccessor;                                              \
@@ -142,7 +144,7 @@ inline std::tuple<
     UPortal *, USignBlock *, UMonitor *, UComputer *, UQuantumComputer *,
     ULuaBlock *, UMinerBase *, UDrillingRig *, UPumpjack *,
     UDeconstructorCrafter *, UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *,
-    ULogicDisplay *, ULogicController *, ULogicInterface *, UCoreAccessor *,
+    ULogicDisplay *, ULogicController *, ULogicInterface *, UCoreAccessor *, UHandGenerator *,
     ACCESSOR_CLASS_CODEGEN(Fluid), ACCESSOR_CLASS_CODEGEN(Electric),
     ACCESSOR_CLASS_CODEGEN(Heat), ACCESSOR_CLASS_CODEGEN(Kinetic),
     ACCESSOR_CLASS_CODEGEN(Data)>

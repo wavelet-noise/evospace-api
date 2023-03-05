@@ -40,7 +40,7 @@ evo::AccessorListener::AccessorListener(
     valid =
         added_bus->subscribe([our_acc, this](const evo::AccessorEvent &event) {
             auto added_accessor = event.data();
-            auto added_outside = added_accessor->GetOutsideAccessor();
+            auto added_outside = added_accessor->GetOutsideAccessorAny();
             if (our_acc == added_outside) {
                 if (our_acc->test_outside(added_outside)) {
                     this->update_proxy(added_accessor);
