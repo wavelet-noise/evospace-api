@@ -55,14 +55,31 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     void add_accessor(UBaseAccessor *accessor);
 
     /**
-     * @brief
-     * @param com
+     * @brief Add a component to this BlockLogic
+     * @code
+     * ```lua
+     * class_cache.proto_construction = function(self)
+     *     local inventory = self:add_component(Inventory.new(), "inventory")
+     * end
+     * ```
+     * @endcode 
+     * @param com Prototype object to add
+     * @param name component name for search
      */
     void add_component(UPrototype *com, std::string_view name);
 
     /**
-     * @brief
-     * @param com
+     * @brief Searching for a component. Can be slow for using at tick
+     * @code
+     * ```lua
+     * class_cache.proto_clone = function(self, cache)
+     *     local inventory = Inventory.cast(self:get_component("inventory"))
+     *     cache.inventory = inventory
+     * end
+     * ```
+     * @endcode 
+     * @param name component name for search
+     * @return Prototype object or nil
      */
     UPrototype *get_component(std::string_view name) const;
 
