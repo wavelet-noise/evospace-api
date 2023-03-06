@@ -128,9 +128,9 @@ inline std::tuple<
     UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UFilteringBlock *,
     UCrafterBase *, USelectCrafter *, UAutoCrafter *, UItem *,
     URecipeDictionary *, UBlock *, UTesselator *, UTesselatorCube *,
-    UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBrushBreaker *, UBaseAccessor *,
-    UBaseInventoryAccessor *, UInventoryReader *, UInventoryAccess *,
-    UBaseInventory *, UInventory *, USingleSlotInventory *,
+    UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBrushBreaker *,
+    UBaseAccessor *, UBaseInventoryAccessor *, UInventoryReader *,
+    UInventoryAccess *, UBaseInventory *, UInventory *, USingleSlotInventory *,
     UInventoryContainer *, UInternalInventory *, URecipeInventory *,
     UPropsGenerator *, ULayeringGenerator *, UBiome *, UStaticAttach *,
     UPropList *, UStaticResearch *, UStaticChapter *, UBedLogic *, UDoorLogic *,
@@ -144,10 +144,10 @@ inline std::tuple<
     UPortal *, USignBlock *, UMonitor *, UComputer *, UQuantumComputer *,
     ULuaBlock *, UMinerBase *, UDrillingRig *, UPumpjack *,
     UDeconstructorCrafter *, UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *,
-    ULogicDisplay *, ULogicController *, ULogicInterface *, UCoreAccessor *, UHandGenerator *,
-    ACCESSOR_CLASS_CODEGEN(Fluid), ACCESSOR_CLASS_CODEGEN(Electric),
-    ACCESSOR_CLASS_CODEGEN(Heat), ACCESSOR_CLASS_CODEGEN(Kinetic),
-    ACCESSOR_CLASS_CODEGEN(Data)>
+    ULogicDisplay *, ULogicController *, ULogicInterface *, UCoreAccessor *,
+    UHandGenerator *, ACCESSOR_CLASS_CODEGEN(Fluid),
+    ACCESSOR_CLASS_CODEGEN(Electric), ACCESSOR_CLASS_CODEGEN(Heat),
+    ACCESSOR_CLASS_CODEGEN(Kinetic), ACCESSOR_CLASS_CODEGEN(Data)>
     classes;
 
 #undef ACCESSOR_FORWARD_CODEGEN

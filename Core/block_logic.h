@@ -62,7 +62,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
      *     local inventory = self:add_component(Inventory.new(), "inventory")
      * end
      * ```
-     * @endcode 
+     * @endcode
      * @param com Prototype object to add
      * @param name component name for search
      */
@@ -77,7 +77,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
      *     cache.inventory = inventory
      * end
      * ```
-     * @endcode 
+     * @endcode
      * @param name component name for search
      * @return Prototype object or nil
      */

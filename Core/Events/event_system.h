@@ -58,7 +58,8 @@ template <typename EventType> class EventBus {
     using EventCallback = std::function<void(const EventType &)>;
 
     SubscriptionHandle subscribe(const EventCallback &callback) {
-        return m_callbacks.emplace(SubscriptionHandle{next_handle++}, callback).first->first;
+        return m_callbacks.emplace(SubscriptionHandle{next_handle++}, callback)
+            .first->first;
     }
 
     void unsubscribe(const SubscriptionHandle &handle) {

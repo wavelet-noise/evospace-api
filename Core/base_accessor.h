@@ -41,7 +41,7 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
     }
 
     UBaseAccessor *GetOutsideAccessorAny();
-    
+
     const UBaseAccessor *GetOutsideAccessor() const {
         return GetOutsideAccessor(GetClass());
     }

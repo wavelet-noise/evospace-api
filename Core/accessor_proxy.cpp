@@ -49,7 +49,7 @@ evo::AccessorListener::AccessorListener(
         });
 }
 
-evo::AccessorListener::~AccessorListener(){
+evo::AccessorListener::~AccessorListener() {
     if (valid) {
         added_bus->unsubscribe(valid.value());
     }
@@ -58,7 +58,8 @@ evo::AccessorListener::~AccessorListener(){
 evo::AccessorListener::AccessorListener(AccessorListener &&l) noexcept
     : opposite_test(l.opposite_test), added_bus(l.added_bus),
       removed_bus(l.removed_bus), valid(l.valid), proxy(l.proxy) {
-    l.valid = {}; l.opposite_test = nullptr;
+    l.valid = {};
+    l.opposite_test = nullptr;
 }
 
 void evo::AccessorListener::update_proxy(UBaseAccessor *our_acc) {

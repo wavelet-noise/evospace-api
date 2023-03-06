@@ -15,7 +15,7 @@ UCLASS()
 class UHandGenerator : public UTieredBlock {
     GENERATED_BODY()
 
-public:
+  public:
     UPROPERTY(BlueprintReadOnly)
     /**
      * @brief Kinetic energy per click
@@ -44,17 +44,19 @@ public:
     UHandGenerator();
 
     UPROPERTY()
-    USingleSlotInventory * inventory;
+    USingleSlotInventory *inventory;
 
     UPROPERTY()
-    UKineticOutputAccessor * accessor;
+    UKineticOutputAccessor *accessor;
 
     virtual bool is_block_tick() const override;
 
     UFUNCTION(BlueprintCallable)
     void OnGeneratorPressed();
 
-    virtual void OnAction(const FHitResult &hit, const Vec3i &side, AItemLogicActor *item) override;
+    virtual void OnAction(
+        const FHitResult &hit, const Vec3i &side, AItemLogicActor *item
+    ) override;
 
   protected:
     virtual void Tick() override;
