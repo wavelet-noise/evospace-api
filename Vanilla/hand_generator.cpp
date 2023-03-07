@@ -16,6 +16,7 @@ bool UHandGenerator::is_block_tick() const { return true; }
 
 void UHandGenerator::OnGeneratorPressed() {
     if (stored + per_click < max_stored) {
+        AwakeAnimation();
         stored += per_click;
     } else {
         stored = max_stored;
@@ -32,6 +33,7 @@ void UHandGenerator::OnAction(
 void UHandGenerator::Tick() {
     // UTieredBlock::Tick(); // is empty
     if (stored >= power && inventory->get(0).count < power) {
+        AwakeAnimation();
         inventory->add(FItemData(evo::DB::find<UItem>("Kinetic"), power));
         stored -= power;
     }
