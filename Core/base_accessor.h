@@ -15,6 +15,8 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
     // Legacy
     void SetSidePos(const Vec3i &side, const Vec3i &pos);
 
+    bool is_connectable(UBaseAccessor &other);
+
     /**
      * @brief offset from (0,0,0) block for this accessor
      */
@@ -25,7 +27,8 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
      */
     Vec3i side;
 
-    std::unique_ptr<evo::AccessorListener> opposite;
+    // connected opposite accessor
+    UBaseAccessor *opposite;
 
     virtual bool is_active() const { return false; }
 

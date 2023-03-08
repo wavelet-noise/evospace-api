@@ -47,7 +47,6 @@ class UBaseInventoryAccessor : public UBaseAccessor {
 
     virtual bool Pop(UInventoryAccess *to);
     virtual bool Pop(UInventoryAccess *to, int32 max_count);
-    virtual bool Pop(UInventoryAccess *to, float percent);
 
     virtual FItemData PopItem(UInventoryAccess *to, const UItem *item);
     virtual FItemData PopItem(UInventoryAccess *to, const FItemData &data);

@@ -92,12 +92,10 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos);
     virtual void
     OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
-    virtual void OnSideAccessorAdded(
-        UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
-    );
-    virtual void OnSideAccessorRemoved(
-        UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
-    );
+    virtual void
+    OnSideAccessorAdded(UBaseAccessor &accessor, const Vec3i &acc_world_pos);
+    virtual void
+    OnSideAccessorRemoved(UBaseAccessor &accessor, const Vec3i &acc_world_pos);
     virtual void OnSpawnedByItem(AItemLogicActor *item);
     virtual EBreakResult OnRemovedByItem(AItemLogicActor *item);
 
@@ -237,7 +235,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     virtual int32 DropItems(UInventoryAccess *inventory);
 
-    virtual TArray<UBaseAccessor *> &GetAccessors();
+    virtual std::vector<UBaseAccessor *> &GetAccessors();
 
     virtual AActor *GetActor();
 
@@ -248,8 +246,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     FQuat mQuat = FQuat(EForceInit::ForceInitToZero);
 
-    UPROPERTY()
-    TArray<UBaseAccessor *> accessors;
+    std::vector<UBaseAccessor *> accessors;
 
     UPROPERTY()
     TArray<UPrototype *> components;
@@ -282,7 +279,7 @@ class UPartBlockLogic : public UBlockLogic {
 
     virtual UBlockLogic *GetRootBlock() override;
 
-    virtual TArray<UBaseAccessor *> &GetAccessors() override;
+    virtual std::vector<UBaseAccessor *> &GetAccessors() override;
 
     virtual AActor *GetActor() override;
 
