@@ -32,7 +32,7 @@ class UBlockNetwork : public UObject {
     bool RemoveInputAccessor(UBaseInventoryAccessor *accessor);
     bool RemoveOutputAccessor(UBaseInventoryAccessor *accessor);
 
-    bool IsEmpty() const;
+    bool is_empty() const;
 
     static TSet<UConductor *> CheckIntegrity(UConductor *block);
     static bool _CheckIntegrity(

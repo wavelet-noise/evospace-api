@@ -35,7 +35,6 @@ class UCoreAccessor : public UBaseInventoryAccessor {
 
     virtual bool Pop(UInventoryAccess *to) override;
     virtual bool Pop(UInventoryAccess *to, int32 max_count) override;
-    virtual bool Pop(UInventoryAccess *to, float percent) override;
 
     virtual FItemData PopItem(UInventoryAccess *to, const UItem *item) override;
     virtual FItemData

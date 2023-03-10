@@ -36,11 +36,11 @@ class UConveyor : public UTieredBlock,
     ) override;
 
     virtual void OnSideAccessorAdded(
-        UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
+        UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side
     ) override;
 
     virtual void OnSideAccessorRemoved(
-        UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
+        UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side
     ) override;
 
     virtual void RemoveActor() override;

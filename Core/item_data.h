@@ -55,9 +55,11 @@ struct FItemData {
     FItemData(const UItem *item, int64 _count);
     FItemData(const UItem *item);
 
+    bool Swap(FItemData&other);
+
     FItemData &operator=(const FItemData &val);
 
-    void clear();
+    void Clear();
 
     bool operator==(const FItemData &other) const;
     bool operator!=(const FItemData &other) const;

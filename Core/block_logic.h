@@ -55,14 +55,31 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     void add_accessor(UBaseAccessor *accessor);
 
     /**
-     * @brief
-     * @param com
+     * @brief Add a component to this BlockLogic
+     * @code
+     * ```lua
+     * class_cache.proto_construction = function(self)
+     *     local inventory = self:add_component(Inventory.new(), "inventory")
+     * end
+     * ```
+     * @endcode
+     * @param com Prototype object to add
+     * @param name component name for search
      */
     void add_component(UPrototype *com, std::string_view name);
 
     /**
-     * @brief
-     * @param com
+     * @brief Searching for a component. Can be slow for using at tick
+     * @code
+     * ```lua
+     * class_cache.proto_clone = function(self, cache)
+     *     local inventory = Inventory.cast(self:get_component("inventory"))
+     *     cache.inventory = inventory
+     * end
+     * ```
+     * @endcode
+     * @param name component name for search
+     * @return Prototype object or nil
      */
     UPrototype *get_component(std::string_view name) const;
 
@@ -75,12 +92,10 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos);
     virtual void
     OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
-    virtual void OnSideAccessorAdded(
-        UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
-    );
-    virtual void OnSideAccessorRemoved(
-        UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
-    );
+    virtual void
+    OnSideAccessorAdded(UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side);
+    virtual void
+    OnSideAccessorRemoved(UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side);
     virtual void OnSpawnedByItem(AItemLogicActor *item);
     virtual EBreakResult OnRemovedByItem(AItemLogicActor *item);
 
@@ -98,7 +113,11 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void Tick();
     virtual void TickAccessor();
 
-    virtual void EvospacePostDuplicate(const UBlockLogic *proto) {}
+    /**
+     * @brief dim is already exists here
+     * @param proto
+     */
+    virtual void EvospacePostDuplicate(const UBlockLogic *proto);
 
     /**
      * @brief Test if position is suitable for this block placing
@@ -173,6 +192,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     void SetActorRotation(FQuat param1);
 
     UBaseAccessor *GetSideAccessor(UClass *type, Vec3i side, Vec3i pos);
+    UBaseAccessor *GetSideAccessor(Vec3i side, Vec3i pos);
 
     template <class Ty_> Ty_ *GetSideAccessor(Vec3i side, Vec3i pos) {
         return Cast<Ty_>(GetSideAccessor(Ty_::StaticClass(), side, pos));
@@ -215,7 +235,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     virtual int32 DropItems(UInventoryAccess *inventory);
 
-    virtual TArray<UBaseAccessor *> &GetAccessors();
+    virtual std::vector<UBaseAccessor *> &GetAccessors();
 
     virtual AActor *GetActor();
 
@@ -226,8 +246,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     FQuat mQuat = FQuat(EForceInit::ForceInitToZero);
 
-    UPROPERTY()
-    TArray<UBaseAccessor *> accessors;
+    std::vector<UBaseAccessor *> accessors;
 
     UPROPERTY()
     TArray<UPrototype *> components;
@@ -260,7 +279,7 @@ class UPartBlockLogic : public UBlockLogic {
 
     virtual UBlockLogic *GetRootBlock() override;
 
-    virtual TArray<UBaseAccessor *> &GetAccessors() override;
+    virtual std::vector<UBaseAccessor *> &GetAccessors() override;
 
     virtual AActor *GetActor() override;
 

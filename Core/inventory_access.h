@@ -62,7 +62,7 @@ class UInventoryAccess : public UInventoryReader {
         checkNoEntry();
         return 0;
     };
-
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere);
     /**
      * @brief Property. Slot count that can be accessed with add_with_limit()
@@ -74,16 +74,32 @@ class UInventoryAccess : public UInventoryReader {
      * @brief Function. remove all slots from inventory
      */
     virtual void reset() { checkNoEntry(); }
-
+    
+    UFUNCTION(BlueprintCallable)
+    /**
+     * @brief Function. Clear all slots in inventory
+     */
+    virtual void clear() { checkNoEntry(); }
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
     /**
      * @brief Property. currently hovered slot or -1 for nothing
      */
-    int32 hovered = INDEX_NONE;
+    int32 selected = INDEX_NONE;
+
+    /**
+     * @brief Property.
+     */
+    bool can_have_zero_slots = false;
+
+    /**
+     * @brief Property.
+     */
+    bool zero_locked = false;
 
     virtual void SetCanHaveZeroSlot(bool value) {
-        if (!mZeroLocked)
-            mCanHaveZeroSlot = value;
+        if (!zero_locked)
+            can_have_zero_slots = value;
     }
     virtual void Sanitize() {}
 
@@ -93,10 +109,6 @@ class UInventoryAccess : public UInventoryReader {
 
     UFUNCTION(BlueprintCallable)
     virtual void SortKeyAZ() {}
-
-  protected:
-    bool mCanHaveZeroSlot = false;
-    bool mZeroLocked = false;
 
   public:
     EVO_LUA_CODEGEN_DB(UInventoryAccess, InventoryAccess);

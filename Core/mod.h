@@ -22,8 +22,6 @@ class UMod : public UObject, public ISerializableJson {
     GENERATED_BODY()
 
   public:
-    void lua_state_close();
-
     /**
      * @brief name
      */

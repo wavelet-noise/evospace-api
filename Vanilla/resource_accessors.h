@@ -8,7 +8,7 @@
 
 UCLASS()
 /**
- * @brief Vanilla electric accessor BlockLogic
+ * @brief Vanilla electric accessor
  */
 class UElectricAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
@@ -26,7 +26,7 @@ class UElectricAccessor : public UBaseInventoryAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla electric conductor BlockLogic
+ * @brief Vanilla electric conductor accessor
  */
 class UElectricConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
@@ -38,7 +38,7 @@ class UElectricConductorAccessor : public UBaseAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla electric input BlockLogic
+ * @brief Vanilla electric input accessor
  */
 class UElectricInputAccessor : public UElectricAccessor {
     GENERATED_BODY()
@@ -50,7 +50,7 @@ class UElectricInputAccessor : public UElectricAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla electric output BlockLogic
+ * @brief Vanilla electric output accessor
  */
 class UElectricOutputAccessor : public UElectricAccessor {
     GENERATED_BODY()
@@ -64,7 +64,7 @@ class UElectricOutputAccessor : public UElectricAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla fluid accessor BlockLogic
+ * @brief Vanilla fluid accessor
  */
 class UFluidAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
@@ -82,7 +82,7 @@ class UFluidAccessor : public UBaseInventoryAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla fluid conductor BlockLogic
+ * @brief Vanilla fluid conductor accessor
  */
 class UFluidConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
@@ -94,7 +94,7 @@ class UFluidConductorAccessor : public UBaseAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla fluid input BlockLogic
+ * @brief Vanilla fluid input accessor
  */
 class UFluidInputAccessor : public UFluidAccessor {
     GENERATED_BODY()
@@ -106,7 +106,7 @@ class UFluidInputAccessor : public UFluidAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla fluid output BlockLogic
+ * @brief Vanilla fluid output accessor
  */
 class UFluidOutputAccessor : public UFluidAccessor {
     GENERATED_BODY()
@@ -120,7 +120,7 @@ class UFluidOutputAccessor : public UFluidAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla heat accessor BlockLogic
+ * @brief Vanilla heat accessor
  */
 class UHeatAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
@@ -138,7 +138,7 @@ class UHeatAccessor : public UBaseInventoryAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla heat conductor BlockLogic
+ * @brief Vanilla heat conductor accessor
  */
 class UHeatConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
@@ -150,7 +150,7 @@ class UHeatConductorAccessor : public UBaseAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla heat input BlockLogic
+ * @brief Vanilla heat input accessor
  */
 class UHeatInputAccessor : public UHeatAccessor {
     GENERATED_BODY()
@@ -162,7 +162,7 @@ class UHeatInputAccessor : public UHeatAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla heat output BlockLogic
+ * @brief Vanilla heat output accessor
  */
 class UHeatOutputAccessor : public UHeatAccessor {
     GENERATED_BODY()
@@ -176,7 +176,7 @@ class UHeatOutputAccessor : public UHeatAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla kinetic accessor BlockLogic
+ * @brief Vanilla kinetic accessor
  */
 class UKineticAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
@@ -195,7 +195,7 @@ class UKineticAccessor : public UBaseInventoryAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla kinetic conductor BlockLogic
+ * @brief Vanilla kinetic conductor accessor
  */
 class UKineticConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
@@ -207,7 +207,7 @@ class UKineticConductorAccessor : public UBaseAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla kinetic input BlockLogic
+ * @brief Vanilla kinetic input accessor
  */
 class UKineticInputAccessor : public UKineticAccessor {
     GENERATED_BODY()
@@ -219,7 +219,7 @@ class UKineticInputAccessor : public UKineticAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla kinetic output BlockLogic
+ * @brief Vanilla kinetic output accessor
  */
 class UKineticOutputAccessor : public UKineticAccessor {
     GENERATED_BODY()
@@ -234,7 +234,7 @@ class UKineticOutputAccessor : public UKineticAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla data accessor BlockLogic
+ * @brief Vanilla data accessor
  */
 class UDataAccessor : public UDataInventoryAccessor {
     GENERATED_BODY()
@@ -252,7 +252,7 @@ class UDataAccessor : public UDataInventoryAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla data conductor BlockLogic
+ * @brief Vanilla data conductor accessor
  */
 class UDataConductorAccessor : public UBaseAccessor {
     GENERATED_BODY()
@@ -264,7 +264,7 @@ class UDataConductorAccessor : public UBaseAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla data input BlockLogic
+ * @brief Vanilla data input accessor
  */
 class UDataInputAccessor : public UDataAccessor {
     GENERATED_BODY()
@@ -276,7 +276,7 @@ class UDataInputAccessor : public UDataAccessor {
 
 UCLASS()
 /**
- * @brief Vanilla data output BlockLogic
+ * @brief Vanilla data output accessor
  */
 class UDataOutputAccessor : public UDataAccessor {
     GENERATED_BODY()

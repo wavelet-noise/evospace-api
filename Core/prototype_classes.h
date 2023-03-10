@@ -16,6 +16,7 @@ class UTesselatorCube;
 class UTesselatorMarching;
 class UItemLogic;
 class UBlockBuilder;
+class UBrushBreaker;
 class UBaseAccessor;
 class UBaseInventoryAccessor;
 class UInventoryReader;
@@ -104,6 +105,8 @@ class ULogicInterface;
 
 class UCoreAccessor;
 
+class UHandGenerator;
+
 #define ACCESSOR_FORWARD_CODEGEN(NAME)                                         \
     class U##NAME##Accessor;                                                   \
     class U##NAME##InputAccessor;                                              \
@@ -125,9 +128,9 @@ inline std::tuple<
     UPrototype *, UEntity *, UBlockLogic *, UTieredBlock *, UFilteringBlock *,
     UCrafterBase *, USelectCrafter *, UAutoCrafter *, UItem *,
     URecipeDictionary *, UBlock *, UTesselator *, UTesselatorCube *,
-    UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBaseAccessor *,
-    UBaseInventoryAccessor *, UInventoryReader *, UInventoryAccess *,
-    UBaseInventory *, UInventory *, USingleSlotInventory *,
+    UTesselatorMarching *, UItemLogic *, UBlockBuilder *, UBrushBreaker *,
+    UBaseAccessor *, UBaseInventoryAccessor *, UInventoryReader *,
+    UInventoryAccess *, UBaseInventory *, UInventory *, USingleSlotInventory *,
     UInventoryContainer *, UInternalInventory *, URecipeInventory *,
     UPropsGenerator *, ULayeringGenerator *, UBiome *, UStaticAttach *,
     UPropList *, UStaticResearch *, UStaticChapter *, UBedLogic *, UDoorLogic *,
@@ -142,9 +145,9 @@ inline std::tuple<
     ULuaBlock *, UMinerBase *, UDrillingRig *, UPumpjack *,
     UDeconstructorCrafter *, UDumpCrafter *, UDumpAnyCrafter *, ULogicCircuit *,
     ULogicDisplay *, ULogicController *, ULogicInterface *, UCoreAccessor *,
-    ACCESSOR_CLASS_CODEGEN(Fluid), ACCESSOR_CLASS_CODEGEN(Electric),
-    ACCESSOR_CLASS_CODEGEN(Heat), ACCESSOR_CLASS_CODEGEN(Kinetic),
-    ACCESSOR_CLASS_CODEGEN(Data)>
+    UHandGenerator *, ACCESSOR_CLASS_CODEGEN(Fluid),
+    ACCESSOR_CLASS_CODEGEN(Electric), ACCESSOR_CLASS_CODEGEN(Heat),
+    ACCESSOR_CLASS_CODEGEN(Kinetic), ACCESSOR_CLASS_CODEGEN(Data)>
     classes;
 
 #undef ACCESSOR_FORWARD_CODEGEN

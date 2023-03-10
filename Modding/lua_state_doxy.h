@@ -24,7 +24,7 @@ class Vec3i {
     int32 z;
 
     /**
-     * @brief Readonly function. Construct Vec3i from 3 numbers
+     * @brief Static function. Construct Vec3i from 3 numbers
      * @details lua syntax
      * @code{.lua}
      * vec = Vec3i.new(x, y, z)

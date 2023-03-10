@@ -51,9 +51,9 @@ class UInventoryReader : public UPrototype {
     };
 
     /**
-     * @brief Function.
-     * @param index
-     * @return
+     * @brief Function. Get ItemData for specific inventory slot
+     * @param index inventory slot index
+     * @return ItemData from this slot
      */
     virtual const FItemData &get(int32 index) const {
         checkNoEntry();

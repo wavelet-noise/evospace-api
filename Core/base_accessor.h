@@ -2,6 +2,7 @@
 #pragma once
 #include "Core/prototype.h"
 #include "CoreMinimal.h"
+#include "accessor_proxy.h"
 
 #include "base_accessor.generated.h"
 
@@ -14,6 +15,8 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
     // Legacy
     void SetSidePos(const Vec3i &side, const Vec3i &pos);
 
+    bool is_connectable(UBaseAccessor &other);
+
     /**
      * @brief offset from (0,0,0) block for this accessor
      */
@@ -24,6 +27,11 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
      */
     Vec3i side;
 
+    // connected opposite accessor
+    UBaseAccessor *opposite;
+
+    virtual bool is_active() const { return false; }
+
   public:
     UBaseAccessor();
 
@@ -31,9 +39,11 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
 
     const UBaseAccessor *GetOutsideAccessor(UClass *type) const;
 
-    UBaseAccessor *GetOutsideAccessor() {
+    UBaseAccessor *GetOutsideAccessorThis() {
         return GetOutsideAccessor(GetClass());
     }
+
+    UBaseAccessor *GetOutsideAccessorAny();
 
     const UBaseAccessor *GetOutsideAccessor() const {
         return GetOutsideAccessor(GetClass());
@@ -50,6 +60,8 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
+
+    virtual bool test_outside(UBaseAccessor *acc) const;
 
   public:
     virtual void TickComponent();

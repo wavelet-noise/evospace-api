@@ -23,20 +23,13 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
 
     // Lua api
   public:
-    UFUNCTION(BlueprintCallable)
-    /**
-     * @brief
-     */
-    void clear();
-
     // Lua api override
   public:
     virtual const FItemData &safe_get(int32 index) const override;
     virtual const FItemData &get(int32 index) const override;
     virtual int32 find(const UItem *item) const override;
-
-    UFUNCTION(BlueprintCallable)
     virtual void reset() override;
+    virtual void clear() override;
 
   public:
     UBaseInventory();
@@ -105,16 +98,6 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     TFunction<int64(const FItemData &)> mMaxSlotCount;
 
     bool mAutoSize = false;
-
-    /**
-     * @fn std::optional<ItemData> get(int32 index)
-     * @brief Function. Get ItemData for specific BaseInventory slot
-     * @param index BaseInventory slot index
-     * @return ItemData from this slot or nil
-     */
-
-    std::optional<FItemData> lua_get_slot(int32 index);
-    int32 lua_get_count();
 
   public:
     EVO_LUA_CODEGEN_DB(UBaseInventory, BaseInventory);

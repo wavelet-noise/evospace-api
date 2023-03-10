@@ -57,6 +57,8 @@ class UComputer : public UTieredBlock {
     UPROPERTY()
     UCoreAccessor *core_accessor;
 
+    virtual void lua_postprocess(ModLoadingContext &context) override;
+
   public:
     EVO_LUA_CODEGEN_DB_EX(Computer);
     static void lua_reg(lua_State *L);
@@ -68,8 +70,6 @@ class UQuantumComputer : public UComputer {
 
   public:
     UQuantumComputer();
-
-    virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
   protected:
     virtual void Tick() override;
