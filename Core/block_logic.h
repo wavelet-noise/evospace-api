@@ -93,9 +93,9 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void
     OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
     virtual void
-    OnSideAccessorAdded(UBaseAccessor &accessor, const Vec3i &acc_world_pos);
+    OnSideAccessorAdded(UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side);
     virtual void
-    OnSideAccessorRemoved(UBaseAccessor &accessor, const Vec3i &acc_world_pos);
+    OnSideAccessorRemoved(UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side);
     virtual void OnSpawnedByItem(AItemLogicActor *item);
     virtual EBreakResult OnRemovedByItem(AItemLogicActor *item);
 
