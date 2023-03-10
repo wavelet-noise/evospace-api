@@ -136,12 +136,6 @@ class UCrafterBase : public UTieredBlock, public ISwitchInterface {
 
     void SetSwitched(bool val) override;
     bool GetSwitched() const override;
-    virtual void OnSideAccessorAdded(
-        UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
-    ) override;
-    virtual void OnSideAccessorRemoved(
-        UBaseAccessor *accessor, const Vec3i &side, const Vec3i &pos
-    ) override;
 
   protected:
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, BlueprintCosmetic)

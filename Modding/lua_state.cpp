@@ -223,8 +223,7 @@ LuaState::LuaState() {
 
     getGlobalNamespace(L)
         .beginClass<UIcoGenerator>("IcoGenerator")
-        .addStaticFunction("combine_mul_add", &UIcoGenerator::combine_mul_add)
-        .addStaticFunction("combine_mul", &UIcoGenerator::combine_mul)
+        .addStaticFunction("combine", &UIcoGenerator::combine)
         .endClass();
 
     getGlobalNamespace(L)

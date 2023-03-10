@@ -112,17 +112,7 @@ class UItem : public UPrototype, public ISerializableJson {
     // Description common keys
     std::vector<KeyTable> description_parts = {};
 
-    /**
-     * @brief 
-     * @param kt 
-     */
-    void append_description(const KeyTable &kt);
-
-    /**
-     * @brief 
-     * @param kt 
-     */
-    void append_label(const KeyTable &kt);
+    void append_description(KeyTable &kt);
 
     KeyTable label_format;
 
