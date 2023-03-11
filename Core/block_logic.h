@@ -197,6 +197,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     template <typename Ty_> Ty_ *CreateDefaultAccessor(FName SubobjectFName) {
         auto v = CreateDefaultSubobject<Ty_>(SubobjectFName);
+        v->name = TCHAR_TO_UTF8(*SubobjectFName.ToString());
         add_accessor(v);
         return v;
     }
