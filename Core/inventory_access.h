@@ -62,7 +62,7 @@ class UInventoryAccess : public UInventoryReader {
         checkNoEntry();
         return 0;
     };
-    
+
     UPROPERTY(BlueprintReadWrite, EditAnywhere);
     /**
      * @brief Property. Slot count that can be accessed with add_with_limit()
@@ -74,13 +74,13 @@ class UInventoryAccess : public UInventoryReader {
      * @brief Function. remove all slots from inventory
      */
     virtual void reset() { checkNoEntry(); }
-    
+
     UFUNCTION(BlueprintCallable)
     /**
      * @brief Function. Clear all slots in inventory
      */
     virtual void clear() { checkNoEntry(); }
-    
+
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
     /**
      * @brief Property. currently hovered slot or -1 for nothing

@@ -42,6 +42,8 @@ class UCoreAccessor : public UBaseInventoryAccessor {
     virtual FItemData
     PopItem(UInventoryAccess *to, const UItem *item, float percent) override;
 
+    virtual bool is_connectable(UBaseAccessor &acc) const override;
+
   public:
     EVO_LUA_CODEGEN_DB_EX(CoreAccessor);
     static void lua_reg(lua_State *L);

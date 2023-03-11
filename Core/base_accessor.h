@@ -15,61 +15,48 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
     // Legacy
     void SetSidePos(const Vec3i &side, const Vec3i &pos);
 
-    bool is_connectable(UBaseAccessor &other);
+    virtual bool is_connectable(UBaseAccessor &other) const;
 
     /**
-     * @brief offset from (0,0,0) block for this accessor
+     * @brief Relative offset from (0,0,0) block for this accessor
      */
     Vec3i pos;
 
     /**
-     * @brief side of cube to interact with this accessor
+     * @brief Relative side of cube to interact with this accessor
      */
     Vec3i side;
+
+    /**
+     * @brief Absolute offset from (0,0,0) block for this accessor
+     */
+    Vec3i world_pos;
+
+    /**
+     * @brief Absolute side of cube to interact with this accessor
+     */
+    Vec3i world_side;
 
     // connected opposite accessor
     UBaseAccessor *opposite;
 
+    /**
+     * @brief Readonly property. Does this accessor can tick
+     * @return
+     */
     virtual bool is_active() const { return false; }
 
   public:
     UBaseAccessor();
 
-    UBaseAccessor *GetOutsideAccessor(UClass *type);
-
-    const UBaseAccessor *GetOutsideAccessor(UClass *type) const;
-
-    UBaseAccessor *GetOutsideAccessorThis() {
-        return GetOutsideAccessor(GetClass());
-    }
-
-    UBaseAccessor *GetOutsideAccessorAny();
-
-    const UBaseAccessor *GetOutsideAccessor() const {
-        return GetOutsideAccessor(GetClass());
-    }
-
-    template <class T> T *GetOutsideAccessor() {
-        return static_cast<T *>(GetOutsideAccessor(T::StaticClass()));
-    }
-
-    template <class T> const T *GetOutsideAccessor() const {
-        return static_cast<const T *>(GetOutsideAccessor(T::StaticClass()));
-    }
-
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
-    virtual bool test_outside(UBaseAccessor *acc) const;
-
   public:
     virtual void TickComponent();
 
-  protected:
-    virtual void BeginPlay();
-
-    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
+    virtual void CacheWorldPos();
 
   public:
     EVO_LUA_CODEGEN_DB(UBaseAccessor, BaseAccessor);

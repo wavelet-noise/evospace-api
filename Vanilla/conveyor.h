@@ -35,13 +35,9 @@ class UConveyor : public UTieredBlock,
         int32 comp_index = INDEX_NONE
     ) override;
 
-    virtual void OnSideAccessorAdded(
-        UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side
-    ) override;
+    virtual void OnSideAccessorAdded(UBaseAccessor &accessor) override;
 
-    virtual void OnSideAccessorRemoved(
-        UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side
-    ) override;
+    virtual void OnSideAccessorRemoved(UBaseAccessor &accessor) override;
 
     virtual void RemoveActor() override;
 

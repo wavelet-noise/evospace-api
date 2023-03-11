@@ -60,12 +60,10 @@ class UBaseInventoryAccessor : public UBaseAccessor {
 
     template <typename _Ty> _Ty *_GetOutput() { return Cast<_Ty>(mOutput); }
 
+    virtual bool is_connectable(UBaseAccessor &acc) const override;
+
   protected:
     virtual void TickComponent() override;
-
-    virtual UBaseInventoryAccessor *GetAutoOutsideAccessor();
-
-    virtual bool test_outside(UBaseAccessor *acc) const override;
 
   protected:
     UPROPERTY(VisibleAnywhere)

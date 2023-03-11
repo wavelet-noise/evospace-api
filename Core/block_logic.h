@@ -92,10 +92,8 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     virtual void OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos);
     virtual void
     OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
-    virtual void
-    OnSideAccessorAdded(UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side);
-    virtual void
-    OnSideAccessorRemoved(UBaseAccessor &accessor, const Vec3i &acc_world_pos, const Vec3i &acc_world_side);
+    virtual void OnSideAccessorAdded(UBaseAccessor &accessor);
+    virtual void OnSideAccessorRemoved(UBaseAccessor &accessor);
     virtual void OnSpawnedByItem(AItemLogicActor *item);
     virtual EBreakResult OnRemovedByItem(AItemLogicActor *item);
 
@@ -190,13 +188,6 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
     FTransform GetTransform() const;
 
     void SetActorRotation(FQuat param1);
-
-    UBaseAccessor *GetSideAccessor(UClass *type, Vec3i side, Vec3i pos);
-    UBaseAccessor *GetSideAccessor(Vec3i side, Vec3i pos);
-
-    template <class Ty_> Ty_ *GetSideAccessor(Vec3i side, Vec3i pos) {
-        return Cast<Ty_>(GetSideAccessor(Ty_::StaticClass(), side, pos));
-    }
 
     UBaseAccessor *GetCoreAccessor(UClass *type);
 

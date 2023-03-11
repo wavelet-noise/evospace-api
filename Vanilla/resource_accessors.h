@@ -12,12 +12,6 @@ UCLASS()
  */
 class UElectricAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
-  public:
-    UElectricAccessor *GetOutsideAccessorCached();
-    const UElectricAccessor *GetOutsideAccessorCached() const;
-
-  protected:
-    virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(ElectricAccessor);
@@ -68,12 +62,6 @@ UCLASS()
  */
 class UFluidAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
-  public:
-    UFluidAccessor *GetOutsideAccessorCached();
-    const UFluidAccessor *GetOutsideAccessorCached() const;
-
-  protected:
-    virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(FluidAccessor);
@@ -124,12 +112,6 @@ UCLASS()
  */
 class UHeatAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
-  public:
-    UHeatAccessor *GetOutsideAccessorCached();
-    const UHeatAccessor *GetOutsideAccessorCached() const;
-
-  protected:
-    virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(HeatAccessor);
@@ -182,13 +164,6 @@ class UKineticAccessor : public UBaseInventoryAccessor {
     GENERATED_BODY()
 
   public:
-    UKineticAccessor *GetOutsideAccessorCached();
-    const UKineticAccessor *GetOutsideAccessorCached() const;
-
-  protected:
-    virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
-
-  public:
     EVO_LUA_CODEGEN_DB_EX(KineticAccessor);
     static void lua_reg(lua_State *L);
 };
@@ -238,12 +213,6 @@ UCLASS()
  */
 class UDataAccessor : public UDataInventoryAccessor {
     GENERATED_BODY()
-  public:
-    UDataAccessor *GetOutsideAccessorCached();
-    const UDataAccessor *GetOutsideAccessorCached() const;
-
-  protected:
-    virtual UBaseInventoryAccessor *GetAutoOutsideAccessor() override;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DataAccessor);
