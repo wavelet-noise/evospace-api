@@ -25,11 +25,6 @@ struct FUsedIn {
     int32 tier = 0;
 };
 
-// UENUM(BlueprintType)
-// enum class EIODirection : uint8
-//{
-// };
-
 UCLASS(BlueprintType)
 /**
  * @brief List of recipes for using in some crafter
@@ -46,7 +41,7 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
      * @endcode
      * @return
      */
-    int32 count() const { return mRecipes.Num(); }
+    int32 count() const { return recipes.Num(); }
 
     /**
      * @brief Readonly property. Get recipe from this dictionary by index
@@ -57,8 +52,8 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
      * @return
      */
     const URecipe *recipe_at(int32 index) const {
-        if (index >= 0 && index < mRecipes.Num())
-            return mRecipes[index];
+        if (index >= 0 && index < recipes.Num())
+            return recipes[index];
         return nullptr;
     }
 
@@ -71,14 +66,14 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
      * @return false if recipe is already in dictionary, true otherwise
      */
     bool add_recipe(URecipe *recipe) {
-        if (mNameChache.Contains(recipe->name)) {
+        if (name_cache.Contains(recipe->name)) {
             LOG(ERROR_LL) << "RecipeDictionary is already contains "
                           << TCHAR_TO_UTF8(*recipe->name.ToString());
             return false;
         }
-        mRecipes.Add(recipe);
-        mNameChache.Add(recipe->name, recipe);
-        recipe->dictionary_index = mRecipes.Num() - 1;
+        recipes.Add(recipe);
+        name_cache.Add(recipe->name, recipe);
+        recipe->dictionary_index = recipes.Num() - 1;
         return true;
     }
 
@@ -119,12 +114,13 @@ class URecipeDictionary : public UPrototype, public ISerializableJson {
 
   public:
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-    TArray<const URecipe *> mRecipes;
+    TArray<const URecipe *> recipes;
 
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-    TArray<FUsedIn> mUsedIn;
+    TArray<FUsedIn> used_in;
 
-    TMap<FName, const URecipe *> mNameChache;
+    // ReSharper disable once CppUE4ProbableMemoryIssuesWithUObjectsInContainer
+    TMap<FName, const URecipe *> name_cache;
 
     UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     UInventory *mUsedInInventory;

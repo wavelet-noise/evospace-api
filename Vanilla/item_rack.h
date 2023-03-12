@@ -31,7 +31,7 @@ class UItemRack : public UStorageBlock {
     virtual int64 GetCapacity() const override;
 
   private:
-    void SetActor(AActor *actor);
+    virtual void SetActor(AActor *actor) override;
 
     static const int32 mBaseSize = 2048;
 

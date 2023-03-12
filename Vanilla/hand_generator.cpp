@@ -2,8 +2,8 @@
 
 #include "Core/single_slot_inventory.h"
 #include "Evospace/Dimension.h"
-#include "resource_accessors.h"
 #include "Evospace/JsonHelper.h"
+#include "resource_accessors.h"
 
 UHandGenerator::UHandGenerator() {
     inventory = CreateDefaultSubobject<USingleSlotInventory>("inventory");

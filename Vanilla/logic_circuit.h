@@ -24,27 +24,10 @@ class LogicNetworkState : public evo::LegacyLuaState {
 
     static LogicNetworkState &Get();
 
-    // UFUNCTION()
-    // FLuaValue GetClass(FLuaValue name);
-    //
-    // UFUNCTION()
-    // FLuaValue FindObject(FLuaValue name);
-    //
-    // UFUNCTION()
-    // FLuaValue SetBlockInDim(FLuaValue x, FLuaValue y, FLuaValue z,
-    //                         FLuaValue sb);
-
-    void RequireDimesion(ADimension *dim);
-    virtual void Log(const FString &Message);
-
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
-    FString Output;
-
-    // virtual void
-    // ReceiveLuaCountHook_Implementation(const FLuaDebug &LuaDebug);
+    void RequireDimension(ADimension *dim);
 
   private:
-    ADimension *dimension;
+    ADimension *dim = nullptr;
 };
 
 UCLASS()
@@ -128,12 +111,12 @@ class ULogicInterface : public UTieredBlock {
 
     virtual void Tick() override;
 
-    void BlockBeginPlay() override;
+    virtual void BlockBeginPlay() override;
 
     UPROPERTY(BlueprintReadOnly)
     UInternalInventory *mInventoryRight;
 
-    bool is_block_tick() const override;
+    virtual bool is_block_tick() const override;
 
   private:
     UPROPERTY()
@@ -192,7 +175,7 @@ class ULogicController : public UFilteringBlock {
 
     virtual void Tick() override;
 
-    void BlockBeginPlay() override;
+    virtual void BlockBeginPlay() override;
 
     UPROPERTY(BlueprintReadOnly)
     UInternalInventory *mInventoryLeft;
@@ -200,9 +183,10 @@ class ULogicController : public UFilteringBlock {
     UPROPERTY(BlueprintReadOnly)
     UInternalInventory *mSetup;
 
-    bool is_block_tick() const override;
+    virtual bool is_block_tick() const override;
 
-    void ChangeFilter(int32 inventory, int32 slot, UItem *item) override;
+    virtual void
+    ChangeFilter(int32 inventory, int32 slot, UItem *item) override;
 
   private:
     UPROPERTY()
@@ -234,7 +218,7 @@ class ULogicDisplay : public UFilteringBlock {
 
     virtual void Tick() override;
 
-    void BlockBeginPlay() override;
+    virtual void BlockBeginPlay() override;
 
     UPROPERTY(BlueprintReadOnly)
     UInternalInventory *mInventoryLeft;
@@ -254,9 +238,10 @@ class ULogicDisplay : public UFilteringBlock {
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     ELogicDisplayMode mSelectedMode = ELogicDisplayMode::Nothing;
 
-    bool is_block_tick() const override;
+    virtual bool is_block_tick() const override;
 
-    void ChangeFilter(int32 inventory, int32 slot, UItem *item) override;
+    virtual void
+    ChangeFilter(int32 inventory, int32 slot, UItem *item) override;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     UMaterialInstanceDynamic *mMaterialDyn;
@@ -330,14 +315,14 @@ class LogicFunctor {
     virtual int32 GetInputsCount() = 0;
 };
 
-template <int argcount> class TLogicFunctor : public LogicFunctor {
+template <int arg_count> class TLogicFunctor : public LogicFunctor {
   public:
     TLogicFunctor() = default;
-    virtual ~TLogicFunctor() = default;
+    virtual ~TLogicFunctor() override = default;
     virtual void operator()(
         const UInventory *input, UCircuitSetup *setup, UInventory *output
-    ) = 0;
-    virtual int32 GetInputsCount() override { return argcount; };
+    ) override = 0;
+    virtual int32 GetInputsCount() override { return arg_count; };
 };
 
 class AndFunctor : public TLogicFunctor<2> {
@@ -479,7 +464,8 @@ class ULogicCircuit : public UFilteringBlock {
 
     virtual bool is_block_tick() const override;
 
-    void ChangeFilter(int32 inventory, int32 slot, UItem *item) override;
+    virtual void
+    ChangeFilter(int32 inventory, int32 slot, UItem *item) override;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(LogicCircuit);

@@ -131,7 +131,7 @@ class USplitter : public UTieredBlock {
 
     virtual void BlockBeginPlay() override;
 
-    bool is_block_tick() const;
+    virtual bool is_block_tick() const override;
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
     virtual void PostLoad() override;
@@ -169,7 +169,7 @@ class USplitter : public UTieredBlock {
     const UItem *mLastOutputItem = nullptr;
     UByteProperty *mOutputIndex = nullptr;
 
-    void SetActor(AActor *actor);
+    virtual void SetActor(AActor *actor) override;
 
     UPROPERTY()
     USolidInputAccessor *mInputAccessor;

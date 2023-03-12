@@ -23,9 +23,10 @@ class UFenceLogic : public UBlockLogic {
     UFenceLogic();
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-    virtual void OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos);
     virtual void
-    OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos);
+    OnNeighborBlockAdded(UBlockLogic *neighbour, const Vec3i &pos) override;
+    virtual void
+    OnNeighborBlockRemoved(UBlockLogic *neighbour, const Vec3i &pos) override;
 
     virtual Vec3i GetRotationLocks() const override;
 
@@ -52,8 +53,9 @@ class UDoorLogic : public UBlockLogic {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
-    void
-    OnAction(const FHitResult &hit, const Vec3i &side, AItemLogicActor *item);
+    virtual void OnAction(
+        const FHitResult &hit, const Vec3i &side, AItemLogicActor *item
+    ) override;
 
     UPROPERTY(BlueprintReadOnly)
     bool mOpened = false;
@@ -73,8 +75,9 @@ class ULampLogic : public UTieredBlock {
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
     virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
-    void
-    OnAction(const FHitResult &hit, const Vec3i &side, AItemLogicActor *item);
+    virtual void OnAction(
+        const FHitResult &hit, const Vec3i &side, AItemLogicActor *item
+    ) override;
 
     UPROPERTY(BlueprintReadOnly)
     int32 mType = false;
@@ -91,8 +94,9 @@ class UBedLogic : public UBlockLogic {
     GENERATED_BODY()
 
   public:
-    void
-    OnAction(const FHitResult &hit, const Vec3i &side, AItemLogicActor *item);
+    virtual void OnAction(
+        const FHitResult &hit, const Vec3i &side, AItemLogicActor *item
+    ) override;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(BedLogic);

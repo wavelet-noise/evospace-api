@@ -278,7 +278,7 @@ class UDataConductor : public UConductor {
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
-    bool IsDataNetwork() const override;
+    virtual bool IsDataNetwork() const override;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(DataConductor);
@@ -351,9 +351,9 @@ class UKineticConductor : public UConductor {
     )
     float mBonusCapacity = 1.f;
 
-    bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+    virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
-    int64 GetCharge() const override;
+    virtual int64 GetCharge() const override;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(KineticConductor);
@@ -370,7 +370,7 @@ class USwitch : public UConductor, public ISwitchInterface {
     GENERATED_BODY()
 
   public:
-    void RebuildFrom(int64 rem_capacity = 0);
+    virtual void RebuildFrom(int64 rem_capacity = 0) override;
     virtual const TArray<Vec3i> &GetConductionSides() const override;
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
