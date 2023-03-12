@@ -3,6 +3,7 @@
 #include "Core/single_slot_inventory.h"
 #include "Evospace/Dimension.h"
 #include "resource_accessors.h"
+#include "Evospace/JsonHelper.h"
 
 UHandGenerator::UHandGenerator() {
     inventory = CreateDefaultSubobject<USingleSlotInventory>("inventory");
@@ -28,6 +29,16 @@ void UHandGenerator::OnAction(
 ) {
     Super::OnAction(hit, side, item);
     OnGeneratorPressed();
+}
+bool UHandGenerator::DeserializeJson(TSharedPtr<FJsonObject> json) {
+    auto result = Super::DeserializeJson(json);
+    json_helper::TryGet(json, "stored", stored);
+    return result;
+}
+bool UHandGenerator::SerializeJson(TSharedPtr<FJsonObject> json) {
+    auto result = Super::SerializeJson(json);
+    json_helper::TrySet(json, "stored", stored);
+    return result;
 }
 
 void UHandGenerator::Tick() {

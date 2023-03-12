@@ -22,13 +22,13 @@ struct FOreData {
     /**
      * @brief Item count already gathered from this OreSector
      */
-    int64 gathered;
+    int32 gathered;
 
     UPROPERTY(BlueprintReadOnly)
     /**
      * @brief Item capacity in this OreSector on spawn
      */
-    int64 capacity;
+    int32 capacity;
 
   public:
     bool SerializeJson(TSharedPtr<FJsonObject> json) const;

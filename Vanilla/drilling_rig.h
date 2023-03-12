@@ -5,8 +5,8 @@
 
 #include "drilling_rig.generated.h"
 
-
-class UOreSector;class UBoolProperty;
+class UOreSector;
+class UBoolProperty;
 class UItem;
 class USingleSlotInventory;
 class UKineticInputAccessor;
@@ -43,17 +43,24 @@ class UMinerBase : public UTieredBlock {
     int32 mSupplyTemp = 1;
 
     UPROPERTY(BlueprintReadOnly)
-    UItem *mDiggingItem = nullptr;
+    const UItem *digging_item = nullptr;
 
-    UPROPERTY()
-    UOreSector * ore_sector = nullptr;
+    UPROPERTY(BlueprintReadOnly)
+    int32 digging_index = INDEX_NONE;
+
+    UPROPERTY(BlueprintReadOnly)
+    UOreSector *ore_sector = nullptr;
 
     virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
     UFUNCTION(BlueprintCallable)
-    void SelectItem(UItem *item);
+    int32 get_complexity() const;
 
-    UOreSector * get_ore_sector() const;
+    UFUNCTION(BlueprintCallable)
+    int32 get_median() const;
+
+    UFUNCTION(BlueprintCallable)
+    void SelectItem(int32 index);
 
     virtual bool CheckItem(const UItem *i) const;
 
@@ -83,6 +90,8 @@ class UMinerBase : public UTieredBlock {
 
   private:
     ADimension *dim = nullptr;
+
+    UOreSector *get_ore_sector() const;
 
   public:
     EVO_LUA_CODEGEN_DB_EX(MinerBase);

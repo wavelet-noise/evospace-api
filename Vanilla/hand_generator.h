@@ -58,6 +58,9 @@ class UHandGenerator : public UTieredBlock {
         const FHitResult &hit, const Vec3i &side, AItemLogicActor *item
     ) override;
 
+    virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+    virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
+
   protected:
     virtual void Tick() override;
 
