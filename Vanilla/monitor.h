@@ -1,8 +1,8 @@
 // Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/tiered_block.h"
 #include "CoreMinimal.h"
 #include "Evospace/CoordinateMinimal.h"
-#include "Vanilla/tiered_block.h"
 
 #include "Monitor.generated.h"
 

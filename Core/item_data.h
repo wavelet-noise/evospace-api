@@ -36,19 +36,19 @@ struct FItemData {
      * @fn FItemData static new_empty ()
      * @brief empty ItemData constructor
      */
-    // described in lua_state.cpp
+    // lambda in in lua_state.cpp
 
     /**
      * @fn FItemData static new_zero (UItem * item)
      * @brief 0 count ItemData constructor
      */
-    // described in lua_state.cpp
+    // lambda in in lua_state.cpp
 
     /**
      * @fn FItemData static new (UItem * item, int64 count)
      * @brief ItemData constructor
      */
-    // described in lua_state.cpp
+    // lambda in lua_state.cpp
 
   public:
     FItemData() = default;
@@ -72,7 +72,8 @@ struct FRecipeItemData {
   public:
     UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
     /**
-     * @brief
+     * @brief Property. Crafter output slot capacity override
+     * @see USingleSlotInventory::SetCapacity
      */
     int64 capacity = 0;
 

@@ -1,9 +1,9 @@
 // Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/storage_block.h"
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
 #include "Evospace/Common.h"
-#include "Vanilla/storage_block.h"
 
 #include "Conductor.generated.h"
 

@@ -1,12 +1,12 @@
 // Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/tiered_block.h"
 #include "CoreMinimal.h"
-#include "Vanilla/tiered_block.h"
 
 #include "pump.generated.h"
 
 class USingleSlotInventory;
-class UInventoryWhiteFilter;
+class UItemWhiteFilter;
 
 UCLASS()
 /**
@@ -103,7 +103,7 @@ class UFilteringPump : public UPump {
     TArray<UItem *> GetItems() const;
 
     UPROPERTY()
-    UInventoryWhiteFilter *mWhiteFilter;
+    UItemWhiteFilter *mWhiteFilter;
 
     UPROPERTY(BlueprintReadOnly)
     UItem *mSelectedItem = nullptr;

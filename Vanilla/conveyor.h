@@ -1,16 +1,16 @@
 // Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "Containers/Array.h"
+#include "Core/tiered_block.h"
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/Accessors/ConveyorInventorySideAccessor.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
-#include "Vanilla/tiered_block.h"
 
 #include "conveyor.generated.h"
 
 class UBaseAccessor;
 class UInventory;
-class UInventoryInventoryFilter;
+class UItemInventoryFilter;
 
 UCLASS()
 /**
@@ -198,7 +198,7 @@ class USorter : public USplitter {
     TArray<UInventory *> mFilterInvs;
 
     UPROPERTY()
-    UInventoryInventoryFilter *mFilter;
+    UItemInventoryFilter *mFilter;
 
     UFUNCTION(BlueprintCallable)
     void PushFilter(UItem *item, int32 index);

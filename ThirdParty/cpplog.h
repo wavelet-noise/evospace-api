@@ -588,8 +588,9 @@ class FileLogger : public OstreamLogger {
 // Log to file, rotate when the log reaches a given size.
 class SizeRotateFileLogger : public OstreamLogger {
   public:
-    typedef void (*pfBuildFileName
-    )(unsigned long logNumber, std::string &newFileName, void *context);
+    typedef void (*pfBuildFileName)(
+        unsigned long logNumber, std::string &newFileName, void *context
+    );
 
   private:
     std::streamoff m_maxSize;
@@ -650,9 +651,10 @@ class SizeRotateFileLogger : public OstreamLogger {
 // Log to file, rotate every "x" seconds.
 class TimeRotateFileLogger : public OstreamLogger {
   public:
-    typedef void (*pfBuildFileName
-    )(::tm *time, unsigned long logNumber, std::string &newFileName,
-      void *context);
+    typedef void (*pfBuildFileName)(
+        ::tm *time, unsigned long logNumber, std::string &newFileName,
+        void *context
+    );
 
   private:
     unsigned long m_rotateInterval;

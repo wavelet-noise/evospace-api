@@ -114,8 +114,9 @@ enum {
 
 typedef void *(*mz_alloc_func)(void *opaque, size_t items, size_t size);
 typedef void (*mz_free_func)(void *opaque, void *address);
-typedef void *(*mz_realloc_func
-)(void *opaque, void *address, size_t items, size_t size);
+typedef void *(*mz_realloc_func)(
+    void *opaque, void *address, size_t items, size_t size
+);
 
 #define MZ_VERSION "9.1.15"
 #define MZ_VERNUM 0x91F0
@@ -343,10 +344,12 @@ typedef struct {
     char m_comment[MZ_ZIP_MAX_ARCHIVE_FILE_COMMENT_SIZE];
 } mz_zip_archive_file_stat;
 
-typedef size_t (*mz_file_read_func
-)(void *pOpaque, mz_uint64 file_ofs, void *pBuf, size_t n);
-typedef size_t (*mz_file_write_func
-)(void *pOpaque, mz_uint64 file_ofs, const void *pBuf, size_t n);
+typedef size_t (*mz_file_read_func)(
+    void *pOpaque, mz_uint64 file_ofs, void *pBuf, size_t n
+);
+typedef size_t (*mz_file_write_func)(
+    void *pOpaque, mz_uint64 file_ofs, const void *pBuf, size_t n
+);
 
 struct mz_zip_internal_state_tag;
 typedef struct mz_zip_internal_state_tag mz_zip_internal_state;
@@ -658,8 +661,9 @@ void *tdefl_write_image_to_png_file_in_memory(
     const void *pImage, int w, int h, int num_chans, size_t *pLen_out
 );
 
-typedef mz_bool (*tdefl_put_buf_func_ptr
-)(const void *pBuf, int len, void *pUser);
+typedef mz_bool (*tdefl_put_buf_func_ptr)(
+    const void *pBuf, int len, void *pUser
+);
 
 mz_bool tdefl_compress_mem_to_output(
     const void *pBuf, size_t buf_len, tdefl_put_buf_func_ptr pPut_buf_func,
@@ -1571,8 +1575,8 @@ tinfl_status tinfl_decompress(
                     TINFL_GET_BYTE(7, r->m_raw_header[counter]);
             }
             if ((counter = (r->m_raw_header[0] | (r->m_raw_header[1] << 8))) !=
-                (mz_uint
-                )(0xFFFF ^ (r->m_raw_header[2] | (r->m_raw_header[3] << 8)))) {
+                (mz_uint)(0xFFFF ^
+                          (r->m_raw_header[2] | (r->m_raw_header[3] << 8)))) {
                 TINFL_CR_RETURN_FOREVER(39, TINFL_STATUS_FAILED);
             }
             while ((counter) && (num_bits)) {
@@ -2056,8 +2060,9 @@ int tinfl_decompress_mem_to_callback(
         );
         in_buf_ofs += in_buf_size;
         if ((dst_buf_size) &&
-            (!(*pPut_buf_func
-            )(pDict + dict_ofs, (int)dst_buf_size, pPut_buf_user)))
+            (!(*pPut_buf_func)(
+                pDict + dict_ofs, (int)dst_buf_size, pPut_buf_user
+            )))
             break;
         if (status != TINFL_STATUS_HAS_MORE_OUTPUT) {
             result = (status == TINFL_STATUS_DONE);
@@ -2361,8 +2366,9 @@ static void tdefl_optimize_huffman_table(
     {                                                                          \
         if (rle_repeat_count) {                                                \
             if (rle_repeat_count < 3) {                                        \
-                d->m_huff_count[2][prev_code_size] = (mz_uint16                \
-                )(d->m_huff_count[2][prev_code_size] + rle_repeat_count);      \
+                d->m_huff_count[2][prev_code_size] =                           \
+                    (mz_uint16)(d->m_huff_count[2][prev_code_size] +           \
+                                rle_repeat_count);                             \
                 while (rle_repeat_count--)                                     \
                     packed_code_sizes[num_packed_code_sizes++] =               \
                         prev_code_size;                                        \
@@ -3019,8 +3025,8 @@ static mz_bool tdefl_compress_fast(tdefl_compressor *d) {
 
             if (((cur_match_dist = (mz_uint16)(lookahead_pos - probe_pos)) <=
                  dict_size) &&
-                ((*(const mz_uint32
-                        *)(d->m_dict + (probe_pos &= TDEFL_LZ_DICT_SIZE_MASK)) &
+                ((*(const mz_uint32 *)(d->m_dict +
+                                       (probe_pos &= TDEFL_LZ_DICT_SIZE_MASK)) &
                   0xFFFFFF) == first_trigram)) {
                 const mz_uint16 *p = (const mz_uint16 *)pCur_dict;
                 const mz_uint16 *q = (const mz_uint16 *)(d->m_dict + probe_pos);
@@ -4062,11 +4068,10 @@ static void mz_zip_time_to_dos_time(
 #else
     struct tm *tm = localtime(&time);
 #endif
-    *pDOS_time = (mz_uint16
-    )(((tm->tm_hour) << 11) + ((tm->tm_min) << 5) + ((tm->tm_sec) >> 1));
-    *pDOS_date = (mz_uint16
-    )(((tm->tm_year + 1900 - 1980) << 9) + ((tm->tm_mon + 1) << 5) + tm->tm_mday
-    );
+    *pDOS_time = (mz_uint16)(((tm->tm_hour) << 11) + ((tm->tm_min) << 5) +
+                             ((tm->tm_sec) >> 1));
+    *pDOS_date = (mz_uint16)(((tm->tm_year + 1900 - 1980) << 9) +
+                             ((tm->tm_mon + 1) << 5) + tm->tm_mday);
 }
 #endif
 
@@ -4356,8 +4361,9 @@ mz_zip_reader_read_central_dir(mz_zip_archive *pZip, mz_uint32 flags) {
                 return MZ_FALSE;
             MZ_ZIP_ARRAY_ELEMENT(
                 &pZip->m_pState->m_central_dir_offsets, mz_uint32, i
-            ) = (mz_uint32
-            )(p - (const mz_uint8 *)pZip->m_pState->m_central_dir.m_p);
+            ) = (mz_uint32)(p -
+                            (const mz_uint8 *)pZip->m_pState->m_central_dir.m_p
+            );
             if (sort_central_dir)
                 MZ_ZIP_ARRAY_ELEMENT(
                     &pZip->m_pState->m_sorted_central_dir_offsets, mz_uint32, i

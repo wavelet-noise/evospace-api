@@ -28,6 +28,11 @@ class UInventoryContainer;
 class UInternalInventory;
 class URecipeInventory;
 
+class UBaseItemFilter;
+class UItemBlackFilter;
+class UItemWhiteFilter;
+class UItemInventoryFilter;
+
 class UPropsGenerator;
 class ULayeringGenerator;
 class UBiome;

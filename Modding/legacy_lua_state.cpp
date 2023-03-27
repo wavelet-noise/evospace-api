@@ -3,8 +3,8 @@
 
 #include "Core/base_inventory_accessor.h"
 #include "Core/block_logic.h"
+#include "Core/inventory_container.h"
 #include "Core/select_crafter.h"
-#include "Vanilla/inventory_container.h"
 
 using namespace luabridge;
 

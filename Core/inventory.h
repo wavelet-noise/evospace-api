@@ -12,7 +12,7 @@
 
 #include "Inventory.generated.h"
 
-class UInventoryFilter;
+class UBaseItemFilter;
 
 UCLASS(BlueprintType)
 /**
@@ -42,7 +42,7 @@ class UInventory : public UBaseInventory {
 
     FItemData &_AddEmpty_GetRef();
 
-    virtual void TrySetFilter(int32 index, UInventoryFilter *filter) override;
+    virtual void TrySetFilter(int32 index, UBaseItemFilter *filter) override;
 
   public:
     EVO_LUA_CODEGEN_DB(UInventory, Inventory);

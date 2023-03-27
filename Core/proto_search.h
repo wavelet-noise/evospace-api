@@ -5,16 +5,15 @@
 
 class UPrototype;
 
-template<typename T>
-class TextTrie {
-public:
+template <typename T> class TextTrie {
+  public:
     struct TrieNode {
         std::unordered_map<char, std::unique_ptr<TrieNode>> children;
         bool isLeaf = false;
         T value;
     };
 
-    void insert(const std::string& key, T value) {
+    void insert(const std::string &key, T value) {
         auto node = &root;
         for (char c : key) {
             auto childIt = node->children.find(c);
@@ -27,8 +26,8 @@ public:
         node->value = std::move(value);
     }
 
-    std::vector<const T*> search(const std::string& key) const {
-        std::vector<const T*> results;
+    std::vector<const T *> search(const std::string &key) const {
+        std::vector<const T *> results;
         auto node = findNode(key);
         if (node) {
             collectLeaves(node, results);
@@ -36,10 +35,10 @@ public:
         return results;
     }
 
-private:
+  private:
     TrieNode root;
 
-    TrieNode* findNode(const std::string& key) const {
+    TrieNode *findNode(const std::string &key) const {
         auto node = &root;
         for (char c : key) {
             auto childIt = node->children.find(c);
@@ -51,14 +50,15 @@ private:
         return node;
     }
 
-    void collectLeaves(const TrieNode* node, std::vector<const T*>& results) const {
+    void
+    collectLeaves(const TrieNode *node, std::vector<const T *> &results) const {
         if (node->isLeaf) {
             results.push_back(&node->value);
         }
-        for (const auto& child : node->children) {
+        for (const auto &child : node->children) {
             collectLeaves(child.second.get(), results);
         }
     }
 };
 
-using PrototypeSearch = TextTrie<UPrototype*>;
+using PrototypeSearch = TextTrie<UPrototype *>;

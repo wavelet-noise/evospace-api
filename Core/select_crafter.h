@@ -50,6 +50,9 @@ class USelectCrafter : public UCrafterBase {
     virtual bool LoadSettings(
         TSharedPtr<FJsonObject> json, AMainPlayerController *mpc = nullptr
     ) override;
+    ECanAccomodate checkCanAccommodate();
+    void processInput(int i_num);
+    void processOutput(int i_num);
 
   protected:
     virtual void Tick() override;

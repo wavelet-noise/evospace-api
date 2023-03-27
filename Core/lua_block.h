@@ -1,5 +1,5 @@
 #pragma once
-#include "Vanilla/tiered_block.h"
+#include "Core/tiered_block.h"
 
 #include "lua_block.generated.h"
 

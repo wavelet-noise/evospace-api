@@ -1554,8 +1554,8 @@ class Namespace : public detail::Registrar {
             return *this;
         }
 
-        Class<T> &addIndexMetaMethod(LuaRef (*idxf
-        )(T &, const LuaRef &, lua_State *)) {
+        Class<T> &
+        addIndexMetaMethod(LuaRef (*idxf)(T &, const LuaRef &, lua_State *)) {
             using FnType = decltype(idxf);
 
             assertStackState(
@@ -1572,8 +1572,8 @@ class Namespace : public detail::Registrar {
             return *this;
         }
 
-        Class<T> &addIndexMetaMethod(LuaRef (T::*idxf
-        )(const LuaRef &, lua_State *)) {
+        Class<T> &
+        addIndexMetaMethod(LuaRef (T::*idxf)(const LuaRef &, lua_State *)) {
             using MemFnPtr = decltype(idxf);
 
             assertStackState(
@@ -1620,8 +1620,9 @@ class Namespace : public detail::Registrar {
             return *this;
         }
 
-        Class<T> &addNewIndexMetaMethod(LuaRef (*idxf
-        )(T &, const LuaRef &, const LuaRef &, lua_State *)) {
+        Class<T> &addNewIndexMetaMethod(
+            LuaRef (*idxf)(T &, const LuaRef &, const LuaRef &, lua_State *)
+        ) {
             using FnType = decltype(idxf);
 
             assertStackState(
@@ -1638,8 +1639,9 @@ class Namespace : public detail::Registrar {
             return *this;
         }
 
-        Class<T> &addNewIndexMetaMethod(LuaRef (T::*idxf
-        )(const LuaRef &, const LuaRef &, lua_State *)) {
+        Class<T> &addNewIndexMetaMethod(
+            LuaRef (T::*idxf)(const LuaRef &, const LuaRef &, lua_State *)
+        ) {
             using MemFnPtr = decltype(idxf);
 
             assertStackState(

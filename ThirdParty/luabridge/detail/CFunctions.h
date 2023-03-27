@@ -652,7 +652,7 @@ template <class F, class T> int invoke_const_member_function(lua_State *L) {
  * ('this') value is at top ot the Lua stack.
  */
 template <class T> int invoke_member_cfunction(lua_State *L) {
-    using F = int (T::*)(lua_State * L);
+    using F = int (T::*)(lua_State *L);
 
     assert(isfulluserdata(L, lua_upvalueindex(1)));
 
@@ -666,7 +666,7 @@ template <class T> int invoke_member_cfunction(lua_State *L) {
 }
 
 template <class T> int invoke_const_member_cfunction(lua_State *L) {
-    using F = int (T::*)(lua_State * L) const;
+    using F = int (T::*)(lua_State *L) const;
 
     assert(isfulluserdata(L, lua_upvalueindex(1)));
 

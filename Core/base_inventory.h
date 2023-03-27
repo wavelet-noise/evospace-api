@@ -10,13 +10,13 @@
 
 #include "base_inventory.generated.h"
 
-class UInventoryFilter;
+class UBaseItemFilter;
 class UBaseInventory;
 class UItem;
 
 UCLASS(Abstract, BlueprintType)
 /**
- * @brief Base inventory. Container like object
+ * @brief Abstract Class. Base inventory. Container like object
  */
 class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     GENERATED_BODY()
@@ -50,9 +50,9 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     UFUNCTION(BlueprintCallable)
     virtual void SetWidgetClass(TSubclassOf<UInventoryWidgetBase> widget_class);
 
-    void SetFilter(UInventoryFilter *filter);
+    void SetFilter(UBaseItemFilter *filter);
 
-    UInventoryFilter *GetFilter();
+    UBaseItemFilter *GetFilter();
 
     void SetMaxSlotFunctor(TFunction<int64(const FItemData &)> func);
 
@@ -88,7 +88,7 @@ class UBaseInventory : public UInventoryAccess, public ISerializableJson {
     UPROPERTY(
         VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true")
     )
-    UInventoryFilter *mFilter;
+    UBaseItemFilter *mFilter;
 
     UPROPERTY(
         VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true")

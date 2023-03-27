@@ -2,9 +2,9 @@
 #pragma once
 #include "Core/inventory.h"
 #include "Core/item.h"
+#include "Core/tiered_block.h"
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
-#include "Vanilla/tiered_block.h"
 
 #include "robot_arm.generated.h"
 

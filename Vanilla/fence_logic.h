@@ -3,8 +3,8 @@
 #include "../../Blocks/SidesArray.h"
 #include "../../CoordinateMinimal.h"
 #include "Core/block_logic.h"
+#include "Core/tiered_block.h"
 #include "CoreMinimal.h"
-#include "Vanilla/tiered_block.h"
 
 #include <Engine/EngineTypes.h>
 

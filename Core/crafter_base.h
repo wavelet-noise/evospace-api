@@ -1,15 +1,18 @@
 // Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/tiered_block.h"
 #include "CoreMinimal.h"
 #include "Evospace/Blocks/ItemHopperInterface.h"
-#include "Vanilla/tiered_block.h"
 
 #include "crafter_base.generated.h"
 
 class UInternalInventory;
 class URecipeDictionary;
 
-UCLASS(BlueprintType)
+UCLASS(Abstract, BlueprintType)
+/**
+ * @brief Abstract Class.
+ */
 class UCrafterBase : public UTieredBlock, public ISwitchInterface {
     GENERATED_BODY()
 

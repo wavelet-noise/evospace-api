@@ -6,7 +6,7 @@
 
 #include "inventory_access.generated.h"
 
-class UInventoryFilter;
+class UBaseItemFilter;
 
 UCLASS(Abstract, BlueprintType)
 /**
@@ -103,7 +103,7 @@ class UInventoryAccess : public UInventoryReader {
     }
     virtual void Sanitize() {}
 
-    virtual void TrySetFilter(int32 index, UInventoryFilter *filter) {
+    virtual void TrySetFilter(int32 index, UBaseItemFilter *filter) {
         checkNoEntry();
     }
 

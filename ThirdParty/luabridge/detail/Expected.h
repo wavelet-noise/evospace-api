@@ -38,7 +38,7 @@ struct is_swappable_with_impl<
 template <class T, class U> struct is_nothrow_swappable_with_impl {
     static constexpr bool value =
         noexcept(swap(std::declval<T>(), std::declval<U>())
-        ) &&noexcept(swap(std::declval<U>(), std::declval<T>()));
+        ) && noexcept(swap(std::declval<U>(), std::declval<T>()));
 
     using type = std::bool_constant<value>;
 };
@@ -698,13 +698,13 @@ template <class E> class Unexpected {
     ) noexcept(std::is_nothrow_copy_constructible_v<E>)
         : error_(e) {}
 
-    constexpr const E &value() const &noexcept { return error_; }
+    constexpr const E &value() const & noexcept { return error_; }
 
-    constexpr E &value() &noexcept { return error_; }
+    constexpr E &value() & noexcept { return error_; }
 
-    constexpr const E &&value() const &&noexcept { return std::move(error_); }
+    constexpr const E &&value() const && noexcept { return std::move(error_); }
 
-    constexpr E &&value() &&noexcept { return std::move(error_); }
+    constexpr E &&value() && noexcept { return std::move(error_); }
 
   private:
     E error_;
@@ -741,11 +741,11 @@ template <class E> class BadExpectedAccess : public BadExpectedAccess<void> {
     ) noexcept(std::is_nothrow_constructible_v<E, E &&>)
         : error_(std::move(error)) {}
 
-    const E &error() const &noexcept { return error_; }
+    const E &error() const & noexcept { return error_; }
 
-    E &error() &noexcept { return error_; }
+    E &error() & noexcept { return error_; }
 
-    E &&error() &&noexcept { return std::move(error_); }
+    E &&error() && noexcept { return std::move(error_); }
 
   private:
     E error_;
@@ -982,7 +982,7 @@ class Expected : public detail::ExpectedBase<
         return base_type::value();
     }
 
-    constexpr const T &&value() const &&noexcept {
+    constexpr const T &&value() const && noexcept {
 #if LUABRIDGE_HAS_EXCEPTIONS
         if (!hasValue())
             throw BadExpectedAccess<E>(error());
@@ -999,15 +999,15 @@ class Expected : public detail::ExpectedBase<
         return std::move(base_type::value());
     }
 
-    constexpr const E &error() const &noexcept { return base_type::error(); }
+    constexpr const E &error() const & noexcept { return base_type::error(); }
 
-    constexpr E &error() &noexcept { return base_type::error(); }
+    constexpr E &error() & noexcept { return base_type::error(); }
 
-    constexpr const E &&error() const &&noexcept {
+    constexpr const E &&error() const && noexcept {
         return std::move(base_type::error());
     }
 
-    constexpr E &&error() &&noexcept { return std::move(base_type::error()); }
+    constexpr E &&error() && noexcept { return std::move(base_type::error()); }
 
     template <class U> constexpr T valueOr(U &&defaultValue) const & {
         return hasValue() ? value()
@@ -1023,8 +1023,8 @@ class Expected : public detail::ExpectedBase<
     template <class Tag, class... Args>
     auto assign(Tag tag, Args &&...args) noexcept(noexcept(
         std::declval<this_type>().destroy()
-    ) &&noexcept(std::declval<this_type>()
-                     .construct(tag, std::forward<Args>(args)...)))
+    ) && noexcept(std::declval<this_type>()
+                      .construct(tag, std::forward<Args>(args)...)))
         -> decltype(std::declval<this_type>()
                         .construct(tag, std::forward<Args>(args)...)) {
         this->destroy();
@@ -1150,22 +1150,22 @@ class Expected<void, E> : public detail::ExpectedBase<
 
     constexpr bool hasValue() const noexcept { return base_type::valid(); }
 
-    constexpr const E &error() const &noexcept { return base_type::error(); }
+    constexpr const E &error() const & noexcept { return base_type::error(); }
 
-    constexpr E &error() &noexcept { return base_type::error(); }
+    constexpr E &error() & noexcept { return base_type::error(); }
 
-    constexpr const E &&error() const &&noexcept {
+    constexpr const E &&error() const && noexcept {
         return std::move(base_type::error());
     }
 
-    constexpr E &&error() &&noexcept { return std::move(base_type::error()); }
+    constexpr E &&error() && noexcept { return std::move(base_type::error()); }
 
   private:
     template <class Tag, class... Args>
     void assign(Tag tag, Args &&...args) noexcept(noexcept(
         std::declval<this_type>().destroy()
-    ) &&noexcept(std::declval<this_type>()
-                     .construct(tag, std::forward<Args>(args)...))) {
+    ) && noexcept(std::declval<this_type>()
+                      .construct(tag, std::forward<Args>(args)...))) {
         this->destroy();
         this->construct(tag, std::forward<Args>(args)...);
     }

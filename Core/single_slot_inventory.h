@@ -20,13 +20,9 @@ class USingleSlotInventory : public UBaseInventory {
   public:
     USingleSlotInventory();
 
-    void SetCapacity(int64 value);
-
-    int64 GetCapacity() const;
-
     void SetSimpleFilter(const UItem *item);
 
-    virtual void TrySetFilter(int32 index, UInventoryFilter *filter) override;
+    virtual void TrySetFilter(int32 index, UBaseItemFilter *filter) override;
 
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 

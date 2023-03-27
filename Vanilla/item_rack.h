@@ -1,7 +1,7 @@
 // Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Core/storage_block.h"
 #include "CoreMinimal.h"
-#include "Vanilla/storage_block.h"
 
 #include "item_rack.generated.h"
 
