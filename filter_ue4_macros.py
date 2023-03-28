@@ -4,6 +4,32 @@ import os
 import re
 import sys
 
+def camel_to_snake_case(camel_case_str):
+    snake_case_str = ""
+
+    for i, char in enumerate(camel_case_str):
+        if char.isupper():
+            if i != 0:
+                snake_case_str += '_'
+            snake_case_str += char.lower()
+        else:
+            snake_case_str += char
+
+    return snake_case_str
+
+
+def replace_camel_case_with_snake_case(text):
+    def replace(match):
+        matched_str = match.group(0)
+        if matched_str.startswith("F") or matched_str.startswith("U"):
+            return matched_str
+        return camel_to_snake_case(matched_str)
+
+    # Regex pattern to match CamelCase words
+    pattern = r'[A-Z][a-z]*|[a-z]+[A-Z][a-z]*'
+    result = re.sub(pattern, replace, text)
+    return result
+
 
 def paren_matcher (n):
     return r"[^()]*?(?:\("*n+r"[^()]*?"+r"\)[^()]*?)*?"*n
@@ -16,6 +42,7 @@ for root, dirs, files in os.walk("./"):
             # Slurp file into a single string
             with open(namepath, 'r') as file:
                 content = file.read()
+                content = replace_camel_case_with_snake_case(content)
                 regex = '^(\s*)((?:UFUNCTION|UCLASS|UPROPERTY|UENUM|GENERATED_BODY)\s*\('+paren_matcher(25)+'\))'
                 content = re.sub(regex, r'\1', content, flags=re.MULTILINE)
                 content = re.sub(r'\bU[A-Z]\w+', lambda x: x.group().replace("U", ""), content)
