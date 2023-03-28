@@ -44,7 +44,7 @@ jobs:
       
     - name: Copy doxygen-awesome-css files to html directory
       run: |
-        cp -r doxygen-awesome-css/* html
+        cp -r doxygen-awesome-css/* doxygen/html
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
