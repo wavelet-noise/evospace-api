@@ -42,6 +42,9 @@ jobs:
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
       
+    - name: Set write permissions on html directory
+      run: chmod u+w doxygen/html
+      
     - name: Copy doxygen-awesome-css files to html directory
       run: |
         cp -r doxygen-awesome-css/* doxygen/html
