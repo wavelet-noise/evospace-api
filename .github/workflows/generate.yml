@@ -41,19 +41,18 @@ jobs:
         
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
-      
-    - name: Set write permissions on html directory
-      run: chmod u+w doxygen/html
+      env:
+        OUTPUT_DIRECTORY: './output'
       
     - name: Copy doxygen-awesome-css files to html directory
       run: |
-        cp -r doxygen-awesome-css/* doxygen/html
+        cp -r ./doxygen-awesome-css/* ./output
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
       env:
         REPO: self
         BRANCH: gh-pages
-        FOLDER: doxygen/html
+        FOLDER: ./output
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SQUASH_HISTORY: true
