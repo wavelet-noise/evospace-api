@@ -13,6 +13,13 @@ def camel_to_snake_case(camel_case_str):
             if current_word:
                 snake_case_parts.append(current_word)
             current_word = char.lower()
+        elif char.isdigit():
+            if current_word and current_word[-1].isdigit():
+                current_word += char
+            else:
+                if current_word:
+                    snake_case_parts.append(current_word)
+                current_word = char
         else:
             current_word += char
 
