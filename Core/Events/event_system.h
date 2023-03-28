@@ -50,7 +50,7 @@ template <typename EventType> class TypedEvent : public Event {
 };
 
 class BaseEventBus {
-public:
+  public:
     virtual ~BaseEventBus() = default;
 };
 
@@ -90,34 +90,32 @@ template <typename EventType> class EventBus : public BaseEventBus {
 };
 
 class EventSystem {
-public:
-    template<typename EventType>
-    SubscriptionHandle subscribe(const typename EventBus<EventType>::EventCallback& callback) {
+  public:
+    template <typename EventType>
+    SubscriptionHandle
+    subscribe(const typename EventBus<EventType>::EventCallback &callback) {
         return getEventBus<EventType>().subscribe(callback);
     }
 
-    template<typename EventType>
-    void unsubscribe(const SubscriptionHandle& handle) {
+    template <typename EventType>
+    void unsubscribe(const SubscriptionHandle &handle) {
         getEventBus<EventType>().unsubscribe(handle);
     }
 
-    template<typename EventType>
-    void publish(const EventType& event) {
+    template <typename EventType> void publish(const EventType &event) {
         getEventBus<EventType>().publish(event);
     }
 
-    template<typename EventType>
-    void clear() {
+    template <typename EventType> void clear() {
         getEventBus<EventType>().clear();
     }
 
-private:
-    template<typename EventType>
-        EventBus<EventType>& getEventBus() {
-        static std::shared_ptr<EventBus<EventType>> mEventBuses = [](){
+  private:
+    template <typename EventType> EventBus<EventType> &getEventBus() {
+        static std::shared_ptr<EventBus<EventType>> mEventBuses = []() {
             return std::make_shared<EventBus<EventType>>();
         }();
-        
+
         return *mEventBuses;
     }
 };

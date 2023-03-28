@@ -7,4 +7,4 @@ class UBaseAccessor;
 namespace evo {
 using AccessorEvent = TypedEvent<UBaseAccessor *>;
 using DimensionLoadedEvent = TypedEvent<ADimension *>;
-}
+} // namespace evo
