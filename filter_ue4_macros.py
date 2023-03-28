@@ -26,7 +26,7 @@ def replace_camel_case_with_snake_case(text):
         return camel_to_snake_case(matched_str)
 
     # Regex pattern to match CamelCase words
-    pattern = r'[A-Z][a-z]*|[a-z]+[A-Z][a-z]*'
+    pattern = r'\b(?:F|U)?[A-Z][a-z]*|[a-z]+[A-Z][a-z]*\b'
     result = re.sub(pattern, replace, text)
     return result
 
