@@ -67,4 +67,4 @@ class UStaticMeshComponent {
      * @return FVector representing the relative scale of the component.
      */
     FVector GetRelativeScale3D() const;
-}
+};
