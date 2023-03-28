@@ -1,9 +1,15 @@
-/**
- * @brief Set the static mesh for the component.
- * @param StaticMesh UStaticMesh pointer representing the new static mesh.
- */
 
+#pragma once
+
+/**
+ * @brief Static mesh component
+ */
 class UStaticMeshComponent {
+
+    /**
+     * @brief Set the static mesh for the component.
+     * @param StaticMesh UStaticMesh pointer representing the new static mesh.
+     */
     void SetStaticMesh(UStaticMesh* StaticMesh);
 
     /**
