@@ -39,10 +39,12 @@ jobs:
         
         python lua_code_highlight.py
         
+        mkdir output
+        
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
       env:
-        OUTPUT_DIRECTORY: './output'
+        OUTPUT_DIRECTORY: output
       
     - name: Copy doxygen-awesome-css files to html directory
       run: |
