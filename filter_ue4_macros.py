@@ -25,7 +25,7 @@ def camel_to_snake_case(camel_case_str):
 def replace_camel_case_with_snake_case(text):
     def replace(match):
         matched_str = match.group(0)
-        if matched_str.startswith("F") or matched_str.startswith("U") or matched_str in {'Vec2i', 'Vec3i', 'Vec3'}:
+        if matched_str.startswith("F") or matched_str.startswith("U") or matched_str.startswith("A") or matched_str in {'Vec2i', 'Vec3i', 'Vec3'}:
             return matched_str
         return camel_to_snake_case(matched_str)
 
