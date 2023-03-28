@@ -53,7 +53,7 @@ def paren_matcher (n):
 for root, dirs, files in os.walk("./"):
     for filename in files:
         namepath = os.path.join(root, filename)
-        if namepath.find(".h") != -1:
+        if namepath.find(".h") != -1 and namepath.find(".html") == -1:
             print(namepath)
             # Slurp file into a single string
             with open(namepath, 'r') as file:
