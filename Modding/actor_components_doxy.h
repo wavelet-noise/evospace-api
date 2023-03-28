@@ -5,7 +5,7 @@
  * @brief Static mesh component
  */
 class UStaticMeshComponent {
-
+public:
     /**
      * @brief Set the static mesh for the component.
      * @param StaticMesh UStaticMesh pointer representing the new static mesh.
