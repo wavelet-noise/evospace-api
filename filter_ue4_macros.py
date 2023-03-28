@@ -21,7 +21,10 @@ def camel_to_snake_case(camel_case_str):
 
     if current_word:
         if current_word[-1].isdigit() and not (len(current_word) > 1 and current_word[-2] == 'D'):
-            snake_case_parts[-1] = snake_case_parts[-1] + current_word
+            if snake_case_parts:
+                snake_case_parts[-1] = snake_case_parts[-1] + current_word
+            else:
+                snake_case_parts.append(current_word)
         else:
             snake_case_parts.append(current_word)
 
