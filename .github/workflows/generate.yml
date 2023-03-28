@@ -41,6 +41,10 @@ jobs:
         
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@1.9.4
+      
+    - name: Copy doxygen-awesome-css files to html directory
+      run: |
+        cp -r doxygen-awesome-css/* html
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
