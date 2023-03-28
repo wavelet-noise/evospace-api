@@ -10,16 +10,9 @@ def camel_to_snake_case(camel_case_str):
 
     for i, char in enumerate(camel_case_str):
         if char.isupper():
-            if current_word and not (len(current_word) == 1 and current_word[-1].isdigit()):
+            if current_word and not (current_word[-1].isdigit() and char.isdigit()):
                 snake_case_parts.append(current_word)
             current_word = char.lower()
-        elif char.isdigit():
-            if current_word and current_word[-1].isdigit():
-                current_word += char
-            else:
-                if current_word:
-                    snake_case_parts.append(current_word)
-                current_word = char
         else:
             current_word += char
 
