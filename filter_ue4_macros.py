@@ -5,17 +5,21 @@ import re
 import sys
 
 def camel_to_snake_case(camel_case_str):
-    snake_case_str = ""
+    snake_case_parts = []
+    current_word = ""
 
     for i, char in enumerate(camel_case_str):
         if char.isupper():
-            if i != 0:
-                snake_case_str += '_'
-            snake_case_str += char.lower()
+            if current_word:
+                snake_case_parts.append(current_word)
+            current_word = char.lower()
         else:
-            snake_case_str += char
+            current_word += char
 
-    return snake_case_str
+    if current_word:
+        snake_case_parts.append(current_word)
+
+    return '_'.join(snake_case_parts)
 
 
 def replace_camel_case_with_snake_case(text):
@@ -26,7 +30,7 @@ def replace_camel_case_with_snake_case(text):
         return camel_to_snake_case(matched_str)
 
     # Regex pattern to match CamelCase words
-    pattern = r'\b(?:F|U)?[A-Z][a-z]*|\b(?:F|U)?[A-Z][a-z]*[A-Z][a-zA-Z0-9]*\b'
+    pattern = r'\b(?:F|U)?[A-Z][a-zA-Z0-9]*\b'
     result = re.sub(pattern, replace, text)
     return result
 
