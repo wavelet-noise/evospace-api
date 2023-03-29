@@ -31,26 +31,12 @@ jobs:
         mkdir output
         
     - name: Doxygen Action
-      uses: mattnotmitt/doxygen-action@1.9.4
+      uses: mattnotmitt/doxygen-action@v1.0.0
       
-    - name: Clone doxygen-awesome-css
-      uses: actions/checkout@v2
-      with:
-        repository: jothepro/doxygen-awesome-css
-        ref: v2.1.0
-        path: doxygen-awesome-css
-        
-    - name: Copy doxygen-awesome-css files to artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: doxygen-awesome-css
-        path: doxygen-awesome-css
-
-    - name: Download doxygen-awesome-css files from artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: doxygen-awesome-css
-        path: doxygen/html
+    - name: Clone doxygen-awesome-css and copy to output
+      run: |
+        git clone https://github.com/jothepro/doxygen-awesome-css.git
+        cp -r doxygen-awesome-css/doxygen-awesome/ doxygen/html
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
