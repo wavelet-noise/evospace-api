@@ -36,7 +36,7 @@ jobs:
     - name: Clone doxygen-awesome-css and copy to output
       run: |
         git clone https://github.com/jothepro/doxygen-awesome-css.git
-        cp -r doxygen-awesome-css/ doxygen/html
+        sudo cp -r doxygen-awesome-css/ doxygen/html
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
