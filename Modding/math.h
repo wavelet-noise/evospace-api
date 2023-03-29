@@ -16,6 +16,18 @@ inline void registerUnrealClasses(lua_State *L) {
         .addProperty("g", &FColor::G, true)
         .addProperty("b", &FColor::B, true)
         .addProperty("a", &FColor::A, true)
+        .addStaticProperty("red", []() { return FColor::Red; })
+        .addStaticProperty("green", []() { return FColor::Green; })
+        .addStaticProperty("blue", []() { return FColor::Blue; })
+        .addStaticProperty("yellow", []() { return FColor::Yellow; })
+        .addStaticProperty("cyan", []() { return FColor::Cyan; })
+        .addStaticProperty("magenta", []() { return FColor::Magenta; })
+        .addStaticProperty("white", []() { return FColor::White; })
+        .addStaticProperty("black", []() { return FColor::Black; })
+        .addStaticProperty("gray", []() { return FColor::Gray; })
+        .addStaticProperty("orange", []() { return FColor::Orange; })
+        .addStaticProperty("purple", []() { return FColor::Purple; })
+        .addStaticProperty("transparent", []() { return FColor::Transparent; })
         .endClass();
 
     // FQuat

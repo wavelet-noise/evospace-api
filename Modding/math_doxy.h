@@ -1,18 +1,31 @@
 #pragma once
 /**
-* @class FColor
+ * @class FColor
  * @brief Represents a color using four 8-bit channels (RGBA).
  *
- * FColor stores color components as unsigned 8-bit integers, each ranging from 0 to 255.
- * This class provides basic functionality to manipulate colors, such as reading and setting
- * individual color channels.
+ * FColor stores color components as unsigned 8-bit integers, each ranging from
+ * 0 to 255. This class provides basic functionality to manipulate colors, such
+ * as reading and setting individual color channels.
  */
 class FColor {
-public:
+  public:
     uint8 R; /**< Red color component */
     uint8 G; /**< Green color component */
     uint8 B; /**< Blue color component */
     uint8 A; /**< Alpha (transparency) component */
+
+    /**
+     * @property red A predefined red color (255, 0, 0).
+     * @property green A predefined green color (0, 255, 0).
+     * @property blue A predefined blue color (0, 0, 255).
+     * @property yellow A predefined yellow color (255, 255, 0).
+     * @property cyan A predefined cyan color (0, 255, 255).
+     * @property magenta A predefined magenta color (255, 0, 255).
+     * @property white A predefined white color (255, 255, 255).
+     * @property black A predefined black color (0, 0, 0).
+     * @property gray A predefined gray color (128, 128, 128).
+     * @property transparent A predefined transparent color (0, 0, 0, 0).
+     **/
 };
 
 /**
@@ -23,7 +36,7 @@ public:
  * It provides various operations to manipulate and transform quaternions.
  */
 class FQuat {
-public:
+  public:
     float X; /**< X component of the quaternion */
     float Y; /**< Y component of the quaternion */
     float Z; /**< Z component of the quaternion */
@@ -50,17 +63,20 @@ public:
 
 /**
  * @class FTransform
- * @brief Represents a 3D transformation, including translation, rotation, and scale.
+ * @brief Represents a 3D transformation, including translation, rotation, and
+ * scale.
  *
- * FTransform is a class that stores a 3D transformation, including translation (position),
- * rotation (orientation), and scale. It provides various operations to manipulate and
- * transform objects in 3D space.
+ * FTransform is a class that stores a 3D transformation, including translation
+ * (position), rotation (orientation), and scale. It provides various operations
+ * to manipulate and transform objects in 3D space.
  */
 class FTransform {
-public:
-    FVector Translation; /**< Translation (position) component of the transform */
-    FQuat Rotation;      /**< Rotation (orientation) component of the transform as a quaternion */
-    FVector Scale;       /**< Scale component of the transform */
+  public:
+    FVector
+        Translation; /**< Translation (position) component of the transform */
+    FQuat Rotation;  /**< Rotation (orientation) component of the transform as a
+                        quaternion */
+    FVector Scale;   /**< Scale component of the transform */
 
     /**
      * @brief Get the forward vector of the transform.
@@ -85,32 +101,32 @@ public:
      * @param Position The position vector to transform.
      * @return FVector representing the transformed position.
      */
-    FVector TransformPosition(const FVector& Position) const;
+    FVector TransformPosition(const FVector &Position) const;
 
     /**
      * @brief Inverse transform a position vector by this transform.
      * @param Position The position vector to inverse transform.
      * @return FVector representing the inverse transformed position.
      */
-    FVector InverseTransformPosition(const FVector& Position) const;
+    FVector InverseTransformPosition(const FVector &Position) const;
 
     /**
- * @brief Set the location (translation) of the transform.
- * @param Location FVector representing the new location.
- */
-    void SetLocation(const FVector& Location);
+     * @brief Set the location (translation) of the transform.
+     * @param Location FVector representing the new location.
+     */
+    void SetLocation(const FVector &Location);
 
     /**
      * @brief Set the rotation (orientation) of the transform.
      * @param Rotation FQuat representing the new rotation as a quaternion.
      */
-    void SetRotation(const FQuat& Rotation);
+    void SetRotation(const FQuat &Rotation);
 
     /**
      * @brief Set the scale of the transform.
      * @param Scale FVector representing the new scale.
      */
-    void SetScale3D(const FVector& Scale);
+    void SetScale3D(const FVector &Scale);
 
     /**
      * @brief Get the location (translation) of the transform.
