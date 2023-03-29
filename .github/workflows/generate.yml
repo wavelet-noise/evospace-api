@@ -39,9 +39,18 @@ jobs:
         repository: jothepro/doxygen-awesome-css
         ref: v2.1.0
         path: doxygen-awesome-css
+        
+    - name: Copy doxygen-awesome-css files to artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: doxygen-awesome-css
+        path: doxygen-awesome-css
 
-    - name: Copy doxygen-awesome-css files to doxygen/html directory
-      run: cp -r doxygen-awesome-css/* doxygen/html/
+    - name: Download doxygen-awesome-css files from artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: doxygen-awesome-css
+        path: doxygen/html
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
