@@ -24,23 +24,21 @@ jobs:
         rm -rf .git
         rm -rf .github
         
-        echo "- clone doxy css -"
-        
-        git clone https://github.com/jothepro/doxygen-awesome-css.git
-        cd doxygen-awesome-css
-        git checkout v2.1.0
-        
-        rm -rf .git
-        rm -rf .github
-        
-        cd ..
-        
         python filter_ue4_macros.py
         
         python lua_code_highlight.py
         
+        mkdir output
+        
     - name: Doxygen Action
-      uses: mattnotmitt/doxygen-action@1.9.4
+      uses: mattnotmitt/doxygen-action@v1.0.0
+      
+    - name: Clone doxygen-awesome-css and copy to output
+      run: |
+        git clone https://github.com/jothepro/doxygen-awesome-css.git
+        rm -rf doxygen-awesome-css/.git
+        rm -rf doxygen-awesome-css/.github
+        sudo cp -r doxygen-awesome-css/* doxygen/html
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
