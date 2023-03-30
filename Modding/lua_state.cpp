@@ -1,6 +1,7 @@
 // Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #include "lua_state.h"
 
+#include "actor_components.h"
 #include "Core/block.h"
 #include "Core/item.h"
 #include "Core/recipe.h"
@@ -9,6 +10,7 @@
 #include "Evospace/MainGameModLoader.h"
 #include "Evospace/Shared/static_logger.h"
 #include "luabridge_extension.h"
+#include "math.h"
 
 namespace evo {
 
@@ -221,180 +223,9 @@ LuaState::LuaState() {
 
     using namespace luabridge;
 
-    getGlobalNamespace(L)
-        .beginClass<UIcoGenerator>("IcoGenerator")
-        .addStaticFunction("combine", &UIcoGenerator::combine)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<UTexture2D>("Texture")
-        .addStaticFunction("find", &LuaState::find_texture)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<UMaterialInterface>("Material")
-        .addStaticFunction("load", &LuaState::find_material)
-        .endClass();
-
-    getGlobalNamespace(L).beginClass<UStaticMesh>("Mesh").endClass();
-
-    getGlobalNamespace(L).beginClass<UObject>("Object").endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<UClass>("Class")
-        .addStaticFunction("find", &LuaState::find_class)
-        .addStaticFunction("load", &LuaState::load_class)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<APlayerController>("PlayerController")
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<Vec3i>("Vec3i")
-        .addStaticFunction(
-            "new", +[](int32 x, int32 y, int32 z) { return Vec3i(x, y, z); }
-        )
-        .addStaticFunction(
-            "one", +[]() { return Vec3i(1); }
-        )
-        .addStaticProperty(
-            "zero", +[]() { return Vec3i(0); }
-        )
-        .addStaticProperty(
-            "up", +[]() { return Side::Up; }
-        )
-        .addStaticProperty(
-            "down", +[]() { return Side::Down; }
-        )
-        .addStaticProperty(
-            "left", +[]() { return Side::Left; }
-        )
-        .addStaticProperty(
-            "right", +[]() { return Side::Right; }
-        )
-        .addStaticProperty(
-            "back", +[]() { return Side::Back; }
-        )
-        .addStaticProperty(
-            "front", +[]() { return Side::Front; }
-        )
-        .addProperty("x", &Vec3i::X, true)
-        .addProperty("y", &Vec3i::Y, true)
-        .addProperty("z", &Vec3i::Z, true)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<Vec2i>("Vec2i")
-        .addStaticFunction(
-            "new", +[](int32 x, int32 y) { return Vec2i(x, y); }
-        )
-        .addStaticProperty(
-            "zero", +[]() { return Vec2i(0); }
-        )
-        .addStaticProperty(
-            "one", +[]() { return Vec2i(1); }
-        )
-        .addProperty("x", &Vec2i::X, true)
-        .addProperty("y", &Vec2i::Y, true)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<FVector>("Vec3")
-        .addStaticFunction(
-            "new", +[](float x, float y, float z) { return FVector(x, y, z); }
-        )
-        .addStaticFunction(
-            "one", +[]() { return FVector(1); }
-        )
-        .addStaticProperty(
-            "zero", +[]() { return FVector(0); }
-        )
-        .addStaticProperty(
-            "up", +[]() { return FVector(Side::Up.X, Side::Up.Y, Side::Up.Z); }
-        )
-        .addStaticProperty(
-            "down",
-            +[]() { return FVector(Side::Down.X, Side::Down.Y, Side::Down.Z); }
-        )
-        .addStaticProperty(
-            "left",
-            +[]() { return FVector(Side::Left.X, Side::Left.Y, Side::Left.Z); }
-        )
-        .addStaticProperty(
-            "right",
-            +[]() {
-                return FVector(Side::Right.X, Side::Right.Y, Side::Right.Z);
-            }
-        )
-        .addStaticProperty(
-            "back",
-            +[]() { return FVector(Side::Back.X, Side::Back.Y, Side::Back.Z); }
-        )
-        .addStaticProperty(
-            "front",
-            +[]() {
-                return FVector(Side::Front.X, Side::Front.Y, Side::Front.Z);
-            }
-        )
-        .addProperty("x", &FVector::X, true)
-        .addProperty("y", &FVector::Y, true)
-        .addProperty("z", &FVector::Z, true)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginNamespace("cs")
-        .addFunction(
-            "bp2sp",
-            +[](const Vec3i &bpos) { auto spos = cs::WBtoS(bpos, gSectorSize); }
-        )
-        .addFunction(
-            "w2bp", +[](const FVector &world) { auto spos = cs::WtoWB(world); }
-        )
-        .addFunction(
-            "bp2w", +[](const Vec3i &bpos) { auto spos = cs::WBtoW(bpos); }
-        )
-        .addFunction(
-            "w2sp",
-            +[](const FVector &world) {
-                auto spos = cs::WBtoS(world, gSectorSize);
-            }
-        )
-        .endNamespace();
-
-    getGlobalNamespace(L)
-        .beginClass<KeyTable>("Loc")
-        .addStaticFunction("new", &KeyTable::create)
-        .addStaticFunction("new_param", &KeyTable::new_param)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<FItemData>("ItemData")
-        .addStaticFunction(
-            "new_empty", +[]() { return FItemData(); }
-        )
-        .addStaticFunction(
-            "new",
-            +[](UItem *item, int64 count) { return FItemData(item, count); }
-        )
-        .addStaticFunction(
-            "new_zero", +[](UItem *item) { return FItemData(item); }
-        )
-        .addProperty("count", &FItemData::count)
-        .addProperty("item", &FItemData::item)
-        .endClass();
-
-    getGlobalNamespace(L)
-        .beginClass<URecipe>("Recipe")
-        .addStaticFunction("new", &URecipe::lua_new)
-        .addProperty("loss", &URecipe::loss)
-        .addProperty("ticks", &URecipe::ticks)
-        .addProperty("input", &URecipe::input, false)
-        .addProperty("output", &URecipe::output, false)
-        .addProperty("res_input", &URecipe::res_input)
-        .addProperty("res_output", &URecipe::res_output)
-        .addProperty("name", &URecipe::get_name, &URecipe::set_name)
-        .endClass();
+    registerComponentClasses(L);
+    
+    registerMathClasses(L);
 
     run_code(
         "require('jit') if type(jit) == 'table' then print(jit.version) else "
