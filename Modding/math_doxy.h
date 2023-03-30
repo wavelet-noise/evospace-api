@@ -15,17 +15,45 @@ class FColor {
     uint8 A; /**< Alpha (transparency) component */
 
     /**
-     * @property red A predefined red color (255, 0, 0).
-     * @property green A predefined green color (0, 255, 0).
-     * @property blue A predefined blue color (0, 0, 255).
-     * @property yellow A predefined yellow color (255, 255, 0).
-     * @property cyan A predefined cyan color (0, 255, 255).
-     * @property magenta A predefined magenta color (255, 0, 255).
-     * @property white A predefined white color (255, 255, 255).
-     * @property black A predefined black color (0, 0, 0).
-     * @property gray A predefined gray color (128, 128, 128).
-     * @property transparent A predefined transparent color (0, 0, 0, 0).
+     * @brief red A predefined red color (255, 0, 0).
      **/
+    static FColor red;
+    /**
+     * @brief green A predefined green color (0, 255, 0).
+     **/
+    static FColor green;
+    /**
+     * @brief blue A predefined blue color (0, 0, 255).
+     **/
+    static FColor blue;
+    /**
+     * @brief yellow A predefined yellow color (255, 255, 0).
+     **/
+    static FColor yellow;
+    /**
+     * @brief cyan A predefined cyan color (0, 255, 255).
+     **/
+    static FColor cyan;
+    /**
+     * @brief magenta A predefined magenta color (255, 0, 255).
+     **/
+    static FColor magenta;
+    /**
+     * @brief white A predefined white color (255, 255, 255).
+     * */
+    static FColor white;
+    /**
+     * @brief black A predefined black color (0, 0, 0).
+     **/
+    static FColor black;
+    /**
+     * @brief gray A predefined gray color (128, 128, 128).
+     **/
+    static FColor gray;
+    /**
+     * @brief transparent A predefined transparent color (0, 0, 0, 0).
+     **/
+    static FColor transparent;
 };
 
 /**
