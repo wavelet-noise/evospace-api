@@ -24,7 +24,7 @@ inline void registerUnrealClasses(lua_State *L) {
         .addStaticProperty("magenta", []() { return FColor::Magenta; })
         .addStaticProperty("white", []() { return FColor::White; })
         .addStaticProperty("black", []() { return FColor::Black; })
-        .addStaticProperty("gray", []() { return FColor::Gray; })
+        .addStaticProperty("gray", []() { return FColor(128,128,128,255); })
         .addStaticProperty("orange", []() { return FColor::Orange; })
         .addStaticProperty("purple", []() { return FColor::Purple; })
         .addStaticProperty("transparent", []() { return FColor::Transparent; })
