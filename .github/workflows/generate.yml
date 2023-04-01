@@ -39,6 +39,7 @@ jobs:
         rm -rf doxygen-awesome-css/.git
         rm -rf doxygen-awesome-css/.github
         sudo cp -r doxygen-awesome-css/* doxygen/html
+        sudo cp -f doxygen/html/doxygen-awesome.css doxygen/html/doxygen.css
         
     - name: Deploy 🚀
       uses: s0/git-publish-subdir-action@develop
