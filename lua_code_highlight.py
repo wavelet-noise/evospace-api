@@ -154,7 +154,7 @@ for root, dirs, files in os.walk('./'):
 
                 if code.find('<div class="fragment">') != -1:
                     print('already decorated')
-                    # continue
+                    continue
 
                 print('colorize code in ' + namepath)
 
