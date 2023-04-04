@@ -342,7 +342,7 @@ class Texture2D {
  *
  * This class is used for managing static meshes in the engine, including loading, modifying, and rendering them.
  */
-class StaticMesh {
+class UStaticMesh {
     
 };
 
@@ -353,7 +353,7 @@ class StaticMesh {
  * allows constant-time insertions and removals at the end, and linear time for insertions and removals in the middle.
  * std::vector automatically manages its memory, resizing as necessary when elements are added or removed.
  */
-class Array {
+class UArray {
     
 };
 
@@ -366,6 +366,6 @@ class Array {
  * The container uses a hash function to compute the hash value for each key, which determines the position of the
  * key-value pair in the internal data structure. The container automatically handles collisions and manages its memory.
  */
-class Table {
+class UTable {
     
 };
