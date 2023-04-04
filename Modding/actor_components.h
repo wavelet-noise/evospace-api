@@ -26,7 +26,7 @@ inline void registerComponentClasses(lua_State *L) {
         .addStaticFunction("load", &evo::LuaState::find_material)
         .endClass();
 
-    luabridge::getGlobalNamespace(L).beginClass<UStaticMesh>("Mesh").endClass();
+    luabridge::getGlobalNamespace(L).beginClass<UStaticMesh>("StaticMesh").endClass();
 
     luabridge::getGlobalNamespace(L).beginClass<UObject>("Object").endClass();
 

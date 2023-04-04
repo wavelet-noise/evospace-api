@@ -59,6 +59,9 @@ for root, dirs, files in os.walk("./"):
             with open(namepath, 'r') as file:
                 content = file.read()
                 content = content.replace('FVector', 'Vec3')
+                content = content.replace('std::vector', 'Array')
+                content = content.replace('std::unordered_map', 'Table')
+                content = content.replace('std::map', 'Table')
                 content = replace_camel_case_with_snake_case(content)
                 regex = '^(\s*)((?:UFUNCTION|UCLASS|UPROPERTY|UENUM|GENERATED_BODY)\s*\('+paren_matcher(25)+'\))'
                 content = re.sub(regex, r'\1', content, flags=re.MULTILINE)
