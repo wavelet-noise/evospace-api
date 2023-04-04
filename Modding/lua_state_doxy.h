@@ -369,3 +369,31 @@ class UArray {
 class UTable {
     
 };
+
+/**
+ * @brief Any engine class
+ */
+class UClass {
+    
+};
+
+/**
+ * @brief Recipe
+ */
+class URecipe {
+    
+};
+
+/**
+ * @brief PlayerController
+ */
+class UPlayerController {
+    
+};
+
+/**
+ * @brief PlayerCharacter
+ */
+class UPlayerCharacter {
+    
+};
