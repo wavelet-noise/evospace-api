@@ -333,7 +333,7 @@ class cs {
  *
  * This class is used for managing 2D textures in the engine, including loading, modifying, and rendering them.
  */
-class Texture2D {
+class UTexture2D {
     
 };
 
