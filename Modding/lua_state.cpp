@@ -11,6 +11,7 @@
 #include "Evospace/Shared/static_logger.h"
 #include "luabridge_extension.h"
 #include "math.h"
+#include "misc_evospace.h"
 
 namespace evo {
 
@@ -223,9 +224,17 @@ LuaState::LuaState() {
 
     using namespace luabridge;
 
+    LOG(TRACE_LL) << "Lua actor component registering";
+    
     registerComponentClasses(L);
+
+    LOG(TRACE_LL) << "Lua extra math registering";
     
     registerMathClasses(L);
+
+    LOG(TRACE_LL) << "Lua misc classes registering";
+
+    registerMiscClasses(L);
 
     run_code(
         "require('jit') if type(jit) == 'table' then print(jit.version) else "
