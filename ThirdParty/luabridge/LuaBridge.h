@@ -5,6 +5,10 @@
 // clang-format off
 
 #pragma once
+#pragma warning( disable : 4583 )
+#pragma warning( disable : 4582 )
+#pragma warning( disable : 4800 )
+#pragma warning( disable : 4083 )
 
 #include "../lua/lua.hpp"
 
