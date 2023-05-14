@@ -1,7 +1,6 @@
 // Copyright (c) 2017 - 2023, Samsonov Andrey. All Rights Reserved.
 #include "lua_state.h"
 
-#include "actor_components.h"
 #include "Core/block.h"
 #include "Core/item.h"
 #include "Core/recipe.h"
@@ -9,6 +8,7 @@
 #include "Evospace/IcoGenerator.h"
 #include "Evospace/MainGameModLoader.h"
 #include "Evospace/Shared/static_logger.h"
+#include "actor_components.h"
 #include "luabridge_extension.h"
 #include "math.h"
 #include "misc_evospace.h"
@@ -225,11 +225,11 @@ LuaState::LuaState() {
     using namespace luabridge;
 
     LOG(TRACE_LL) << "Lua actor component registering";
-    
+
     registerComponentClasses(L);
 
     LOG(TRACE_LL) << "Lua extra math registering";
-    
+
     registerMathClasses(L);
 
     LOG(TRACE_LL) << "Lua misc classes registering";

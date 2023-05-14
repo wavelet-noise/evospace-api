@@ -17,18 +17,42 @@ inline void registerMathClasses(lua_State *L) {
         .addProperty("g", &FColor::G, true)
         .addProperty("b", &FColor::B, true)
         .addProperty("a", &FColor::A, true)
-        .addStaticProperty("red", +[]() { return FColor::Red; })
-        .addStaticProperty("green", +[]() { return FColor::Green; })
-        .addStaticProperty("blue", +[]() { return FColor::Blue; })
-        .addStaticProperty("yellow", +[]() { return FColor::Yellow; })
-        .addStaticProperty("cyan", +[]() { return FColor::Cyan; })
-        .addStaticProperty("magenta", +[]() { return FColor::Magenta; })
-        .addStaticProperty("white", +[]() { return FColor::White; })
-        .addStaticProperty("black", +[]() { return FColor::Black; })
-        .addStaticProperty("gray", +[]() { return FColor(128,128,128,255); })
-        .addStaticProperty("orange", +[]() { return FColor::Orange; })
-        .addStaticProperty("purple", +[]() { return FColor::Purple; })
-        .addStaticProperty("transparent", +[]() { return FColor::Transparent; })
+        .addStaticProperty(
+            "red", +[]() { return FColor::Red; }
+        )
+        .addStaticProperty(
+            "green", +[]() { return FColor::Green; }
+        )
+        .addStaticProperty(
+            "blue", +[]() { return FColor::Blue; }
+        )
+        .addStaticProperty(
+            "yellow", +[]() { return FColor::Yellow; }
+        )
+        .addStaticProperty(
+            "cyan", +[]() { return FColor::Cyan; }
+        )
+        .addStaticProperty(
+            "magenta", +[]() { return FColor::Magenta; }
+        )
+        .addStaticProperty(
+            "white", +[]() { return FColor::White; }
+        )
+        .addStaticProperty(
+            "black", +[]() { return FColor::Black; }
+        )
+        .addStaticProperty(
+            "gray", +[]() { return FColor(128, 128, 128, 255); }
+        )
+        .addStaticProperty(
+            "orange", +[]() { return FColor::Orange; }
+        )
+        .addStaticProperty(
+            "purple", +[]() { return FColor::Purple; }
+        )
+        .addStaticProperty(
+            "transparent", +[]() { return FColor::Transparent; }
+        )
         .endClass();
 
     // FQuat
@@ -59,7 +83,7 @@ inline void registerMathClasses(lua_State *L) {
         .addFunction("get_scale", &FTransform::GetScale3D)
         .endClass();
 
-        luabridge::getGlobalNamespace(L)
+    luabridge::getGlobalNamespace(L)
         .beginClass<Vec3i>("Vec3i")
         .addStaticFunction(
             "new", +[](int32 x, int32 y, int32 z) { return Vec3i(x, y, z); }

@@ -331,69 +331,61 @@ class cs {
 /**
  * @brief Represents a 2D texture in Unreal Engine.
  *
- * This class is used for managing 2D textures in the engine, including loading, modifying, and rendering them.
+ * This class is used for managing 2D textures in the engine, including loading,
+ * modifying, and rendering them.
  */
-class UTexture2D {
-    
-};
+class UTexture2D {};
 
 /**
  * @brief Represents a static mesh in Unreal Engine.
  *
- * This class is used for managing static meshes in the engine, including loading, modifying, and rendering them.
+ * This class is used for managing static meshes in the engine, including
+ * loading, modifying, and rendering them.
  */
-class UStaticMesh {
-    
-};
+class UStaticMesh {};
 
 /**
  * @brief A dynamic array container in the C++ Standard Library.
  *
- * std::vector is a sequence container that encapsulates dynamic-size arrays. It provides random access to elements,
- * allows constant-time insertions and removals at the end, and linear time for insertions and removals in the middle.
- * std::vector automatically manages its memory, resizing as necessary when elements are added or removed.
+ * std::vector is a sequence container that encapsulates dynamic-size arrays. It
+ * provides random access to elements, allows constant-time insertions and
+ * removals at the end, and linear time for insertions and removals in the
+ * middle. std::vector automatically manages its memory, resizing as necessary
+ * when elements are added or removed.
  */
-class UArray {
-    
-};
+class UArray {};
 
 /**
  * @class std::unordered_map
- * @brief An associative container in the C++ Standard Library that provides fast retrieval of values based on keys.
+ * @brief An associative container in the C++ Standard Library that provides
+ * fast retrieval of values based on keys.
  *
- * std::unordered_map is a hash table-based container that stores elements in key-value pairs, where each key is unique.
- * It allows fast lookups, insertions, and removals, with average constant-time complexity for these operations.
- * The container uses a hash function to compute the hash value for each key, which determines the position of the
- * key-value pair in the internal data structure. The container automatically handles collisions and manages its memory.
+ * std::unordered_map is a hash table-based container that stores elements in
+ * key-value pairs, where each key is unique. It allows fast lookups,
+ * insertions, and removals, with average constant-time complexity for these
+ * operations. The container uses a hash function to compute the hash value for
+ * each key, which determines the position of the key-value pair in the internal
+ * data structure. The container automatically handles collisions and manages
+ * its memory.
  */
-class UTable {
-    
-};
+class UTable {};
 
 /**
  * @brief Any engine class
  */
-class UClass {
-    
-};
+class UClass {};
 
 /**
  * @brief Recipe
  */
-class URecipe {
-    
-};
+class URecipe {};
 
 /**
  * @brief PlayerController
  */
-class UPlayerController {
-    
-};
+class UPlayerController {};
 
 /**
  * @brief PlayerCharacter
  */
-class UPlayerCharacter {
-    
-};
+class UPlayerCharacter {};
