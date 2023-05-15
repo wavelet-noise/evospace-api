@@ -23,39 +23,49 @@ class UMod : public UObject, public ISerializableJson {
 
   public:
     /**
-     * @brief name
+     * @brief name. Must be not empty.
      */
     std::string name;
 
     /**
-     * @brief version
+     * @brief version. Default value: ""
      */
     std::string version;
 
     /**
-     * @brief title
+     * @brief title. Default value: ""
      */
     std::string title;
 
     /**
-     * @brief evospace_version
+     * @brief evospace_version. Default value: ""
      */
     std::string evospace_version;
 
     /**
-     * @brief created_by
+     * @brief created_by. Default value: ""
      */
     std::string created_by;
 
     /**
-     * @brief description
+     * @brief description. Default value: ""
      */
     std::string description;
 
     /**
-     * @brief author
+     * @brief author. Default value: ""
      */
     std::string author;
+
+    /**
+     * @brief enabled. Default value: true
+     */
+    bool enabled = true;
+
+    /**
+     * @brief is mod loaded without errors. Default value: false
+     */
+    bool loaded_without_errors = false;
 
     /**
      * @brief dependencies
@@ -89,6 +99,12 @@ class UMod : public UObject, public ISerializableJson {
 
     UFUNCTION(BlueprintCallable)
     FString Author() const { return UTF8_TO_TCHAR(author.data()); }
+
+    UFUNCTION(BlueprintCallable)
+    bool Enabled() const { return enabled; }
+
+    UFUNCTION(BlueprintCallable)
+    bool LoadedWithoutErrors() const { return loaded_without_errors; }
 
     UFUNCTION(BlueprintCallable)
     TArray<FString> Dependencies() const {
