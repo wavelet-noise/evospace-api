@@ -184,6 +184,11 @@ LuaState::LuaState() {
     auto col = luabridge::getGlobal(L, "collectgarbage");
     col("setpause", 100);
 
+    LOG(TRACE_LL) << "Lua state is cunstructed";
+}
+
+void LuaState::Init() {
+
     // std::error_code er;
     // const auto ref = luabridge::Stack<luabridge::LuaRef>::get(L, 2);
     //

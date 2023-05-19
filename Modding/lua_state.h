@@ -19,6 +19,8 @@ class LuaState {
 
     LuaState();
 
+    void Init();
+
     LuaState(const LuaState &v) = delete;
     LuaState &operator=(const LuaState &v) = delete;
 
