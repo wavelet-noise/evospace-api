@@ -17,26 +17,31 @@ class UBaseAccessor : public UPrototype, public ISerializableJson {
 
     virtual bool is_connectable(UBaseAccessor &other) const;
 
+    UPROPERTY()
     /**
      * @brief Relative offset from (0,0,0) block for this accessor
      */
-    Vec3i pos;
+    FVector3i pos;
 
+    UPROPERTY()
     /**
      * @brief Relative side of cube to interact with this accessor
      */
-    Vec3i side;
+    FVector3i side;
 
+    UPROPERTY()
     /**
      * @brief Absolute offset from (0,0,0) block for this accessor
      */
-    Vec3i world_pos;
+    FVector3i world_pos;
 
+    UPROPERTY()
     /**
      * @brief Absolute side of cube to interact with this accessor
      */
-    Vec3i world_side;
+    FVector3i world_side;
 
+    UPROPERTY()
     // connected opposite accessor
     UBaseAccessor *opposite;
 

@@ -227,7 +227,7 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     virtual int32 DropItems(UInventoryAccess *inventory);
 
-    virtual std::vector<UBaseAccessor *> &GetAccessors();
+    virtual TArray<UBaseAccessor *> &GetAccessors();
 
     virtual AActor *GetActor();
 
@@ -238,7 +238,8 @@ class UBlockLogic : public UPrototype, public ISerializableJson {
 
     FQuat mQuat = FQuat(EForceInit::ForceInitToZero);
 
-    std::vector<UBaseAccessor *> accessors;
+    UPROPERTY()
+    TArray<UBaseAccessor *> accessors;
 
     UPROPERTY()
     TArray<UPrototype *> components;
@@ -271,7 +272,7 @@ class UPartBlockLogic : public UBlockLogic {
 
     virtual UBlockLogic *GetRootBlock() override;
 
-    virtual std::vector<UBaseAccessor *> &GetAccessors() override;
+    virtual TArray<UBaseAccessor *> &GetAccessors() override;
 
     virtual AActor *GetActor() override;
 
