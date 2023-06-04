@@ -107,7 +107,11 @@ class UItem : public UPrototype, public ISerializableJson {
     // Database page tag
     std::string page = "";
 
+    FName page_name;
+
     std::string category = "";
+
+    FName category_name;
 
     // Description common keys
     std::vector<KeyTable> description_parts = {};
@@ -122,6 +126,8 @@ class UItem : public UPrototype, public ISerializableJson {
     // Engine code
   public:
     virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+
+    virtual void PostDeserializeJson() override;
 
     AItemLogicActor *
     SpawnLogicItemDeferred(UWorld *world, const FTransform &transform) const;

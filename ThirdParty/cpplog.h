@@ -345,6 +345,11 @@ class BaseLogger {
     virtual ~BaseLogger() {}
 };
 
+class NothingLogger : public BaseLogger {
+public:
+    virtual bool sendLogMessage(LogData *logData) {};
+};
+
 // Log message - this is instantiated upon every call to LOG(logger)
 class LogMessage {
   private:
