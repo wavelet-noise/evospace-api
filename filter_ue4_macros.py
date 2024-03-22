@@ -34,6 +34,8 @@ def camel_to_snake_case(camel_case_str):
     return '_'.join(snake_case_parts)
 
 def camel_to_snake_case(name):
+    # Adjust to handle names starting with 'm' and followed by an uppercase letter
+    name = re.sub(r'^m([A-Z])', r'\1', name)  # Remove 'm' prefix if followed by uppercase
     return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
 
 def is_excluded(name):
@@ -48,8 +50,8 @@ def replace_camel_case_with_snake_case(text):
             return matched_str
         return camel_to_snake_case(matched_str)
 
-    # Pattern to match CamelCase identifiers.
-    pattern = r'\b[A-Z][a-zA-Z0-9]*\b'
+    # Adjust the pattern to also match names starting with 'm' followed by an uppercase letter.
+    pattern = r'\b[A-Z][a-zA-Z0-9]*\b|\bm[A-Z][a-zA-Z0-9]*\b'
 
     result_lines = []
     for line in text.splitlines():
@@ -77,8 +79,6 @@ for root, dirs, files in os.walk("./"):
                 content = content.replace('std::vector', 'UArray')
                 content = content.replace('std::unordered_map', 'UTable')
                 content = content.replace('std::map', 'UTable')
-
-                content = re.sub(r'\bm[A-Z]+[a-z]+', lambda x: x.group().replace("m", ""), content)
 
                 content = replace_camel_case_with_snake_case(content)
                 
