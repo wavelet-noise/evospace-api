@@ -78,7 +78,7 @@ for root, dirs, files in os.walk("./"):
                 content = content.replace('std::unordered_map', 'UTable')
                 content = content.replace('std::map', 'UTable')
 
-                content = re.sub(r'\bm[A-Z]\w+', lambda x: x.group().replace("m", ""), content)
+                content = re.sub(r'\bm[A-Z]+[a-z]+', lambda x: x.group().replace("m", ""), content)
 
                 content = replace_camel_case_with_snake_case(content)
                 
