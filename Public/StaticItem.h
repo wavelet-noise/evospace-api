@@ -69,7 +69,7 @@ class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
      * Default value: 1.0
      *
      * @code{.lua}
-     * local coal = Item.get("Coal")
+     * local coal = StaticItem.find("CoalStaticItem")
      * mul = coal.unit_mul
      * coal.unit_mul = 1.0
      * @endcode
@@ -83,7 +83,7 @@ class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
      * Default value: nil
      *
      * @code{.lua}
-     * local coal = Item.get("Coal")
+     * local coal = StaticItem.find("CoalStaticItem")
      * image = coal.image
      * coal.image = image
      * @endcode
@@ -111,7 +111,7 @@ class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
      * Default value: 0
      *
      * @code{.lua}
-     * local coal = Item.get("Coal")
+     * local coal = StaticItem.find("CoalStaticItem")
      * count = coal.max_count
      * coal.max_count = 64
      * @endcode
