@@ -6,7 +6,11 @@
 
 class UAutosizeInventory;
 class UMainGameModLoader;
+
 UCLASS(BlueprintType)
+/**
+ * 
+ */
 class UStaticTip : public UObject, public ISerializableJson {
   GENERATED_BODY()
   public:

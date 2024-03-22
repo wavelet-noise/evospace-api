@@ -20,6 +20,9 @@ enum class ECanAccomodate : uint8 {
 };
 
 UCLASS(BlueprintType)
+/**
+ * 
+ */
 class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
   using Self = USelectCrafter;
   GENERATED_BODY()

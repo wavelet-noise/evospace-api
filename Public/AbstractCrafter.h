@@ -12,6 +12,9 @@ class URecipe;class UBaseRecipeDictionary;class UAutosizeInventory;
 class UInventoryContainer;
 
 UCLASS(BlueprintType)
+/**
+ * 
+ */
 class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchInterface {
   using Self = UAbstractCrafter;
   GENERATED_BODY()

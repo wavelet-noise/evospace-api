@@ -91,6 +91,9 @@ enum class ModTickLoadStatus { NotChecked,
                                Download };
 
 UCLASS()
+/**
+ * 
+ */
 class UMainGameModLoader : public UObject {
   GENERATED_BODY()
   public:

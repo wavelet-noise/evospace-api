@@ -12,6 +12,9 @@ class UStaticItem;
 class AActor;
 
 USTRUCT(BlueprintType)
+/**
+ * 
+ */
 struct FStaticBlockMinable {
   GENERATED_BODY()
 
@@ -28,6 +31,9 @@ struct FStaticBlockMinable {
 };
 
 UCLASS(Abstract)
+/**
+ * 
+ */
 class EVOSPACE_API UStaticObject : public UObject, public ISerializableJson {
   GENERATED_BODY()
 

@@ -18,6 +18,9 @@ struct FChangelog {
 };
 
 UCLASS(BlueprintType)
+/**
+ * 
+ */
 class UChangelogStorage : public UObject {
   GENERATED_BODY()
   public:

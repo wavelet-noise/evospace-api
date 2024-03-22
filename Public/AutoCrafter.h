@@ -10,6 +10,9 @@ class UAutosizeInventory;
 class UInventory;
 
 UCLASS(BlueprintType)
+/**
+ * 
+ */
 class EVOSPACE_API UAutoCrafter : public USelectCrafter {
   using Self = UAutoCrafter;
   GENERATED_BODY()

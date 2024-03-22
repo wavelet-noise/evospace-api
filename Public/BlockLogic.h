@@ -25,6 +25,9 @@ class UStaticBlock;
 class UBaseAccessor;
 
 UCLASS(BlueprintType)
+/**
+ * 
+ */
 class EVOSPACE_API UBlockLogic : public UObject, public ISerializableJson {
   GENERATED_BODY()
 

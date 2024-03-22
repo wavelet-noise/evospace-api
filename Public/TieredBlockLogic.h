@@ -8,6 +8,9 @@
 class UInventoryReader;
 
 UCLASS(BlueprintType)
+/**
+ * 
+ */
 class EVOSPACE_API UTieredBlockLogic : public UBlockLogic {
   using Self = UTieredBlockLogic;
   GENERATED_BODY()
