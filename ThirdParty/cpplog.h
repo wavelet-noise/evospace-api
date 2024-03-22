@@ -99,6 +99,10 @@
 #include "scribestream.hpp"
 #endif
 
+#ifdef EVOSPACE_WINDOWS
+#include <__msvc_chrono.hpp>
+#endif
+
 // If we don't have a level defined, set it to CPPLOG_LEVEL_DEBUG (log all
 // except trace statements)
 #ifndef CPPLOG_FILTER_LEVEL
@@ -135,136 +139,136 @@ typedef unsigned int loglevel_t;
 
 // Helper functions.  Stuck these in their own namespace for simplicity.
 namespace helpers {
-// Gets the filename from a path.
-inline static const char *fileNameFromPath(const char *filePath) {
+  // Gets the filename from a path.
+  inline static const char *fileNameFromPath(const char *filePath) {
     const char *fileName = strrchr(filePath, '/');
 #if defined(_WIN32)
     if (!fileName)
-        fileName = strrchr(filePath, '\\');
+      fileName = strrchr(filePath, '\\');
 #endif
     return fileName ? fileName + 1 : filePath;
-}
+  }
 
-// Thread-safe version of localtime()
-inline bool slocaltime(::tm *const out, const ::time_t *const in) {
+  // Thread-safe version of localtime()
+  inline bool slocaltime(::tm *const out, const ::time_t *const in) {
 #if defined(_WIN32) && defined(_MSC_VER)
     return ::localtime_s(out, in) == 0;
 #elif defined(__MINGW32__)
     // Warning - not entirely thread safe on MinGW
     ::tm *localOut = ::localtime(in);
     if (localOut) {
-        ::memcpy(out, localOut, sizeof(::tm));
+      ::memcpy(out, localOut, sizeof(::tm));
     }
     return localOut != NULL;
 #else
     // Default to SUSv2 (libc >= 5.2.5) function.
     return ::localtime_r(in, out) != NULL;
 #endif
-}
+  }
 
-// Thread-safe version of gmtime()
-inline bool sgmtime(::tm *const out, const ::time_t *const in) {
+  // Thread-safe version of gmtime()
+  inline bool sgmtime(::tm *const out, const ::time_t *const in) {
 #if defined(_WIN32) && defined(_MSC_VER)
     return ::gmtime_s(out, in) == 0;
 #elif defined(__MINGW32__)
     // Warning - not entirely thread safe on MinGW
     ::tm *localOut = ::gmtime(in);
     if (localOut) {
-        ::memcpy(out, localOut, sizeof(::tm));
+      ::memcpy(out, localOut, sizeof(::tm));
     }
     return localOut != NULL;
 #else
     // Default to SUSv2 (libc >= 5.2.5) function.
     return ::gmtime_r(in, out) != NULL;
 #endif
-}
+  }
 
 // Below we have a bunch of macros, typedefs and such that make getting our
 // current process/thread ID simpler.
 #ifdef CPPLOG_SYSTEM_IDS
 #ifdef CPPLOG_USE_OLD_BOOST
-typedef boost::interprocess::detail::OS_process_id_t process_id_t;
+  typedef boost::interprocess::detail::OS_process_id_t process_id_t;
 
-inline process_id_t get_process_id() {
+  inline process_id_t get_process_id() {
     return boost::interprocess::detail::get_current_process_id();
-}
+  }
 #else
-typedef boost::interprocess::ipcdetail::OS_process_id_t process_id_t;
+  typedef boost::interprocess::ipcdetail::OS_process_id_t process_id_t;
 
-inline process_id_t get_process_id() {
+  inline process_id_t get_process_id() {
     return boost::interprocess::ipcdetail::get_current_process_id();
-}
+  }
 #endif
 
 #ifdef CPPLOG_USE_SYSCALL_FOR_THREAD_ID
-typedef unsigned long thread_id_t;
+  typedef unsigned long thread_id_t;
 
-inline thread_id_t get_thread_id() {
+  inline thread_id_t get_thread_id() {
     return static_cast<unsigned long>(syscall(SYS_gettid));
-}
+  }
 
-inline void print_thread_id(std::ostream &stream, thread_id_t thread_id) {
+  inline void print_thread_id(std::ostream &stream, thread_id_t thread_id) {
     stream << std::setfill('0') << std::setw(8) << std::hex << thread_id;
-}
+  }
 #else // CPPLOG_USE_SYSCALL_FOR_THREAD_ID
 #ifdef CPPLOG_USE_OLD_BOOST
-typedef boost::interprocess::detail::OS_thread_id_t thread_id_t;
+  typedef boost::interprocess::detail::OS_thread_id_t thread_id_t;
 
-inline thread_id_t get_thread_id() {
+  inline thread_id_t get_thread_id() {
     return boost::interprocess::detail::get_current_thread_id();
-}
+  }
 #else
-typedef boost::interprocess::ipcdetail::OS_thread_id_t thread_id_t;
+  typedef boost::interprocess::ipcdetail::OS_thread_id_t thread_id_t;
 
-inline thread_id_t get_thread_id() {
+  inline thread_id_t get_thread_id() {
     return boost::interprocess::ipcdetail::get_current_thread_id();
-}
+  }
 #endif // CPPLOG_USE_OLD_BOOST
 
-// This function lets us print a thread ID in all cases, including on
-// platforms where it's actually a structure (pthread_t, I'm looking
-// at you...).  Note that this kinda-sorta assumes a little-endian
-// architecture, if we want meaningful results.  Not super important,
-// though, since the address of a structure isn't actually that useful.
-// TODO: I might rewrite this using templates to print properly if it's
-// an unsigned long, and fall back to this implementation otherwise.
-inline void print_thread_id(std::ostream &stream, thread_id_t thread_id) {
+  // This function lets us print a thread ID in all cases, including on
+  // platforms where it's actually a structure (pthread_t, I'm looking
+  // at you...).  Note that this kinda-sorta assumes a little-endian
+  // architecture, if we want meaningful results.  Not super important,
+  // though, since the address of a structure isn't actually that useful.
+  // TODO: I might rewrite this using templates to print properly if it's
+  // an unsigned long, and fall back to this implementation otherwise.
+  inline void print_thread_id(std::ostream &stream, thread_id_t thread_id) {
     unsigned char *sptr =
-        static_cast<unsigned char *>(static_cast<void *>(&thread_id));
+      static_cast<unsigned char *>(static_cast<void *>(&thread_id));
     for (size_t i = sizeof(thread_id_t); i != 0; i--) {
-        stream << std::setfill('0') << std::setw(2) << std::hex
-               << static_cast<unsigned>(sptr[i - 1]);
+      stream << std::setfill('0') << std::setw(2) << std::hex
+             << static_cast<unsigned>(sptr[i - 1]);
     }
-}
+  }
 #endif // CPPLOG_USE_SYSCALL_FOR_THREAD_ID
 #endif // CPPLOG_SYSTEM_IDS
 
-// Simple class that allows us to evaluate a stream to void - prevents compiler
-// errors.
-class VoidStreamClass {
-  public:
+  // Simple class that allows us to evaluate a stream to void - prevents compiler
+  // errors.
+  class VoidStreamClass {
+public:
     VoidStreamClass() {}
     void operator&(std::ostream &) {}
-};
+  };
 
-// fixed_streambuf is a minimal implementation around std::basic_streambuf
-// with a fixed size backing buffer. It implements additional functionality
-// needed by cpplog and exposes the backing buffer in a safe way via c_str().
-// This makes it possible to avoid extra copying.
-class fixed_streambuf
+  // fixed_streambuf is a minimal implementation around std::basic_streambuf
+  // with a fixed size backing buffer. It implements additional functionality
+  // needed by cpplog and exposes the backing buffer in a safe way via c_str().
+  // This makes it possible to avoid extra copying.
+  class fixed_streambuf
     : public std::basic_streambuf<char, std::char_traits<char>> {
-  private:
+private:
     // Constant.
     static const size_t k_logBufferCapacity = 20000;
     // Leave room for terminating null character in case buffer fills up.
     char m_buffer[k_logBufferCapacity + 1];
 
-  public:
+public:
     fixed_streambuf() {
-        // Use allocated buffer as backing store.
-        setp(m_buffer, m_buffer + k_logBufferCapacity);
-        // Insert terminator at buffer end.
-        m_buffer[k_logBufferCapacity] = '\0';
+      // Use allocated buffer as backing store.
+      setp(m_buffer, m_buffer + k_logBufferCapacity);
+      // Insert terminator at buffer end.
+      m_buffer[k_logBufferCapacity] = '\0';
     }
 
     std::streamsize length() const { return pptr() - pbase(); }
@@ -274,279 +278,282 @@ class fixed_streambuf
 
     // Unput one character.
     int_type sunputc() {
-        if ((!pptr()) || (pptr() == pbase()))
-            return pbackfail();
+      if ((!pptr()) || (pptr() == pbase()))
+        return pbackfail();
 
-        pbump(-1);
+      pbump(-1);
 
-        // This is safe because *epptr() always is '\0' and inside
-        // the backing buffer.
-        return traits_type::to_int_type(*(pptr() + 1));
+      // This is safe because *epptr() always is '\0' and inside
+      // the backing buffer.
+      return traits_type::to_int_type(*(pptr() + 1));
     }
 
     // Peek at last inserted character.
     int peek() const {
-        if ((!pptr()) || (pptr() == pbase()))
-            return std::char_traits<char>::eof();
+      if ((!pptr()) || (pptr() == pbase()))
+        return std::char_traits<char>::eof();
 
-        return static_cast<int>(*(pptr() - 1));
+      return static_cast<int>(*(pptr() - 1));
     }
 
     const char *c_str() const {
-        // Add terminating null character.
-        // This is safe even if the buffer is full to its capacity since
-        // epptr() is inside the backing buffer.
-        *pptr() = '\0';
-        return pbase();
+      // Add terminating null character.
+      // This is safe even if the buffer is full to its capacity since
+      // epptr() is inside the backing buffer.
+      *pptr() = '\0';
+      return pbase();
     }
-};
+  };
 } // namespace helpers
 
 // Logger data.  This is sent to a logger when a LogMessage is Flush()'ed, or
 // when the destructor is called.
 struct LogData {
 
-    // Our streambuf & stream to log data to.
-    helpers::fixed_streambuf streamBuffer;
-    std::ostream stream;
+  // Our streambuf & stream to log data to.
+  helpers::fixed_streambuf streamBuffer;
+  std::ostream stream;
 
-    // Captured data.
-    unsigned int level;
-    time_t messageTime;
-    ::tm utcTime;
+  // Captured data.
+  unsigned int level;
+  time_t messageTime;
+  ::tm utcTime;
 
 #ifdef CPPLOG_SYSTEM_IDS
-    // Process/thread ID.
-    helpers::process_id_t processId;
-    helpers::thread_id_t threadId;
+  // Process/thread ID.
+  helpers::process_id_t processId;
+  helpers::thread_id_t threadId;
 #endif
 
-    // Constructor that initializes our stream.
-    LogData(loglevel_t logLevel)
-        : streamBuffer(), stream(&streamBuffer), level(logLevel)
+  // Constructor that initializes our stream.
+  LogData(loglevel_t logLevel)
+    : streamBuffer(), stream(&streamBuffer), level(logLevel)
 #ifdef CPPLOG_SYSTEM_IDS
-          ,
-          processId(0), threadId(0)
+      ,
+      processId(0),
+      threadId(0)
 #endif
-    {
-    }
+  {
+  }
 
-    virtual ~LogData() {}
+  virtual ~LogData() {}
 };
 
 // Base interface for a logger.
 class BaseLogger {
   public:
-    // All loggers must provide an interface to log a message to.
-    // The return value of this function indicates whether to delete
-    // the log message.
-    virtual bool sendLogMessage(LogData *logData) = 0;
+  // All loggers must provide an interface to log a message to.
+  // The return value of this function indicates whether to delete
+  // the log message.
+  virtual bool sendLogMessage(LogData *logData) = 0;
 
-    virtual ~BaseLogger() {}
+  virtual ~BaseLogger() {}
 };
 
 // Log message - this is instantiated upon every call to LOG(logger)
 class LogMessage {
   private:
-    BaseLogger *m_logger;
-    bool m_flushed;
-    bool m_deleteMessage;
+  BaseLogger *m_logger;
+  bool m_flushed;
+  bool m_deleteMessage;
 
   protected:
-    LogData *m_logData;
+  LogData *m_logData;
 
   private:
-    // Flag for if a fatal message has been logged already.
-    // This prevents us from calling exit(), which calls something,
-    // which then logs a fatal message, which cause an infinite loop.
-    // TODO: this should probably be thread-safe...
-    static bool getSetFatal(bool get, bool val) {
-        static bool m_fatalFlag = false;
+  // Flag for if a fatal message has been logged already.
+  // This prevents us from calling exit(), which calls something,
+  // which then logs a fatal message, which cause an infinite loop.
+  // TODO: this should probably be thread-safe...
+  static bool getSetFatal(bool get, bool val) {
+    static bool m_fatalFlag = false;
 
-        if (!get)
-            m_fatalFlag = val;
+    if (!get)
+      m_fatalFlag = val;
 
-        return m_fatalFlag;
-    }
+    return m_fatalFlag;
+  }
 
   public:
-    LogMessage(
-        loglevel_t logLevel, BaseLogger *outputLogger,
-        bool useDefaultLogFormat = true
-    )
-        : m_logger(outputLogger) {
-        Init(logLevel, useDefaultLogFormat);
+  LogMessage(
+    loglevel_t logLevel, BaseLogger *outputLogger,
+    bool useDefaultLogFormat = true)
+    : m_logger(outputLogger) {
+    Init(logLevel, useDefaultLogFormat);
+  }
+
+  LogMessage(
+    loglevel_t logLevel, BaseLogger &outputLogger,
+    bool useDefaultLogFormat = true)
+    : m_logger(&outputLogger) {
+    Init(logLevel, useDefaultLogFormat);
+  }
+
+  virtual ~LogMessage() CPPLOG_NOEXCEPT_FALSE {
+    Flush();
+
+    if (m_deleteMessage) {
+      delete m_logData;
     }
+  }
 
-    LogMessage(
-        loglevel_t logLevel, BaseLogger &outputLogger,
-        bool useDefaultLogFormat = true
-    )
-        : m_logger(&outputLogger) {
-        Init(logLevel, useDefaultLogFormat);
-    }
-
-    virtual ~LogMessage() CPPLOG_NOEXCEPT_FALSE {
-        Flush();
-
-        if (m_deleteMessage) {
-            delete m_logData;
-        }
-    }
-
-    inline std::ostream &getStream() { return m_logData->stream; }
+  inline std::ostream &getStream() { return m_logData->stream; }
 
   protected:
-    virtual void InitLogMessage() {
-        // Log process ID and thread ID.
+  virtual void InitLogMessage() {
+    // Log process ID and thread ID.
 #ifdef CPPLOG_SYSTEM_IDS
-        m_logData->stream << "[" << std::right << std::setfill('0')
-                          << std::setw(8) << std::hex << m_logData->processId
-                          << ".";
-        helpers::print_thread_id(m_logData->stream, m_logData->threadId);
-        m_logData->stream << "] ";
+    m_logData->stream << "[" << std::right << std::setfill('0')
+                      << std::setw(8) << std::hex << m_logData->processId
+                      << ".";
+    helpers::print_thread_id(m_logData->stream, m_logData->threadId);
+    m_logData->stream << "] ";
 #endif
 
-        m_logData->stream << std::setfill(' ') << std::setw(5) << std::left
-                          << std::dec
-                          << LogMessage::getLevelName(m_logData->level)
-                          << " - ";
-    }
+    m_logData->stream << std::setfill(' ') << std::setw(5) << std::left
+                      << std::dec
+                      << LogMessage::getLevelName(m_logData->level)
+                      << " - ";
+  }
 
   private:
-    void Init(loglevel_t logLevel, bool useDefaultLogFormat = true) {
-        m_logData = new LogData(logLevel);
-        m_flushed = false;
-        m_deleteMessage = false;
+  void Init(loglevel_t logLevel, bool useDefaultLogFormat = true) {
+    m_logData = new LogData(logLevel);
+    m_flushed = false;
+    m_deleteMessage = false;
 
-        // Capture data.
-        m_logData->messageTime = ::time(NULL);
+    // Capture data.
+    m_logData->messageTime = ::time(NULL);
 
-        // Get current time.
-        ::tm gmt;
-        cpplog::helpers::sgmtime(&gmt, &m_logData->messageTime);
-        memcpy(&m_logData->utcTime, &gmt, sizeof(tm));
+    // Get current time.
+    ::tm gmt;
+    cpplog::helpers::sgmtime(&gmt, &m_logData->messageTime);
+    memcpy(&m_logData->utcTime, &gmt, sizeof(tm));
 
 #ifdef CPPLOG_SYSTEM_IDS
-        // Get process/thread ID.
-        m_logData->processId = helpers::get_process_id();
-        m_logData->threadId = helpers::get_thread_id();
+    // Get process/thread ID.
+    m_logData->processId = helpers::get_process_id();
+    m_logData->threadId = helpers::get_thread_id();
 #endif // CPPLOG_SYSTEM_IDS
 
-        if (useDefaultLogFormat) {
-            InitLogMessage();
-        }
+    if (useDefaultLogFormat) {
+      InitLogMessage();
     }
+  }
 
-    void Flush() {
-        if (!m_flushed) {
-            // Insert newline, if needed.
-            helpers::fixed_streambuf *const sb = &m_logData->streamBuffer;
-            if (sb->peek() != '\n') {
-                // If buffer is full, remove last char to leave room for
-                // newline.
-                if (sb->full())
-                    sb->sunputc();
+  void Flush() {
+    if (!m_flushed) {
+      // Insert newline, if needed.
+      helpers::fixed_streambuf *const sb = &m_logData->streamBuffer;
+      if (sb->peek() != '\n') {
+        // If buffer is full, remove last char to leave room for
+        // newline.
+        if (sb->full())
+          sb->sunputc();
 
-                // Insert newline
-                sb->sputc('\n');
-            }
+        // Insert newline
+        sb->sputc('\n');
+      }
 
-            // Save the log level.
-            loglevel_t savedLogLevel = m_logData->level;
+      // Save the log level.
+      loglevel_t savedLogLevel = m_logData->level;
 
-            // Send the message, set flushed=true.
-            m_deleteMessage = m_logger->sendLogMessage(m_logData);
-            m_flushed = true;
+      // Send the message, set flushed=true.
+      m_deleteMessage = m_logger->sendLogMessage(m_logData);
+      m_flushed = true;
 
-            // Note: We cannot touch m_logData after the above call.  By the
-            // time it returns, we have to assume it has already been freed.
+      // Note: We cannot touch m_logData after the above call.  By the
+      // time it returns, we have to assume it has already been freed.
 
-            // If this is a fatal message...
-            if (savedLogLevel == FATAL_LL && !getSetFatal(true, true)) {
-                // Set our fatal flag.
-                getSetFatal(false, true);
+      // If this is a fatal message...
+      if (savedLogLevel == FATAL_LL && !getSetFatal(true, true)) {
+        // Set our fatal flag.
+        getSetFatal(false, true);
 
 #ifdef _DEBUG
 // Only exit in debug mode if CPPLOG_FATAL_EXIT_DEBUG is set.
 #if defined(CPPLOG_FATAL_EXIT_DEBUG) || defined(CPPLOG_FATAL_EXIT)
-                std::exit(1);
+        std::exit(1);
 #endif
 #else //!_DEBUG
 #ifdef CPPLOG_FATAL_EXIT_DEBUG
-                std::exit(1)
+        std::exit(1)
 #endif
 #endif
-            }
-        }
+      }
     }
+  }
 
   public:
-    static const char *getLevelName(loglevel_t level) {
-        switch (level) {
-        case TRACE_LL:
-            return "TRACE";
-        case DEBUG_LL:
-            return "DEBUG";
-        case INFO_LL:
-            return "INFO";
-        case WARN_LL:
-            return "WARN";
-        case ERROR_LL:
-            return "ERROR";
-        case FATAL_LL:
-            return "FATAL";
-        default:
-            return "OTHER";
-        };
+  static const char *getLevelName(loglevel_t level) {
+    switch (level) {
+    case TRACE_LL:
+      return "TRACE";
+    case DEBUG_LL:
+      return "DEBUG";
+    case INFO_LL:
+      return "INFO";
+    case WARN_LL:
+      return "WARN";
+    case ERROR_LL:
+      return "ERROR";
+    case FATAL_LL:
+      return "FATAL";
+    default:
+      return "OTHER";
     };
+  };
 };
 
 // Generic class - logs to a given std::ostream.
 class OstreamLogger : public BaseLogger {
   protected:
-    std::ostream &m_logStream;
+  std::ostream &m_logStream;
 
   public:
-    OstreamLogger(std::ostream &outStream) : m_logStream(outStream) {}
+  OstreamLogger(std::ostream &outStream)
+    : m_logStream(outStream) {}
 
-    virtual bool sendLogMessage(LogData *logData) {
-        helpers::fixed_streambuf *const sb = &logData->streamBuffer;
-        m_logStream.write(sb->c_str(), sb->length());
-        m_logStream << std::flush;
+  virtual bool sendLogMessage(LogData *logData) {
+    helpers::fixed_streambuf *const sb = &logData->streamBuffer;
+    m_logStream.write(sb->c_str(), sb->length());
+    m_logStream << std::flush;
 
-        return true;
-    }
+    return true;
+  }
 
-    virtual ~OstreamLogger() {}
+  virtual ~OstreamLogger() {}
 };
 
 class UeStringArrayLogger : public OstreamLogger {
   private:
-    std::ostringstream m_stream;
+  std::ostringstream m_stream;
 
   public:
-    TArray<FString> log;
+  TArray<FString> log;
 
-    UeStringArrayLogger() : OstreamLogger(m_stream) {}
+  UeStringArrayLogger()
+    : OstreamLogger(m_stream) {}
 
-    virtual bool sendLogMessage(LogData *logData);
+  virtual bool sendLogMessage(LogData *logData);
 };
 
 class UeLogger : public OstreamLogger {
   private:
-    std::ostringstream m_stream;
+  std::ostringstream m_stream;
 
   public:
-    UeLogger() : OstreamLogger(m_stream) {}
+  UeLogger()
+    : OstreamLogger(m_stream) {}
 
-    virtual bool sendLogMessage(LogData *logData);
+  virtual bool sendLogMessage(LogData *logData);
 };
 
 // Simple implementation - logs to stderr.
 class StdErrLogger : public OstreamLogger {
   public:
-    StdErrLogger() : OstreamLogger(std::cerr) {}
+  StdErrLogger()
+    : OstreamLogger(std::cerr) {}
 };
 
 // Simple implementation - logs to a string, provides the ability to get that
@@ -554,358 +561,373 @@ class StdErrLogger : public OstreamLogger {
 class StringLogger : public OstreamLogger {
 
   public:
-    std::ostringstream m_stream;
+  std::ostringstream m_stream;
 
-    StringLogger() : OstreamLogger(m_stream) {}
+  StringLogger()
+    : OstreamLogger(m_stream) {}
 
-    std::string getString() { return m_stream.str(); }
+  std::string getString() { return m_stream.str(); }
 
-    void clear() {
-        m_stream.str("");
-        m_stream.clear();
+  void clear() {
+    m_stream.str("");
+    m_stream.clear();
+  }
+};
+
+class SessionRotatingLogger : public OstreamLogger {
+  private:
+  std::string m_path;
+  std::ofstream m_outStream;
+
+  static std::string GetCurrentTimeString() {
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d_%H-%M-%S");
+    return ss.str();
+  }
+
+  void RotateLogs();
+
+  public:
+  SessionRotatingLogger(const std::string &logDirectory)
+    : OstreamLogger(m_outStream), m_path(logDirectory) {
+    RotateLogs(); // Rotate logs before opening a new one
+
+    std::string logFileName = "evospace_" + GetCurrentTimeString() + ".txt";
+    std::string fullPath = logDirectory + "/" + logFileName;
+
+    m_outStream.open(fullPath, std::ios_base::out);
+    if (!m_outStream) {
+      throw std::runtime_error("Unable to open log file: " + fullPath);
     }
+
+    // Assuming OstreamLogger's constructor accepts std::ostream&
+    //OstreamLogger(m_outStream);
+  }
 };
 
 // Log to file.
 class FileLogger : public OstreamLogger {
   private:
-    std::string m_path;
-    std::ofstream m_outStream;
+  std::string m_path;
+  std::ofstream m_outStream;
 
   public:
-    FileLogger(std::string logFilePath)
-        : OstreamLogger(m_outStream), m_path(logFilePath),
-          m_outStream(logFilePath.c_str(), std::ios_base::out) {}
+  FileLogger(std::string logFilePath)
+    : OstreamLogger(m_outStream), m_path(logFilePath), m_outStream(logFilePath.c_str(), std::ios_base::out) {}
 
-    FileLogger(std::string logFilePath, bool append)
-        : OstreamLogger(m_outStream), m_path(logFilePath),
-          m_outStream(
-              logFilePath.c_str(),
-              append ? std::ios_base::app : std::ios_base::out
-          ) {}
+  FileLogger(std::string logFilePath, bool append)
+    : OstreamLogger(m_outStream), m_path(logFilePath), m_outStream(logFilePath.c_str(), append ? std::ios_base::app : std::ios_base::out) {}
 };
 
 // Log to file, rotate when the log reaches a given size.
 class SizeRotateFileLogger : public OstreamLogger {
   public:
-    typedef void (*pfBuildFileName)(
-        unsigned long logNumber, std::string &newFileName, void *context
-    );
+  typedef void (*pfBuildFileName)(
+    unsigned long logNumber, std::string &newFileName, void *context);
 
   private:
-    std::streamoff m_maxSize;
-    unsigned long m_logNumber;
+  std::streamoff m_maxSize;
+  unsigned long m_logNumber;
 
-    SizeRotateFileLogger::pfBuildFileName m_buildFunc;
-    void *m_context;
+  SizeRotateFileLogger::pfBuildFileName m_buildFunc;
+  void *m_context;
 
-    std::ofstream m_outStream;
+  std::ofstream m_outStream;
 
   public:
-    SizeRotateFileLogger(pfBuildFileName nameFunc, std::streamoff maxSize)
-        : OstreamLogger(m_outStream), m_maxSize(maxSize), m_logNumber(0),
-          m_buildFunc(nameFunc), m_context(NULL), m_outStream() {
-        // "Rotate" to open our initial log.
-        RotateLog();
+  SizeRotateFileLogger(pfBuildFileName nameFunc, std::streamoff maxSize)
+    : OstreamLogger(m_outStream), m_maxSize(maxSize), m_logNumber(0), m_buildFunc(nameFunc), m_context(NULL), m_outStream() {
+    // "Rotate" to open our initial log.
+    RotateLog();
+  }
+
+  SizeRotateFileLogger(
+    pfBuildFileName nameFunc, void *context, std::streamoff maxSize)
+    : OstreamLogger(m_outStream), m_maxSize(maxSize), m_logNumber(0), m_buildFunc(nameFunc), m_context(context), m_outStream() {
+    // "Rotate" to open our initial log.
+    RotateLog();
+  }
+
+  virtual ~SizeRotateFileLogger() {}
+
+  virtual bool sendLogMessage(LogData *logData) {
+    // Call the actual logger.
+    bool deleteMessage = OstreamLogger::sendLogMessage(logData);
+
+    // Check if we're over our limit.
+    if (m_outStream.tellp() > m_maxSize) {
+      // Yep, increment our log number and rotate.
+      m_logNumber++;
+      m_outStream << std::flush;
+
+      RotateLog();
     }
 
-    SizeRotateFileLogger(
-        pfBuildFileName nameFunc, void *context, std::streamoff maxSize
-    )
-        : OstreamLogger(m_outStream), m_maxSize(maxSize), m_logNumber(0),
-          m_buildFunc(nameFunc), m_context(context), m_outStream() {
-        // "Rotate" to open our initial log.
-        RotateLog();
-    }
-
-    virtual ~SizeRotateFileLogger() {}
-
-    virtual bool sendLogMessage(LogData *logData) {
-        // Call the actual logger.
-        bool deleteMessage = OstreamLogger::sendLogMessage(logData);
-
-        // Check if we're over our limit.
-        if (m_outStream.tellp() > m_maxSize) {
-            // Yep, increment our log number and rotate.
-            m_logNumber++;
-            m_outStream << std::flush;
-
-            RotateLog();
-        }
-
-        return deleteMessage;
-    }
+    return deleteMessage;
+  }
 
   private:
-    void RotateLog() {
-        // Build the file name.
-        std::string newFileName;
-        m_buildFunc(m_logNumber, newFileName, m_context);
+  void RotateLog() {
+    // Build the file name.
+    std::string newFileName;
+    m_buildFunc(m_logNumber, newFileName, m_context);
 
-        // Close old file, open new file.
-        m_outStream.close();
-        m_outStream.open(newFileName.c_str(), std::ios_base::out);
-    }
+    // Close old file, open new file.
+    m_outStream.close();
+    m_outStream.open(newFileName.c_str(), std::ios_base::out);
+  }
 };
 
 // Log to file, rotate every "x" seconds.
 class TimeRotateFileLogger : public OstreamLogger {
   public:
-    typedef void (*pfBuildFileName)(
-        ::tm *time, unsigned long logNumber, std::string &newFileName,
-        void *context
-    );
+  typedef void (*pfBuildFileName)(
+    ::tm *time, unsigned long logNumber, std::string &newFileName,
+    void *context);
 
   private:
-    unsigned long m_rotateInterval;
-    ::time_t m_lastRotateTime;
-    unsigned long m_logNumber;
+  unsigned long m_rotateInterval;
+  ::time_t m_lastRotateTime;
+  unsigned long m_logNumber;
 
-    cpplog::TimeRotateFileLogger::pfBuildFileName m_buildFunc;
-    void *m_context;
+  cpplog::TimeRotateFileLogger::pfBuildFileName m_buildFunc;
+  void *m_context;
 
-    std::ofstream m_outStream;
+  std::ofstream m_outStream;
 
   public:
-    TimeRotateFileLogger(
-        pfBuildFileName nameFunc, unsigned long intervalSeconds
-    )
-        : OstreamLogger(m_outStream), m_rotateInterval(intervalSeconds),
-          m_logNumber(0), m_buildFunc(nameFunc), m_context(NULL) {
-        // "Rotate" to open our initial log.
-        RotateLog(::time(NULL));
+  TimeRotateFileLogger(
+    pfBuildFileName nameFunc, unsigned long intervalSeconds)
+    : OstreamLogger(m_outStream), m_rotateInterval(intervalSeconds), m_logNumber(0), m_buildFunc(nameFunc), m_context(NULL) {
+    // "Rotate" to open our initial log.
+    RotateLog(::time(NULL));
+  }
+
+  TimeRotateFileLogger(
+    pfBuildFileName nameFunc, void *context, unsigned long intervalSeconds)
+    : OstreamLogger(m_outStream), m_rotateInterval(intervalSeconds), m_logNumber(0), m_buildFunc(nameFunc), m_context(context) {
+    // "Rotate" to open our initial log.
+    RotateLog(::time(NULL));
+  }
+
+  virtual ~TimeRotateFileLogger() {}
+
+  virtual bool sendLogMessage(LogData *logData) {
+    // Get the current time.
+    ::time_t currTime;
+    ::time(&currTime);
+
+    unsigned long timeDiff =
+      static_cast<unsigned long>(difftime(currTime, m_lastRotateTime));
+
+    // Is the difference greater than our number of seconds?
+    if (timeDiff > m_rotateInterval) {
+      // Yep, increment our log number and rotate.
+      m_logNumber++;
+      m_outStream << std::flush;
+
+      RotateLog(currTime);
     }
 
-    TimeRotateFileLogger(
-        pfBuildFileName nameFunc, void *context, unsigned long intervalSeconds
-    )
-        : OstreamLogger(m_outStream), m_rotateInterval(intervalSeconds),
-          m_logNumber(0), m_buildFunc(nameFunc), m_context(context) {
-        // "Rotate" to open our initial log.
-        RotateLog(::time(NULL));
-    }
-
-    virtual ~TimeRotateFileLogger() {}
-
-    virtual bool sendLogMessage(LogData *logData) {
-        // Get the current time.
-        ::time_t currTime;
-        ::time(&currTime);
-
-        unsigned long timeDiff =
-            static_cast<unsigned long>(difftime(currTime, m_lastRotateTime));
-
-        // Is the difference greater than our number of seconds?
-        if (timeDiff > m_rotateInterval) {
-            // Yep, increment our log number and rotate.
-            m_logNumber++;
-            m_outStream << std::flush;
-
-            RotateLog(currTime);
-        }
-
-        // Call the actual logger.
-        return OstreamLogger::sendLogMessage(logData);
-    }
+    // Call the actual logger.
+    return OstreamLogger::sendLogMessage(logData);
+  }
 
   private:
-    void RotateLog(time_t currTime) {
-        // Get the current time.
-        ::tm timeInfo;
-        cpplog::helpers::slocaltime(&timeInfo, &currTime);
+  void RotateLog(time_t currTime) {
+    // Get the current time.
+    ::tm timeInfo;
+    cpplog::helpers::slocaltime(&timeInfo, &currTime);
 
-        // Build a new file name.
-        std::string newFileName;
-        m_buildFunc(&timeInfo, m_logNumber, newFileName, m_context);
+    // Build a new file name.
+    std::string newFileName;
+    m_buildFunc(&timeInfo, m_logNumber, newFileName, m_context);
 
-        // Close old file, open new file.
-        m_outStream.close();
-        m_outStream.open(newFileName.c_str(), std::ios_base::out);
+    // Close old file, open new file.
+    m_outStream.close();
+    m_outStream.open(newFileName.c_str(), std::ios_base::out);
 
-        // Reset the rotate time.
-        ::time(&m_lastRotateTime);
-    }
+    // Reset the rotate time.
+    ::time(&m_lastRotateTime);
+  }
 };
 
 #ifdef CPPLOG_WITH_SCRIBE_LOGGER
 // Given a Scribe node, will send log messages there with the given category.
 class ScribeLogger : public OstreamLogger {
   private:
-    scribe_stream m_outStream;
+  scribe_stream m_outStream;
 
   public:
-    ScribeLogger(
-        std::string host, unsigned short port, std::string category, int timeout
-    )
-        : OstreamLogger(m_outStream) {
-        m_outStream.open(host, port, category, timeout);
-    }
+  ScribeLogger(
+    std::string host, unsigned short port, std::string category, int timeout)
+    : OstreamLogger(m_outStream) {
+    m_outStream.open(host, port, category, timeout);
+  }
 };
 #endif
 
 // Tee logger - given two loggers, will forward a message to both.
 class TeeLogger : public BaseLogger {
   private:
-    BaseLogger *m_logger1;
-    BaseLogger *m_logger2;
+  BaseLogger *m_logger1;
+  BaseLogger *m_logger2;
 
-    bool m_logger1Owned;
-    bool m_logger2Owned;
+  bool m_logger1Owned;
+  bool m_logger2Owned;
 
   public:
-    TeeLogger(BaseLogger *one, BaseLogger *two)
-        : m_logger1(one), m_logger2(two), m_logger1Owned(false),
-          m_logger2Owned(false) {}
+  TeeLogger(BaseLogger *one, BaseLogger *two)
+    : m_logger1(one), m_logger2(two), m_logger1Owned(false), m_logger2Owned(false) {}
 
-    TeeLogger(BaseLogger *one, bool ownOne, BaseLogger *two, bool ownTwo)
-        : m_logger1(one), m_logger2(two), m_logger1Owned(ownOne),
-          m_logger2Owned(ownTwo) {}
+  TeeLogger(BaseLogger *one, bool ownOne, BaseLogger *two, bool ownTwo)
+    : m_logger1(one), m_logger2(two), m_logger1Owned(ownOne), m_logger2Owned(ownTwo) {}
 
-    TeeLogger(BaseLogger &one, BaseLogger &two)
-        : m_logger1(&one), m_logger2(&two), m_logger1Owned(false),
-          m_logger2Owned(false) {}
+  TeeLogger(BaseLogger &one, BaseLogger &two)
+    : m_logger1(&one), m_logger2(&two), m_logger1Owned(false), m_logger2Owned(false) {}
 
-    TeeLogger(BaseLogger &one, bool ownOne, BaseLogger &two, bool ownTwo)
-        : m_logger1(&one), m_logger2(&two), m_logger1Owned(ownOne),
-          m_logger2Owned(ownTwo) {}
+  TeeLogger(BaseLogger &one, bool ownOne, BaseLogger &two, bool ownTwo)
+    : m_logger1(&one), m_logger2(&two), m_logger1Owned(ownOne), m_logger2Owned(ownTwo) {}
 
-    ~TeeLogger() {
-        if (m_logger1Owned)
-            delete m_logger1;
-        if (m_logger2Owned)
-            delete m_logger2;
-    }
+  ~TeeLogger() {
+    if (m_logger1Owned)
+      delete m_logger1;
+    if (m_logger2Owned)
+      delete m_logger2;
+  }
 
-    virtual bool sendLogMessage(LogData *logData) {
-        bool deleteMessage = true;
+  virtual bool sendLogMessage(LogData *logData) {
+    bool deleteMessage = true;
 
-        deleteMessage = deleteMessage && m_logger1->sendLogMessage(logData);
-        deleteMessage = deleteMessage && m_logger2->sendLogMessage(logData);
+    deleteMessage = deleteMessage && m_logger1->sendLogMessage(logData);
+    deleteMessage = deleteMessage && m_logger2->sendLogMessage(logData);
 
-        return deleteMessage;
-    }
+    return deleteMessage;
+  }
 };
 
 // Multiplex logger - will forward a log message to all loggers.
 class MultiplexLogger : public BaseLogger {
-    struct LoggerInfo {
-        BaseLogger *logger;
-        bool owned;
+  struct LoggerInfo {
+    BaseLogger *logger;
+    bool owned;
 
-        LoggerInfo(BaseLogger *l, bool o) : logger(l), owned(o) {}
-    };
-    std::vector<LoggerInfo> m_loggers;
+    LoggerInfo(BaseLogger *l, bool o)
+      : logger(l), owned(o) {}
+  };
+  std::vector<LoggerInfo> m_loggers;
 
   public:
-    MultiplexLogger() {}
+  MultiplexLogger() {}
 
-    MultiplexLogger(BaseLogger *one) {
-        m_loggers.push_back(LoggerInfo(one, false));
+  MultiplexLogger(BaseLogger *one) {
+    m_loggers.push_back(LoggerInfo(one, false));
+  }
+
+  MultiplexLogger(BaseLogger &one) {
+    m_loggers.push_back(LoggerInfo(&one, false));
+  }
+
+  MultiplexLogger(BaseLogger *one, bool owned) {
+    m_loggers.push_back(LoggerInfo(one, owned));
+  }
+
+  MultiplexLogger(BaseLogger &one, bool owned) {
+    m_loggers.push_back(LoggerInfo(&one, owned));
+  }
+
+  MultiplexLogger(BaseLogger *one, BaseLogger *two) {
+    m_loggers.push_back(LoggerInfo(one, false));
+    m_loggers.push_back(LoggerInfo(two, false));
+  }
+
+  MultiplexLogger(
+    BaseLogger *one, bool ownOne, BaseLogger *two, bool ownTwo) {
+    m_loggers.push_back(LoggerInfo(one, ownOne));
+    m_loggers.push_back(LoggerInfo(two, ownTwo));
+  }
+
+  MultiplexLogger(
+    BaseLogger &one, bool ownOne, BaseLogger &two, bool ownTwo) {
+    m_loggers.push_back(LoggerInfo(&one, ownOne));
+    m_loggers.push_back(LoggerInfo(&two, ownTwo));
+  }
+
+  ~MultiplexLogger() {
+    for (std::vector<LoggerInfo>::iterator It = m_loggers.begin();
+         It != m_loggers.end();
+         It++) {
+      if ((*It).owned)
+        delete (*It).logger;
+    }
+  }
+
+  void addLogger(BaseLogger *logger) {
+    m_loggers.push_back(LoggerInfo(logger, false));
+  }
+  void addLogger(BaseLogger &logger) {
+    m_loggers.push_back(LoggerInfo(&logger, false));
+  }
+
+  void addLogger(BaseLogger *logger, bool owned) {
+    m_loggers.push_back(LoggerInfo(logger, owned));
+  }
+  void addLogger(BaseLogger &logger, bool owned) {
+    m_loggers.push_back(LoggerInfo(&logger, owned));
+  }
+
+  virtual bool sendLogMessage(LogData *logData) {
+    bool deleteMessage = true;
+
+    for (std::vector<LoggerInfo>::iterator It = m_loggers.begin();
+         It != m_loggers.end();
+         It++) {
+      deleteMessage =
+        deleteMessage && (*It).logger->sendLogMessage(logData);
     }
 
-    MultiplexLogger(BaseLogger &one) {
-        m_loggers.push_back(LoggerInfo(&one, false));
-    }
-
-    MultiplexLogger(BaseLogger *one, bool owned) {
-        m_loggers.push_back(LoggerInfo(one, owned));
-    }
-
-    MultiplexLogger(BaseLogger &one, bool owned) {
-        m_loggers.push_back(LoggerInfo(&one, owned));
-    }
-
-    MultiplexLogger(BaseLogger *one, BaseLogger *two) {
-        m_loggers.push_back(LoggerInfo(one, false));
-        m_loggers.push_back(LoggerInfo(two, false));
-    }
-
-    MultiplexLogger(
-        BaseLogger *one, bool ownOne, BaseLogger *two, bool ownTwo
-    ) {
-        m_loggers.push_back(LoggerInfo(one, ownOne));
-        m_loggers.push_back(LoggerInfo(two, ownTwo));
-    }
-
-    MultiplexLogger(
-        BaseLogger &one, bool ownOne, BaseLogger &two, bool ownTwo
-    ) {
-        m_loggers.push_back(LoggerInfo(&one, ownOne));
-        m_loggers.push_back(LoggerInfo(&two, ownTwo));
-    }
-
-    ~MultiplexLogger() {
-        for (std::vector<LoggerInfo>::iterator It = m_loggers.begin();
-             It != m_loggers.end();
-             It++) {
-            if ((*It).owned)
-                delete (*It).logger;
-        }
-    }
-
-    void addLogger(BaseLogger *logger) {
-        m_loggers.push_back(LoggerInfo(logger, false));
-    }
-    void addLogger(BaseLogger &logger) {
-        m_loggers.push_back(LoggerInfo(&logger, false));
-    }
-
-    void addLogger(BaseLogger *logger, bool owned) {
-        m_loggers.push_back(LoggerInfo(logger, owned));
-    }
-    void addLogger(BaseLogger &logger, bool owned) {
-        m_loggers.push_back(LoggerInfo(&logger, owned));
-    }
-
-    virtual bool sendLogMessage(LogData *logData) {
-        bool deleteMessage = true;
-
-        for (std::vector<LoggerInfo>::iterator It = m_loggers.begin();
-             It != m_loggers.end();
-             It++) {
-            deleteMessage =
-                deleteMessage && (*It).logger->sendLogMessage(logData);
-        }
-
-        return deleteMessage;
-    }
+    return deleteMessage;
+  }
 };
 
 // Filtering logger.  Will not forward all messages less than a given level.
 class FilteringLogger : public BaseLogger {
   private:
-    loglevel_t m_lowestLevelAllowed;
-    BaseLogger *m_forwardTo;
-    bool m_owned;
+  loglevel_t m_lowestLevelAllowed;
+  BaseLogger *m_forwardTo;
+  bool m_owned;
 
   public:
-    FilteringLogger(loglevel_t level, BaseLogger *forwardTo)
-        : m_lowestLevelAllowed(level), m_forwardTo(forwardTo), m_owned(false) {}
+  FilteringLogger(loglevel_t level, BaseLogger *forwardTo)
+    : m_lowestLevelAllowed(level), m_forwardTo(forwardTo), m_owned(false) {}
 
-    FilteringLogger(loglevel_t level, BaseLogger &forwardTo)
-        : m_lowestLevelAllowed(level), m_forwardTo(&forwardTo), m_owned(false) {
-    }
+  FilteringLogger(loglevel_t level, BaseLogger &forwardTo)
+    : m_lowestLevelAllowed(level), m_forwardTo(&forwardTo), m_owned(false) {
+  }
 
-    FilteringLogger(loglevel_t level, BaseLogger *forwardTo, bool owned)
-        : m_lowestLevelAllowed(level), m_forwardTo(forwardTo), m_owned(owned) {}
+  FilteringLogger(loglevel_t level, BaseLogger *forwardTo, bool owned)
+    : m_lowestLevelAllowed(level), m_forwardTo(forwardTo), m_owned(owned) {}
 
-    FilteringLogger(loglevel_t level, BaseLogger &forwardTo, bool owned)
-        : m_lowestLevelAllowed(level), m_forwardTo(&forwardTo), m_owned(owned) {
-    }
+  FilteringLogger(loglevel_t level, BaseLogger &forwardTo, bool owned)
+    : m_lowestLevelAllowed(level), m_forwardTo(&forwardTo), m_owned(owned) {
+  }
 
-    ~FilteringLogger() {
-        if (m_owned)
-            delete m_forwardTo;
-    }
+  ~FilteringLogger() {
+    if (m_owned)
+      delete m_forwardTo;
+  }
 
-    void SetLevel(loglevel_t allowed) { m_lowestLevelAllowed = allowed; }
+  void SetLevel(loglevel_t allowed) { m_lowestLevelAllowed = allowed; }
 
-    virtual bool sendLogMessage(LogData *logData) {
-        if (logData->level >= m_lowestLevelAllowed)
-            return m_forwardTo->sendLogMessage(logData);
-        else
-            return true;
-    }
+  virtual bool sendLogMessage(LogData *logData) {
+    if (logData->level >= m_lowestLevelAllowed)
+      return m_forwardTo->sendLogMessage(logData);
+    else
+      return true;
+  }
 };
 
 // Logger that moves all processing of log messages to a background thread.
@@ -913,87 +935,90 @@ class FilteringLogger : public BaseLogger {
 #ifdef CPPLOG_THREADING
 class BackgroundLogger : public BaseLogger {
   private:
-    BaseLogger *m_forwardTo;
-    concurrent_queue<LogData *> m_queue;
+  BaseLogger *m_forwardTo;
+  concurrent_queue<LogData *> m_queue;
 
-    boost::thread m_backgroundThread;
-    LogData *m_dummyItem;
+  boost::thread m_backgroundThread;
+  LogData *m_dummyItem;
 
-    void backgroundFunction() {
-        LogData *nextLogEntry;
-        bool deleteMessage = true;
+  void backgroundFunction() {
+    LogData *nextLogEntry;
+    bool deleteMessage = true;
 
-        do {
-            m_queue.wait_and_pop(nextLogEntry);
+    do {
+      m_queue.wait_and_pop(nextLogEntry);
 
-            if (nextLogEntry != m_dummyItem)
-                deleteMessage = m_forwardTo->sendLogMessage(nextLogEntry);
+      if (nextLogEntry != m_dummyItem)
+        deleteMessage = m_forwardTo->sendLogMessage(nextLogEntry);
 
-            if (deleteMessage)
-                delete nextLogEntry;
-        } while (nextLogEntry != m_dummyItem);
-    }
+      if (deleteMessage)
+        delete nextLogEntry;
+    } while (nextLogEntry != m_dummyItem);
+  }
 
-    void Init() {
-        // Create dummy item.
-        m_dummyItem = new LogData(TRACE);
+  void Init() {
+    // Create dummy item.
+    m_dummyItem = new LogData(TRACE);
 
-        // And create background thread.
-        m_backgroundThread =
-            boost::thread(&BackgroundLogger::backgroundFunction, this);
-    }
+    // And create background thread.
+    m_backgroundThread =
+      boost::thread(&BackgroundLogger::backgroundFunction, this);
+  }
 
   public:
-    BackgroundLogger(BaseLogger *forwardTo) : m_forwardTo(forwardTo) { Init(); }
+  BackgroundLogger(BaseLogger *forwardTo)
+    : m_forwardTo(forwardTo) { Init(); }
 
-    BackgroundLogger(BaseLogger &forwardTo) : m_forwardTo(&forwardTo) {
-        Init();
-    }
+  BackgroundLogger(BaseLogger &forwardTo)
+    : m_forwardTo(&forwardTo) {
+    Init();
+  }
 
-    void Stop() {
-        // Push our "dummy" item on the queue ...
-        m_queue.push(m_dummyItem);
+  void Stop() {
+    // Push our "dummy" item on the queue ...
+    m_queue.push(m_dummyItem);
 
-        // ... and wait for thread to terminate.
-        m_backgroundThread.join();
+    // ... and wait for thread to terminate.
+    m_backgroundThread.join();
 
-        // NOTE: The loop will free the dummy item for us, we can ignore it.
-    }
+    // NOTE: The loop will free the dummy item for us, we can ignore it.
+  }
 
-    ~BackgroundLogger() { Stop(); }
+  ~BackgroundLogger() { Stop(); }
 
-    virtual bool sendLogMessage(LogData *logData) {
-        m_queue.push(logData);
+  virtual bool sendLogMessage(LogData *logData) {
+    m_queue.push(logData);
 
-        // Don't delete - the background thread should handle this.
-        return false;
-    }
+    // Don't delete - the background thread should handle this.
+    return false;
+  }
 };
 
 #endif
 
 // Seperate namespace for loggers that use templates.
 namespace templated {
-// Filtering logger that accepts the level as a template parameter.
-// This will be slightly faster at runtime, as the if statement will
-// be performed on a constant value, as opposed to needing a memory
-// lookup (as with FilteringLogger)
-template <loglevel_t lowestLevel = TRACE_LL>
-class TFilteringLogger : public BaseLogger {
+  // Filtering logger that accepts the level as a template parameter.
+  // This will be slightly faster at runtime, as the if statement will
+  // be performed on a constant value, as opposed to needing a memory
+  // lookup (as with FilteringLogger)
+  template <loglevel_t lowestLevel = TRACE_LL>
+  class TFilteringLogger : public BaseLogger {
     BaseLogger *m_forwardTo;
 
-  public:
-    TFilteringLogger(BaseLogger *forwardTo) : m_forwardTo(forwardTo) {}
+public:
+    TFilteringLogger(BaseLogger *forwardTo)
+      : m_forwardTo(forwardTo) {}
 
     virtual bool sendLogMessage(LogData *logData) {
-        if (logData->level >= lowestLevel)
-            return m_forwardTo->sendLogMessage(logData);
-        else
-            return true;
+      if (logData->level >= lowestLevel)
+        return m_forwardTo->sendLogMessage(logData);
+      else
+        return true;
     }
-};
+  };
 
-// TODO: Implement others?
+  // TODO: Implement others?
 } // namespace templated
 } // namespace cpplog
 

@@ -1,0 +1,78 @@
+// Copyright (c) 2017 - 2024, Samsonov Andrey. All Rights Reserved.
+
+#include "Mod.h"
+
+#include "EvospaceLuaState.h"
+#include "LegacyLuaState.h"
+#include "Evospace/JsonHelper.h"
+#include "Public/MainGameModLoader.h"
+
+#include <regex>
+
+void UMod::lua_state_close() {
+  init.reset();
+}
+
+bool UMod::DeserializeJson(TSharedPtr<FJsonObject> json) {
+  json_helper::TryGet(json, "name", name);
+  json_helper::TryGet(json, "version", version);
+  json_helper::TryGet(json, "title", title);
+  json_helper::TryGet(json, "author", author);
+  json_helper::TryGet(json, "evospace_version", evospace_version);
+  json_helper::TryGet(json, "dependencies", dependencies);
+  json_helper::TryGet(json, "description", description);
+
+  for (auto &s : dependencies) {
+    s = std::regex_replace(s, std::regex(" "), "");
+  }
+
+  return true;
+}
+
+bool UMod::DeserializeFromDirectory(
+  const FString &directory, ModLoadingContext &context) {
+  std::string dir_string = TCHAR_TO_UTF8(*directory);
+  IPlatformFile &PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+  {
+    FString json_data;
+    if (PlatformFile.FileExists(*(directory / "info.json"))) {
+      FFileHelper::LoadFileToString(
+        json_data, *(directory / "info.json"));
+    } else {
+      context.log(WARN_LL) << dir_string << " has no info.json";
+      return false;
+    }
+
+    TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject());
+    TSharedRef<TJsonReader<>> JsonReader =
+      TJsonReaderFactory<>::Create(json_data);
+
+    if (FJsonSerializer::Deserialize(JsonReader, JsonObject) &&
+        JsonObject.IsValid()) {
+      DeserializeJson(JsonObject);
+    }
+  }
+
+  auto lua_state = context.lua_state;
+
+  auto file = directory / "init.lua";
+  if (PlatformFile.FileExists(*file)) {
+    FString json_data;
+    FFileHelper::LoadFileToString(json_data, *(directory / "init.lua"));
+    luabridge::setGlobal(lua_state->L, nullptr, "init");
+    context.loader->lastRegisteredMod = {};
+    if (auto result = lua_state->RunCode(TCHAR_TO_UTF8(*json_data), "@init")) {
+      if (context.loader->lastRegisteredMod.has_value()) {
+        this->init = context.loader->lastRegisteredMod.value();
+        context.log(INFO_LL) << " init function table registered. " << this->init->isTable();
+      } else {
+        context.log(ERROR_LL) << " registration unknown error";
+      }
+    } else {
+      context.log(ERROR_LL) << " init.lua file execution error";
+      lua_state->HandleLuaErrorOnStack(context);
+    }
+  }
+
+  return true;
+}

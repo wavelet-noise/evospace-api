@@ -16,25 +16,26 @@ namespace luabridge {
  */
 class Security {
   public:
-    static bool hideMetatables() noexcept {
-        return getSettings().hideMetatables;
-    }
+  static bool hideMetatables() noexcept {
+    return getSettings().hideMetatables;
+  }
 
-    static void setHideMetatables(bool shouldHide) noexcept {
-        getSettings().hideMetatables = shouldHide;
-    }
+  static void setHideMetatables(bool shouldHide) noexcept {
+    getSettings().hideMetatables = shouldHide;
+  }
 
   private:
-    struct Settings {
-        Settings() noexcept : hideMetatables(true) {}
+  struct Settings {
+    Settings() noexcept
+      : hideMetatables(true) {}
 
-        bool hideMetatables;
-    };
+    bool hideMetatables;
+  };
 
-    static Settings &getSettings() noexcept {
-        static Settings settings;
-        return settings;
-    }
+  static Settings &getSettings() noexcept {
+    static Settings settings;
+    return settings;
+  }
 };
 
 //=================================================================================================
@@ -44,14 +45,15 @@ class Security {
  * @note This works on any type specialized by `Stack`, including `LuaRef` and
  * its table proxies.
  */
-template <class T> TypeResult<T> getGlobal(lua_State *L, const char *name) {
-    lua_getglobal(L, name);
+template <class T>
+TypeResult<T> getGlobal(lua_State *L, const char *name) {
+  lua_getglobal(L, name);
 
-    auto result = luabridge::Stack<T>::get(L, -1);
+  auto result = luabridge::Stack<T>::get(L, -1);
 
-    lua_pop(L, 1);
+  lua_pop(L, 1);
 
-    return result;
+  return result;
 }
 
 //=================================================================================================
@@ -61,13 +63,14 @@ template <class T> TypeResult<T> getGlobal(lua_State *L, const char *name) {
  * @note This works on any type specialized by `Stack`, including `LuaRef` and
  * its table proxies.
  */
-template <class T> bool setGlobal(lua_State *L, T &&t, const char *name) {
-    if (auto result = push(L, std::forward<T>(t))) {
-        lua_setglobal(L, name);
-        return true;
-    }
+template <class T>
+bool setGlobal(lua_State *L, T &&t, const char *name) {
+  if (auto result = push(L, std::forward<T>(t))) {
+    lua_setglobal(L, name);
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 //=================================================================================================
@@ -75,7 +78,7 @@ template <class T> bool setGlobal(lua_State *L, T &&t, const char *name) {
  * @brief Change whether or not metatables are hidden (on by default).
  */
 inline void setHideMetatables(bool shouldHide) noexcept {
-    Security::setHideMetatables(shouldHide);
+  Security::setHideMetatables(shouldHide);
 }
 
 } // namespace luabridge

@@ -5,10 +5,13 @@
 // clang-format off
 
 #pragma once
+THIRD_PARTY_INCLUDES_START
 #pragma warning( disable : 4583 )
 #pragma warning( disable : 4582 )
 #pragma warning( disable : 4800 )
 #pragma warning( disable : 4083 )
+
+#include "../../StaticLogger.h"
 
 #include "../lua/lua.hpp"
 
@@ -321,8 +324,7 @@ void throw_or_assert(Args&&... args)
 #if LUABRIDGE_HAS_EXCEPTIONS
     throw T(std::forward<Args>(args)...);
 #else
-    unused(std::forward<Args>(args)...);
-    assert(false);
+    ((LOG(ERROR_LL) << args), ...);
 #endif
 }
 
@@ -7071,12 +7073,14 @@ auto operator<=(const T& lhs, const LuaRef& rhs)
     return !(rhs > lhs);
 }
 
+#if !PLATFORM_WINDOWS
 template <class T>
 auto operator>(const T& lhs, const LuaRef& rhs)
     -> std::enable_if_t<!std::is_same_v<T, LuaRef> && !std::is_same_v<T, LuaRefBase<LuaRef, LuaRef>>, bool>
 {
     return rhs <= lhs;
 }
+#endif
 
 template <class T>
 auto operator>=(const T& lhs, const LuaRef& rhs)
@@ -9751,3 +9755,5 @@ inline void dumpState(lua_State* L, std::ostream& stream = std::cerr)
 
 // End File: Source/LuaBridge/detail/Dump.h
 // clang-format on
+
+THIRD_PARTY_INCLUDES_END

@@ -31,7 +31,7 @@
 
 #if defined(LUA_USE_LINUX)
 #define LUA_USE_POSIX
-#define LUA_USE_DLOPEN   /* needs an extra library: -ldl */
+#define LUA_USE_DLOPEN /* needs an extra library: -ldl */
 #define LUA_USE_READLINE /* needs some extra libraries */
 #endif
 
@@ -79,18 +79,18 @@
 */
 #define LUA_LDIR "!\\lua\\"
 #define LUA_CDIR "!\\"
-#define LUA_PATH_DEFAULT                                                       \
-    ".\\?.lua;" LUA_LDIR "?.lua;" LUA_LDIR "?\\init.lua;" LUA_CDIR             \
-    "?.lua;" LUA_CDIR "?\\init.lua"
+#define LUA_PATH_DEFAULT                                         \
+  ".\\?.lua;" LUA_LDIR "?.lua;" LUA_LDIR "?\\init.lua;" LUA_CDIR \
+  "?.lua;" LUA_CDIR "?\\init.lua"
 #define LUA_CPATH_DEFAULT ".\\?.dll;" LUA_CDIR "?.dll;" LUA_CDIR "loadall.dll"
 
 #else
 #define LUA_ROOT "/usr/local/"
 #define LUA_LDIR LUA_ROOT "share/lua/5.1/"
 #define LUA_CDIR LUA_ROOT "lib/lua/5.1/"
-#define LUA_PATH_DEFAULT                                                       \
-    "./?.lua;" LUA_LDIR "?.lua;" LUA_LDIR "?/init.lua;" LUA_CDIR               \
-    "?.lua;" LUA_CDIR "?/init.lua"
+#define LUA_PATH_DEFAULT                                       \
+  "./?.lua;" LUA_LDIR "?.lua;" LUA_LDIR "?/init.lua;" LUA_CDIR \
+  "?.lua;" LUA_CDIR "?/init.lua"
 #define LUA_CPATH_DEFAULT "./?.so;" LUA_CDIR "?.so;" LUA_CDIR "loadall.so"
 #endif
 
@@ -167,8 +167,8 @@
 #define LUAI_FUNC static
 #define LUAI_DATA /* empty */
 
-#elif defined(__GNUC__) && ((__GNUC__ * 100 + __GNUC_MINOR__) >= 302) &&       \
-    defined(__ELF__)
+#elif defined(__GNUC__) && ((__GNUC__ * 100 + __GNUC_MINOR__) >= 302) && \
+  defined(__ELF__)
 #define LUAI_FUNC __attribute__((visibility("hidden"))) extern
 #define LUAI_DATA LUAI_FUNC
 
@@ -252,26 +252,26 @@
 #include <readline/readline.h>
 #include <stdio.h>
 #define lua_readline(L, b, p) ((void)L, ((b) = readline(p)) != NULL)
-#define lua_saveline(L, idx)                                                   \
-    if (lua_strlen(L, idx) > 0)            /* non-empty line? */               \
-        add_history(lua_tostring(L, idx)); /* add it to history */
+#define lua_saveline(L, idx)                        \
+  if (lua_strlen(L, idx) > 0) /* non-empty line? */ \
+    add_history(lua_tostring(L, idx)); /* add it to history */
 #define lua_freeline(L, b) ((void)L, free(b))
 #else
-#define lua_readline(L, b, p)                                                  \
-    ((void)L,                                                                  \
-     fputs(p, stdout),                                                         \
-     fflush(stdout),                        /* show prompt */                  \
-     fgets(b, LUA_MAXINPUT, stdin) != NULL) /* get line */
-#define lua_saveline(L, idx)                                                   \
-    {                                                                          \
-        (void)L;                                                               \
-        (void)idx;                                                             \
-    }
-#define lua_freeline(L, b)                                                     \
-    {                                                                          \
-        (void)L;                                                               \
-        (void)b;                                                               \
-    }
+#define lua_readline(L, b, p)        \
+  ((void)L,                          \
+   fputs(p, stdout),                 \
+   fflush(stdout), /* show prompt */ \
+   fgets(b, LUA_MAXINPUT, stdin) != NULL) /* get line */
+#define lua_saveline(L, idx) \
+  {                          \
+    (void)L;                 \
+    (void)idx;               \
+  }
+#define lua_freeline(L, b) \
+  {                        \
+    (void)L;               \
+    (void)b;               \
+  }
 #endif
 
 #endif
@@ -357,14 +357,14 @@
 */
 #if defined(LUA_USE_APICHECK)
 #include <assert.h>
-#define luai_apicheck(L, o)                                                    \
-    {                                                                          \
-        (void)L;                                                               \
-        assert(o);                                                             \
-    }
+#define luai_apicheck(L, o) \
+  {                         \
+    (void)L;                \
+    assert(o);              \
+  }
 #else
-#define luai_apicheck(L, o)                                                    \
-    { (void)L; }
+#define luai_apicheck(L, o) \
+  { (void)L; }
 #endif
 
 /*
@@ -524,8 +524,8 @@
 */
 
 /* On a Pentium, resort to a trick */
-#if defined(LUA_NUMBER_DOUBLE) && !defined(LUA_ANSI) && !defined(__SSE2__) &&  \
-    (defined(__i386) || defined(_M_IX86) || defined(__i386__))
+#if defined(LUA_NUMBER_DOUBLE) && !defined(LUA_ANSI) && !defined(__SSE2__) && \
+  (defined(__i386) || defined(_M_IX86) || defined(__i386__))
 
 /* On a Microsoft compiler, use assembler */
 #if defined(_MSC_VER)
@@ -538,15 +538,15 @@
 #else
 
 union luai_Cast {
-    double l_d;
-    long l_l;
+  double l_d;
+  long l_l;
 };
-#define lua_number2int(i, d)                                                   \
-    {                                                                          \
-        volatile union luai_Cast u;                                            \
-        u.l_d = (d) + 6755399441055744.0;                                      \
-        (i) = u.l_l;                                                           \
-    }
+#define lua_number2int(i, d)          \
+  {                                   \
+    volatile union luai_Cast u;       \
+    u.l_d = (d) + 6755399441055744.0; \
+    (i) = u.l_l;                      \
+  }
 #define lua_number2integer(i, n) lua_number2int(i, n)
 
 #endif
@@ -567,12 +567,12 @@ union luai_Cast {
 ** aligned in 16-byte boundaries, then you should add long double in the
 ** union.) Probably you do not need to change this.
 */
-#define LUAI_USER_ALIGNMENT_T                                                  \
-    union {                                                                    \
-        double u;                                                              \
-        void *s;                                                               \
-        long l;                                                                \
-    }
+#define LUAI_USER_ALIGNMENT_T \
+  union {                     \
+    double u;                 \
+    void *s;                  \
+    long l;                   \
+  }
 
 /*
 @@ LUAI_THROW/LUAI_TRY define how Lua does exception handling.
@@ -585,31 +585,31 @@ union luai_Cast {
 #if defined(__cplusplus)
 /* C++ exceptions */
 #define LUAI_THROW(L, c) throw(c)
-#define LUAI_TRY(L, c, a)                                                      \
-    try {                                                                      \
-        a                                                                      \
-    } catch (...) {                                                            \
-        if ((c)->status == 0)                                                  \
-            (c)->status = -1;                                                  \
-    }
+#define LUAI_TRY(L, c, a) \
+  try {                   \
+    a                     \
+  } catch (...) {         \
+    if ((c)->status == 0) \
+      (c)->status = -1;   \
+  }
 #define luai_jmpbuf int /* dummy variable */
 
 #elif defined(LUA_USE_ULONGJMP)
 /* in Unix, try _longjmp/_setjmp (more efficient) */
 #define LUAI_THROW(L, c) _longjmp((c)->b, 1)
-#define LUAI_TRY(L, c, a)                                                      \
-    if (_setjmp((c)->b) == 0) {                                                \
-        a                                                                      \
-    }
+#define LUAI_TRY(L, c, a)     \
+  if (_setjmp((c)->b) == 0) { \
+    a                         \
+  }
 #define luai_jmpbuf jmp_buf
 
 #else
 /* default handling with long jumps */
 #define LUAI_THROW(L, c) longjmp((c)->b, 1)
-#define LUAI_TRY(L, c, a)                                                      \
-    if (setjmp((c)->b) == 0) {                                                 \
-        a                                                                      \
-    }
+#define LUAI_TRY(L, c, a)    \
+  if (setjmp((c)->b) == 0) { \
+    a                        \
+  }
 #define luai_jmpbuf jmp_buf
 
 #endif
@@ -634,19 +634,19 @@ union luai_Cast {
 #if defined(LUA_USE_MKSTEMP)
 #include <unistd.h>
 #define LUA_TMPNAMBUFSIZE 32
-#define lua_tmpnam(b, e)                                                       \
-    {                                                                          \
-        strcpy(b, "/tmp/lua_XXXXXX");                                          \
-        e = mkstemp(b);                                                        \
-        if (e != -1)                                                           \
-            close(e);                                                          \
-        e = (e == -1);                                                         \
-    }
+#define lua_tmpnam(b, e)          \
+  {                               \
+    strcpy(b, "/tmp/lua_XXXXXX"); \
+    e = mkstemp(b);               \
+    if (e != -1)                  \
+      close(e);                   \
+    e = (e == -1);                \
+  }
 
 #else
 #define LUA_TMPNAMBUFSIZE L_tmpnam
-#define lua_tmpnam(b, e)                                                       \
-    { e = (tmpnam(b) == NULL); }
+#define lua_tmpnam(b, e) \
+  { e = (tmpnam(b) == NULL); }
 #endif
 
 #endif
@@ -668,10 +668,10 @@ union luai_Cast {
 
 #else
 
-#define lua_popen(L, c, m)                                                     \
-    ((void)((void)c, m),                                                       \
-     luaL_error(L, LUA_QL("popen") " not supported"),                          \
-     (FILE *)0)
+#define lua_popen(L, c, m)                          \
+  ((void)((void)c, m),                              \
+   luaL_error(L, LUA_QL("popen") " not supported"), \
+   (FILE *)0)
 #define lua_pclose(L, file) ((void)((void)L, file), 0)
 
 #endif

@@ -19,33 +19,35 @@
 namespace luabridge {
 namespace detail {
 
-template <class... Args> struct non_const_overload {
+  template <class... Args>
+  struct non_const_overload {
     template <class R, class T>
     constexpr auto operator()(R (T::*ptr)(Args...)) const noexcept
-        -> decltype(ptr) {
-        return ptr;
+      -> decltype(ptr) {
+      return ptr;
     }
-};
+  };
 
-template <class... Args> struct const_overload {
+  template <class... Args>
+  struct const_overload {
     template <class R, class T>
     constexpr auto operator()(R (T::*ptr)(Args...) const) const noexcept
-        -> decltype(ptr) {
-        return ptr;
+      -> decltype(ptr) {
+      return ptr;
     }
-};
+  };
 
-template <class... Args>
-struct overload : const_overload<Args...>, non_const_overload<Args...> {
+  template <class... Args>
+  struct overload : const_overload<Args...>, non_const_overload<Args...> {
     using const_overload<Args...>::operator();
     using non_const_overload<Args...>::operator();
 
     template <class R>
     constexpr auto operator()(R (*ptr)(Args...)) const noexcept
-        -> decltype(ptr) {
-        return ptr;
+      -> decltype(ptr) {
+      return ptr;
     }
-};
+  };
 
 } // namespace detail
 
@@ -53,7 +55,8 @@ struct overload : const_overload<Args...>, non_const_overload<Args...> {
 /**
  * @brief Overload resolution.
  */
-template <class... Args> constexpr detail::overload<Args...> overload = {};
+template <class... Args>
+constexpr detail::overload<Args...> overload = {};
 template <class... Args>
 constexpr detail::const_overload<Args...> constOverload = {};
 template <class... Args>

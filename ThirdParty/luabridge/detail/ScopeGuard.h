@@ -14,23 +14,26 @@ namespace luabridge::detail {
 /**
  * @brief Scope guard.
  */
-template <class F> class ScopeGuard {
+template <class F>
+class ScopeGuard {
   public:
-    template <class V>
-    ScopeGuard(V &&v) : m_func(std::forward<V>(v)), m_shouldRun(true) {}
+  template <class V>
+  ScopeGuard(V &&v)
+    : m_func(std::forward<V>(v)), m_shouldRun(true) {}
 
-    ~ScopeGuard() {
-        if (m_shouldRun)
-            m_func();
-    }
+  ~ScopeGuard() {
+    if (m_shouldRun)
+      m_func();
+  }
 
-    void reset() { m_shouldRun = false; }
+  void reset() { m_shouldRun = false; }
 
   private:
-    F m_func;
-    bool m_shouldRun;
+  F m_func;
+  bool m_shouldRun;
 };
 
-template <class F> ScopeGuard(F &&) -> ScopeGuard<F>;
+template <class F>
+ScopeGuard(F &&) -> ScopeGuard<F>;
 
 } // namespace luabridge::detail

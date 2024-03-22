@@ -20,73 +20,78 @@ namespace luabridge {
 /**
  * @brief Helper for unused vars.
  */
-template <class... Args> constexpr void unused(Args &&...) {}
+template <class... Args>
+constexpr void unused(Args &&...) {}
 
 // These functions and defines are for Luau.
 #if LUABRIDGE_ON_LUAU
 inline int luaL_ref(lua_State *L, int idx) {
-    assert(idx == LUA_REGISTRYINDEX);
+  assert(idx == LUA_REGISTRYINDEX);
 
-    const int ref = lua_ref(L, -1);
+  const int ref = lua_ref(L, -1);
 
-    lua_pop(L, 1);
+  lua_pop(L, 1);
 
-    return ref;
+  return ref;
 }
 
 inline void luaL_unref(lua_State *L, int idx, int ref) {
-    unused(idx);
+  unused(idx);
 
-    lua_unref(L, ref);
+  lua_unref(L, ref);
 }
 
-template <class T> inline void *lua_newuserdata_x(lua_State *L, size_t sz) {
-    return lua_newuserdatadtor(L, sz, [](void *x) {
-        T *object = static_cast<T *>(x);
-        object->~T();
-    });
+template <class T>
+inline void *lua_newuserdata_x(lua_State *L, size_t sz) {
+  return lua_newuserdatadtor(L, sz, [](void *x) {
+    T *object = static_cast<T *>(x);
+    object->~T();
+  });
 }
 
 inline void lua_pushcfunction_x(lua_State *L, lua_CFunction fn) {
-    lua_pushcfunction(L, fn, "");
+  lua_pushcfunction(L, fn, "");
 }
 
 inline void lua_pushcclosure_x(lua_State *L, lua_CFunction fn, int n) {
-    lua_pushcclosure(L, fn, "", n);
+  lua_pushcclosure(L, fn, "", n);
 }
 
 inline int lua_error_x(lua_State *L) {
-    lua_error(L);
-    return 0;
+  lua_error(L);
+  return 0;
 }
 
 inline int
 lua_getstack_info_x(lua_State *L, int level, const char *what, lua_Debug *ar) {
-    return lua_getinfo(L, level, what, ar);
+  return lua_getinfo(L, level, what, ar);
 }
 
 #else
 using ::luaL_ref;
 using ::luaL_unref;
 
-template <class T> inline void *lua_newuserdata_x(lua_State *L, size_t sz) {
-    return lua_newuserdata(L, sz);
+template <class T>
+inline void *lua_newuserdata_x(lua_State *L, size_t sz) {
+  return lua_newuserdata(L, sz);
 }
 
 inline void lua_pushcfunction_x(lua_State *L, lua_CFunction fn) {
-    lua_pushcfunction(L, fn);
+  lua_pushcfunction(L, fn);
 }
 
 inline void lua_pushcclosure_x(lua_State *L, lua_CFunction fn, int n) {
-    lua_pushcclosure(L, fn, n);
+  lua_pushcclosure(L, fn, n);
 }
 
-inline int lua_error_x(lua_State *L) { return lua_error(L); }
+inline int lua_error_x(lua_State *L) {
+  return lua_error(L);
+}
 
 inline int
 lua_getstack_info_x(lua_State *L, int level, const char *what, lua_Debug *ar) {
-    lua_getstack(L, level, ar);
-    return lua_getinfo(L, what, ar);
+  lua_getstack(L, level, ar);
+  return lua_getinfo(L, what, ar);
 }
 
 #endif // LUABRIDGE_ON_LUAU
@@ -94,32 +99,32 @@ lua_getstack_info_x(lua_State *L, int level, const char *what, lua_Debug *ar) {
 // These are for Lua versions prior to 5.3.0.
 #if LUA_VERSION_NUM < 503
 inline lua_Number to_numberx(lua_State *L, int idx, int *isnum) {
-    lua_Number n = lua_tonumber(L, idx);
+  lua_Number n = lua_tonumber(L, idx);
 
-    if (isnum)
-        *isnum = (n != 0 || lua_isnumber(L, idx));
+  if (isnum)
+    *isnum = (n != 0 || lua_isnumber(L, idx));
 
-    return n;
+  return n;
 }
 
 inline lua_Integer to_integerx(lua_State *L, int idx, int *isnum) {
-    int ok = 0;
-    lua_Number n = to_numberx(L, idx, &ok);
+  int ok = 0;
+  lua_Number n = to_numberx(L, idx, &ok);
 
-    if (ok) {
-        const auto int_n = static_cast<lua_Integer>(n);
-        if (n == static_cast<lua_Number>(int_n)) {
-            if (isnum)
-                *isnum = 1;
+  if (ok) {
+    const auto int_n = static_cast<lua_Integer>(n);
+    if (n == static_cast<lua_Number>(int_n)) {
+      if (isnum)
+        *isnum = 1;
 
-            return int_n;
-        }
+      return int_n;
     }
+  }
 
-    if (isnum)
-        *isnum = 0;
+  if (isnum)
+    *isnum = 0;
 
-    return 0;
+  return 0;
 }
 
 #endif // LUA_VERSION_NUM < 503
@@ -130,26 +135,26 @@ using lua_Unsigned = std::make_unsigned_t<lua_Integer>;
 
 #if !LUABRIDGE_ON_LUAU
 inline int lua_absindex(lua_State *L, int idx) {
-    if (idx > LUA_REGISTRYINDEX && idx < 0)
-        return lua_gettop(L) + idx + 1;
-    else
-        return idx;
+  if (idx > LUA_REGISTRYINDEX && idx < 0)
+    return lua_gettop(L) + idx + 1;
+  else
+    return idx;
 }
 #endif
 
 inline void lua_rawgetp(lua_State *L, int idx, const void *p) {
-    idx = lua_absindex(L, idx);
-    luaL_checkstack(L, 1, "not enough stack slots");
-    lua_pushlightuserdata(L, const_cast<void *>(p));
-    lua_rawget(L, idx);
+  idx = lua_absindex(L, idx);
+  luaL_checkstack(L, 1, "not enough stack slots");
+  lua_pushlightuserdata(L, const_cast<void *>(p));
+  lua_rawget(L, idx);
 }
 
 inline void lua_rawsetp(lua_State *L, int idx, const void *p) {
-    idx = lua_absindex(L, idx);
-    luaL_checkstack(L, 1, "not enough stack slots");
-    lua_pushlightuserdata(L, const_cast<void *>(p));
-    lua_insert(L, -2);
-    lua_rawset(L, idx);
+  idx = lua_absindex(L, idx);
+  luaL_checkstack(L, 1, "not enough stack slots");
+  lua_pushlightuserdata(L, const_cast<void *>(p));
+  lua_insert(L, -2);
+  lua_rawset(L, idx);
 }
 
 #define LUA_OPEQ 1
@@ -157,31 +162,31 @@ inline void lua_rawsetp(lua_State *L, int idx, const void *p) {
 #define LUA_OPLE 3
 
 inline int lua_compare(lua_State *L, int idx1, int idx2, int op) {
-    switch (op) {
-    case LUA_OPEQ:
-        return lua_equal(L, idx1, idx2);
+  switch (op) {
+  case LUA_OPEQ:
+    return lua_equal(L, idx1, idx2);
 
-    case LUA_OPLT:
-        return lua_lessthan(L, idx1, idx2);
+  case LUA_OPLT:
+    return lua_lessthan(L, idx1, idx2);
 
-    case LUA_OPLE:
-        return lua_equal(L, idx1, idx2) || lua_lessthan(L, idx1, idx2);
+  case LUA_OPLE:
+    return lua_equal(L, idx1, idx2) || lua_lessthan(L, idx1, idx2);
 
-    default:
-        return 0;
-    }
+  default:
+    return 0;
+  }
 }
 
 inline int get_length(lua_State *L, int idx) {
-    return static_cast<int>(lua_objlen(L, idx));
+  return static_cast<int>(lua_objlen(L, idx));
 }
 
 #else // LUA_VERSION_NUM >= 502
 inline int get_length(lua_State *L, int idx) {
-    lua_len(L, idx);
-    const int len = static_cast<int>(luaL_checknumber(L, -1));
-    lua_pop(L, 1);
-    return len;
+  lua_len(L, idx);
+  const int len = static_cast<int>(luaL_checknumber(L, -1));
+  lua_pop(L, 1);
+  return len;
 }
 
 #endif // LUA_VERSION_NUM < 502
@@ -198,40 +203,42 @@ inline int get_length(lua_State *L, int idx) {
 template <class T, class ErrorType>
 std::error_code throw_or_error_code(ErrorType error) {
 #if LUABRIDGE_HAS_EXCEPTIONS
-    throw T(makeErrorCode(error).message().c_str());
+  throw T(makeErrorCode(error).message().c_str());
 #else
-    return makeErrorCode(error);
+  return makeErrorCode(error);
 #endif
 }
 
 template <class T, class ErrorType>
 std::error_code throw_or_error_code(lua_State *L, ErrorType error) {
 #if LUABRIDGE_HAS_EXCEPTIONS
-    throw T(L, makeErrorCode(error));
+  throw T(L, makeErrorCode(error));
 #else
-    return unused(L), makeErrorCode(error);
+  return unused(L), makeErrorCode(error);
 #endif
 }
 
 /**
  * @brief Helper to throw or assert.
  */
-template <class T, class... Args> void throw_or_assert(Args &&...args) {
+template <class T, class... Args>
+void throw_or_assert(Args &&...args) {
 #if LUABRIDGE_HAS_EXCEPTIONS
-    throw T(std::forward<Args>(args)...);
+  throw T(std::forward<Args>(args)...);
 #else
-    unused(std::forward<Args>(args)...);
-    assert(false);
+  unused(std::forward<Args>(args)...);
+  assert(false);
 #endif
 }
 
 /**
  * @brief Helper to set unsigned.
  */
-template <class T> void pushunsigned(lua_State *L, T value) {
-    static_assert(std::is_unsigned_v<T>);
+template <class T>
+void pushunsigned(lua_State *L, T value) {
+  static_assert(std::is_unsigned_v<T>);
 
-    lua_pushinteger(L, static_cast<lua_Integer>(value));
+  lua_pushinteger(L, static_cast<lua_Integer>(value));
 }
 
 /**
@@ -239,9 +246,9 @@ template <class T> void pushunsigned(lua_State *L, T value) {
  */
 inline lua_Number tonumber(lua_State *L, int idx, int *isnum) {
 #if !LUABRIDGE_ON_LUAU && LUA_VERSION_NUM > 502
-    return lua_tonumberx(L, idx, isnum);
+  return lua_tonumberx(L, idx, isnum);
 #else
-    return to_numberx(L, idx, isnum);
+  return to_numberx(L, idx, isnum);
 #endif
 }
 
@@ -250,9 +257,9 @@ inline lua_Number tonumber(lua_State *L, int idx, int *isnum) {
  */
 inline lua_Integer tointeger(lua_State *L, int idx, int *isnum) {
 #if !LUABRIDGE_ON_LUAU && LUA_VERSION_NUM > 502
-    return lua_tointegerx(L, idx, isnum);
+  return lua_tointegerx(L, idx, isnum);
 #else
-    return to_integerx(L, idx, isnum);
+  return to_integerx(L, idx, isnum);
 #endif
 }
 
@@ -263,14 +270,14 @@ inline constexpr char main_thread_name[] = "__luabridge_main_thread";
 
 inline void register_main_thread(lua_State *threadL) {
 #if LUA_VERSION_NUM < 502
-    if (threadL == nullptr)
-        lua_pushnil(threadL);
-    else
-        lua_pushthread(threadL);
+  if (threadL == nullptr)
+    lua_pushnil(threadL);
+  else
+    lua_pushthread(threadL);
 
-    lua_setglobal(threadL, main_thread_name);
+  lua_setglobal(threadL, main_thread_name);
 #else
-    unused(threadL);
+  unused(threadL);
 #endif
 }
 
@@ -279,20 +286,20 @@ inline void register_main_thread(lua_State *threadL) {
  */
 inline lua_State *main_thread(lua_State *threadL) {
 #if LUA_VERSION_NUM < 502
-    lua_getglobal(threadL, main_thread_name);
-    if (lua_isthread(threadL, -1)) {
-        auto L = lua_tothread(threadL, -1);
-        lua_pop(threadL, 1);
-        return L;
-    }
-    assert(false); // Have you forgot to call luabridge::registerMainThread ?
-    lua_pop(threadL, 1);
-    return threadL;
-#else
-    lua_rawgeti(threadL, LUA_REGISTRYINDEX, LUA_RIDX_MAINTHREAD);
-    lua_State *L = lua_tothread(threadL, -1);
+  lua_getglobal(threadL, main_thread_name);
+  if (lua_isthread(threadL, -1)) {
+    auto L = lua_tothread(threadL, -1);
     lua_pop(threadL, 1);
     return L;
+  }
+  assert(false); // Have you forgot to call luabridge::registerMainThread ?
+  lua_pop(threadL, 1);
+  return threadL;
+#else
+  lua_rawgeti(threadL, LUA_REGISTRYINDEX, LUA_RIDX_MAINTHREAD);
+  lua_State *L = lua_tothread(threadL, -1);
+  lua_pop(threadL, 1);
+  return L;
 #endif
 }
 
@@ -300,28 +307,28 @@ inline lua_State *main_thread(lua_State *threadL) {
  * @brief Get a table value, bypassing metamethods.
  */
 inline void rawgetfield(lua_State *L, int index, char const *key) {
-    assert(lua_istable(L, index));
-    index = lua_absindex(L, index);
-    lua_pushstring(L, key);
-    lua_rawget(L, index);
+  assert(lua_istable(L, index));
+  index = lua_absindex(L, index);
+  lua_pushstring(L, key);
+  lua_rawget(L, index);
 }
 
 /**
  * @brief Set a table value, bypassing metamethods.
  */
 inline void rawsetfield(lua_State *L, int index, char const *key) {
-    assert(lua_istable(L, index));
-    index = lua_absindex(L, index);
-    lua_pushstring(L, key);
-    lua_insert(L, -2);
-    lua_rawset(L, index);
+  assert(lua_istable(L, index));
+  index = lua_absindex(L, index);
+  lua_pushstring(L, key);
+  lua_insert(L, -2);
+  lua_rawset(L, index);
 }
 
 /**
  * @brief Returns true if the value is a full userdata (not light).
  */
 [[nodiscard]] inline bool isfulluserdata(lua_State *L, int index) {
-    return lua_isuserdata(L, index) && !lua_islightuserdata(L, index);
+  return lua_isuserdata(L, index) && !lua_islightuserdata(L, index);
 }
 
 /**
@@ -333,8 +340,8 @@ inline void rawsetfield(lua_State *L, int index, char const *key) {
  * @note This is used for assertions.
  */
 [[nodiscard]] inline bool equalstates(lua_State *L1, lua_State *L2) {
-    return lua_topointer(L1, LUA_REGISTRYINDEX) ==
-           lua_topointer(L2, LUA_REGISTRYINDEX);
+  return lua_topointer(L1, LUA_REGISTRYINDEX) ==
+         lua_topointer(L2, LUA_REGISTRYINDEX);
 }
 
 /**
@@ -342,31 +349,32 @@ inline void rawsetfield(lua_State *L, int index, char const *key) {
  * }.
  */
 [[nodiscard]] inline int table_length(lua_State *L, int index) {
-    assert(lua_istable(L, index));
+  assert(lua_istable(L, index));
 
-    int items_count = 0;
+  int items_count = 0;
 
-    lua_pushnil(L);
-    while (lua_next(L, index) != 0) {
-        ++items_count;
+  lua_pushnil(L);
+  while (lua_next(L, index) != 0) {
+    ++items_count;
 
-        lua_pop(L, 1);
-    }
+    lua_pop(L, 1);
+  }
 
-    return items_count;
+  return items_count;
 }
 
 /**
  * @brief Return an aligned pointer of type T.
  */
-template <class T> [[nodiscard]] T *align(void *ptr) noexcept {
-    const auto address = reinterpret_cast<size_t>(ptr);
+template <class T>
+[[nodiscard]] T *align(void *ptr) noexcept {
+  const auto address = reinterpret_cast<size_t>(ptr);
 
-    const auto offset = address % alignof(T);
-    const auto aligned_address =
-        (offset == 0) ? address : (address + alignof(T) - offset);
+  const auto offset = address % alignof(T);
+  const auto aligned_address =
+    (offset == 0) ? address : (address + alignof(T) - offset);
 
-    return reinterpret_cast<T *>(aligned_address);
+  return reinterpret_cast<T *>(aligned_address);
 }
 
 /**
@@ -374,19 +382,20 @@ template <class T> [[nodiscard]] T *align(void *ptr) noexcept {
  */
 template <class T>
 [[nodiscard]] constexpr size_t maximum_space_needed_to_align() noexcept {
-    return sizeof(T) + alignof(T) - 1;
+  return sizeof(T) + alignof(T) - 1;
 }
 
 /**
  * @brief Deallocate lua userdata taking into account alignment.
  */
-template <class T> int lua_deleteuserdata_aligned(lua_State *L) {
-    assert(isfulluserdata(L, 1));
+template <class T>
+int lua_deleteuserdata_aligned(lua_State *L) {
+  assert(isfulluserdata(L, 1));
 
-    T *aligned = align<T>(lua_touserdata(L, 1));
-    aligned->~T();
+  T *aligned = align<T>(lua_touserdata(L, 1));
+  aligned->~T();
 
-    return 0;
+  return 0;
 }
 
 /**
@@ -398,63 +407,63 @@ template <class T> int lua_deleteuserdata_aligned(lua_State *L) {
 template <class T, class... Args>
 void *lua_newuserdata_aligned(lua_State *L, Args &&...args) {
 #if LUABRIDGE_ON_LUAU
-    void *pointer =
-        lua_newuserdatadtor(L, maximum_space_needed_to_align<T>(), [](void *x) {
-            T *aligned = align<T>(x);
-            aligned->~T();
-        });
+  void *pointer =
+    lua_newuserdatadtor(L, maximum_space_needed_to_align<T>(), [](void *x) {
+      T *aligned = align<T>(x);
+      aligned->~T();
+    });
 #else
-    void *pointer = lua_newuserdata_x<T>(L, maximum_space_needed_to_align<T>());
+  void *pointer = lua_newuserdata_x<T>(L, maximum_space_needed_to_align<T>());
 
-    lua_newtable(L);
-    lua_pushcfunction_x(L, &lua_deleteuserdata_aligned<T>);
-    rawsetfield(L, -2, "__gc");
-    lua_setmetatable(L, -2);
+  lua_newtable(L);
+  lua_pushcfunction_x(L, &lua_deleteuserdata_aligned<T>);
+  rawsetfield(L, -2, "__gc");
+  lua_setmetatable(L, -2);
 #endif
 
-    T *aligned = align<T>(pointer);
+  T *aligned = align<T>(pointer);
 
-    new (aligned) T(std::forward<Args>(args)...);
+  new (aligned) T(std::forward<Args>(args)...);
 
-    return pointer;
+  return pointer;
 }
 
 /**
  * @brief Safe error able to walk backwards for error reporting correctly.
  */
 inline int raise_lua_error(lua_State *L, const char *fmt, ...) {
-    va_list argp;
-    va_start(argp, fmt);
+  va_list argp;
+  va_start(argp, fmt);
 
-    bool pushed_error = false;
-    for (int level = 2; level > 0; --level) {
-        lua_Debug ar;
+  bool pushed_error = false;
+  for (int level = 2; level > 0; --level) {
+    lua_Debug ar;
 
 #if LUABRIDGE_ON_LUAU
-        if (lua_getinfo(L, level, "sl", &ar) == 0)
-            continue;
+    if (lua_getinfo(L, level, "sl", &ar) == 0)
+      continue;
 #else
-        if (lua_getstack(L, level, &ar) == 0 || lua_getinfo(L, "Sl", &ar) == 0)
-            continue;
+    if (lua_getstack(L, level, &ar) == 0 || lua_getinfo(L, "Sl", &ar) == 0)
+      continue;
 #endif
 
-        if (ar.currentline <= 0)
-            continue;
+    if (ar.currentline <= 0)
+      continue;
 
-        lua_pushfstring(L, "%s:%d: ", ar.short_src, ar.currentline);
-        pushed_error = true;
+    lua_pushfstring(L, "%s:%d: ", ar.short_src, ar.currentline);
+    pushed_error = true;
 
-        break;
-    }
+    break;
+  }
 
-    if (!pushed_error)
-        lua_pushliteral(L, "");
+  if (!pushed_error)
+    lua_pushliteral(L, "");
 
-    lua_pushvfstring(L, fmt, argp);
-    va_end(argp);
-    lua_concat(L, 2);
+  lua_pushvfstring(L, fmt, argp);
+  va_end(argp);
+  lua_concat(L, 2);
 
-    return lua_error_x(L);
+  return lua_error_x(L);
 }
 
 /**
@@ -463,40 +472,40 @@ inline int raise_lua_error(lua_State *L, const char *fmt, ...) {
  */
 template <class U = lua_Integer, class T>
 constexpr bool is_integral_representable_by(T value) {
-    constexpr bool same_signedness =
-        (std::is_unsigned_v<T> && std::is_unsigned_v<U>) ||
-        (!std::is_unsigned_v<T> && !std::is_unsigned_v<U>);
+  constexpr bool same_signedness =
+    (std::is_unsigned_v<T> && std::is_unsigned_v<U>) ||
+    (!std::is_unsigned_v<T> && !std::is_unsigned_v<U>);
 
-    if constexpr (sizeof(T) == sizeof(U)) {
-        if constexpr (same_signedness)
-            return true;
-
-        if constexpr (std::is_unsigned_v<T>)
-            return value <= static_cast<T>(std::numeric_limits<U>::max());
-
-        return value >= static_cast<T>(std::numeric_limits<U>::min()) &&
-               static_cast<U>(value) <= std::numeric_limits<U>::max();
-    }
-
-    if constexpr (sizeof(T) < sizeof(U)) {
-        return static_cast<U>(value) >= std::numeric_limits<U>::min() &&
-               static_cast<U>(value) <= std::numeric_limits<U>::max();
-    }
+  if constexpr (sizeof(T) == sizeof(U)) {
+    if constexpr (same_signedness)
+      return true;
 
     if constexpr (std::is_unsigned_v<T>)
-        return value <= static_cast<T>(std::numeric_limits<U>::max());
+      return value <= static_cast<T>(std::numeric_limits<U>::max());
 
     return value >= static_cast<T>(std::numeric_limits<U>::min()) &&
-           value <= static_cast<T>(std::numeric_limits<U>::max());
+           static_cast<U>(value) <= std::numeric_limits<U>::max();
+  }
+
+  if constexpr (sizeof(T) < sizeof(U)) {
+    return static_cast<U>(value) >= std::numeric_limits<U>::min() &&
+           static_cast<U>(value) <= std::numeric_limits<U>::max();
+  }
+
+  if constexpr (std::is_unsigned_v<T>)
+    return value <= static_cast<T>(std::numeric_limits<U>::max());
+
+  return value >= static_cast<T>(std::numeric_limits<U>::min()) &&
+         value <= static_cast<T>(std::numeric_limits<U>::max());
 }
 
 template <class U = lua_Integer>
 bool is_integral_representable_by(lua_State *L, int index) {
-    int isValid = 0;
+  int isValid = 0;
 
-    const auto value = tointeger(L, index, &isValid);
+  const auto value = tointeger(L, index, &isValid);
 
-    return isValid ? is_integral_representable_by<U>(value) : false;
+  return isValid ? is_integral_representable_by<U>(value) : false;
 }
 
 /**
@@ -505,24 +514,24 @@ bool is_integral_representable_by(lua_State *L, int index) {
  */
 template <class U = lua_Number, class T>
 constexpr bool is_floating_point_representable_by(T value) {
-    if constexpr (sizeof(T) == sizeof(U))
-        return true;
+  if constexpr (sizeof(T) == sizeof(U))
+    return true;
 
-    if constexpr (sizeof(T) < sizeof(U))
-        return static_cast<U>(value) >= -std::numeric_limits<U>::max() &&
-               static_cast<U>(value) <= std::numeric_limits<U>::max();
+  if constexpr (sizeof(T) < sizeof(U))
+    return static_cast<U>(value) >= -std::numeric_limits<U>::max() &&
+           static_cast<U>(value) <= std::numeric_limits<U>::max();
 
-    return value >= static_cast<T>(-std::numeric_limits<U>::max()) &&
-           value <= static_cast<T>(std::numeric_limits<U>::max());
+  return value >= static_cast<T>(-std::numeric_limits<U>::max()) &&
+         value <= static_cast<T>(std::numeric_limits<U>::max());
 }
 
 template <class U = lua_Number>
 bool is_floating_point_representable_by(lua_State *L, int index) {
-    int isValid = 0;
+  int isValid = 0;
 
-    const auto value = tonumber(L, index, &isValid);
+  const auto value = tonumber(L, index, &isValid);
 
-    return isValid ? is_floating_point_representable_by<U>(value) : false;
+  return isValid ? is_floating_point_representable_by<U>(value) : false;
 }
 
 } // namespace luabridge

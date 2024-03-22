@@ -15,60 +15,61 @@ namespace luabridge {
 /**
  * @brief Stack specialization for `std::vector`.
  */
-template <class T> struct Stack<std::vector<T>> {
-    using Type = std::vector<T>;
+template <class T>
+struct Stack<std::vector<T>> {
+  using Type = std::vector<T>;
 
-    [[nodiscard]] static Result push(lua_State *L, const Type &vector) {
+  [[nodiscard]] static Result push(lua_State *L, const Type &vector) {
 #if LUABRIDGE_SAFE_STACK_CHECKS
-        if (!lua_checkstack(L, 3))
-            return makeErrorCode(ErrorCode::LuaStackOverflow);
+    if (!lua_checkstack(L, 3))
+      return makeErrorCode(ErrorCode::LuaStackOverflow);
 #endif
 
-        StackRestore stackRestore(L);
+    StackRestore stackRestore(L);
 
-        lua_createtable(L, static_cast<int>(vector.size()), 0);
+    lua_createtable(L, static_cast<int>(vector.size()), 0);
 
-        for (std::size_t i = 0; i < vector.size(); ++i) {
-            lua_pushinteger(L, static_cast<lua_Integer>(i + 1));
+    for (std::size_t i = 0; i < vector.size(); ++i) {
+      lua_pushinteger(L, static_cast<lua_Integer>(i + 1));
 
-            auto result = Stack<T>::push(L, vector[i]);
-            if (!result)
-                return result;
+      auto result = Stack<T>::push(L, vector[i]);
+      if (!result)
+        return result;
 
-            lua_settable(L, -3);
-        }
-
-        stackRestore.reset();
-        return {};
+      lua_settable(L, -3);
     }
 
-    [[nodiscard]] static TypeResult<Type> get(lua_State *L, int index) {
-        if (!lua_istable(L, index))
-            return makeErrorCode(ErrorCode::InvalidTypeCast);
+    stackRestore.reset();
+    return {};
+  }
 
-        const StackRestore stackRestore(L);
+  [[nodiscard]] static TypeResult<Type> get(lua_State *L, int index) {
+    if (!lua_istable(L, index))
+      return makeErrorCode(ErrorCode::InvalidTypeCast);
 
-        Type vector;
-        vector.reserve(static_cast<std::size_t>(get_length(L, index)));
+    const StackRestore stackRestore(L);
 
-        int absIndex = lua_absindex(L, index);
-        lua_pushnil(L);
+    Type vector;
+    vector.reserve(static_cast<std::size_t>(get_length(L, index)));
 
-        while (lua_next(L, absIndex) != 0) {
-            auto item = Stack<T>::get(L, -1);
-            if (!item)
-                return makeErrorCode(ErrorCode::InvalidTypeCast);
+    int absIndex = lua_absindex(L, index);
+    lua_pushnil(L);
 
-            vector.emplace_back(*item);
-            lua_pop(L, 1);
-        }
+    while (lua_next(L, absIndex) != 0) {
+      auto item = Stack<T>::get(L, -1);
+      if (!item)
+        return makeErrorCode(ErrorCode::InvalidTypeCast);
 
-        return vector;
+      vector.emplace_back(*item);
+      lua_pop(L, 1);
     }
 
-    [[nodiscard]] static bool isInstance(lua_State *L, int index) {
-        return lua_istable(L, index);
-    }
+    return vector;
+  }
+
+  [[nodiscard]] static bool isInstance(lua_State *L, int index) {
+    return lua_istable(L, index);
+  }
 };
 
 } // namespace luabridge

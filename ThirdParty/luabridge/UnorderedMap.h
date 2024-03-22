@@ -15,65 +15,66 @@ namespace luabridge {
 /**
  * @brief Stack specialization for `std::unordered_map`.
  */
-template <class K, class V> struct Stack<std::unordered_map<K, V>> {
-    using Type = std::unordered_map<K, V>;
+template <class K, class V>
+struct Stack<std::unordered_map<K, V>> {
+  using Type = std::unordered_map<K, V>;
 
-    [[nodiscard]] static Result push(lua_State *L, const Type &map) {
+  [[nodiscard]] static Result push(lua_State *L, const Type &map) {
 #if LUABRIDGE_SAFE_STACK_CHECKS
-        if (!lua_checkstack(L, 3))
-            return makeErrorCode(ErrorCode::LuaStackOverflow);
+    if (!lua_checkstack(L, 3))
+      return makeErrorCode(ErrorCode::LuaStackOverflow);
 #endif
 
-        StackRestore stackRestore(L);
+    StackRestore stackRestore(L);
 
-        lua_createtable(L, 0, static_cast<int>(map.size()));
+    lua_createtable(L, 0, static_cast<int>(map.size()));
 
-        for (auto it = map.begin(); it != map.end(); ++it) {
-            auto result = Stack<K>::push(L, it->first);
-            if (!result)
-                return result;
+    for (auto it = map.begin(); it != map.end(); ++it) {
+      auto result = Stack<K>::push(L, it->first);
+      if (!result)
+        return result;
 
-            result = Stack<V>::push(L, it->second);
-            if (!result)
-                return result;
+      result = Stack<V>::push(L, it->second);
+      if (!result)
+        return result;
 
-            lua_settable(L, -3);
-        }
-
-        stackRestore.reset();
-        return {};
+      lua_settable(L, -3);
     }
 
-    [[nodiscard]] static TypeResult<Type> get(lua_State *L, int index) {
-        if (!lua_istable(L, index))
-            return makeErrorCode(ErrorCode::InvalidTypeCast);
+    stackRestore.reset();
+    return {};
+  }
 
-        const StackRestore stackRestore(L);
+  [[nodiscard]] static TypeResult<Type> get(lua_State *L, int index) {
+    if (!lua_istable(L, index))
+      return makeErrorCode(ErrorCode::InvalidTypeCast);
 
-        Type map;
+    const StackRestore stackRestore(L);
 
-        int absIndex = lua_absindex(L, index);
-        lua_pushnil(L);
+    Type map;
 
-        while (lua_next(L, absIndex) != 0) {
-            auto value = Stack<V>::get(L, -1);
-            if (!value)
-                return makeErrorCode(ErrorCode::InvalidTypeCast);
+    int absIndex = lua_absindex(L, index);
+    lua_pushnil(L);
 
-            auto key = Stack<K>::get(L, -2);
-            if (!key)
-                return makeErrorCode(ErrorCode::InvalidTypeCast);
+    while (lua_next(L, absIndex) != 0) {
+      auto value = Stack<V>::get(L, -1);
+      if (!value)
+        return makeErrorCode(ErrorCode::InvalidTypeCast);
 
-            map.emplace(*key, *value);
-            lua_pop(L, 1);
-        }
+      auto key = Stack<K>::get(L, -2);
+      if (!key)
+        return makeErrorCode(ErrorCode::InvalidTypeCast);
 
-        return map;
+      map.emplace(*key, *value);
+      lua_pop(L, 1);
     }
 
-    [[nodiscard]] static bool isInstance(lua_State *L, int index) {
-        return lua_istable(L, index);
-    }
+    return map;
+  }
+
+  [[nodiscard]] static bool isInstance(lua_State *L, int index) {
+    return lua_istable(L, index);
+  }
 };
 
 } // namespace luabridge

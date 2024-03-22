@@ -46,10 +46,11 @@ namespace luabridge {
  *
  * @endcode
  */
-template <class T> struct ContainerTraits {
-    using IsNotContainer = bool;
+template <class T>
+struct ContainerTraits {
+  using IsNotContainer = bool;
 
-    using Type = T;
+  using Type = T;
 };
 
 /**
@@ -58,38 +59,42 @@ template <class T> struct ContainerTraits {
  * @tparam T Class that is hold by the shared_ptr, must inherit from
  * std::enable_shared_from_this.
  */
-template <class T> struct ContainerTraits<std::shared_ptr<T>> {
-    static_assert(std::is_base_of_v<std::enable_shared_from_this<T>, T>);
+template <class T>
+struct ContainerTraits<std::shared_ptr<T>> {
+  static_assert(std::is_base_of_v<std::enable_shared_from_this<T>, T>);
 
-    using Type = T;
+  using Type = T;
 
-    static std::shared_ptr<T> construct(T *t) { return t->shared_from_this(); }
+  static std::shared_ptr<T> construct(T *t) { return t->shared_from_this(); }
 
-    static T *get(const std::shared_ptr<T> &c) { return c.get(); }
+  static T *get(const std::shared_ptr<T> &c) { return c.get(); }
 };
 
 namespace detail {
 
-//=================================================================================================
-/**
+  //=================================================================================================
+  /**
  * @brief Determine if type T is a container.
  *
  * To be considered a container, there must be a specialization of
  * ContainerTraits with the required fields.
  */
-template <class T> class IsContainer {
-  private:
+  template <class T>
+  class IsContainer {
+private:
     typedef char yes[1]; // sizeof (yes) == 1
-    typedef char no[2];  // sizeof (no)  == 2
+    typedef char no[2]; // sizeof (no)  == 2
 
-    template <class C> static constexpr no &test(typename C::IsNotContainer *);
+    template <class C>
+    static constexpr no &test(typename C::IsNotContainer *);
 
-    template <class> static constexpr yes &test(...);
+    template <class>
+    static constexpr yes &test(...);
 
-  public:
+public:
     static constexpr bool value =
-        sizeof(test<ContainerTraits<T>>(0)) == sizeof(yes);
-};
+      sizeof(test<ContainerTraits<T>>(0)) == sizeof(yes);
+  };
 
 } // namespace detail
 } // namespace luabridge

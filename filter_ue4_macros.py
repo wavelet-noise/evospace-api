@@ -33,7 +33,6 @@ def camel_to_snake_case(camel_case_str):
 
     return '_'.join(snake_case_parts)
 
-
 def replace_camel_case_with_snake_case(text):
     def replace(match):
         matched_str = match.group(0)

@@ -179,8 +179,7 @@ LUA_API void(lua_call)(lua_State *L, int nargs, int nresults);
 LUA_API int(lua_pcall)(lua_State *L, int nargs, int nresults, int errfunc);
 LUA_API int(lua_cpcall)(lua_State *L, lua_CFunction func, void *ud);
 LUA_API int(lua_load)(
-    lua_State *L, lua_Reader reader, void *dt, const char *chunkname
-);
+  lua_State *L, lua_Reader reader, void *dt, const char *chunkname);
 
 LUA_API int(lua_dump)(lua_State *L, lua_Writer writer, void *data);
 
@@ -244,8 +243,8 @@ LUA_API void lua_setallocf(lua_State *L, lua_Alloc f, void *ud);
 #define lua_isnone(L, n) (lua_type(L, (n)) == LUA_TNONE)
 #define lua_isnoneornil(L, n) (lua_type(L, (n)) <= 0)
 
-#define lua_pushliteral(L, s)                                                  \
-    lua_pushlstring(L, "" s, (sizeof(s) / sizeof(char)) - 1)
+#define lua_pushliteral(L, s) \
+  lua_pushlstring(L, "" s, (sizeof(s) / sizeof(char)) - 1)
 
 #define lua_setglobal(L, s) lua_setfield(L, LUA_GLOBALSINDEX, (s))
 #define lua_getglobal(L, s) lua_getfield(L, LUA_GLOBALSINDEX, (s))
@@ -309,18 +308,18 @@ LUA_API int lua_gethookmask(lua_State *L);
 LUA_API int lua_gethookcount(lua_State *L);
 
 struct lua_Debug {
-    int event;
-    const char *name;           /* (n) */
-    const char *namewhat;       /* (n) `global', `local', `field', `method' */
-    const char *what;           /* (S) `Lua', `C', `main', `tail' */
-    const char *source;         /* (S) */
-    int currentline;            /* (l) */
-    int nups;                   /* (u) number of upvalues */
-    int linedefined;            /* (S) */
-    int lastlinedefined;        /* (S) */
-    char short_src[LUA_IDSIZE]; /* (S) */
-    /* private part */
-    int i_ci; /* active function */
+  int event;
+  const char *name; /* (n) */
+  const char *namewhat; /* (n) `global', `local', `field', `method' */
+  const char *what; /* (S) `Lua', `C', `main', `tail' */
+  const char *source; /* (S) */
+  int currentline; /* (l) */
+  int nups; /* (u) number of upvalues */
+  int linedefined; /* (S) */
+  int lastlinedefined; /* (S) */
+  char short_src[LUA_IDSIZE]; /* (S) */
+  /* private part */
+  int i_ci; /* active function */
 };
 
 /* }====================================================================== */
