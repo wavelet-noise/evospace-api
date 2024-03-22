@@ -77,13 +77,17 @@ for root, dirs, files in os.walk("./"):
                 content = content.replace('std::vector', 'UArray')
                 content = content.replace('std::unordered_map', 'UTable')
                 content = content.replace('std::map', 'UTable')
+
+                content = re.sub(r'\bm[A-Z]\w+', lambda x: x.group().replace("m", ""), content)
+
                 content = replace_camel_case_with_snake_case(content)
-                #content = re.sub(r'\bm[A-Z]\w+', lambda x: x.group().replace("m", ""), content)
                 
                 regex = '^(\s*)((?:UFUNCTION|UCLASS|UPROPERTY|UENUM|GENERATED_BODY)\s*\('+paren_matcher(25)+'\))'
                 content = re.sub(regex, r'\1', content, flags=re.MULTILINE)
-                #content = re.sub(r'\bU[A-Z]\w+', lambda x: x.group().replace("U", ""), content)
-                #content = re.sub(r'\bF[A-Z]\w+', lambda x: x.group().replace("F", ""), content)
-                #content = re.sub(r'\bE[A-Z]\w+', lambda x: x.group().replace("E", ""), content)
+                content = re.sub(r'\bU[A-Z]\w+', lambda x: x.group().replace("U", ""), content)
+                content = re.sub(r'\bF[A-Z]\w+', lambda x: x.group().replace("F", ""), content)
+                content = re.sub(r'\bE[A-Z]\w+', lambda x: x.group().replace("E", ""), content)
+                content = re.sub(r'\bT[A-Z]\w+', lambda x: x.group().replace("T", ""), content)
+                
             with open(namepath, 'w') as file:
                 file.write(content)
