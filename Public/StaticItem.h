@@ -1,10 +1,9 @@
 // Copyright (c) 2017 - 2024, Samsonov Andrey. All Rights Reserved.
 
 #pragma once
-
-#include "../Common.h"
-#include "../SerializableJson.h"
 #include "Prototype.h"
+#include "Evospace/Common.h"
+#include "Evospace/SerializableJson.h"
 
 #include <Engine/World.h>
 #include <Internationalization/Text.h>
