@@ -7,11 +7,11 @@
   class U##NAME##ConductorAccessor;
 
 #define ACCESSOR_CLASS_CODEGEN(NAME)                                        \
-  U## NAME## Accessor *, U## NAME## InputAccessor *, U## NAME## OutputAccessor *, \
-    U## NAME## ConductorAccessor *
+  U##NAME##Accessor *, U##NAME##InputAccessor *, U##NAME##OutputAccessor *, \
+    U##NAME##ConductorAccessor *
 
-
-class UStaticItem;class UAutoCrafter;
+class UStaticItem;
+class UAutoCrafter;
 class USelectCrafter;
 class UAdminElectricGeneratorBlockLogic;
 class UBedBlockLogic;
