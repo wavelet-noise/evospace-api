@@ -40,7 +40,7 @@ def camel_to_snake_case(name):
 
 def is_excluded(name):
     # Exclude if it starts with "U" or "F" followed by an uppercase letter, indicating CamelCase.
-    return re.match(r'^(F|U|T|E)[A-Z]', name)
+    return re.match(r'^(F|U|T|E|I)[A-Z]', name)
 
 def replace_camel_case_with_snake_case(text):
     def replace(match):
@@ -88,6 +88,7 @@ for root, dirs, files in os.walk("./"):
                 content = re.sub(r'\bF[A-Z]\w+', lambda x: x.group().replace("F", ""), content)
                 content = re.sub(r'\bE[A-Z]\w+', lambda x: x.group().replace("E", ""), content)
                 content = re.sub(r'\bT[A-Z]\w+', lambda x: x.group().replace("T", ""), content)
+                content = re.sub(r'\bI[A-Z]\w+', lambda x: x.group().replace("I", ""), content)
                 
             with open(namepath, 'w') as file:
                 file.write(content)
