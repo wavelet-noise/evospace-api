@@ -12,7 +12,6 @@ Steam:
 Discord:
 [https://discord.gg/RPkSZNY](https://discord.gg/RPkSZNY)
 
-* [LuaBlock](Doc/LuaBlock.md)
+[//]: # * [LuaBlock](Doc/LuaBlock.md)
 * [Class list](https://wavelet-noise.github.io/evospace-api/annotated.html)
 * [Mod structure](Doc/ModStructure.md)
-* [Mod example](Doc/Example.md)

@@ -9,4 +9,4 @@ JSON file is used to describe most of data in Evospace
 [Directory structure](JsonData.md)
 
 ### Implementation
-i
+[Mod lua init](ModInitLua.md)
