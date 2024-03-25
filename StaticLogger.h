@@ -5,6 +5,7 @@
 
 #include <list>
 #include <string>
+#include <functional>
 
 #ifndef LOG_LEVEL
 #define LOG(level) \
@@ -38,5 +39,12 @@ inline std::ostream &operator<<(std::ostream &os, const FString &str) {
 
 inline std::ostream &operator<<(std::ostream &os, const FVector3i &vec) {
   os << "{" << std::to_string(vec.X) << ", " << std::to_string(vec.Y) << ", " << std::to_string(vec.Z) << "}";
+  return os;
+}
+
+inline std::ostream &operator<<(std::ostream &os, const std::function<void(std::ostream&)>& func) {
+  if (func) {
+    func(os);
+  }
   return os;
 }
