@@ -44,7 +44,7 @@ class Zip {
 
   std::vector<std::string> NameList();
 
-  static void ExtractAllFiles(const std::string& zipFilePath, const std::string& extractionPath);
+  static void ExtractAllFiles(const std::string &zipFilePath, const std::string &extractionPath);
 
   std::unique_ptr<miniz_cpp::zip_file> zipfile;
   std::string filename;

@@ -68,7 +68,7 @@ void Zip::Extract(std::string_view path) {
   zipfile->extractall(path.data());
 }
 
-void Zip::ExtractAllFiles(const std::string& zipFilePath, const std::string& extractionPath) {
+void Zip::ExtractAllFiles(const std::string &zipFilePath, const std::string &extractionPath) {
   mz_zip_archive zip_archive;
   memset(&zip_archive, 0, sizeof(zip_archive));
 

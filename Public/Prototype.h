@@ -18,7 +18,7 @@ class Base;
     luabridge::getGlobalNamespace(L)                                                                                        \
       .beginClass<type>(#name)                                                                                              \
       .addStaticFunction(                                                                                                   \
-        "find", +[](std::string_view name) { return FindObject<type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(name.data())); })           \
+        "find", +[](std::string_view name) { return FindObject<type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(name.data())); })     \
       .addStaticFunction("cast", &type::lua_codegen_cast)                                                                   \
       .addStaticFunction(                                                                                                   \
         "new", +[](std::string_view newName) { return NewObject<type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(newName.data())); }) \
@@ -37,7 +37,7 @@ class Base;
     luabridge::getGlobalNamespace(L)                                                                                           \
       .beginClass<U##type>(#type)                                                                                              \
       .addStaticFunction(                                                                                                      \
-        "find", +[](std::string_view name) { return FindObject<U##type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(name.data())); })           \
+        "find", +[](std::string_view name) { return FindObject<U##type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(name.data())); })     \
       .addStaticFunction("cast", &U##type::lua_codegen_cast)                                                                   \
       .addStaticFunction(                                                                                                      \
         "new", +[](std::string_view newName) { return NewObject<U##type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(newName.data())); }) \
@@ -53,7 +53,7 @@ class Base;
     luabridge::getGlobalNamespace(L)                                                                                        \
       .deriveClass<type, parent>(#name)                                                                                     \
       .addStaticFunction(                                                                                                   \
-        "find", +[](std::string_view name) { return FindObject<type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(name.data())); })           \
+        "find", +[](std::string_view name) { return FindObject<type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(name.data())); })     \
       .addStaticFunction("cast", &type::lua_codegen_cast)                                                                   \
       .addStaticFunction(                                                                                                   \
         "new", +[](std::string_view newName) { return NewObject<type>(EVO_ASSET_OWNER(), UTF8_TO_TCHAR(newName.data())); }) \

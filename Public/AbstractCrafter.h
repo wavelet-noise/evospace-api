@@ -7,8 +7,9 @@
 
 #include "AbstractCrafter.generated.h"
 
-
-class URecipe;class UBaseRecipeDictionary;class UAutosizeInventory;
+class URecipe;
+class UBaseRecipeDictionary;
+class UAutosizeInventory;
 class UInventoryContainer;
 
 UCLASS(BlueprintType)
@@ -124,7 +125,7 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   const URecipe *mCurrentRecipe = nullptr;
 
   EVO_LUA_CODEGEN_DB_EX(AbstractCrafter);
-  static void lua_reg(lua_State *L){
+  static void lua_reg(lua_State *L) {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, UTieredBlockLogic>("AbstractCrafter")
       .addProperty("busy", &Self::busy, true)
