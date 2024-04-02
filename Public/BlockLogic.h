@@ -250,6 +250,7 @@ class EVOSPACE_API UPartBlockLogic : public UBlockLogic {
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
   virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
+  UPROPERTY()
   UBlockLogic *mParentBlock;
 
   virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
