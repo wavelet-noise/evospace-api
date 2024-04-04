@@ -55,6 +55,8 @@ class EVOSPACE_API UBlockLogic : public UObject, public ISerializableJson {
   virtual bool IsHandleRecipeSelection() const;
   virtual void HandleRecipeSelection(UStaticItem *item);
 
+  virtual void SetRenderable();
+
   virtual void SetActor(ABlockActor *actor);
   void DeferredPaintApply() const;
   virtual void RemoveActor();
@@ -213,12 +215,14 @@ class EVOSPACE_API UBlockLogic : public UObject, public ISerializableJson {
 
   virtual ABlockActor *GetActor();
 
+  virtual bool GetNoActor() const;
+
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere,
             meta = (AllowPrivateAccess = "true"))
   const UStaticBlock *mStaticBlock = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-  ABlockActor *mActor = nullptr;
+  bool mRenderable = false;
 
   UPROPERTY(VisibleAnywhere)
   FVector3i mPos = {};
@@ -229,13 +233,17 @@ class EVOSPACE_API UBlockLogic : public UObject, public ISerializableJson {
   UPROPERTY(VisibleAnywhere)
   TArray<UBaseAccessor *> mAccessors;
 
-  UPROPERTY()
-  ADimension *mDimension;
-
   //mutable int32 mFromLastWakeup = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
   UMaterialInterface *mPaintMaterial;
+
+  protected:
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+  ABlockActor *mActor = nullptr;
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+  ADimension *mDimension;
 
   public:
   EVO_LUA_CODEGEN_DB_EX(BlockLogic);
