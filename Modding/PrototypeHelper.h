@@ -10,6 +10,7 @@
   U##NAME##Accessor *, U##NAME##InputAccessor *, U##NAME##OutputAccessor *, \
     U##NAME##ConductorAccessor *
 
+class UPrototype;
 class UStaticItem;
 class UAutoCrafter;
 class USelectCrafter;
@@ -59,7 +60,7 @@ namespace PrototypeHelper {
   //   ACCESSOR_CLASS_CODEGEN(Kinetic), ACCESSOR_CLASS_CODEGEN(Data)>
   //   classes_backup;
 
-  inline std::tuple<UStaticObject *, UStaticItem *, UStaticBlock *, UBlockLogic *, UStaticTip *, URecipe *, UTieredBlockLogic *, UAbstractCrafter *, UFenceBlockLogic *, UDoorBlockLogic *, UBedBlockLogic *, UAdminElectricGeneratorBlockLogic *, USelectCrafter *, UAutoCrafter *> classes;
+  inline std::tuple<UPrototype *, UStaticObject *, UStaticItem *, UStaticBlock *, UBlockLogic *, UStaticTip *, URecipe *, UTieredBlockLogic *, UAbstractCrafter *, UFenceBlockLogic *, UDoorBlockLogic *, UBedBlockLogic *, UAdminElectricGeneratorBlockLogic *, USelectCrafter *, UAutoCrafter *> classes;
 
 #undef ACCESSOR_FORWARD_CODEGEN
 #undef ACCESSOR_CLASS_CODEGEN

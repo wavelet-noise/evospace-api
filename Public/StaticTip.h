@@ -11,19 +11,28 @@ UCLASS(BlueprintType)
 /**
  * 
  */
-class UStaticTip : public UObject, public ISerializableJson {
+class UStaticTip : public UPrototype {
   GENERATED_BODY()
   public:
   UStaticTip();
 
-  UPROPERTY(BlueprintReadOnly)
+  UPROPERTY(BlueprintReadOnly, EditAnywhere)
   FKeyTableObject mLabel;
 
-  UPROPERTY(BlueprintReadOnly)
+  UPROPERTY(BlueprintReadOnly, EditAnywhere)
   FKeyTableObject mDescription;
 
-  UPROPERTY()
+  UPROPERTY(BlueprintReadOnly, EditAnywhere)
   UAutosizeInventory *mContextInventory;
+
+  UPROPERTY(BlueprintReadOnly, EditAnywhere)
+  UTexture2D *mImage;
+
+  UPROPERTY(BlueprintReadOnly, EditAnywhere)
+  FString mImagePath;
+
+  UFUNCTION(BlueprintCallable)
+  void LoadImage();
 
   void AddContext(const UStaticItem *item);
   void ClearContext();
@@ -33,9 +42,10 @@ class UStaticTip : public UObject, public ISerializableJson {
   EVO_LUA_CODEGEN_DB_EX(StaticTip);
   static void lua_reg(lua_State *L) {
     luabridge::getGlobalNamespace(L)
-      .deriveClass<UStaticTip, UObject>("StaticTip")
+      .deriveClass<UStaticTip, UPrototype>("StaticTip")
       .addProperty("label", &UStaticTip::mLabel)
       .addProperty("description", &UStaticTip::mDescription)
+      .addProperty("image", &UStaticTip::mImagePath)
       .addFunction("add_context", &UStaticTip::AddContext)
       .addFunction("clear_context", &UStaticTip::ClearContext)
       .endClass();

@@ -14,13 +14,13 @@ void UMod::lua_state_close() {
 }
 
 bool UMod::DeserializeJson(TSharedPtr<FJsonObject> json) {
-  json_helper::TryGet(json, "name", name);
-  json_helper::TryGet(json, "version", version);
-  json_helper::TryGet(json, "title", title);
-  json_helper::TryGet(json, "author", author);
-  json_helper::TryGet(json, "evospace_version", evospace_version);
+  json_helper::TryGet(json, "name", mName);
+  json_helper::TryGet(json, "version", mVersion);
+  json_helper::TryGet(json, "title", mTitle);
+  json_helper::TryGet(json, "author", mAuthor);
+  json_helper::TryGet(json, "evospace_version", mEvospaceVersion);
   json_helper::TryGet(json, "dependencies", dependencies);
-  json_helper::TryGet(json, "description", description);
+  json_helper::TryGet(json, "description", mDescription);
 
   for (auto &s : dependencies) {
     s = std::regex_replace(s, std::regex(" "), "");
@@ -29,15 +29,13 @@ bool UMod::DeserializeJson(TSharedPtr<FJsonObject> json) {
   return true;
 }
 
-bool UMod::DeserializeFromDirectory(
-  const FString &directory, ModLoadingContext &context) {
+bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext &context) {
   std::string dir_string = TCHAR_TO_UTF8(*directory);
   IPlatformFile &PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
   {
     FString json_data;
     if (PlatformFile.FileExists(*(directory / "info.json"))) {
-      FFileHelper::LoadFileToString(
-        json_data, *(directory / "info.json"));
+      FFileHelper::LoadFileToString(json_data, *(directory / "info.json"));
     } else {
       context.log(WARN_LL) << dir_string << " has no info.json";
       return false;

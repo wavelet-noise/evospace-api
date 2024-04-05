@@ -28,7 +28,7 @@ UCLASS(BlueprintType)
 /**
  * 
  */
-class EVOSPACE_API UBlockLogic : public UObject, public ISerializableJson {
+class EVOSPACE_API UBlockLogic : public UPrototype {
   GENERATED_BODY()
 
   protected:

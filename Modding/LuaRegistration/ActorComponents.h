@@ -58,16 +58,16 @@ inline void registerComponentClasses(lua_State *L) {
 
   luabridge::getGlobalNamespace(L)
     .beginClass<FKeyTableObject>("Loc")
-    .addStaticFunction("new", [](std::string_view table, std::string_view key) {
+    .addStaticFunction("new", [](std::string_view key, std::string_view table) {
       auto kt = FKeyTableObject();
-      kt.Table = UTF8_TO_TCHAR(table.data());
       kt.Key = UTF8_TO_TCHAR(key.data());
+      kt.Table = UTF8_TO_TCHAR(table.data());
       return kt;
     })
-    .addStaticFunction("new_param", [](std::string_view table, std::string_view key, float param) {
+    .addStaticFunction("new_param", [](std::string_view key, std::string_view table, float param) {
       auto kt = FKeyTableObject();
-      kt.Table = UTF8_TO_TCHAR(table.data());
       kt.Key = UTF8_TO_TCHAR(key.data());
+      kt.Table = UTF8_TO_TCHAR(table.data());
       kt.Value = param;
       kt.Args = 1;
       return kt;

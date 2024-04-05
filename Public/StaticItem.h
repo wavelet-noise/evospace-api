@@ -34,7 +34,7 @@ UCLASS(BlueprintType)
  *
  * Not modifiable in game part of item
  */
-class EVOSPACE_API UStaticItem : public UObject, public ISerializableJson {
+class EVOSPACE_API UStaticItem : public UPrototype {
   GENERATED_BODY()
 
   public:

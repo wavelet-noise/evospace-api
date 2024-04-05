@@ -31,42 +31,44 @@ class UMod : public UObject, public ISerializableJson {
   /**
      * @brief name. Must be not empty.
      */
-  std::string name;
+  std::string mName;
 
   /**
      * @brief version. Default value: ""
      */
-  std::string version;
+  std::string mVersion;
 
   /**
      * @brief title. Default value: ""
      */
-  std::string title;
+  std::string mTitle;
 
   /**
      * @brief evospace_version. Default value: ""
      */
-  std::string evospace_version;
+  std::string mEvospaceVersion;
 
   /**
      * @brief created_by. Default value: ""
      */
-  std::string created_by;
+  std::string mCreatedBy;
 
   /**
      * @brief description. Default value: ""
      */
-  std::string description;
+  std::string mDescription;
 
   /**
      * @brief author. Default value: ""
      */
-  std::string author;
+  std::string mAuthor;
+
+  FString mPath;
 
   /**
      * @brief enabled. Default value: true
      */
-  bool enabled = true;
+  bool mEnabled = true;
 
   /**
      * @brief is mod loaded without errors. Default value: false
@@ -85,30 +87,30 @@ class UMod : public UObject, public ISerializableJson {
   bool DeserializeFromDirectory(const FString &s, ModLoadingContext &context);
 
   UFUNCTION(BlueprintCallable)
-  FString Name() const { return UTF8_TO_TCHAR(name.data()); }
+  FString Name() const { return UTF8_TO_TCHAR(mName.data()); }
 
   UFUNCTION(BlueprintCallable)
-  FString Version() const { return UTF8_TO_TCHAR(version.data()); }
+  FString Version() const { return UTF8_TO_TCHAR(mVersion.data()); }
 
   UFUNCTION(BlueprintCallable)
-  FString Title() const { return UTF8_TO_TCHAR(title.data()); }
+  FString Title() const { return UTF8_TO_TCHAR(mTitle.data()); }
 
   UFUNCTION(BlueprintCallable)
   FString EvospaceVersion() const {
-    return UTF8_TO_TCHAR(evospace_version.data());
+    return UTF8_TO_TCHAR(mEvospaceVersion.data());
   }
 
   UFUNCTION(BlueprintCallable)
-  FString CreatedBy() const { return UTF8_TO_TCHAR(created_by.data()); }
+  FString CreatedBy() const { return UTF8_TO_TCHAR(mCreatedBy.data()); }
 
   UFUNCTION(BlueprintCallable)
-  FString Description() const { return UTF8_TO_TCHAR(description.data()); }
+  FString Description() const { return UTF8_TO_TCHAR(mDescription.data()); }
 
   UFUNCTION(BlueprintCallable)
-  FString Author() const { return UTF8_TO_TCHAR(author.data()); }
+  FString Author() const { return UTF8_TO_TCHAR(mAuthor.data()); }
 
   UFUNCTION(BlueprintCallable)
-  bool Enabled() const { return enabled; }
+  bool Enabled() const { return mEnabled; }
 
   UFUNCTION(BlueprintCallable)
   bool LoadedWithoutErrors() const { return loaded_without_errors; }
@@ -117,7 +119,7 @@ class UMod : public UObject, public ISerializableJson {
   TArray<FString> Dependencies() const {
     TArray<FString> arr;
     for (auto &a : dependencies) {
-      arr.Add(UTF8_TO_TCHAR(name.data()));
+      arr.Add(UTF8_TO_TCHAR(mName.data()));
     }
     return arr;
   }

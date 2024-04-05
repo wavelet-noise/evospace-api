@@ -9,6 +9,7 @@
 
 #include "MainGameModLoader.generated.h"
 
+class UPrototype;
 namespace evo {
 class LegacyLuaState;
 }
@@ -103,44 +104,59 @@ class UMainGameModLoader : public UObject {
   UPROPERTY(VisibleAnywhere)
   TArray<int64> mSubscribedIds;
 
-  void LoadDirectory(const FString &path);
+  void LoadDirectory(ModLoadingContext &context, const FString &path, const FString &dir);
   bool LoadSync();
+
+  std::vector<UObject *> GetPrototypes();
+
+  bool SelectLocalization(const FString &locale);
+
+  std::optional<luabridge::LuaRef> lastRegisteredMod;
+  void RegisterPrototypeFromTable(const UMod*owner,const luabridge::LuaRef &table);
+  void ModInitTable(const luabridge::LuaRef &table);
+
+  static UMainGameModLoader *GetMainGameModLoader();
+
+  void RegisterPrototype(const UMod * owner, UPrototype *proto) const;
+
+  bool AllSequence(ModLoadingContext &cotext);
+
+  int VanillaJsonCount = 0;
+
+  UPROPERTY()
+  UMod *mCurrentMod;
+
+  UPROPERTY()
+  TArray<UMod *> mods;
+
+  ModTickLoadStatus current_mod_status = ModTickLoadStatus::NotChecked;
+
+  UPROPERTY()
+  TArray<FString> error_log;
+
+  UFUNCTION(BlueprintCallable)
+  int32 GetPhase() const { return phase; }
+
+  private:
+  static bool LoadLoc(ModLoadingContext &context, const FString &path, const FString &locale = "source", bool isSource = true);
+
   bool PrepareMods(ModLoadingContext &context);
   bool LuaTickCaller(ModLoadingContext &context, std::string_view function_name, int32 seq);
   bool SubscriptionLoading(ModLoadingContext &context);
-  bool AllSequence(ModLoadingContext &cotext);
   bool Init(ModLoadingContext &context, int32 seq);
   bool PostInit(ModLoadingContext &context, int32 seq);
   bool PreInit(ModLoadingContext &context, int32 seq);
   bool ResearchPostprocess(ModLoadingContext &context);
   bool LuaPostprocess(ModLoadingContext &context);
-  bool Localization(ModLoadingContext &context);
   bool CollectingItems(ModLoadingContext &context);
-  void RegisterPrototype(UObject *proto);
-  std::vector<UObject *> GetPrototypes();
-
-  std::optional<luabridge::LuaRef> lastRegisteredMod;
-  void RegisterPrototypeFromTable(const luabridge::LuaRef &table);
-  void ModInitTable(const luabridge::LuaRef &table);
-
-  static UMainGameModLoader *GetMainGameModLoader();
-
-  int VanillaJsonCount = 0;
-
-  UPROPERTY()
-  TArray<UMod *> mods;
+  bool ModContentLoad(ModLoadingContext &cotext, int phase);
 
   UPROPERTY()
   TArray<UMod *> lostMods;
 
-  ModTickLoadStatus current_mod_status = ModTickLoadStatus::NotChecked;
-
-  UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+  UPROPERTY(VisibleAnywhere)
   int current_mod = 0;
 
-  UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+  UPROPERTY(VisibleAnywhere)
   int phase = 0;
-
-  UPROPERTY()
-  TArray<FString> error_log;
 };

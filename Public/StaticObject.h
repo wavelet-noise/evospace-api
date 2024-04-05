@@ -34,7 +34,7 @@ UCLASS(Abstract)
 /**
  * 
  */
-class EVOSPACE_API UStaticObject : public UObject, public ISerializableJson {
+class EVOSPACE_API UStaticObject : public UPrototype {
   GENERATED_BODY()
 
   public:
@@ -48,9 +48,6 @@ class EVOSPACE_API UStaticObject : public UObject, public ISerializableJson {
 
   UPROPERTY(BlueprintReadOnly)
   FQuat mDefaultRotation = FQuat::Identity;
-
-  virtual void LuaCleanup() {
-  }
 
   virtual AActor *CreateSelector() const { return nullptr; };
 
