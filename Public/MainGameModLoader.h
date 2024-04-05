@@ -112,12 +112,12 @@ class UMainGameModLoader : public UObject {
   bool SelectLocalization(const FString &locale);
 
   std::optional<luabridge::LuaRef> lastRegisteredMod;
-  void RegisterPrototypeFromTable(const UMod*owner,const luabridge::LuaRef &table);
+  void RegisterPrototypeFromTable(const UMod *owner, const luabridge::LuaRef &table);
   void ModInitTable(const luabridge::LuaRef &table);
 
   static UMainGameModLoader *GetMainGameModLoader();
 
-  void RegisterPrototype(const UMod * owner, UPrototype *proto) const;
+  void RegisterPrototype(const UMod *owner, UPrototype *proto) const;
 
   bool AllSequence(ModLoadingContext &cotext);
 
