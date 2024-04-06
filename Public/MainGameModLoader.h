@@ -138,7 +138,7 @@ class UMainGameModLoader : public UObject {
   int32 GetPhase() const { return phase; }
 
   private:
-  static bool LoadLoc(ModLoadingContext &context, const FString &path, const FString &locale = "source", bool isSource = true);
+  static bool LoadLoc(ModLoadingContext &context, const FString &path, const FString &locale, bool isSource);
 
   bool PrepareMods(ModLoadingContext &context);
   bool LuaTickCaller(ModLoadingContext &context, std::string_view function_name, int32 seq);
