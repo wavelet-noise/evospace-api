@@ -52,11 +52,12 @@ class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
   float mCraftSpeedMultiplier = 1.0f;
 
   ECanAccomodate mCanAccomodate = ECanAccomodate::Unknown;
-
-  protected:
+  
   virtual int32 GetSpeedLevel() const override;
 
   virtual void SetWorking(bool working);
+
+  
   FBoolProperty *mWorking = nullptr;
 
   public:
