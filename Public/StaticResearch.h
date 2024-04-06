@@ -58,12 +58,6 @@ class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
   UTexture2D *Texture = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UAutosizeInventory *Collect;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UAutosizeInventory *CollectDefault;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   TArray<UStaticResearch *> RequiredResearches = {};
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
