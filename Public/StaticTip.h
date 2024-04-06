@@ -32,7 +32,7 @@ class UStaticTip : public UPrototype {
   FString mImagePath;
 
   UFUNCTION(BlueprintCallable)
-  void LoadImage();
+  void LoadImagePath();
 
   void AddContext(const UStaticItem *item);
   void ClearContext();
