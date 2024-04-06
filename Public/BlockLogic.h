@@ -9,6 +9,7 @@
 
 #include "BlockLogic.generated.h"
 
+class AMainPlayerController;
 class ABlockActor;
 class UBlockWidget;
 DECLARE_STATS_GROUP(TEXT("BLOCKLOGIC_Game"), STATGROUP_BLOCKLOGIC,
@@ -95,19 +96,18 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   virtual void SleepAnimation() const;
 
   // No any code
-  virtual bool SaveSettings(TSharedPtr<FJsonObject> json,
+  virtual void SaveSettings(TSharedPtr<FJsonObject> json,
                             AMainPlayerController *mpc = nullptr);
 
   // No any code
-  virtual bool LoadSettings(TSharedPtr<FJsonObject> json,
+  virtual void LoadSettings(TSharedPtr<FJsonObject> json,
                             AMainPlayerController *mpc = nullptr);
 
   UFUNCTION(BlueprintCallable)
   virtual FString SaveSettings(AMainPlayerController *mpc = nullptr);
 
   UFUNCTION(BlueprintCallable)
-  virtual void LoadSettings(const FString &json,
-                            AMainPlayerController *mpc = nullptr);
+  virtual void LoadSettings(const FString &json, AMainPlayerController *mpc = nullptr);
 
   UFUNCTION(BlueprintCallable)
   void PaintBlock(UMaterialInterface *mat);

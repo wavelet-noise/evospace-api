@@ -23,14 +23,14 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
   virtual void Tick() override;
 
   UPROPERTY()
-  class UNonSerializedInternalInventory *mLastInventory;
+  class UNonSerializedAutosizeInventory *mLastInventory;
 
   public:
   virtual bool IsUniversalCrafter() const override;
 
   virtual void SelectRecipe(APlayerController *pc, int32 i) override;
 
-  virtual bool LoadSettings(TSharedPtr<FJsonObject> json, AMainPlayerController *mpc = nullptr) override;
+  virtual void LoadSettings(TSharedPtr<FJsonObject> json, AMainPlayerController *mpc = nullptr) override;
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
