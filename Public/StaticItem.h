@@ -146,6 +146,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
   bool mIncomplete = true;
 
   TSharedPtr<FJsonObject> mLogicJson;
+  virtual void MarkIncomplete() override;
 
   EVO_LUA_CODEGEN_DB_EX(StaticItem);
   static void lua_reg(lua_State *L);

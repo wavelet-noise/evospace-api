@@ -107,6 +107,8 @@ class UPrototype : public UObject, public ISerializableJson {
 
   virtual void LuaCleanup();
 
+  virtual void MarkIncomplete();
+
   /*!
      * @fn static This * find(std::string_view name)
      * @brief Try to find object of type This with given name
@@ -136,4 +138,7 @@ inline bool UPrototype::DeserializeJson(TSharedPtr<FJsonObject> json) {
 }
 
 inline void UPrototype::LuaCleanup() {
+}
+
+inline void UPrototype::MarkIncomplete(){
 }
