@@ -48,6 +48,8 @@ class Zip {
 
   std::unique_ptr<miniz_cpp::zip_file> zipfile;
   std::string filename;
+
+  static std::string_view decodeError(int code);
 };
 
 #endif /* Zip_hpp */

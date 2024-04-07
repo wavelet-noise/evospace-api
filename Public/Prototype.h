@@ -140,5 +140,5 @@ inline bool UPrototype::DeserializeJson(TSharedPtr<FJsonObject> json) {
 inline void UPrototype::LuaCleanup() {
 }
 
-inline void UPrototype::MarkIncomplete(){
+inline void UPrototype::MarkIncomplete() {
 }
