@@ -65,9 +65,6 @@ class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
   virtual TSubclassOf<UBlockWidget> GetWidgetClass() const override;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UCoreAccessor *mAutoCrafterCoreAccessor;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventoryContainer *mAutoCrafterCoreInput;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

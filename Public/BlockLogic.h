@@ -9,6 +9,7 @@
 
 #include "BlockLogic.generated.h"
 
+class UCoreAccessor;
 class AMainPlayerController;
 class ABlockActor;
 class UBlockWidget;
@@ -153,13 +154,6 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
     return Cast<Ty_>(GetSideAccessor(Ty_::StaticClass(), side, pos));
   }
 
-  UBaseAccessor *GetCoreAccessor(UClass *type);
-
-  template <class Ty_>
-  Ty_ *GetCoreAccessor() {
-    return Cast<Ty_>(GetCoreAccessor(Ty_::StaticClass()));
-  }
-
   template <typename Ty_>
   Ty_ *CreateDefaultAccessor(UObject *Outer, FName SubobjectFName) {
     auto v = CreateDefaultSubobject<Ty_>(Outer, SubobjectFName);
@@ -217,8 +211,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   virtual bool GetNoActor() const;
 
-  UPROPERTY(BlueprintReadOnly, VisibleAnywhere,
-            meta = (AllowPrivateAccess = "true"))
+  UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
   const UStaticBlock *mStaticBlock = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -232,6 +225,26 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   UPROPERTY(VisibleAnywhere)
   TArray<UBaseAccessor *> mAccessors;
+
+  // Core
+  protected:
+  UPROPERTY(VisibleAnywhere)
+  UCoreAccessor *mCore;
+  std::function<UCoreAccessor *()> mCoreInit;
+
+  public:
+  UFUNCTION(BlueprintCallable)
+  virtual UCoreAccessor *GetCoreAccessor();
+
+  // Monitor
+  protected:
+  UPROPERTY(VisibleAnywhere)
+  UCoreAccessor *mMonitor;
+  std::function<UCoreAccessor *()> mMonitorInit;
+
+  public:
+  UFUNCTION(BlueprintCallable)
+  virtual UCoreAccessor *GetMonitorAccessor();
 
   //mutable int32 mFromLastWakeup = 0;
 
@@ -268,6 +281,10 @@ class EVOSPACE_API UPartBlockLogic : public UBlockLogic {
   virtual UBlockLogic *GetPartRootBlock() override;
 
   virtual TArray<UBaseAccessor *> GetAccessors() override;
+
+  virtual UCoreAccessor *GetCoreAccessor();
+
+  virtual UCoreAccessor *GetMonitorAccessor();
 
   virtual ABlockActor *GetActor() override;
 
