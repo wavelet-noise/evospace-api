@@ -195,9 +195,6 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   virtual void OnAction(const FHitResult &hit, const Vec3i &side,
                         AItemLogic *item);
 
-  UFUNCTION(BlueprintCallable, BlueprintPure)
-  virtual bool ActionAndWidget() const;
-
   //    .
   virtual int32 DropItems(UInventoryAccess *inventory);
 
