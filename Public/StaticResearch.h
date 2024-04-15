@@ -41,7 +41,9 @@ struct EVOSPACE_API FResearchUnlockLevel {
 
   public:
   TArray<FResearchUnlock> Unlocks;
-  TArray<URecipe *> Recipes;
+
+  UPROPERTY()
+  TArray<class URecipe *> Recipes;
 };
 
 UCLASS(BlueprintType)
@@ -109,26 +111,26 @@ class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
 
   virtual void PostDeserializeJson() override;
 
-  virtual void ApplyToController(AMainPlayerController *apply_to);
+  virtual void ApplyToController(AMainPlayerController *apply_to, int32 level);
 };
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {
   GENERATED_BODY()
   public:
-  virtual void ApplyToController(AMainPlayerController *apply_to) override;
+  virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 };
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UStaticResearchModifier : public UStaticResearch {
   GENERATED_BODY()
   public:
-  virtual void ApplyToController(AMainPlayerController *apply_to) override;
+  virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UStaticModifier *mModifier;
+  class UStaticModifier *mModifier = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   float mBonusValue;
@@ -138,5 +140,5 @@ UCLASS(BlueprintType)
 class EVOSPACE_API UStaticResearchToolUnlock : public UStaticResearch {
   GENERATED_BODY()
   public:
-  virtual void ApplyToController(AMainPlayerController *apply_to) override;
+  virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 };

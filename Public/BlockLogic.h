@@ -206,7 +206,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   virtual ABlockActor *GetActor();
 
-  virtual bool GetNoActor() const;
+  virtual bool IsNoActor() const;
 
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
   const UStaticBlock *mStaticBlock = nullptr;
