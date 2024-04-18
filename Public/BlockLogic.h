@@ -61,7 +61,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   virtual void SetActor(ABlockActor *actor);
   void DeferredPaintApply() const;
-  virtual void RemoveActor();
+  virtual void RemoveActorOrRenderable();
 
   virtual void LuaBlock();
   virtual void BlockDestruction();
