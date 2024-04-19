@@ -6,6 +6,7 @@
 #include "Evospace/CoordinameMinimal.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Vector.h"
+#include "Evospace/PerformanceStat.h"
 
 #include "BlockLogic.generated.h"
 
@@ -13,8 +14,6 @@ class UCoreAccessor;
 class AMainPlayerController;
 class ABlockActor;
 class UBlockWidget;
-DECLARE_STATS_GROUP(TEXT("BLOCKLOGIC_Game"), STATGROUP_BLOCKLOGIC,
-                    STATCAT_Advanced);
 
 class UHudWidget;
 class URootBlockComponent;
