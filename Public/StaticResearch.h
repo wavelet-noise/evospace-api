@@ -1,10 +1,12 @@
 #pragma once
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Vector.h"
+#include <Evospace/Common.h>
 #include "StaticResearch.generated.h"
 
 class UStaticChapter;
 class AMainPlayerController;
+class UInventory;
 
 UCLASS(BlueprintType)
 class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
