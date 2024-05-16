@@ -35,5 +35,8 @@ class UChangelogStorage : public UObject {
   UFUNCTION(BlueprintCallable, BlueprintPure)
   static int32 GetChangelogCount();
 
+  UFUNCTION(BlueprintCallable, BlueprintPure)
+  static bool CheckAndUpdateLastEntry();
+
   static const std::vector<FChangelog> &GetStorage();
 };
