@@ -140,6 +140,8 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   // No any code
   virtual void BlockEndPlay();
 
+  FTransform GetTransformLocation() const;
+
   FTransform GetTransform() const;
 
   FVector GetLocation() const;

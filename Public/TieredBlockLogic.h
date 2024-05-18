@@ -38,8 +38,10 @@ class EVOSPACE_API UTieredBlockLogic : public UBlockLogic {
   UPROPERTY(BlueprintReadOnly, EditAnywhere)
   uint8 mLevel = 0;
 
-  protected:
+  public:
   static FString TierToString(int32 tier);
+
+  static FColor TierToColor(int32 tier);
 
   EVO_LUA_CODEGEN_DB_EX(TieredBlockLogic);
   static void lua_reg(lua_State *L) {
