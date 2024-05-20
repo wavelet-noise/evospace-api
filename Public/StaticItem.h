@@ -145,6 +145,9 @@ class EVOSPACE_API UStaticItem : public UPrototype {
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   bool mIncomplete = true;
 
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  int64 mMaxCharge = 0;
+
   TSharedPtr<FJsonObject> mLogicJson;
   virtual void MarkIncomplete() override;
 
