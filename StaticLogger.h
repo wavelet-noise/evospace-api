@@ -42,7 +42,7 @@ inline std::ostream &operator<<(std::ostream &os, const FVector3i &vec) {
   return os;
 }
 
-inline std::ostream &operator<<(std::ostream &os, const std::function<void(std::ostream &)> &func) {
+inline std::ostream &operator<<(std::ostream &os, const TFunction<void(std::ostream &)> &func) {
   if (func) {
     func(os);
   }

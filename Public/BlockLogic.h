@@ -228,7 +228,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   protected:
   UPROPERTY(VisibleAnywhere)
   UCoreAccessor *mCore;
-  std::function<UCoreAccessor *()> mCoreInit;
+  TFunction<UCoreAccessor *()> mCoreInit;
 
   public:
   UFUNCTION(BlueprintCallable)
@@ -238,7 +238,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   protected:
   UPROPERTY(VisibleAnywhere)
   UCoreAccessor *mMonitor;
-  std::function<UCoreAccessor *()> mMonitorInit;
+  TFunction<UCoreAccessor *()> mMonitorInit;
 
   public:
   UFUNCTION(BlueprintCallable)
