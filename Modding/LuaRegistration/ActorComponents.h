@@ -4,8 +4,10 @@
 #include "ThirdParty/lua/lua.h"
 #include "ThirdParty/luabridge/luabridge.h"
 #include "Evospace/Common.h"
+#include "Evospace/Dimension.h"
 #include "Evospace/Blocks/BlockActor.h"
 #include "Evospace/Item/ItemData.h"
+#include "Evospace/Item/ItemLogic.h"
 #include "Evospace/Item/Recipe.h"
 
 class UIcoGenerator;
@@ -14,11 +16,13 @@ inline void registerComponentClasses(lua_State *L) {
   luabridge::getGlobalNamespace(L)
     .beginClass<UObject>("Object")
     .addStaticFunction(
-      "find", +[](std::string_view name) { return FindObject<UObject>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data())); })
+      "find", +[](std::string_view name) { return FindObject<UObject>(MainGameOwner<UObject>::Get(), UTF8_TO_TCHAR(name.data())); })
     .addStaticFunction("cast", [](UObject *obj) { return obj; })
     .addFunction("get_name", [](UObject *obj) { return std::string(TCHAR_TO_UTF8(*obj->GetName())); })
     .addFunction("get_class", [](UObject *obj) { return obj->GetClass(); })
-    .addStaticFunction("get_class", []() { return UObject::StaticClass(); })
+    .addStaticFunction(
+      "get_class", +[]() { return UObject::StaticClass(); })
+    .addFunction("__tostring", [](UObject *obj) -> std::string { return TCHAR_TO_UTF8(*("(Object: " + obj->GetName() + ")")); })
     .endClass();
 
   luabridge::getGlobalNamespace(L)
@@ -85,18 +89,6 @@ inline void registerComponentClasses(lua_State *L) {
       "new_zero", +[](UStaticItem *item) { return FItemData(item); })
     .addProperty("count", &FItemData::mValue)
     .addProperty("item", &FItemData::mItem)
-    .endClass();
-
-  luabridge::getGlobalNamespace(L)
-    .beginClass<URecipe>("Recipe")
-    //.addStaticFunction("new", &URecipe::lua_new)
-    .addProperty("loss", &URecipe::loss)
-    .addProperty("ticks", &URecipe::ticks)
-    .addProperty("input", &URecipe::input, false)
-    .addProperty("output", &URecipe::output, false)
-    .addProperty("res_input", &URecipe::res_input)
-    .addProperty("res_output", &URecipe::res_output)
-    //.addProperty("name", &URecipe::get_name, &URecipe::set_name)
     .endClass();
 
   luabridge::getGlobalNamespace(L)
@@ -179,6 +171,12 @@ inline void registerComponentClasses(lua_State *L) {
       }
       return false;
     })
+    .endClass();
+
+  luabridge::getGlobalNamespace(L)
+    .deriveClass<ADimension, AActor>("Dimension")
+    .addFunction("spawn_block_logic", &ADimension::LuaSpawnBlockLogic)
+    .addFunction("set_block_cell", &ADimension::LuaSetBlockCell)
     .endClass();
 
   luabridge::getGlobalNamespace(L)

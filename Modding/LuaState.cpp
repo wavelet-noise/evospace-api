@@ -102,8 +102,7 @@ void LuaState::processLuaErrorOnStack(std::string_view code) {
 luabridge::LuaRef LuaState::ToLuaRefFunction(std::string_view code, std::string_view path) {
   std::string output;
   std::string path_decorated = std::string("@") + path.data();
-  if (auto err = luaL_loadbuffer(
-        L, code.data(), code.length(), path_decorated.data())) {
+  if (auto err = luaL_loadbuffer(L, code.data(), code.length(), path_decorated.data())) {
     processLuaErrorOnStack(code);
     return luabridge::LuaRef(L, nullptr);
   }
@@ -176,35 +175,10 @@ int LuaState::l_my_print(lua_State *L) {
     } else if (lua_isnumber(L, i)) {
       LOG(INFO_LL) << "Lua: " << lua_tonumber(L, i);
     } else if (lua_isboolean(L, i)) {
-      LOG(INFO_LL) << "Lua: "
-                   << (lua_toboolean(L, i) ? "true" : "false");
+      LOG(INFO_LL) << "Lua: " << (lua_toboolean(L, i) ? "true" : "false");
     } else if (lua_isnil(L, i)) {
       LOG(INFO_LL) << "Lua: nil";
-    } else if (luabridge::isInstance<UStaticBlock>(L, i)) {
-      auto block = luabridge::Stack<UStaticBlock *>::get(L, i);
-      LOG(INFO_LL) << "Lua: UBlock " << TCHAR_TO_UTF8(*block.value()->GetName());
-    } else if (luabridge::isInstance<UStaticItem>(L, i)) {
-      auto item = luabridge::Stack<UStaticItem *>::get(L, i);
-      LOG(INFO_LL) << "Lua: UItem " << TCHAR_TO_UTF8(*item.value()->GetName());
-    } else if (luabridge::isInstance<FItemData>(L, i)) {
-      auto item = luabridge::Stack<FItemData>::get(L, i);
-      LOG(INFO_LL) << "Lua: ItemData {"
-                   << (item.value().mItem ? TCHAR_TO_UTF8(*item.value().mItem->GetName())
-                                          : "nullptr")
-                   << ", " << item.value().mValue << "}";
-    }
-    // else if (Stack<FVector2D>::isInstance(L, i)) {
-    // 	auto vec = Stack<glm::ivec2>::get(L, i);
-    // 	std::cout << "lua print: ivec2{" << vec.x << ", " << vec.y <<
-    // "}" << std::endl;
-    // }
-    // if (luabridge::Stack<UPrototype *>::isInstance(L, i)) {
-    //     auto stat = luabridge::Stack<UPrototype *>::get(L, i);
-    //     LOG(TRACE_LL) << "Lua print: "
-    //               << TCHAR_TO_UTF8(*stat->GetClass()->GetName()) << ""
-    //               << stat->name;
-    // }
-    else {
+    } else {
       LOG(WARN_LL) << "Lua: print not implemented type";
     }
   }

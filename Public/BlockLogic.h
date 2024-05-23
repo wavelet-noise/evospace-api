@@ -258,7 +258,11 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   public:
   EVO_LUA_CODEGEN_DB_EX(BlockLogic);
-  static void lua_reg(lua_State *L);
+  static void lua_reg(lua_State *L) {
+    luabridge::getGlobalNamespace(L)
+      .deriveClass<UBlockLogic, UPrototype>("BlockLogic")
+      .endClass();
+  }
 };
 
 UCLASS(BlueprintType)

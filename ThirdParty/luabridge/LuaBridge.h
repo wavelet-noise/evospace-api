@@ -3009,8 +3009,9 @@ public:
     template <class T>
     static Result push(lua_State* L, T* ptr)
     {
-        if (ptr)
-            return push(L, ptr, getClassRegistryKey<T>());
+        if (ptr) {
+          return push(L, ptr, getClassRegistryKey<T>());
+        }
 
         lua_pushnil(L);
         return {};

@@ -6,7 +6,7 @@
 inline void registerMathClasses(lua_State *L) {
   // FColor
   luabridge::getGlobalNamespace(L)
-    .beginClass<FColor>("FColor")
+    .beginClass<FColor>("Color")
     .addStaticFunction(
       "new",
       [](uint8 r, uint8 g, uint8 b, uint8 a) {
@@ -40,14 +40,16 @@ inline void registerMathClasses(lua_State *L) {
       "purple", +[]() { return FColor::Purple; })
     .addStaticProperty(
       "transparent", +[]() { return FColor::Transparent; })
+    .addFunction("__tostring", [](FColor &c) -> std::string {
+      return TCHAR_TO_UTF8(*("(Color: r=" + FString::FromInt(c.R) + " g=" + FString::FromInt(c.G) + " b=" + FString::FromInt(c.B) + ")"));
+    })
     .endClass();
 
   // FQuat
   luabridge::getGlobalNamespace(L)
     .beginClass<FQuat>("FQuat")
-    .addStaticFunction(
-      "new",
-      [](float x, float y, float z, float w) { return FQuat(x, y, z, w); })
+    .addStaticFunction("new", [](float x, float y, float z, float w) { return FQuat(x, y, z, w); })
+    .addStaticProperty("identity", []() -> FQuat { return FQuat::Identity; })
     .addProperty("x", &FQuat::X, true)
     .addProperty("y", &FQuat::Y, true)
     .addProperty("z", &FQuat::Z, true)
@@ -55,6 +57,10 @@ inline void registerMathClasses(lua_State *L) {
     .addFunction("get_forward_vector", &FQuat::GetForwardVector)
     .addFunction("get_right_vector", &FQuat::GetRightVector)
     .addFunction("get_up_vector", &FQuat::GetUpVector)
+    .addFunction("__tostring", [](FQuat &c) -> std::string {
+      auto rot = c.Rotator();
+      return TCHAR_TO_UTF8(*("(Quat: yaw=" + FString::FromInt(rot.Yaw) + " pitch=" + FString::FromInt(rot.Pitch) + " roll=" + FString::FromInt(rot.Roll) + ")"));
+    })
     .endClass();
 
   // FTransform
@@ -92,6 +98,15 @@ inline void registerMathClasses(lua_State *L) {
     .addProperty("x", &Vec3i::X, true)
     .addProperty("y", &Vec3i::Y, true)
     .addProperty("z", &Vec3i::Z, true)
+    .addFunction("__tostring", [](Vec3i &c) -> std::string {
+      return TCHAR_TO_UTF8(*("(Vec3i: x=" + FString::FromInt(c.X) + " y=" + FString::FromInt(c.Y) + " z=" + FString::FromInt(c.Z) + ")"));
+    })
+    .addFunction("__add", [](Vec3i &a, Vec3i &b) {
+      return Vec3i(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+    })
+    .addFunction("__sub", [](Vec3i &a, Vec3i &b) {
+      return Vec3i(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+    })
     .endClass();
 
   luabridge::getGlobalNamespace(L)
@@ -104,6 +119,9 @@ inline void registerMathClasses(lua_State *L) {
       "one", +[]() { return Vec2i(1); })
     .addProperty("x", &Vec2i::X, true)
     .addProperty("y", &Vec2i::Y, true)
+    .addFunction("__tostring", [](Vec2i &c) -> std::string {
+      return TCHAR_TO_UTF8(*("(Vec2i: x=" + FString::FromInt(c.X) + " y=" + FString::FromInt(c.Y) + ")"));
+    })
     .endClass();
 
   luabridge::getGlobalNamespace(L)
@@ -138,6 +156,9 @@ inline void registerMathClasses(lua_State *L) {
     .addProperty("x", &FVector::X, true)
     .addProperty("y", &FVector::Y, true)
     .addProperty("z", &FVector::Z, true)
+    .addFunction("__tostring", [](FVector &c) -> std::string {
+      return TCHAR_TO_UTF8(*("(Vec3: x=" + FString::FromInt(c.X) + " y=" + FString::FromInt(c.Y) + " z=" + FString::FromInt(c.Z) + ")"));
+    })
     .endClass();
 
   luabridge::getGlobalNamespace(L)
