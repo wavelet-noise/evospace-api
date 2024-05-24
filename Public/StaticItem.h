@@ -68,7 +68,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
      * Default value: 1.0
      *
      * @code{.lua}
-     * local coal = StaticItem.find("CoalStaticItem")
+     * local coal = StaticItem.find("Coal")
      * mul = coal.unit_mul
      * coal.unit_mul = 1.0
      * @endcode
@@ -82,7 +82,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
      * Default value: nil
      *
      * @code{.lua}
-     * local coal = StaticItem.find("CoalStaticItem")
+     * local coal = StaticItem.find("Coal")
      * image = coal.image
      * coal.image = image
      * @endcode
@@ -110,7 +110,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
      * Default value: 0
      *
      * @code{.lua}
-     * local coal = StaticItem.find("CoalStaticItem")
+     * local coal = StaticItem.find("Coal")
      * count = coal.max_count
      * coal.max_count = 64
      * @endcode

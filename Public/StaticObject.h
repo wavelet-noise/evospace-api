@@ -49,6 +49,9 @@ class EVOSPACE_API UStaticObject : public UPrototype {
   UPROPERTY(BlueprintReadOnly)
   FQuat mDefaultRotation = FQuat::Identity;
 
+  UPROPERTY(BlueprintReadOnly)
+  bool mSurface = false;
+
   virtual AActor *CreateSelector() const { return nullptr; };
 
   EVO_LUA_CODEGEN_DB_EX(StaticObject);
