@@ -4,7 +4,6 @@
 #include <Evospace/Common.h>
 #include "StaticResearch.generated.h"
 
-class UStaticChapter;
 class AMainPlayerController;
 class UInventory;
 
@@ -70,9 +69,6 @@ class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   FName ChapterName;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UStaticChapter *Chapter;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   FVector2D Position;
