@@ -58,7 +58,7 @@ class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   TArray<FKeyTableObject> LabelParts = {};
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
   UTexture2D *Texture = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -66,12 +66,6 @@ class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   TArray<FName> RequiredResearchesNames = {};
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  FName ChapterName;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  FVector2D Position;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   TArray<UInventory *> DataPoints;
@@ -88,20 +82,20 @@ class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   FResearchUnlockLevel AlsoUnlocks;
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
   bool mCompleteByDefault = false;
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
   int Level = 0;
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
   FVector2i LevelMinMax;
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
   EResearchStatus Type;
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  bool MainResearch;
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  bool MainResearch = false;
 
   UFUNCTION(BlueprintCallable, BlueprintCosmetic)
   FText GetLabel() const;
