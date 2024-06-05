@@ -119,7 +119,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   virtual UBlockLogic *GetWidgetRootBlock();
 
-  FQuat GetBlockQuat() const;
+  const FQuat &GetBlockQuat() const;
   void SetBlockQuat(const FQuat &r);
 
   void SetActorMobility(EComponentMobility::Type movable);
@@ -209,6 +209,8 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   virtual bool IsNoActor() const;
 
+  virtual bool IsPart() { return false; }
+
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
   const UStaticBlock *mStaticBlock = nullptr;
 
@@ -288,10 +290,11 @@ class EVOSPACE_API UPartBlockLogic : public UBlockLogic {
 
   virtual UCoreAccessor *GetMonitorAccessor();
 
+  virtual bool IsPart() override { return true; }
+
   virtual ABlockActor *GetActor() override;
 
   virtual void SetActor(ABlockActor *actor);
 
-  virtual void OnAction(const FHitResult &hit, const Vec3i &side,
-                        AItemLogic *item);
+  virtual void OnAction(const FHitResult &hit, const Vec3i &side, AItemLogic *item);
 };
