@@ -112,7 +112,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   UFUNCTION(BlueprintCallable)
   void PaintBlock(UMaterialInterface *mat);
 
-  Vec3i GetBlockPos() const;
+  const Vec3i & GetBlockPos() const;
   void SetBlockPos(const Vec3i &pos);
 
   virtual UBlockLogic *GetPartRootBlock();
