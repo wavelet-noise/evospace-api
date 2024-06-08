@@ -153,4 +153,6 @@ class EVOSPACE_API UStaticItem : public UPrototype {
 
   EVO_LUA_CODEGEN_DB_EX(StaticItem);
   static void lua_reg(lua_State *L);
+
+  EVO_GET_OR_REGISTER(UStaticItem, UStaticItem);
 };

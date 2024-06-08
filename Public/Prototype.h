@@ -3,6 +3,7 @@
 
 #include "ThirdParty/luabridge/LuaBridge.h"
 #include "StaticLogger.h"
+#include "Evospace/JsonObjectLibrary.h"
 #include "Evospace/MainGameOwner.h"
 #include "Evospace/SerializableJson.h"
 
@@ -10,6 +11,11 @@
 
 class UMod;
 class Base;
+
+#define EVO_GET_OR_REGISTER(base, real) \
+virtual UObject * GetOrRegister(const FString & obj_name, IRegistrar & registry) override { \
+  return GetOrRegisterHelper<base, real>(obj_name, registry); \
+}\
 
 /*.addStaticFunction("get", &evo::DB::get<type>)       */ /*.addStaticFunction("get_derived", &evo::DB::get_derived<type>)   */
 #define EVO_LUA_CODEGEN_DB(type, name)                                                                                               \
@@ -113,6 +119,11 @@ class UPrototype : public UObject, public ISerializableJson {
     return TCHAR_TO_UTF8(*("(" + GetClass()->GetName() + ": " + GetName() + ")"));
   }
 
+  virtual UObject * GetOrRegister(const FString & obj_name, IRegistrar & registry) {
+    checkNoEntry();
+    return nullptr;
+  }
+
   /*!
      * @fn static This * find(std::string_view name)
      * @brief Try to find object of type This with given name
@@ -129,4 +140,17 @@ class UPrototype : public UObject, public ISerializableJson {
      * @brief Try to cast any prototype object to This type
      * If it is impossible nullptr will be returned
      */
+
+protected:
+  template <typename BaseType, typename RealType>
+inline UObject * GetOrRegisterHelper(const FString & obj_name, IRegistrar & registry) {
+    auto obj = FindObject<BaseType>(MainGameOwner<BaseType>::Get(), *obj_name);
+    if (!obj) {
+      obj = NewObject<BaseType>(MainGameOwner<BaseType>::Get(), RealType::StaticClass(), *obj_name);
+      LOG(TRACE_LL) << "Register " << BaseType::StaticClass()->GetName() << " " << obj_name;
+      registry.Register(obj);
+    }
+
+    return obj;
+  }
 };

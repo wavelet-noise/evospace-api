@@ -50,4 +50,6 @@ class UStaticTip : public UPrototype {
       .addFunction("clear_context", &UStaticTip::ClearContext)
       .endClass();
   }
+
+  EVO_GET_OR_REGISTER(UStaticTip, UStaticTip);
 };

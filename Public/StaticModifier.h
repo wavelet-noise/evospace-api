@@ -26,4 +26,6 @@ class UStaticModifier : public UPrototype {
   FKeyTableObject mDescription;
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+
+  EVO_GET_OR_REGISTER(UStaticModifier, UStaticModifier);
 };

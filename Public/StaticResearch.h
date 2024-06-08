@@ -1,4 +1,5 @@
 #pragma once
+#include "Prototype.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Vector.h"
 #include <Evospace/Common.h>
@@ -49,7 +50,7 @@ struct EVOSPACE_API FResearchUnlockLevel {
 };
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
+class EVOSPACE_API UStaticResearch : public UPrototype {
   GENERATED_BODY()
 
   public:
@@ -105,6 +106,8 @@ class EVOSPACE_API UStaticResearch : public UObject, public ISerializableJson {
   virtual void PostDeserializeJson() override;
 
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level);
+
+  EVO_GET_OR_REGISTER(UStaticResearch, UStaticResearch);
 };
 
 UCLASS(BlueprintType)
@@ -112,6 +115,8 @@ class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {
   GENERATED_BODY()
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
+
+  EVO_GET_OR_REGISTER(UStaticResearch, UStaticResearchBonusInventory);
 };
 
 UCLASS(BlueprintType)
@@ -127,6 +132,8 @@ class EVOSPACE_API UStaticResearchModifier : public UStaticResearch {
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   float mBonusValue;
+
+  EVO_GET_OR_REGISTER(UStaticResearch, UStaticResearchModifier);
 };
 
 UCLASS(BlueprintType)
@@ -134,4 +141,6 @@ class EVOSPACE_API UStaticResearchToolUnlock : public UStaticResearch {
   GENERATED_BODY()
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
+
+  EVO_GET_OR_REGISTER(UStaticResearch, UStaticResearchToolUnlock);
 };
