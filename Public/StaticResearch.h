@@ -107,7 +107,8 @@ class EVOSPACE_API UStaticResearch : public UPrototype {
 
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level);
 
-  EVO_GET_OR_REGISTER(UStaticResearch, UStaticResearch);
+  EVO_LUA_CODEGEN_DB_EX(StaticResearch, StaticResearch)
+  virtual void lua_reg(lua_State *L) const override {}
 };
 
 UCLASS(BlueprintType)
@@ -116,7 +117,8 @@ class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
-  EVO_GET_OR_REGISTER(UStaticResearch, UStaticResearchBonusInventory);
+  EVO_LUA_CODEGEN_DB_EX(StaticResearchBonusInventory, StaticResearch)
+  virtual void lua_reg(lua_State *L) const override {}
 };
 
 UCLASS(BlueprintType)
@@ -133,7 +135,8 @@ class EVOSPACE_API UStaticResearchModifier : public UStaticResearch {
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   float mBonusValue;
 
-  EVO_GET_OR_REGISTER(UStaticResearch, UStaticResearchModifier);
+  EVO_LUA_CODEGEN_DB_EX(StaticResearchModifier, StaticResearch)
+  virtual void lua_reg(lua_State *L) const override {}
 };
 
 UCLASS(BlueprintType)
@@ -142,5 +145,6 @@ class EVOSPACE_API UStaticResearchToolUnlock : public UStaticResearch {
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
-  EVO_GET_OR_REGISTER(UStaticResearch, UStaticResearchToolUnlock);
+  EVO_LUA_CODEGEN_DB_EX(StaticResearchToolUnlock, StaticResearch)
+  virtual void lua_reg(lua_State *L) const override {}
 };

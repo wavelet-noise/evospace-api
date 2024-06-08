@@ -151,8 +151,16 @@ class EVOSPACE_API UStaticItem : public UPrototype {
   TSharedPtr<FJsonObject> mLogicJson;
   virtual void MarkIncomplete() override;
 
-  EVO_LUA_CODEGEN_DB_EX(StaticItem);
-  static void lua_reg(lua_State *L);
-
-  EVO_GET_OR_REGISTER(UStaticItem, UStaticItem);
+  EVO_LUA_CODEGEN_DB_EX(StaticItem, StaticItem)
+  virtual void lua_reg(lua_State *L) const override {
+    luabridge::getGlobalNamespace(L)
+      .deriveClass<UStaticItem, UPrototype>("StaticItem")
+      .addProperty("image", &UStaticItem::mImage)
+      .addProperty("max_count", &UStaticItem::mMaxCount)
+      .addProperty("unit_mul", &UStaticItem::mUnitMul)
+      .addProperty("mesh", &UStaticItem::mMesh)
+      .addProperty("craftable", &UStaticItem::mCraftable)
+      //.addProperty("label_parts", &UStaticItem::mLabelParts)
+      .endClass();
+  }
 };

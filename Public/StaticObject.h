@@ -54,6 +54,11 @@ class EVOSPACE_API UStaticObject : public UPrototype {
 
   virtual AActor *CreateSelector() const { return nullptr; };
 
-  EVO_LUA_CODEGEN_DB_EX(StaticObject);
-  static void lua_reg(lua_State *L);
+  EVO_LUA_CODEGEN_DB_EX(StaticObject, StaticObject)
+  virtual void lua_reg(lua_State *L) const override {
+    luabridge::getGlobalNamespace(L)
+      .deriveClass<UStaticObject, UPrototype>("StaticObject")
+      .addProperty("item", &UStaticObject::mStaticItem)
+      .endClass();
+  }
 };

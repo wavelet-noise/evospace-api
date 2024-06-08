@@ -112,7 +112,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   UFUNCTION(BlueprintCallable)
   void PaintBlock(UMaterialInterface *mat);
 
-  const Vec3i & GetBlockPos() const;
+  const Vec3i &GetBlockPos() const;
   void SetBlockPos(const Vec3i &pos);
 
   virtual UBlockLogic *GetPartRootBlock();
@@ -259,8 +259,8 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   ADimension *mDimension;
 
   public:
-  EVO_LUA_CODEGEN_DB_EX(BlockLogic);
-  static void lua_reg(lua_State *L) {
+  EVO_LUA_CODEGEN_DB_EX(BlockLogic, BlockLogic)
+  virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UBlockLogic, UPrototype>("BlockLogic")
       .endClass();

@@ -70,8 +70,8 @@ class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventoryContainer *mAutoCrafterCoreOutput;
 
-  EVO_LUA_CODEGEN_DB_EX(SelectCrafter);
-  static void lua_reg(lua_State *L) {
+  EVO_LUA_CODEGEN_DB_EX(SelectCrafter, BlockLogic)
+  virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, UAbstractCrafter>("SelectCrafter")
       .endClass();
