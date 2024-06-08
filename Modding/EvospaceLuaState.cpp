@@ -20,7 +20,7 @@ void RegisterClassAndSuper(UClass *Class, TSet<UClass *> &Registered, lua_State 
   }
 
   if (const auto cdo = Class->GetDefaultObject<UPrototype>()) {
-  if (!Registered.Contains(cdo->lua_reg_type())) {
+    if (!Registered.Contains(cdo->lua_reg_type())) {
       cdo->lua_reg_internal(L);
       cdo->lua_reg(L);
       Registered.Add(Class);

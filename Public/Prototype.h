@@ -18,8 +18,8 @@ class Base;
   virtual UClass *lua_reg_type() {                                                                                                           \
     return U##type::StaticClass();                                                                                                           \
   }                                                                                                                                          \
-  virtual UObject *GetOrRegister(const FString &obj_name, IRegistrar &registry) override {                                                   \
-    return GetOrRegisterHelper<U##parent, U##type>(obj_name, registry);                                                                      \
+  virtual UObject *get_or_register(const FString &obj_name, IRegistrar &registry) override {                                                 \
+    return _get_or_register<U##parent, U##type>(obj_name, registry);                                                                         \
   }                                                                                                                                          \
   static U##type *lua_codegen_cast(UObject *parent_inst) {                                                                                   \
     return Cast<U##type>(parent_inst);                                                                                                       \
@@ -101,7 +101,7 @@ class UPrototype : public UObject, public ISerializableJson {
     return TCHAR_TO_UTF8(*("(" + GetClass()->GetName() + ": " + GetName() + ")"));
   }
 
-  virtual UObject *GetOrRegister(const FString &obj_name, IRegistrar &registry) {
+  virtual UObject *get_or_register(const FString &obj_name, IRegistrar &registry) {
     checkNoEntry();
     return nullptr;
   }
@@ -125,7 +125,7 @@ class UPrototype : public UObject, public ISerializableJson {
 
   protected:
   template <typename BaseType, typename RealType>
-  inline UObject *GetOrRegisterHelper(const FString &obj_name, IRegistrar &registry) {
+  inline UObject *_get_or_register(const FString &obj_name, IRegistrar &registry) {
     auto obj = FindObject<BaseType>(MainGameOwner<BaseType>::Get(), *obj_name);
     if (!obj) {
       obj = NewObject<BaseType>(MainGameOwner<BaseType>::Get(), RealType::StaticClass(), *obj_name);
