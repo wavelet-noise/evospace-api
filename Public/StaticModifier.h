@@ -27,6 +27,6 @@ class UStaticModifier : public UPrototype {
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
-  EVO_LUA_CODEGEN_DB_EX(StaticModifier, StaticModifier)
+  EVO_CODEGEN(StaticModifier, StaticModifier)
   virtual void lua_reg(lua_State *L) const override {}
 };

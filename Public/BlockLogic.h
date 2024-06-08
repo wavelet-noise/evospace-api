@@ -259,7 +259,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   ADimension *mDimension;
 
   public:
-  EVO_LUA_CODEGEN_DB_EX(BlockLogic, BlockLogic)
+  EVO_CODEGEN(BlockLogic, BlockLogic)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UBlockLogic, UPrototype>("BlockLogic")

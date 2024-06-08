@@ -124,7 +124,7 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
   const URecipe *mCurrentRecipe = nullptr;
 
-  EVO_LUA_CODEGEN_DB_EX(AbstractCrafter, BlockLogic);
+  EVO_CODEGEN(AbstractCrafter, BlockLogic);
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, UTieredBlockLogic>("AbstractCrafter")

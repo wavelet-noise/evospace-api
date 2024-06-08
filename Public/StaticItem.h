@@ -151,7 +151,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
   TSharedPtr<FJsonObject> mLogicJson;
   virtual void MarkIncomplete() override;
 
-  EVO_LUA_CODEGEN_DB_EX(StaticItem, StaticItem)
+  EVO_CODEGEN(StaticItem, StaticItem)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UStaticItem, UPrototype>("StaticItem")

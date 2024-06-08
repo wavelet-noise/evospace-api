@@ -36,7 +36,7 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
 
   int32 cap_replace = 0;
 
-  EVO_LUA_CODEGEN_DB_EX(AutoCrafter, BlockLogic)
+  EVO_CODEGEN(AutoCrafter, BlockLogic)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, USelectCrafter>("AutoCrafter")

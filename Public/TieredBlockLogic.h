@@ -43,7 +43,7 @@ class EVOSPACE_API UTieredBlockLogic : public UBlockLogic {
 
   static FColor TierToColor(int32 tier);
 
-  EVO_LUA_CODEGEN_DB_EX(TieredBlockLogic, BlockLogic)
+  EVO_CODEGEN(TieredBlockLogic, BlockLogic)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, UBlockLogic>("TieredBlockLogic")
