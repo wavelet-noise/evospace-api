@@ -12,11 +12,9 @@
 class UPrototype;
 namespace evo {
 class LegacyLuaState;
-}
-class UMainGameModLoader;
-namespace evo {
 class ModLoadingLuaState;
 }
+class UMainGameModLoader;
 
 class UJsonObjectLibrary;
 class UMod;
@@ -86,10 +84,12 @@ class ModLoadingContext {
   }
 };
 
-enum class ModTickLoadStatus { NotChecked,
-                               Ok,
-                               Error,
-                               Download };
+enum class ModTickLoadStatus {
+  NotChecked,
+  Ok,
+  Error,
+  Download
+};
 
 UCLASS()
 /**

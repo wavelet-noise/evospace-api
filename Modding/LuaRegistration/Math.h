@@ -157,7 +157,7 @@ inline void registerMathClasses(lua_State *L) {
     .addProperty("y", &FVector::Y, true)
     .addProperty("z", &FVector::Z, true)
     .addFunction("__tostring", [](FVector &c) -> std::string {
-      return TCHAR_TO_UTF8(*("(Vec3: x=" + FString::FromInt(c.X) + " y=" + FString::FromInt(c.Y) + " z=" + FString::FromInt(c.Z) + ")"));
+      return TCHAR_TO_UTF8(*("(Vec3: x=" + FString::SanitizeFloat(c.X) + " y=" + FString::SanitizeFloat(c.Y) + " z=" + FString::SanitizeFloat(c.Z) + ")"));
     })
     .endClass();
 

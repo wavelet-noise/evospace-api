@@ -160,7 +160,6 @@ class EVOSPACE_API UStaticItem : public UPrototype {
       .addProperty("unit_mul", &UStaticItem::mUnitMul)
       .addProperty("mesh", &UStaticItem::mMesh)
       .addProperty("craftable", &UStaticItem::mCraftable)
-      //.addProperty("label_parts", &UStaticItem::mLabelParts)
       .endClass();
   }
 };
