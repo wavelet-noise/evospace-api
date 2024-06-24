@@ -4,11 +4,7 @@
 #include <memory>
 
 StaticLogger::StaticLogger() {
-#if WITH_EDITOR
-  logger_internal = std::make_unique<cpplog::TeeLogger>(new cpplog::UeLogger(), true, new cpplog::SessionRotatingLogger(TCHAR_TO_UTF8(*FPaths::ProjectLogDir())), true);
-#else
-  logger_internal = std::make_unique<cpplog::SessionRotatingLogger>(TCHAR_TO_UTF8(*FPaths::ProjectLogDir()));
-#endif
+  logger_internal = std::make_unique<cpplog::UeLogger>();
 
 #ifdef EVOSPACE_LOG_INFO_PLUS
   logger = std::make_unique<cpplog::templated::TFilteringLogger<INFO_LL>>(logger_internal.get());

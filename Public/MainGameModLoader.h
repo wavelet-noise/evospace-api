@@ -20,9 +20,51 @@ class UJsonObjectLibrary;
 class UMod;
 class ModLoadingContext;
 
+class FStringStream
+{
+  FString Buffer;
+
+public:
+  FStringStream() {}
+
+  // Mimic the << operator for various types
+  template <typename T>
+  FStringStream& operator<<(const T& value)
+  {
+    Buffer += FString::Printf(TEXT("%s"), *FString::SanitizeFloat(value));
+    return *this;
+  }
+
+  // Specialization for FString to properly handle strings
+  FStringStream& operator<<(const FString& value)
+  {
+    Buffer = Buffer + value;
+    return *this;
+  }
+
+  // Specialization for C-style strings (const TCHAR*)
+  FStringStream& operator<<(const TCHAR* value)
+  {
+    Buffer = Buffer + FString(value);
+    return *this;
+  }
+
+  // Get the accumulated FString
+  FString Str() const
+  {
+    return Buffer;
+  }
+
+  // Clear the buffer
+  void Clear()
+  {
+    Buffer.Empty();
+  }
+};
+
 class StringStreamPortion {
   public:
-  std::ostringstream input;
+  FStringStream input;
   int severity = TRACE_LL;
 
   StringStreamPortion(ModLoadingContext &par, int sev)
@@ -60,9 +102,9 @@ class ModLoadingContext {
   ModLoadingContext(const ModLoadingContext &c) = delete;
   ModLoadingContext &operator=(const ModLoadingContext &c) = delete;
 
-  std::string message;
+  FString message;
 
-  std::vector<std::string> errors;
+  std::vector<FString> errors;
 
   evo::LegacyLuaState *lua_state;
 
@@ -73,8 +115,8 @@ class ModLoadingContext {
     return StringStreamPortion(*this, sev);
   }
 
-  std::string Get();
-  void Set(std::string_view m);
+  FString Get();
+  void Set(const FString & m);
   FCriticalSection critical;
 
   std::array<int32, MAX_LL> log_level_counts = { 0 };
@@ -95,11 +137,14 @@ UCLASS()
 /**
  * 
  */
-class UMainGameModLoader : public UObject {
+class EVOSPACE_API UMainGameModLoader : public UObject {
   GENERATED_BODY()
   public:
+
+  UMainGameModLoader();
+  
   UPROPERTY(VisibleAnywhere)
-  UJsonObjectLibrary *mJsonObjectLibrary;
+  UJsonObjectLibrary *mJsonObjectLibrary = nullptr;
 
   UPROPERTY(VisibleAnywhere)
   TArray<int64> mSubscribedIds;
@@ -124,7 +169,7 @@ class UMainGameModLoader : public UObject {
   int VanillaJsonCount = 0;
 
   UPROPERTY()
-  UMod *mCurrentMod;
+  UMod *mCurrentMod = nullptr;
 
   UPROPERTY()
   TArray<UMod *> mods;

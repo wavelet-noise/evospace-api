@@ -101,46 +101,6 @@ inline void registerComponentClasses(lua_State *L) {
     .endClass();
 
   luabridge::getGlobalNamespace(L)
-    .deriveClass<UParticleSystemComponent, UActorComponent>(
-      "ParticleSystemComponent")
-    .addStaticFunction(
-      "class", []() { return UParticleSystemComponent::StaticClass(); })
-    .addFunction("activate", &UParticleSystemComponent::Activate)
-    .addFunction("deactivate", &UParticleSystemComponent::Deactivate)
-    .addFunction("is_active", &UParticleSystemComponent::IsActive)
-    .addFunction("set_template", &UParticleSystemComponent::SetTemplate)
-    .addFunction(
-      "set_color_parameter", &UParticleSystemComponent::SetColorParameter)
-    .addFunction(
-      "set_float_parameter", &UParticleSystemComponent::SetFloatParameter)
-    .addFunction(
-      "set_material_parameter",
-      &UParticleSystemComponent::SetMaterialParameter)
-    .addFunction(
-      "set_vector_parameter",
-      &UParticleSystemComponent::SetVectorParameter)
-    //.addProperty("auto_activate",
-    //&UParticleSystemComponent::bAutoActivate)
-    .addProperty("template", &UParticleSystemComponent::Template)
-    .endClass();
-
-  luabridge::getGlobalNamespace(L)
-    .deriveClass<UAudioComponent, UActorComponent>("AudioComponent")
-    .addStaticFunction(
-      "Class", []() { return UActorComponent::StaticClass(); })
-    .addFunction("play", &UAudioComponent::Play)
-    .addFunction("stop", &UAudioComponent::Stop)
-    .addFunction("fade_in", &UAudioComponent::FadeIn)
-    .addFunction("fade_out", &UAudioComponent::FadeOut)
-    .addFunction(
-      "set_pitch_multiplier", &UAudioComponent::SetPitchMultiplier)
-    .addFunction(
-      "set_volume_multiplier", &UAudioComponent::SetVolumeMultiplier)
-    .addProperty("sound", &UAudioComponent::Sound)
-    .addProperty("isPlaying", &UAudioComponent::IsPlaying)
-    .endClass();
-
-  luabridge::getGlobalNamespace(L)
     .beginClass<AActor>("Actor")
     .addFunction(
       "add_actor_component",

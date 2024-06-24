@@ -7644,13 +7644,13 @@ class Namespace : public detail::Registrar
         {
             assert(name != nullptr);
 
-            std::string type_name = std::string(trueConst ? "const " : "") + name;
+            auto type_name = FString(trueConst ? "const " : "") + name;
 
             lua_newtable(L); 
             lua_pushvalue(L, -1); 
             lua_setmetatable(L, -2); 
 
-            lua_pushstring(L, type_name.c_str());
+            lua_pushstring(L, TCHAR_TO_UTF8(*type_name));
             lua_rawsetp(L, -2, detail::getTypeKey()); 
 
             lua_pushcfunction_x(L, &detail::index_metamethod);

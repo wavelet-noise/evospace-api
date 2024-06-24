@@ -6,7 +6,7 @@
 
 inline void registerModdingClasses(lua_State *L) {
   luabridge::getGlobalNamespace(L)
-    .beginClass<UMainGameModLoader>("MainGameModLoader")
+    .beginClass<UMainGameModLoader>("MGML")
     .addFunction("reg", [](UMainGameModLoader *self, UPrototype *proto) {
       if (ensure_log(proto, "Trying to register nullptr from " << self->mCurrentMod->mName)) {
         self->RegisterPrototype(self->mCurrentMod, proto);
