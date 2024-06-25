@@ -46,14 +46,8 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   UFUNCTION(BlueprintCallable)
   virtual float GetCurrentProgress() const;
 
-  UFUNCTION(BlueprintCallable)
-  virtual int32 GetSpeedLevel() const;
-
   UPROPERTY(BlueprintReadOnly)
   bool mLockedInput = false;
-
-  UFUNCTION(BlueprintCallable)
-  virtual int32 GetRecipeTicks(int32 &plevel) const;
 
   virtual void OnCraftPerformed();
 
