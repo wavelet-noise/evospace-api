@@ -30,14 +30,13 @@ bool UMod::DeserializeJson(TSharedPtr<FJsonObject> json) {
 }
 
 bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext &context) {
-  std::string dir_string = TCHAR_TO_UTF8(*directory);
   IPlatformFile &PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
   {
     FString json_data;
     if (PlatformFile.FileExists(*(directory / "info.json"))) {
       FFileHelper::LoadFileToString(json_data, *(directory / "info.json"));
     } else {
-      context.log(WARN_LL) << dir_string << " has no info.json";
+      context.log(WARN_LL) << directory << " has no info.json";
       return false;
     }
 

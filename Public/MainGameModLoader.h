@@ -20,48 +20,6 @@ class UJsonObjectLibrary;
 class UMod;
 class ModLoadingContext;
 
-class FStringStream
-{
-  FString Buffer;
-
-public:
-  FStringStream() {}
-
-  // Mimic the << operator for various types
-  template <typename T>
-  FStringStream& operator<<(const T& value)
-  {
-    Buffer += FString::Printf(TEXT("%s"), *FString::SanitizeFloat(value));
-    return *this;
-  }
-
-  // Specialization for FString to properly handle strings
-  FStringStream& operator<<(const FString& value)
-  {
-    Buffer = Buffer + value;
-    return *this;
-  }
-
-  // Specialization for C-style strings (const TCHAR*)
-  FStringStream& operator<<(const TCHAR* value)
-  {
-    Buffer = Buffer + FString(value);
-    return *this;
-  }
-
-  // Get the accumulated FString
-  FString Str() const
-  {
-    return Buffer;
-  }
-
-  // Clear the buffer
-  void Clear()
-  {
-    Buffer.Empty();
-  }
-};
-
 class StringStreamPortion {
   public:
   FStringStream input;
@@ -116,7 +74,7 @@ class ModLoadingContext {
   }
 
   FString Get();
-  void Set(const FString & m);
+  void Set(const FString &m);
   FCriticalSection critical;
 
   std::array<int32, MAX_LL> log_level_counts = { 0 };

@@ -15,6 +15,54 @@
 #include <string>
 #include <vector>
 
+class FStringStream
+{
+  FString Buffer;
+
+public:
+  FStringStream() {}
+
+  // Mimic the << operator for various types
+  template <typename T>
+  FStringStream& operator<<(const T& value)
+  {
+    //Buffer += FString::Printf(TEXT("%s"), *FString::SanitizeFloat(value));
+    return *this;
+  }
+
+  FStringStream& operator<<(const UTF8CHAR * value)
+  {
+    Buffer = Buffer + FString(UTF8_TO_TCHAR(value));
+    return *this;
+  }
+
+  // Specialization for FString to properly handle strings
+  FStringStream& operator<<(const FString& value)
+  {
+    Buffer = Buffer + value;
+    return *this;
+  }
+
+  // Specialization for C-style strings (const TCHAR*)
+  FStringStream& operator<<(const TCHAR* value)
+  {
+    Buffer = Buffer + FString(value);
+    return *this;
+  }
+
+  // Get the accumulated FString
+  FString Str() const
+  {
+    return Buffer;
+  }
+
+  // Clear the buffer
+  void Clear()
+  {
+    Buffer.Empty();
+  }
+};
+
 // The following #define's will change the behaviour of this library.
 //      #define CPPLOG_FILTER_LEVEL     <level>
 //          Prevents all log messages with level less than <level> from being
@@ -131,7 +179,8 @@
 //      send all
 //        remaining data.
 
-namespace cpplog {
+
+class FStringStream;namespace cpplog {
 // Our log level type.
 // NOTE: When C++11 becomes widely supported, convert this to "enum class
 // LogLevel".

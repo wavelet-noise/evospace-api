@@ -37,7 +37,7 @@ class LuaState {
   static UTexture2D *FindTexture(std::string_view name);
   static UMaterialInterface *FindMaterial(std::string_view name);
 
-  void AddLuaPath(const std::string &path);
+  void AddLuaPath(const FString &path);
 
   void doFile(std::string_view s) { luaL_dofile(L, s.data()); }
 

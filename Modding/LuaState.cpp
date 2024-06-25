@@ -13,13 +13,13 @@
 
 namespace evo {
 
-void LuaState::AddLuaPath(const std::string &path) {
+void LuaState::AddLuaPath(const FString &path) {
   lua_getglobal(L, "package");
   lua_getfield(L, -1, "path");
-  std::string cur_path = lua_tostring(L, -1);
+  FString cur_path = UTF8_TO_TCHAR(lua_tostring(L, -1));
   cur_path = cur_path + ";" + path + "/?.lua";
   lua_pop(L, 1);
-  lua_pushstring(L, cur_path.data());
+  lua_pushstring(L, TCHAR_TO_UTF8(*cur_path));
   lua_setfield(L, -2, "path");
   lua_pop(L, 1);
 }
