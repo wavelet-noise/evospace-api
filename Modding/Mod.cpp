@@ -36,7 +36,7 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
     if (PlatformFile.FileExists(*(directory / "info.json"))) {
       FFileHelper::LoadFileToString(json_data, *(directory / "info.json"));
     } else {
-      context.log(WARN_LL) << directory << " has no info.json";
+      context.log(WARN_LL) << *directory << " has no info.json";
       return false;
     }
 

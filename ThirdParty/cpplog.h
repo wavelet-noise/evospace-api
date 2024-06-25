@@ -21,29 +21,19 @@ class FStringStream
 
 public:
   FStringStream() {}
-
-  // Mimic the << operator for various types
-  template <typename T>
-  FStringStream& operator<<(const T& value)
+  
+  FStringStream& operator<<(const double& value)
   {
-    //Buffer += FString::Printf(TEXT("%s"), *FString::SanitizeFloat(value));
+    Buffer += FString::Printf(TEXT("%s"), *FString::SanitizeFloat(value));
     return *this;
   }
 
-  FStringStream& operator<<(const UTF8CHAR * value)
+  FStringStream& operator<<(std::string_view value)
   {
-    Buffer = Buffer + FString(UTF8_TO_TCHAR(value));
+    Buffer = Buffer + FString(UTF8_TO_TCHAR(value.data()));
     return *this;
   }
-
-  // Specialization for FString to properly handle strings
-  FStringStream& operator<<(const FString& value)
-  {
-    Buffer = Buffer + value;
-    return *this;
-  }
-
-  // Specialization for C-style strings (const TCHAR*)
+  
   FStringStream& operator<<(const TCHAR* value)
   {
     Buffer = Buffer + FString(value);
