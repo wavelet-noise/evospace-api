@@ -2,11 +2,12 @@
 #include "CoreMinimal.h"
 #include "Evospace/Ensure.h"
 #include "Modding/Mod.h"
+#include "Public/EventSystem.h"
 #include "ThirdParty/lua/lua.h"
 
 inline void registerModdingClasses(lua_State *L) {
   luabridge::getGlobalNamespace(L)
-    .beginClass<UMainGameModLoader>("MGML")
+    .beginClass<UMainGameModLoader>("MainGameModLoader")
     .addFunction("reg", [](UMainGameModLoader *self, UPrototype *proto) {
       if (ensure_log(proto, "Trying to register nullptr from " << self->mCurrentMod->mName)) {
         self->RegisterPrototype(self->mCurrentMod, proto);
@@ -22,4 +23,6 @@ inline void registerModdingClasses(lua_State *L) {
       return self->GetPrototypes();
     })
     .endClass();
+
+   EventSystem::lua_reg(L);
 }
