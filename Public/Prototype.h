@@ -6,6 +6,7 @@
 #include "Evospace/JsonObjectLibrary.h"
 #include "Evospace/MainGameOwner.h"
 #include "Evospace/SerializableJson.h"
+#include "Logging/StructuredLog.h"
 
 #include "prototype.generated.h"
 
@@ -129,7 +130,7 @@ class UPrototype : public UObject, public ISerializableJson {
     auto obj = FindObject<BaseType>(MainGameOwner<BaseType>::Get(), *obj_name);
     if (!obj) {
       obj = NewObject<BaseType>(MainGameOwner<BaseType>::Get(), RealType::StaticClass(), *obj_name);
-      LOG(TRACE_LL) << "Register " << BaseType::StaticClass()->GetName() << " " << obj_name;
+      UE_LOGFMT(LogLoad, Display, "Register {0} {1}", BaseType::StaticClass()->GetName(), obj_name);
       registry.Register(obj);
     }
 
