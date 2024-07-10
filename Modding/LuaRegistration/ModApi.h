@@ -24,5 +24,5 @@ inline void registerModdingClasses(lua_State *L) {
     })
     .endClass();
 
-   EventSystem::lua_reg(L);
+  EventSystem::lua_reg(L);
 }

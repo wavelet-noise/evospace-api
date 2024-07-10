@@ -15,40 +15,34 @@
 #include <string>
 #include <vector>
 
-class FStringStream
-{
+class FStringStream {
   FString Buffer;
 
-public:
+  public:
   FStringStream() {}
-  
-  FStringStream& operator<<(const double& value)
-  {
+
+  FStringStream &operator<<(const double &value) {
     Buffer += FString::Printf(TEXT("%s"), *FString::SanitizeFloat(value));
     return *this;
   }
 
-  FStringStream& operator<<(std::string_view value)
-  {
+  FStringStream &operator<<(std::string_view value) {
     Buffer = Buffer + FString(UTF8_TO_TCHAR(value.data()));
     return *this;
   }
-  
-  FStringStream& operator<<(const TCHAR* value)
-  {
+
+  FStringStream &operator<<(const TCHAR *value) {
     Buffer = Buffer + FString(value);
     return *this;
   }
 
   // Get the accumulated FString
-  FString Str() const
-  {
+  FString Str() const {
     return Buffer;
   }
 
   // Clear the buffer
-  void Clear()
-  {
+  void Clear() {
     Buffer.Empty();
   }
 };
@@ -169,8 +163,8 @@ public:
 //      send all
 //        remaining data.
 
-
-class FStringStream;namespace cpplog {
+class FStringStream;
+namespace cpplog {
 // Our log level type.
 // NOTE: When C++11 becomes widely supported, convert this to "enum class
 // LogLevel".

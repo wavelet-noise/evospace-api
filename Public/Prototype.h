@@ -14,7 +14,7 @@ class UMod;
 class Base;
 
 /*.addStaticFunction("get", &evo::DB::get<U##type>) */ /*.addStaticFunction("get_derived", &evo::DB::get_derived<U##type>) */
-#define EVO_CODEGEN(type, parent)                                                                                                  \
+#define EVO_CODEGEN(type, parent)                                                                                                            \
   public:                                                                                                                                    \
   virtual UClass *lua_reg_type() {                                                                                                           \
     return U##type::StaticClass();                                                                                                           \

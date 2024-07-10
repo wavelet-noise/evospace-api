@@ -13,7 +13,7 @@ class UPrototype;
 namespace evo {
 class LegacyLuaState;
 class ModLoadingLuaState;
-}
+} // namespace evo
 class UMainGameModLoader;
 
 class UJsonObjectLibrary;
@@ -98,9 +98,8 @@ UCLASS()
 class EVOSPACE_API UMainGameModLoader : public UObject {
   GENERATED_BODY()
   public:
-
   UMainGameModLoader();
-  
+
   UPROPERTY(VisibleAnywhere)
   UJsonObjectLibrary *mJsonObjectLibrary = nullptr;
 
