@@ -324,7 +324,7 @@ void throw_or_assert(Args&&... args)
 #if LUABRIDGE_HAS_EXCEPTIONS
     throw T(std::forward<Args>(args)...);
 #else
-    ((LOG(ERROR_LL) << args), ...);
+    ((LOG(ERROR_LL) << UTF8_TO_TCHAR(args)), ...);
 #endif
 }
 

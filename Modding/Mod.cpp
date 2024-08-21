@@ -36,7 +36,7 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
     if (PlatformFile.FileExists(*(directory / "info.json"))) {
       FFileHelper::LoadFileToString(json_data, *(directory / "info.json"));
     } else {
-      LOG(WARN_LL) << *directory << " has no info.json";
+      LOG(WARN_LL) << *directory << u" has no info.json";
       return false;
     }
 
@@ -61,12 +61,12 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
     if (auto result = lua_state->RunCode(TCHAR_TO_UTF8(*json_data), "@init")) {
       if (context.loader->lastRegisteredMod.has_value()) {
         this->init = context.loader->lastRegisteredMod.value();
-        LOG(INFO_LL) << " init function table registered. " << this->init->isTable();
+        LOG(INFO_LL) << u" init function table registered. " << this->init->isTable();
       } else {
-        LOG(ERROR_LL) << " registration unknown error";
+        LOG(ERROR_LL) << u" registration unknown error";
       }
     } else {
-      LOG(ERROR_LL) << " init.lua file execution error";
+      LOG(ERROR_LL) << u" init.lua file execution error";
       lua_state->HandleLuaErrorOnStack(context);
     }
   }

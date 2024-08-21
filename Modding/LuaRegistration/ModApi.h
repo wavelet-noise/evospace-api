@@ -9,7 +9,7 @@ inline void registerModdingClasses(lua_State *L) {
   luabridge::getGlobalNamespace(L)
     .beginClass<UMainGameModLoader>("MainGameModLoader")
     .addFunction("reg", [](UMainGameModLoader *self, UPrototype *proto) {
-      if (ensure_log(proto, "Trying to register nullptr from " << self->mCurrentMod->mName)) {
+      if (ensure_log(proto, u"Trying to register nullptr from " << UTF8_TO_TCHAR(self->mCurrentMod->mName.data()))) {
         self->RegisterPrototype(self->mCurrentMod, proto);
       }
     })

@@ -27,7 +27,7 @@ void LuaState::AddLuaPath(const FString &path) {
 bool LuaState::RunCode(std::string_view code, std::string_view path) {
   std::string path_decorated = std::string("@") + path.data();
   if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
-    LOG(ERROR_LL) << "Lua loading error: " << lua_tostring(L, -1);
+    LOG(ERROR_LL) << u"Lua loading error: " << UTF8_TO_TCHAR(lua_tostring(L, -1));
     return false;
   } else {
     if (lua_pcall(L, 0, LUA_MULTRET, 0)) {
@@ -72,15 +72,15 @@ std::string LuaState::ToByteCode(std::string_view code, std::string_view path) {
     auto index = std::stoi(split_error[1]);
     auto split_source = split(code, '\n');
     auto in_error = split_source[index - 1];
-    LOG(ERROR_LL) << "Load buffer error: " << error << "; line " << index
-                  << ": " << in_error;
+    LOG(ERROR_LL) << u"Load buffer error: " << UTF8_TO_TCHAR(error.data()) << u"; line " << index
+                  << u": " << UTF8_TO_TCHAR(in_error.data());
     return "";
   }
 
   if (lua_dump(L, ToByteCode_Writer, &output)) {
     auto error = lua_tostring(L, -1);
     lua_close(L);
-    LOG(ERROR_LL) << "Dump error: " << error;
+    LOG(ERROR_LL) << u"Dump error: " << UTF8_TO_TCHAR(error);
     return "";
   }
 
@@ -94,8 +94,8 @@ void LuaState::processLuaErrorOnStack(std::string_view code) {
   auto index = std::stoi(split_error[1]);
   auto split_source = split(code, '\n');
   auto in_error = split_source[index - 1];
-  LOG(ERROR_LL) << "Load buffer error: " << error << "; line " << index
-                << ": " << in_error;
+  LOG(ERROR_LL) << u"Load buffer error: " << UTF8_TO_TCHAR(error.data()) << u"; line " << index
+                << u": " << UTF8_TO_TCHAR(in_error.data());
   lua_pop(L, 1);
 }
 
@@ -114,17 +114,17 @@ luabridge::LuaRef LuaState::ToLuaRefFunction(std::string_view code, std::string_
 }
 
 void LuaState::HandleLuaErrorOnStack(ModLoadingContext &context) const {
-  LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+  LOG(ERROR_LL) << u"Lua execution error: " << UTF8_TO_TCHAR(lua_tostring(L, -1));
 
-  LOG(ERROR_LL) << "Call stack:";
+  LOG(ERROR_LL) << u"Call stack:";
   int level = 0;
   lua_Debug debug_info;
   while (lua_getstack(L, level, &debug_info)) {
     lua_getinfo(L, "nSlf", &debug_info);
     LOG(ERROR_LL)
-      << "    " << debug_info.short_src << ":" << debug_info.currentline;
+      << u"    " << UTF8_TO_TCHAR(debug_info.short_src) << u":" << debug_info.currentline;
     if (debug_info.name != nullptr)
-      LOG(ERROR_LL) << " in function " << debug_info.name;
+      LOG(ERROR_LL) << u" in function " << UTF8_TO_TCHAR(debug_info.name);
     ++level;
   }
 }
@@ -133,17 +133,17 @@ bool LuaState::HandleLuaResult(const luabridge::LuaResult &res) const {
   if (res.wasOk())
     return true;
 
-  LOG(ERROR_LL) << "Lua execution error: " << res.errorMessage();
+  LOG(ERROR_LL) << u"Lua execution error: " << UTF8_TO_TCHAR(res.errorMessage().data());
 
-  LOG(ERROR_LL) << "Call stack:";
+  LOG(ERROR_LL) << u"Call stack:";
   int level = 0;
   lua_Debug debug_info;
   while (lua_getstack(L, level, &debug_info)) {
     lua_getinfo(L, "nSlf", &debug_info);
-    LOG(ERROR_LL) << "    " << debug_info.short_src << ":"
+    LOG(ERROR_LL) << u"    " << UTF8_TO_TCHAR(debug_info.short_src) << u":"
                   << debug_info.currentline;
     if (debug_info.name != nullptr)
-      LOG(ERROR_LL) << " in function " << debug_info.name;
+      LOG(ERROR_LL) << u" in function " << UTF8_TO_TCHAR(debug_info.name);
     ++level;
   }
 
@@ -151,17 +151,17 @@ bool LuaState::HandleLuaResult(const luabridge::LuaResult &res) const {
 }
 
 void LuaState::HandleLuaErrorOnStack() const {
-  LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+  LOG(ERROR_LL) << u"Lua execution error: " << UTF8_TO_TCHAR(lua_tostring(L, -1));
 
-  LOG(ERROR_LL) << "Call stack:";
+  LOG(ERROR_LL) << u"Call stack:";
   int level = 0;
   lua_Debug debug_info;
   while (lua_getstack(L, level, &debug_info)) {
     lua_getinfo(L, "nSlf", &debug_info);
-    LOG(ERROR_LL) << "    " << debug_info.short_src << ":"
+    LOG(ERROR_LL) << u"    " << UTF8_TO_TCHAR(debug_info.short_src) << u":"
                   << debug_info.currentline;
     if (debug_info.name != nullptr)
-      LOG(ERROR_LL) << " in function " << debug_info.name;
+      LOG(ERROR_LL) << u" in function " << UTF8_TO_TCHAR(debug_info.name);
     ++level;
   }
 }
@@ -171,15 +171,15 @@ int LuaState::l_my_print(lua_State *L) {
 
   for (int i = 1; i <= nargs; i++) {
     if (lua_isstring(L, i)) {
-      LOG(INFO_LL) << "Lua: " << lua_tostring(L, i);
+      LOG(INFO_LL) << u"Lua: " << UTF8_TO_TCHAR(lua_tostring(L, i));
     } else if (lua_isnumber(L, i)) {
-      LOG(INFO_LL) << "Lua: " << lua_tonumber(L, i);
+      LOG(INFO_LL) << u"Lua: " << lua_tonumber(L, i);
     } else if (lua_isboolean(L, i)) {
-      LOG(INFO_LL) << "Lua: " << (lua_toboolean(L, i) ? "true" : "false");
+      LOG(INFO_LL) << u"Lua: " << (lua_toboolean(L, i) ? u"true" : u"false");
     } else if (lua_isnil(L, i)) {
-      LOG(INFO_LL) << "Lua: nil";
+      LOG(INFO_LL) << u"Lua: nil";
     } else {
-      LOG(WARN_LL) << "Lua: print not implemented type";
+      LOG(WARN_LL) << u"Lua: print not implemented type";
     }
   }
 
@@ -201,7 +201,7 @@ LuaState::LuaState() {
   auto col = luabridge::getGlobal(L, "collectgarbage");
   col("setpause", 100);
 
-  LOG(INFO_LL) << "Lua state is constructed";
+  LOG(INFO_LL) << u"Lua state is constructed";
 }
 
 void LuaState::Init() {
@@ -221,7 +221,7 @@ void LuaState::Init() {
   //
   // if (lua_pcall(L, 1, 1, 0)) {
   //     const std::string err = lua_tostring(L, -1);
-  //     std::cout << "Error: " << err << std::endl;
+  //     std::cout << u"Error: " << err << std::endl;
   //
   //     lua_getglobal(L, "debug");
   //     lua_getfield(L, -1, "traceback");
@@ -239,24 +239,24 @@ void LuaState::Init() {
   //
   // lua_pop(L, 1);
 
-  LOG(INFO_LL) << "Lua actor component registering";
+  LOG(INFO_LL) << u"Lua actor component registering";
 
   registerComponentClasses(L);
 
-  LOG(INFO_LL) << "Lua extra math registering";
+  LOG(INFO_LL) << u"Lua extra math registering";
 
   registerMathClasses(L);
 
-  LOG(INFO_LL) << "Lua misc classes registering";
+  LOG(INFO_LL) << u"Lua misc classes registering";
 
   registerMiscClasses(L);
 
   registerModdingClasses(L);
 
-  LOG(INFO_LL) << "Lua state initialized";
+  LOG(INFO_LL) << u"Lua state initialized";
 
   auto ver = luabridge::getGlobal(L, "_VERSION");
-  LOG(INFO_LL) << ver.tostring();
+  LOG(INFO_LL) << UTF8_TO_TCHAR(ver.tostring().data());
 
   RunCode(
     "require('jit') if type(jit) == 'table' then print(jit.version) else "
@@ -268,9 +268,9 @@ UClass *LuaState::FindClass(const std::string &name) {
   auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
-    LOG(ERROR_LL) << "Class not found " << name;
+    LOG(ERROR_LL) << u"Class not found " << UTF8_TO_TCHAR(name.data());
   } else {
-    //LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+    //LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << u" is loaded";
   }
 
   return type;
@@ -280,9 +280,9 @@ UClass *LuaState::LoadClass(const std::string &name) {
   auto type = LoadObject<UClass>(nullptr, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
-    LOG(ERROR_LL) << "Class not loaded " << name;
+    LOG(ERROR_LL) << u"Class not loaded " << UTF8_TO_TCHAR(name.data());
   } else {
-    //LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+    //LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << u" is loaded";
   }
 
   return type;
@@ -292,9 +292,9 @@ UTexture2D *LuaState::FindTexture(const std::string &name) {
   auto type = FindObject<UTexture2D>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
-    LOG(WARN_LL) << "Texture not found " << name;
+    LOG(WARN_LL) << u"Texture not found " << UTF8_TO_TCHAR(name.data());
   } else {
-    //LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+    //LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << u" is loaded";
   }
 
   return type;
@@ -305,9 +305,9 @@ UMaterialInterface *LuaState::FindMaterial(const std::string &name) {
     nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data())));
 
   if (type == nullptr) {
-    LOG(ERROR_LL) << "Material not found " << name;
+    LOG(ERROR_LL) << u"Material not found " << UTF8_TO_TCHAR(name.data());
   } else {
-    //LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << " is loaded";
+    //LOG(TRACE_LL) << TCHAR_TO_UTF8(*type->GetName()) << u" is loaded";
   }
 
   return type;
