@@ -114,17 +114,17 @@ luabridge::LuaRef LuaState::ToLuaRefFunction(std::string_view code, std::string_
 }
 
 void LuaState::HandleLuaErrorOnStack(ModLoadingContext &context) const {
-  context.log(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
+  LOG(ERROR_LL) << "Lua execution error: " << lua_tostring(L, -1);
 
-  context.log(ERROR_LL) << "Call stack:";
+  LOG(ERROR_LL) << "Call stack:";
   int level = 0;
   lua_Debug debug_info;
   while (lua_getstack(L, level, &debug_info)) {
     lua_getinfo(L, "nSlf", &debug_info);
-    context.log(ERROR_LL)
+    LOG(ERROR_LL)
       << "    " << debug_info.short_src << ":" << debug_info.currentline;
     if (debug_info.name != nullptr)
-      context.log(ERROR_LL) << " in function " << debug_info.name;
+      LOG(ERROR_LL) << " in function " << debug_info.name;
     ++level;
   }
 }
@@ -264,7 +264,7 @@ void LuaState::Init() {
     "jit_test");
 }
 
-UClass *LuaState::FindClass(std::string_view name) {
+UClass *LuaState::FindClass(const std::string & name) {
   auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
@@ -276,7 +276,7 @@ UClass *LuaState::FindClass(std::string_view name) {
   return type;
 }
 
-UClass *LuaState::LoadClass(std::string_view name) {
+UClass *LuaState::LoadClass(const std::string & name) {
   auto type = LoadObject<UClass>(nullptr, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
@@ -288,7 +288,7 @@ UClass *LuaState::LoadClass(std::string_view name) {
   return type;
 }
 
-UTexture2D *LuaState::FindTexture(std::string_view name) {
+UTexture2D *LuaState::FindTexture(const std::string & name) {
   auto type = FindObject<UTexture2D>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
@@ -300,7 +300,7 @@ UTexture2D *LuaState::FindTexture(std::string_view name) {
   return type;
 }
 
-UMaterialInterface *LuaState::FindMaterial(std::string_view name) {
+UMaterialInterface *LuaState::FindMaterial(const std::string & name) {
   auto type = LoadObject<UMaterialInterface>(
     nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data())));
 

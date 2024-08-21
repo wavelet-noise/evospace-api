@@ -1,7 +1,6 @@
 #pragma once
 #include "Containers/Array.h"
 #include "CoreMinimal.h"
-#include "ThirdParty/cpplog.h"
 #include "ThirdParty/luabridge/LuaBridge.h"
 
 #include <string>
@@ -20,38 +19,6 @@ class UJsonObjectLibrary;
 class UMod;
 class ModLoadingContext;
 
-class StringStreamPortion {
-  public:
-  FStringStream input;
-  int severity = TRACE_LL;
-
-  StringStreamPortion(ModLoadingContext &par, int sev)
-    : severity(sev), parent(par) {}
-
-  ~StringStreamPortion();
-
-  template <typename Ty>
-  StringStreamPortion &operator<<(Ty Str) {
-    input << Str;
-    return *this;
-  }
-
-  template <typename Ty>
-  StringStreamPortion &operator<<(Ty *Str) {
-    if (Str) {
-      input << Str;
-    } else {
-      input << "nil";
-    }
-    return *this;
-  }
-
-  ModLoadingContext &parent;
-
-  StringStreamPortion(const StringStreamPortion &v) = delete;
-  StringStreamPortion &operator=(const StringStreamPortion &v) = delete;
-};
-
 class ModLoadingContext {
   public:
   ModLoadingContext(evo::LegacyLuaState *lua, UMainGameModLoader *);
@@ -68,19 +35,13 @@ class ModLoadingContext {
 
   UMainGameModLoader *loader;
 
-  StringStreamPortion log(int sev) {
-    ++log_level_counts[sev];
-    return StringStreamPortion(*this, sev);
-  }
-
   FString Get();
   void Set(const FString &m);
   FCriticalSection critical;
 
-  std::array<int32, MAX_LL> log_level_counts = { 0 };
-
   bool has_errors() {
-    return log_level_counts[ERROR_LL] || log_level_counts[FATAL_LL];
+    //TODO: fix
+    return false;
   }
 };
 
@@ -143,7 +104,7 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   static bool LoadLoc(ModLoadingContext &context, const FString &path, const FString &locale, bool isSource);
 
   bool PrepareMods(ModLoadingContext &context);
-  bool LuaTickCaller(ModLoadingContext &context, std::string_view function_name, int32 seq);
+  bool LuaTickCaller(ModLoadingContext &context, const std::string &function_name, int32 seq);
   bool SubscriptionLoading(ModLoadingContext &context);
   bool Init(ModLoadingContext &context, int32 seq);
   bool PostInit(ModLoadingContext &context, int32 seq);

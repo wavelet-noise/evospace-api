@@ -1,15 +1,13 @@
 // Copyright (c) 2017 - 2024, Samsonov Andrey. All Rights Reserved.
 #pragma once
+#include "Containers/Deque.h"
 #include "Evospace/Vector.h"
-#include "ThirdParty/cpplog.h"
 
-#include <list>
 #include <string>
-#include <functional>
 
 #ifndef LOG_LEVEL
 #define LOG(level) \
-  cpplog::LogMessage((level), *StaticLogger::Get().logger).getStream()
+  FLogHelper(FSimpleLogger::static_logger, level)
 #endif
 
 #ifndef LOG_NOTHING
@@ -17,34 +15,98 @@
   true ? (void)0 : cpplog::helpers::VoidStreamClass() & LOG(level)
 #endif
 
-class StaticLogger {
-  public:
-  StaticLogger();
-
-  std::unique_ptr<cpplog::BaseLogger> logger;
-  std::unique_ptr<cpplog::BaseLogger> logger_internal;
-
-  static StaticLogger &Get();
-  static cpplog::BaseLogger &get_logger();
-
-  StaticLogger(const StaticLogger &) = delete;
-  StaticLogger &operator=(const StaticLogger &) = delete;
+enum ELogLevel {
+  ERROR_LL,
+  WARN_LL,
+  INFO_LL
 };
 
-inline std::ostream &operator<<(std::ostream &os, const FString &str) {
-  const std::string stdString(TCHAR_TO_UTF8(*str));
-  os << stdString;
-  return os;
-}
-
-inline std::ostream &operator<<(std::ostream &os, const FVector3i &vec) {
-  os << "{" << std::to_string(vec.X) << ", " << std::to_string(vec.Y) << ", " << std::to_string(vec.Z) << "}";
-  return os;
-}
-
-inline std::ostream &operator<<(std::ostream &os, const TFunction<void(std::ostream &)> &func) {
-  if (func) {
-    func(os);
+// The simple logger class
+class FSimpleLogger {
+  public:
+  void Log(ELogLevel LogLevel, const FString &Message) {
+    FString LogEntry = GetLogLevelString(LogLevel) + TEXT(" : ") + Message;
+    LogEntries.PushLast(MoveTemp(LogEntry));
   }
-  return os;
-}
+
+  const TDeque<FString> &GetLogEntries() const {
+    return LogEntries;
+  }
+
+  static FSimpleLogger static_logger;
+
+  private:
+  TDeque<FString> LogEntries;
+
+  FString GetLogLevelString(ELogLevel LogLevel) const {
+    switch (LogLevel) {
+    case ERROR_LL:
+      return TEXT("ERROR");
+    case WARN_LL:
+      return TEXT("WARNING");
+    case INFO_LL:
+      return TEXT("INFO");
+    default:
+      return TEXT("UNKNOWN");
+    }
+  }
+};
+
+class FLogHelper {
+  public:
+  FLogHelper(FSimpleLogger &InLogger, ELogLevel InLogLevel)
+    : Logger(InLogger), LogLevel(InLogLevel) {
+  }
+
+  // Overload << operator for strings
+  FLogHelper &operator<<(const FString &Message) {
+    Buffer += Message;
+    return *this;
+  }
+
+  FLogHelper &operator<<(const std::string &Message) {
+    Buffer += UTF8_TO_TCHAR(Message.data());
+    return *this;
+  }
+
+  FLogHelper &operator<<(const char *Message) {
+    Buffer += UTF8_TO_TCHAR(Message);
+    return *this;
+  }
+
+  FLogHelper &operator<<(const TCHAR *Message) {
+    Buffer += Message;
+    return *this;
+  }
+
+  template<size_t N>
+  FLogHelper& operator<<(const char(&Message)[N])
+  {
+    Buffer += UTF8_TO_TCHAR(Message);
+    return *this;
+  }
+
+  template <typename T>
+  FLogHelper &operator<<(const T &Value) {
+    Buffer += FString::Printf(TEXT("%s"), *TTypeToString(Value));
+    return *this;
+  }
+
+  ~FLogHelper() {
+    Logger.Log(LogLevel, Buffer);
+  }
+
+  private:
+  FSimpleLogger &Logger;
+  ELogLevel LogLevel;
+  FString Buffer;
+
+  template <typename T>
+  FString TTypeToString(const T &Value) const {
+    return FString::Printf(TEXT("%s"), *FString::FromInt(Value));
+  }
+  
+  FString TTypeToString(const FVector3i &Value) const {
+    return Value.ToString();
+  }
+};
