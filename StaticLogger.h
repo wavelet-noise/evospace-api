@@ -18,7 +18,8 @@
 enum ELogLevel {
   ERROR_LL,
   WARN_LL,
-  INFO_LL
+  INFO_LL,
+  ELogLevel_Count
 };
 
 // The simple logger class
@@ -27,6 +28,7 @@ class FSimpleLogger {
   void Log(ELogLevel LogLevel, const FString &Message) {
     FString LogEntry = GetLogLevelString(LogLevel) + TEXT(" : ") + Message;
     LogEntries.PushLast(MoveTemp(LogEntry));
+    ++perLevelCount[LogLevel];
   }
 
   const TDeque<FString> &GetLogEntries() const {
@@ -35,7 +37,28 @@ class FSimpleLogger {
 
   static FSimpleLogger static_logger;
 
+  FSimpleLogger() {
+    perLevelCount.SetNumZeroed(ELogLevel_Count);
+  }
+
+  bool HasErrors() const {
+    return perLevelCount[ERROR_LL] > 0;
+  }
+
+  const FString &GetLastMessage() const {
+    static FString dummy = "";
+    if (LogEntries.IsEmpty()) {
+      return dummy;
+    }
+    return LogEntries.Last();
+  }
+
+  const TArray<int32> & GetLevels() const {
+    return perLevelCount;
+  }
+
   private:
+  TArray<int32> perLevelCount;
   TDeque<FString> LogEntries;
 
   FString GetLogLevelString(ELogLevel LogLevel) const {
@@ -43,7 +66,7 @@ class FSimpleLogger {
     case ERROR_LL:
       return TEXT("ERROR");
     case WARN_LL:
-      return TEXT("WARNING");
+      return TEXT("WARN");
     case INFO_LL:
       return TEXT("INFO");
     default:
@@ -79,9 +102,8 @@ class FLogHelper {
     return *this;
   }
 
-  template<size_t N>
-  FLogHelper& operator<<(const char(&Message)[N])
-  {
+  template <size_t N>
+  FLogHelper &operator<<(const char (&Message)[N]) {
     Buffer += UTF8_TO_TCHAR(Message);
     return *this;
   }
@@ -105,7 +127,7 @@ class FLogHelper {
   FString TTypeToString(const T &Value) const {
     return FString::Printf(TEXT("%s"), *FString::FromInt(Value));
   }
-  
+
   FString TTypeToString(const FVector3i &Value) const {
     return Value.ToString();
   }

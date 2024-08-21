@@ -264,7 +264,7 @@ void LuaState::Init() {
     "jit_test");
 }
 
-UClass *LuaState::FindClass(const std::string & name) {
+UClass *LuaState::FindClass(const std::string &name) {
   auto type = FindObject<UClass>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
@@ -276,7 +276,7 @@ UClass *LuaState::FindClass(const std::string & name) {
   return type;
 }
 
-UClass *LuaState::LoadClass(const std::string & name) {
+UClass *LuaState::LoadClass(const std::string &name) {
   auto type = LoadObject<UClass>(nullptr, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
@@ -288,7 +288,7 @@ UClass *LuaState::LoadClass(const std::string & name) {
   return type;
 }
 
-UTexture2D *LuaState::FindTexture(const std::string & name) {
+UTexture2D *LuaState::FindTexture(const std::string &name) {
   auto type = FindObject<UTexture2D>(ANY_PACKAGE, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
@@ -300,7 +300,7 @@ UTexture2D *LuaState::FindTexture(const std::string & name) {
   return type;
 }
 
-UMaterialInterface *LuaState::FindMaterial(const std::string & name) {
+UMaterialInterface *LuaState::FindMaterial(const std::string &name) {
   auto type = LoadObject<UMaterialInterface>(
     nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data())));
 

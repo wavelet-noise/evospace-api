@@ -27,10 +27,6 @@ class ModLoadingContext {
   ModLoadingContext(const ModLoadingContext &c) = delete;
   ModLoadingContext &operator=(const ModLoadingContext &c) = delete;
 
-  FString message;
-
-  std::vector<FString> errors;
-
   evo::LegacyLuaState *lua_state;
 
   UMainGameModLoader *loader;
@@ -38,11 +34,6 @@ class ModLoadingContext {
   FString Get();
   void Set(const FString &m);
   FCriticalSection critical;
-
-  bool has_errors() {
-    //TODO: fix
-    return false;
-  }
 };
 
 enum class ModTickLoadStatus {
