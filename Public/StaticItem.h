@@ -117,10 +117,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
      */
   int64 mMaxCount = 0;
 
-  // Database page tag
-  UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  FName mTag = "";
-
+  // Item database category
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   FName mCategory = "";
 

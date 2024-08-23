@@ -26,7 +26,7 @@ class Base;
     return Cast<U##type>(parent_inst);                                                                                                       \
   }                                                                                                                                          \
   virtual void lua_reg_internal(lua_State *L) const override {                                                                               \
-    LOG(INFO_LL) << u"Registering lua " << TEXT(#type);                                                                                             \
+    LOG(INFO_LL) << u"Registering lua " << TEXT(#type);                                                                                      \
     luabridge::getGlobalNamespace(L)                                                                                                         \
       .beginClass<U##type>(#type)                                                                                                            \
       .addStaticFunction(                                                                                                                    \

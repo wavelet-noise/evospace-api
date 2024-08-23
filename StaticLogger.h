@@ -23,7 +23,7 @@ enum ELogLevel {
 };
 
 class FSimpleLogger {
-public:
+  public:
   void Log(ELogLevel LogLevel, const FString &Message) {
     FString LogEntry = GetLogLevelString(LogLevel) + TEXT(" : ") + Message;
     LogEntries.PushLast(MoveTemp(LogEntry));
@@ -52,11 +52,11 @@ public:
     return LogEntries.Last();
   }
 
-  const TArray<int32> & GetLevels() const {
+  const TArray<int32> &GetLevels() const {
     return perLevelCount;
   }
 
-private:
+  private:
   TArray<int32> perLevelCount;
   TDeque<FString> LogEntries;
 
@@ -79,7 +79,7 @@ class FLogHelper {
   FLogHelper(FSimpleLogger &InLogger, ELogLevel InLogLevel)
     : Logger(InLogger), LogLevel(InLogLevel) {
   }
-  
+
   FLogHelper &operator<<(const FString &Message) {
     Buffer += Message;
     return *this;
@@ -89,11 +89,27 @@ class FLogHelper {
     Buffer += Message;
     return *this;
   }
-  
-    FLogHelper &operator<<(TCHAR * const Message) {
-      Buffer += Message;
-      return *this;
-    }
+
+  FLogHelper &operator<<(const std::string &Message) {
+    Buffer += UTF8_TO_TCHAR(Message.data());
+    return *this;
+  }
+
+  FLogHelper &operator<<(const char *Message) {
+    Buffer += UTF8_TO_TCHAR(Message);
+    return *this;
+  }
+
+  template <size_t N>
+  FLogHelper &operator<<(const char (&Message)[N]) {
+    Buffer += UTF8_TO_TCHAR(Message);
+    return *this;
+  }
+
+  FLogHelper &operator<<(TCHAR *const Message) {
+    Buffer += Message;
+    return *this;
+  }
 
   template <typename T>
   FLogHelper &operator<<(const T &Value) {
