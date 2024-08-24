@@ -26,7 +26,7 @@ class Base;
     return Cast<U##type>(parent_inst);                                                                                                         \
   }                                                                                                                                            \
   virtual void lua_reg_internal(lua_State *L) const override {                                                                                 \
-    LOG(INFO_LL) << u"Registering lua " << TEXT(#type);                                                                                        \
+    LOG(INFO_LL) << "Registering lua " << TEXT(#type);                                                                                        \
     luabridge::getGlobalNamespace(L)                                                                                                           \
       .beginClass<U##type>(#type)                                                                                                              \
       .addStaticFunction(                                                                                                                      \
@@ -48,7 +48,7 @@ class Base;
 // #define EVO_LUA_CODEGEN_EMPTY(type, parent, name)                                                                           \
 //   public:                                                                                                                   \
 //   static void lua_reg(lua_State *L) {                                                                                       \
-//     LOG(INFO_LL) << u"Registering lua " << #name;                                                                            \
+//     LOG(INFO_LL) << "Registering lua " << #name;                                                                            \
 //     luabridge::getGlobalNamespace(L)                                                                                        \
 //       .deriveClass<type, parent>(#name)                                                                                     \
 //       .addStaticFunction(                                                                                                   \
@@ -80,7 +80,7 @@ class UPrototype : public UObject, public ISerializableJson {
   virtual UClass *lua_reg_type() { return UPrototype::StaticClass(); }
   virtual void register_owner() {}
   virtual void lua_reg_internal(lua_State *L) const {
-    LOG(INFO_LL) << u"Registering lua " << u"Prototype";
+    LOG(INFO_LL) << "Registering lua " << "Prototype";
     luabridge::getGlobalNamespace(L)
       .deriveClass<UPrototype, UObject>("Prototype")
 
