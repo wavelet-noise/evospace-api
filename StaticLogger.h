@@ -119,6 +119,7 @@ class FLogHelper {
     return *this;
   }
 
+
   template <typename T>
   FLogHelper &operator<<(const T &Value) {
     Buffer += FString::Printf(TEXT("%s"), *TTypeToString(Value));
@@ -137,6 +138,10 @@ class FLogHelper {
   template <typename T>
   FString TTypeToString(const T &Value) const {
     return FString::Printf(TEXT("%s"), *FString::FromInt(Value));
+  }
+
+  FString TTypeToString(const bool &Value) const {
+    return Value ? "true" : "false";
   }
 
   FString TTypeToString(const FVector3i &Value) const {
