@@ -159,7 +159,7 @@ int LuaState::l_my_print(lua_State *L) {
     } else if (lua_isnumber(L, i)) {
       LOG(INFO_LL) << "Lua: " << lua_tonumber(L, i);
     } else if (lua_isboolean(L, i)) {
-      LOG(INFO_LL) << "Lua: " << (lua_toboolean(L, i) ? u"true" : u"false");
+      LOG(INFO_LL) << "Lua: " << lua_toboolean(L, i);
     } else if (lua_isnil(L, i)) {
       LOG(INFO_LL) << "Lua: nil";
     } else {
