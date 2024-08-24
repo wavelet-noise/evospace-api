@@ -2,6 +2,8 @@
 #include "Prototype.h"
 #include "Evospace/SerializableJson.h"
 #include "Evospace/Vector.h"
+#include "Evospace/Misc/AssetOwner.h"
+
 #include <Evospace/Common.h>
 #include "StaticResearch.generated.h"
 
@@ -107,6 +109,7 @@ class EVOSPACE_API UStaticResearch : public UPrototype {
 
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level);
 
+  EVO_OWNER(StaticResearch)
   EVO_CODEGEN(StaticResearch, StaticResearch)
   virtual void lua_reg(lua_State *L) const override {}
 };
@@ -117,6 +120,7 @@ class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
+  EVO_OWNED(StaticResearchBonusInventory, StaticResearch)
   EVO_CODEGEN(StaticResearchBonusInventory, StaticResearch)
   virtual void lua_reg(lua_State *L) const override {}
 };
@@ -135,6 +139,7 @@ class EVOSPACE_API UStaticResearchModifier : public UStaticResearch {
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   float mBonusValue;
 
+  EVO_OWNED(StaticResearchModifier, StaticResearch)
   EVO_CODEGEN(StaticResearchModifier, StaticResearch)
   virtual void lua_reg(lua_State *L) const override {}
 };
@@ -145,6 +150,7 @@ class EVOSPACE_API UStaticResearchToolUnlock : public UStaticResearch {
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
+  EVO_OWNED(StaticResearchToolUnlock, StaticResearch)
   EVO_CODEGEN(StaticResearchToolUnlock, StaticResearch)
   virtual void lua_reg(lua_State *L) const override {}
 };

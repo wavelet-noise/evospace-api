@@ -14,29 +14,34 @@ class UMod;
 class Base;
 
 /*.addStaticFunction("get", &evo::DB::get<U##type>) */ /*.addStaticFunction("get_derived", &evo::DB::get_derived<U##type>) */
-#define EVO_CODEGEN(type, parent)                                                                                                            \
-  public:                                                                                                                                    \
-  virtual UClass *lua_reg_type() {                                                                                                           \
-    return U##type::StaticClass();                                                                                                           \
-  }                                                                                                                                          \
-  virtual UObject *get_or_register(const FString &obj_name, IRegistrar &registry) override {                                                 \
-    return _get_or_register<U##parent, U##type>(obj_name, registry);                                                                         \
-  }                                                                                                                                          \
-  static U##type *lua_codegen_cast(UObject *parent_inst) {                                                                                   \
-    return Cast<U##type>(parent_inst);                                                                                                       \
-  }                                                                                                                                          \
-  virtual void lua_reg_internal(lua_State *L) const override {                                                                               \
-    LOG(INFO_LL) << u"Registering lua " << TEXT(#type);                                                                                      \
-    luabridge::getGlobalNamespace(L)                                                                                                         \
-      .beginClass<U##type>(#type)                                                                                                            \
-      .addStaticFunction(                                                                                                                    \
-        "find", +[](std::string_view name) { return FindObject<U##type>(MainGameOwner<U##parent>::Get(), UTF8_TO_TCHAR(name.data())); })     \
-      .addStaticFunction("cast", &U##type::lua_codegen_cast)                                                                                 \
-      .addStaticFunction(                                                                                                                    \
-        "new", +[](std::string_view newName) { return NewObject<U##type>(MainGameOwner<U##parent>::Get(), UTF8_TO_TCHAR(newName.data())); }) \
-      .addStaticFunction("get_class", []() { return U##type::StaticClass(); })                                                               \
-      .addFunction("__tostring", &U##type::ToString)                                                                                         \
-      .endClass();                                                                                                                           \
+#define EVO_CODEGEN(type, parent)                                                                                                              \
+  public:                                                                                                                                      \
+  virtual UClass *lua_reg_type() {                                                                                                             \
+    return U##type::StaticClass();                                                                                                             \
+  }                                                                                                                                            \
+  virtual UObject *get_or_register(const FString &obj_name, IRegistrar &registry) override {                                                   \
+    return _get_or_register<U##parent, U##type>(obj_name, registry);                                                                           \
+  }                                                                                                                                            \
+  static U##type *lua_codegen_cast(UObject *parent_inst) {                                                                                     \
+    return Cast<U##type>(parent_inst);                                                                                                         \
+  }                                                                                                                                            \
+  virtual void lua_reg_internal(lua_State *L) const override {                                                                                 \
+    LOG(INFO_LL) << u"Registering lua " << TEXT(#type);                                                                                        \
+    luabridge::getGlobalNamespace(L)                                                                                                           \
+      .beginClass<U##type>(#type)                                                                                                              \
+      .addStaticFunction(                                                                                                                      \
+        "find", +[](std::string_view name) { return FindObject<U##type>(MainGameOwner<U##parent>::Get(), UTF8_TO_TCHAR(name.data())); })       \
+      .addStaticFunction("cast", &U##type::lua_codegen_cast)                                                                                   \
+      .addStaticFunction("get_class", []() { return U##type::StaticClass(); })                                                                 \
+      .addFunction("__tostring", &U##type::ToString)                                                                                           \
+      .endClass();                                                                                                                             \
+    if (!U##type::StaticClass()->HasAnyClassFlags(CLASS_Abstract)) {                                                                                                                \
+      luabridge::getGlobalNamespace(L)                                                                                                         \
+        .beginClass<U##type>(#type)                                                                                                            \
+        .addStaticFunction(                                                                                                                    \
+          "new", +[](std::string_view newName) { return NewObject<U##type>(MainGameOwner<U##parent>::Get(), UTF8_TO_TCHAR(newName.data())); }) \
+        .endClass();                                                                                                                           \
+    }                                                                                                                                          \
   }
 
 // /*.addStaticFunction("get", &evo::DB::get<type>)   */ /* .addStaticFunction("get_derived", &evo::DB::get_derived<type>)  */
@@ -73,6 +78,7 @@ class UPrototype : public UObject, public ISerializableJson {
   public:
   static UPrototype *lua_codegen_cast(UObject *parent_inst) { return Cast<UPrototype>(parent_inst); }
   virtual UClass *lua_reg_type() { return UPrototype::StaticClass(); }
+  virtual void register_owner() {}
   virtual void lua_reg_internal(lua_State *L) const {
     LOG(INFO_LL) << u"Registering lua " << u"Prototype";
     luabridge::getGlobalNamespace(L)

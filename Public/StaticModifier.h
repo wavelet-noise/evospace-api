@@ -6,6 +6,7 @@
 #include "Prototype.h"
 #include "Evospace/Common.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Misc/AssetOwner.h"
 #include "UObject/Object.h"
 #include "StaticModifier.generated.h"
 
@@ -27,6 +28,7 @@ class UStaticModifier : public UPrototype {
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
+  EVO_OWNER(StaticModifier)
   EVO_CODEGEN(StaticModifier, StaticModifier)
   virtual void lua_reg(lua_State *L) const override {}
 };

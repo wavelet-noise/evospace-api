@@ -2,6 +2,7 @@
 #include "Prototype.h"
 #include "Evospace/Common.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Misc/AssetOwner.h"
 #include "StaticTip.generated.h"
 
 class UAutosizeInventory;
@@ -39,6 +40,7 @@ class UStaticTip : public UPrototype {
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
+  EVO_OWNER(StaticTip)
   EVO_CODEGEN(StaticTip, StaticTip)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)

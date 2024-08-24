@@ -4,6 +4,7 @@
 #include "Prototype.h"
 #include "Evospace/Common.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Misc/AssetOwner.h"
 
 #include <Engine/World.h>
 #include <Internationalization/Text.h>
@@ -148,6 +149,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
   TSharedPtr<FJsonObject> mLogicJson;
   virtual void MarkIncomplete() override;
 
+  EVO_OWNER(StaticItem)
   EVO_CODEGEN(StaticItem, StaticItem)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)

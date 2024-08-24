@@ -52,8 +52,7 @@ class LuaState {
   void processLuaErrorOnStack(std::string_view code);
 
   luabridge::LuaRef ToLuaRefFunction(std::string_view code, std::string_view path);
-
-  void HandleLuaErrorOnStack(ModLoadingContext &context) const;
+  
   bool HandleLuaResult(const luabridge::LuaResult &res) const;
 
   void HandleLuaErrorOnStack() const;

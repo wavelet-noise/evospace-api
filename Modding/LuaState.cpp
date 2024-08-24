@@ -113,27 +113,11 @@ luabridge::LuaRef LuaState::ToLuaRefFunction(std::string_view code, std::string_
   return funcRef;
 }
 
-void LuaState::HandleLuaErrorOnStack(ModLoadingContext &context) const {
-  LOG(ERROR_LL) << u"Lua execution error: " << UTF8_TO_TCHAR(lua_tostring(L, -1));
-
-  LOG(ERROR_LL) << u"Call stack:";
-  int level = 0;
-  lua_Debug debug_info;
-  while (lua_getstack(L, level, &debug_info)) {
-    lua_getinfo(L, "nSlf", &debug_info);
-    LOG(ERROR_LL)
-      << u"    " << UTF8_TO_TCHAR(debug_info.short_src) << u":" << debug_info.currentline;
-    if (debug_info.name != nullptr)
-      LOG(ERROR_LL) << u" in function " << UTF8_TO_TCHAR(debug_info.name);
-    ++level;
-  }
-}
-
 bool LuaState::HandleLuaResult(const luabridge::LuaResult &res) const {
   if (res.wasOk())
     return true;
 
-  LOG(ERROR_LL) << u"Lua execution error: " << UTF8_TO_TCHAR(res.errorMessage().data());
+  LOG(ERROR_LL) << u"Lua result error: " << UTF8_TO_TCHAR(res.errorMessage().data());
 
   LOG(ERROR_LL) << u"Call stack:";
   int level = 0;

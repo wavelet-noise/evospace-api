@@ -67,7 +67,7 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
       }
     } else {
       LOG(ERROR_LL) << u" init.lua file execution error";
-      lua_state->HandleLuaErrorOnStack(context);
+      lua_state->HandleLuaErrorOnStack();
     }
   }
 

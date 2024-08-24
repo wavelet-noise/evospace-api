@@ -3,6 +3,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Evospace/SerializableJson.h"
+#include "Evospace/Misc/AssetOwner.h"
 #include "Public/Prototype.h"
 
 #include "StaticObject.generated.h"
@@ -54,6 +55,7 @@ class EVOSPACE_API UStaticObject : public UPrototype {
 
   virtual AActor *CreateSelector() const { return nullptr; };
 
+  EVO_OWNER(StaticObject)
   EVO_CODEGEN(StaticObject, StaticObject)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
