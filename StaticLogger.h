@@ -27,9 +27,9 @@ class FSimpleLogger {
   public:
   void Log(ELogLevel LogLevel, const FString &Message) {
     FString LogEntry = GetLogLevelString(LogLevel) + TEXT(" : ") + Message;
-    if(LogLevel == WARN_LL) {
+    if (LogLevel == WARN_LL) {
       UE_LOGFMT(LogTemp, Warning, "{0}", *Message);
-    } else if(LogLevel == ERROR_LL) {
+    } else if (LogLevel == ERROR_LL) {
       UE_LOGFMT(LogTemp, Error, "{0}", *Message);
     } else {
       UE_LOGFMT(LogTemp, Log, "{0}", *Message);

@@ -35,7 +35,7 @@ class Base;
       .addStaticFunction("get_class", []() { return U##type::StaticClass(); })                                                                 \
       .addFunction("__tostring", &U##type::ToString)                                                                                           \
       .endClass();                                                                                                                             \
-    if (!U##type::StaticClass()->HasAnyClassFlags(CLASS_Abstract)) {                                                                                                                \
+    if (!U##type::StaticClass()->HasAnyClassFlags(CLASS_Abstract)) {                                                                           \
       luabridge::getGlobalNamespace(L)                                                                                                         \
         .beginClass<U##type>(#type)                                                                                                            \
         .addStaticFunction(                                                                                                                    \
