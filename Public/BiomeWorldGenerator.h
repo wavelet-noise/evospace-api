@@ -5,7 +5,7 @@
 #include "../CoordinateSystem.h"
 #include "../NoiseArray.h"
 #include "../Vector.h"
-#include "../WorldGenerator.h"
+#include "Public/WorldGenerator.h"
 #include "MiscGeneratorClasses.h"
 #include "CoreMinimal.h"
 #include "FastNoiseSIMD.h"

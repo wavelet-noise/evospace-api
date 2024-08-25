@@ -1,11 +1,14 @@
 #pragma once
-#include "Evospace/WorldGenerator.h"
+#include "Public/WorldGenerator.h"
 #include "LuaWorldGenerator.generated.h"
 
 
 class UHeightGenerator;class UBiomeFamily;
 
 UCLASS()
+/**
+ * LuaWorldGenerator
+ */
 class ULuaWorldGenerator : public UWorldGenerator {
   GENERATED_BODY()
   public:

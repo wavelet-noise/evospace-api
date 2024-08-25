@@ -4,7 +4,7 @@
 
 #include "../BlockCell.h"
 #include "../CoordinateSystem.h"
-#include "../WorldGenerator.h"
+#include "Public/WorldGenerator.h"
 #include "CoreMinimal.h"
 
 #include "FlatWorldGenerator.generated.h"

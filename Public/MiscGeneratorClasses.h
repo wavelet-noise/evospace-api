@@ -3,7 +3,7 @@
 #include "../Common.h"
 #include "../CoordinateSystem.h"
 #include "../Sector.h"
-#include "../WorldGenerator.h"
+#include "Public/WorldGenerator.h"
 #include "CoreMinimal.h"
 #include "FastNoiseSIMD.h"
 #include "PropList.h"
@@ -154,15 +154,6 @@ class UPropsGenerator : public UObject, public ISerializableJson {
 
   protected:
   UPropList *proplist = nullptr;
-};
-
-UCLASS()
-class UMapTemplate : public UObject {
-  GENERATED_BODY()
-
-  public:
-  UStaticMapTemplate *Templ;
-  FVector2i Offset;
 };
 
 UCLASS()
