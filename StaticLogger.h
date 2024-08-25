@@ -34,6 +34,9 @@ class FSimpleLogger {
     } else {
       UE_LOGFMT(LogTemp, Log, "{0}", *Message);
     }
+    if(LogLevel == ERROR_LL) {
+      ErrorEntries.PushLast(Message);
+    }
     LogEntries.PushLast(MoveTemp(LogEntry));
     ++perLevelCount[LogLevel];
   }
@@ -42,10 +45,16 @@ class FSimpleLogger {
     return LogEntries;
   }
 
+  void Clear() {
+    perLevelCount.SetNumZeroed(ELogLevel_Count);
+    LogEntries.Empty();
+    ErrorEntries.Empty();
+  }
+
   static FSimpleLogger static_logger;
 
   FSimpleLogger() {
-    perLevelCount.SetNumZeroed(ELogLevel_Count);
+    Clear();
   }
 
   bool HasErrors() const {
@@ -60,13 +69,24 @@ class FSimpleLogger {
     return LogEntries.Last();
   }
 
+  TArray<FString> GetErrors() const {
+    TArray<FString> arr;
+    for(auto & s : ErrorEntries) {
+      arr.Add(s);
+    }
+    return arr;
+  }
+
   const TArray<int32> &GetLevels() const {
     return perLevelCount;
   }
 
   private:
   TArray<int32> perLevelCount;
+  
   TDeque<FString> LogEntries;
+  
+  TDeque<FString> ErrorEntries;
 
   FString GetLogLevelString(ELogLevel LogLevel) const {
     switch (LogLevel) {
@@ -118,7 +138,6 @@ class FLogHelper {
     Buffer += Message;
     return *this;
   }
-
 
   template <typename T>
   FLogHelper &operator<<(const T &Value) {
