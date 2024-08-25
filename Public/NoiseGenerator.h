@@ -116,27 +116,27 @@ class UNoiseGenerator : public UPrototype {
       noise->SetFractalType(FastNoiseSIMD::Billow);
     }
   }
-  
+
   std::unique_ptr<FastNoiseSIMD> noise;
   float min = 2;
   float max = 10;
 
   public:
-    EVO_OWNER(NoiseGenerator)
-    EVO_CODEGEN(NoiseGenerator, NoiseGenerator)
-    virtual void lua_reg(lua_State *L) const override {
-      luabridge::getGlobalNamespace(L)
-        .deriveClass<UNoiseGenerator, UPrototype>("NoiseGenerator")
-        .addFunction("set_seed", &UNoiseGenerator::set_seed)
-        .addFunction("get_noise", &UNoiseGenerator::get_noise)
-        .addFunction("set_noise_type", &UNoiseGenerator::set_noise_type)
-        .addFunction("set_frequency", &UNoiseGenerator::set_frequency)
-        .addFunction("set_fractal_octaves", &UNoiseGenerator::set_fractal_octaves)
-        .addFunction("set_fractal_gain", &UNoiseGenerator::set_fractal_gain)
-        .addFunction("set_fractal_lacunarity", &UNoiseGenerator::set_fractal_lacunarity)
-        .addFunction("set_fractal_type", &UNoiseGenerator::set_fractal_type)
-        .addProperty("min", &UNoiseGenerator::min)
-        .addProperty("max", &UNoiseGenerator::max)
-        .endClass();
-    }
+  EVO_OWNER(NoiseGenerator)
+  EVO_CODEGEN(NoiseGenerator, NoiseGenerator)
+  virtual void lua_reg(lua_State *L) const override {
+    luabridge::getGlobalNamespace(L)
+      .deriveClass<UNoiseGenerator, UPrototype>("NoiseGenerator")
+      .addFunction("set_seed", &UNoiseGenerator::set_seed)
+      .addFunction("get_noise", &UNoiseGenerator::get_noise)
+      .addFunction("set_noise_type", &UNoiseGenerator::set_noise_type)
+      .addFunction("set_frequency", &UNoiseGenerator::set_frequency)
+      .addFunction("set_fractal_octaves", &UNoiseGenerator::set_fractal_octaves)
+      .addFunction("set_fractal_gain", &UNoiseGenerator::set_fractal_gain)
+      .addFunction("set_fractal_lacunarity", &UNoiseGenerator::set_fractal_lacunarity)
+      .addFunction("set_fractal_type", &UNoiseGenerator::set_fractal_type)
+      .addProperty("min", &UNoiseGenerator::min)
+      .addProperty("max", &UNoiseGenerator::max)
+      .endClass();
+  }
 };

@@ -34,7 +34,7 @@ class FSimpleLogger {
     } else {
       UE_LOGFMT(LogTemp, Log, "{0}", *Message);
     }
-    if(LogLevel == ERROR_LL) {
+    if (LogLevel == ERROR_LL) {
       ErrorEntries.PushLast(Message);
     }
     LogEntries.PushLast(MoveTemp(LogEntry));
@@ -71,7 +71,7 @@ class FSimpleLogger {
 
   TArray<FString> GetErrors() const {
     TArray<FString> arr;
-    for(auto & s : ErrorEntries) {
+    for (auto &s : ErrorEntries) {
       arr.Add(s);
     }
     return arr;
@@ -83,9 +83,9 @@ class FSimpleLogger {
 
   private:
   TArray<int32> perLevelCount;
-  
+
   TDeque<FString> LogEntries;
-  
+
   TDeque<FString> ErrorEntries;
 
   FString GetLogLevelString(ELogLevel LogLevel) const {

@@ -2,8 +2,8 @@
 #include "Public/WorldGenerator.h"
 #include "LuaWorldGenerator.generated.h"
 
-
-class UHeightGenerator;class UBiomeFamily;
+class UHeightGenerator;
+class UBiomeFamily;
 
 UCLASS()
 /**
