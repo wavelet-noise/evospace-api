@@ -1,6 +1,7 @@
 // Copyright (c) 2017 - 2024, Samsonov Andrey. All Rights Reserved.
 #pragma once
 #include "Prototype.h"
+#include "Evospace/BlockCell.h"
 #include "Evospace/Common.h"
 #include "Evospace/Misc/AssetOwner.h"
 
