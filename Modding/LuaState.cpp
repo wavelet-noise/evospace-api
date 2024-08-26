@@ -2,14 +2,10 @@
 #include "LuaState.h"
 
 #include "StaticLogger.h"
-#include "Evospace/Blocks/Static/StaticBlock.h"
-#include "Evospace/Item/ItemData.h"
-#include "Public/StaticItem.h"
 #include "LuaRegistration/ActorComponents.h"
 #include "LuaRegistration/Math.h"
 #include "LuaRegistration/MiscEvospace.h"
 #include "LuaRegistration/ModApi.h"
-#include "Public/MainGameModLoader.h"
 
 namespace evo {
 
