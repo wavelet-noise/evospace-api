@@ -136,7 +136,7 @@ class UPrototype : public UObject, public ISerializableJson {
     auto obj = FindObject<BaseType>(MainGameOwner<BaseType>::Get(), *obj_name);
     if (!obj) {
       obj = NewObject<BaseType>(MainGameOwner<BaseType>::Get(), RealType::StaticClass(), *obj_name);
-      UE_LOGFMT(LogLoad, Display, "Register {0} {1}", BaseType::StaticClass()->GetName(), obj_name);
+      LOG(INFO_LL) << "Register " << BaseType::StaticClass()->GetName() << " " << obj_name;
       registry.Register(obj);
     }
 
