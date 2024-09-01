@@ -61,13 +61,12 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
     if (auto result = lua_state->RunCode(TCHAR_TO_UTF8(*json_data), "@init")) {
       if (context.loader->lastRegisteredMod.has_value()) {
         this->init = context.loader->lastRegisteredMod.value();
-        LOG(INFO_LL) << " init function table registered. " << this->init->isTable();
+        LOG(INFO_LL) << "Init function table registered. " << this->init->isTable();
       } else {
-        LOG(ERROR_LL) << " registration unknown error";
+        LOG(ERROR_LL) << "Registration unknown error";
       }
     } else {
-      LOG(ERROR_LL) << " init.lua file execution error";
-      lua_state->HandleLuaErrorOnStack();
+      LOG(ERROR_LL) << "init.lua file execution error"; 
     }
   }
 

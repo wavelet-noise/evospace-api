@@ -58,7 +58,7 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   UPROPERTY(VisibleAnywhere)
   TArray<int64> mSubscribedIds;
 
-  void LoadDirectory(ModLoadingContext &context, const FString &path, const FString &dir);
+  void LoadDirectory(const FString &path, const FString &dir);
   bool LoadSync();
 
   std::vector<UObject *> GetPrototypes();
@@ -92,7 +92,7 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   int32 GetPhase() const { return phase; }
 
   private:
-  static bool LoadLoc(ModLoadingContext &context, const FString &path, const FString &locale, bool isSource);
+  static bool LoadLoc(const FString &path, const FString &locale, bool isSource);
 
   bool PrepareMods(ModLoadingContext &context);
   bool LuaTickCaller(ModLoadingContext &context, const std::string &function_name, int32 seq);
@@ -103,7 +103,7 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   bool ResearchPostprocess(ModLoadingContext &context);
   bool LuaPostprocess(ModLoadingContext &context);
   bool CollectingItems(ModLoadingContext &context);
-  bool ModContentLoad(ModLoadingContext &cotext, int phase);
+  bool ModContentLoad(int phase);
 
   UPROPERTY()
   TArray<UMod *> lostMods;
