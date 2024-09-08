@@ -231,8 +231,6 @@ void LuaState::Init() {
 
   registerMiscClasses(L);
 
-  registerModdingClasses(L);
-
   LOG(INFO_LL) << "Lua state initialized";
 
   auto ver = luabridge::getGlobal(L, "_VERSION");

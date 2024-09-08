@@ -81,7 +81,7 @@ class EventSystem {
   HandlerID nextHandlerId;
 
   public:
-  static void lua_reg_internal(lua_State *L) {}
+
   static void lua_reg(lua_State *L) {
     using namespace luabridge;
 
