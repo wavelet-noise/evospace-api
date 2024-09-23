@@ -1,6 +1,8 @@
 #pragma once
 #include "Containers/Array.h"
 #include "CoreMinimal.h"
+#include "Evospace/Ensure.h"
+#include "Modding/Mod.h"
 #include "ThirdParty/luabridge/LuaBridge.h"
 
 #include <string>
@@ -90,6 +92,26 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
 
   UFUNCTION(BlueprintCallable)
   int32 GetPhase() const { return phase; }
+
+  static void lua_reg(lua_State *L) {
+    luabridge::getGlobalNamespace(L)
+      .beginClass<UMainGameModLoader>("MainGameModLoader")
+      .addFunction("reg", [](UMainGameModLoader *self, UPrototype *proto) {
+        if (ensure_log(proto, FString("Trying to register nullptr from ") + UTF8_TO_TCHAR(self->mCurrentMod->mName.data()))) {
+          self->RegisterPrototype(self->mCurrentMod, proto);
+        }
+      })
+      .addFunction("from_table", [](UMainGameModLoader *self, const luabridge::LuaRef &table) {
+        self->RegisterPrototypeFromTable(self->mCurrentMod, table);
+      })
+      .addFunction("mod", [](UMainGameModLoader *self, const luabridge::LuaRef &table) {
+        self->ModInitTable(table);
+      })
+      .addFunction("objects", [](UMainGameModLoader *self) {
+        return self->GetPrototypes();
+      })
+      .endClass();
+  }
 
   private:
   static bool LoadLoc(const FString &path, const FString &locale, bool isSource);

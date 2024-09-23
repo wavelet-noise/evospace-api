@@ -134,12 +134,6 @@ inline void registerComponentClasses(lua_State *L) {
     .endClass();
 
   luabridge::getGlobalNamespace(L)
-    .deriveClass<ADimension, AActor>("Dimension")
-    .addFunction("spawn_block_logic", &ADimension::LuaSpawnBlockLogic)
-    .addFunction("set_block_cell", &ADimension::LuaSetBlockCell)
-    .endClass();
-
-  luabridge::getGlobalNamespace(L)
     .deriveClass<ABlockActor, AActor>("BlockActor")
     .endClass();
 }
