@@ -279,8 +279,7 @@ UTexture2D *LuaState::FindTexture(const std::string &name) {
 }
 
 UMaterialInterface *LuaState::FindMaterial(const std::string &name) {
-  auto type = LoadObject<UMaterialInterface>(
-    nullptr, *(FString(TEXT("/Game/")) + UTF8_TO_TCHAR(name.data())));
+  auto type = LoadObject<UMaterialInterface>(nullptr, UTF8_TO_TCHAR(name.data()));
 
   if (type == nullptr) {
     LOG(ERROR_LL) << "Material not found " << UTF8_TO_TCHAR(name.data());

@@ -86,7 +86,7 @@ inline void registerComponentClasses(lua_State *L) {
       "new",
       +[](UStaticItem *item, int64 count) { return FItemData(item, count); })
     .addStaticFunction(
-      "new_zero", +[](UStaticItem *item) { return FItemData(item); })
+      "new_zero", +[](UStaticItem *item) { return FItemData(item, 0); })
     .addProperty("count", &FItemData::mValue)
     .addProperty("item", &FItemData::mItem)
     .endClass();

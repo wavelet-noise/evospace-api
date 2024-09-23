@@ -20,7 +20,8 @@ enum class Event {
   on_player_mined_item,
   on_built_block,
   on_player_spawn,
-  on_tick
+  on_tick,
+  on_player_at_sector
 };
 
 inline const char *ToString(Event event) {
@@ -31,6 +32,10 @@ inline const char *ToString(Event event) {
     return "on_built_block";
   case Event::on_tick:
     return "on_tick";
+  case Event::on_player_at_sector:
+    return "on_player_at_sector";
+  case Event::on_player_spawn:
+    return "on_player_spawn";
 
   // ...
   default:
@@ -67,6 +72,8 @@ class EventSystem {
    */
   void Unsub(int event, HandlerID handlerId);
 
+  luabridge::LuaRef NewTable() const;
+
   void Trigger(defines::Event event, luabridge::LuaRef context);
 
   void SetState(evo::LuaState *l);
@@ -94,6 +101,7 @@ class EventSystem {
           register_enum_line(on_built_block)
           register_enum_line(on_player_spawn)
           register_enum_line(on_tick)
+          register_enum_line(on_player_at_sector)
         .endNamespace()
       .endNamespace()
       .beginClass<EventSystem>("EventSystem")
