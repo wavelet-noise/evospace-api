@@ -71,7 +71,7 @@ class EVOSPACE_API UStaticResearch : public UPrototype {
   TArray<FName> RequiredResearchesNames = {};
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UInventory * DataPoints;
+  UInventory *DataPoints;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventory *NewItemsCache;
@@ -87,7 +87,7 @@ class EVOSPACE_API UStaticResearch : public UPrototype {
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   bool mCompleteByDefault = false;
-  
+
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   bool mIsUpgrade = false;
 

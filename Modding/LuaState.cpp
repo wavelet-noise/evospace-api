@@ -26,7 +26,7 @@ bool LuaState::RunCode(std::string_view code, std::string_view path) {
     LOG(ERROR_LL) << "Lua loading error: " << UTF8_TO_TCHAR(lua_tostring(L, -1));
     return false;
   }
-  
+
   if (lua_pcall(L, 0, LUA_MULTRET, 0)) {
     HandleLuaErrorOnStack();
     return false;

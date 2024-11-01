@@ -67,6 +67,8 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
 
   bool SelectLocalization(const FString &locale);
 
+  TArray<FString> GetMods();
+
   std::optional<luabridge::LuaRef> lastRegisteredMod;
   void RegisterPrototypeFromTable(const UMod *owner, const luabridge::LuaRef &table);
   void ModInitTable(const luabridge::LuaRef &table);

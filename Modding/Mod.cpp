@@ -66,7 +66,7 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
         LOG(ERROR_LL) << "Registration unknown error";
       }
     } else {
-      LOG(ERROR_LL) << "init.lua file execution error"; 
+      LOG(ERROR_LL) << "init.lua file execution error";
     }
   }
 

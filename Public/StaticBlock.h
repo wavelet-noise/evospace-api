@@ -110,7 +110,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject {
       .addProperty("replace_tag", &UStaticBlock::mReplaceTag)
       .addProperty("color_side", &UStaticBlock::mColorSide)
       .addProperty("color_top", &UStaticBlock::mColorTop)
-      .addProperty("block_init", &UStaticBlock::GetBlockInit, &UStaticBlock::SetBlockInit)
+      .addProperty("block_init", &UStaticBlock::mBlockLuaRef)
       .addProperty("actor_init", &UStaticBlock::mActorInit)
       .endClass();
   }
