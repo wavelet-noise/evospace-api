@@ -25,7 +25,6 @@ class EVOSPACE_API UOldResearch : public UObject, public ISerializableJson {
 UENUM()
 enum class EResearchStatus : uint8 {
   Opened,
-  PartComplete,
   Closed,
   Complete,
   Restricted
@@ -51,27 +50,61 @@ struct EVOSPACE_API FResearchUnlockLevel {
   TArray<class URecipe *> Recipes;
 };
 
-UCLASS(BlueprintType)
-class EVOSPACE_API UStaticResearch : public UPrototype {
+UCLASS(BlueprintType, Abstract)
+class EVOSPACE_API UStaticResearchBase : public UPrototype {
   GENERATED_BODY()
-
   public:
-  UStaticResearch();
 
+  UStaticResearchBase();
+  
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   TArray<FKeyTableObject> LabelParts = {};
 
-  UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  UTexture2D *Texture = nullptr;
-
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  TArray<UStaticResearch *> RequiredResearches = {};
+  UInventory *DataPoints;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   TArray<FName> RequiredResearchesNames = {};
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UInventory *DataPoints;
+  TArray<UStaticResearchBase *> RequiredResearches = {};
+
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  bool mIsUpgrade = false;
+
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  bool MainResearch = false;
+
+  
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  UTexture2D *Texture = nullptr;
+  
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  EResearchStatus Type;
+
+  virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+
+  virtual void ApplyToController(AMainPlayerController *apply_to, int32 level);
+
+  virtual void PostDeserializeJson() override;
+
+  UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+  FText GetLabel() const;
+
+  UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+  virtual UTexture2D * GetTexture() const;
+
+  EVO_OWNER(StaticResearchBase)
+  EVO_CODEGEN(StaticResearchBase, StaticResearchBase)
+  virtual void lua_reg(lua_State *L) const override {}
+};
+
+UCLASS(BlueprintType)
+class EVOSPACE_API UStaticResearch : public UStaticResearchBase {
+  GENERATED_BODY()
+
+  public:
+  UStaticResearch();
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventory *NewItemsCache;
@@ -82,14 +115,8 @@ class EVOSPACE_API UStaticResearch : public UPrototype {
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventory *AlsoNewItemsCache;
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  FResearchUnlockLevel AlsoUnlocks;
-
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   bool mCompleteByDefault = false;
-
-  UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  bool mIsUpgrade = false;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   int Level = 0;
@@ -97,39 +124,32 @@ class EVOSPACE_API UStaticResearch : public UPrototype {
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   FVector2i LevelMinMax;
 
-  UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  EResearchStatus Type;
-
-  UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  bool MainResearch = false;
-
-  UFUNCTION(BlueprintCallable, BlueprintCosmetic)
-  FText GetLabel() const;
-
-  virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-
   virtual void PostDeserializeJson() override;
 
-  virtual void ApplyToController(AMainPlayerController *apply_to, int32 level);
+  virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
-  EVO_OWNER(StaticResearch)
-  EVO_CODEGEN(StaticResearch, StaticResearch)
+  virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+  
+  virtual UTexture2D * GetTexture() const override;
+
+  EVO_OWNED(StaticResearch, StaticResearchBase)
+  EVO_CODEGEN(StaticResearch, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearch {
+class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearchBase {
   GENERATED_BODY()
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
-  EVO_OWNED(StaticResearchBonusInventory, StaticResearch)
-  EVO_CODEGEN(StaticResearchBonusInventory, StaticResearch)
+  EVO_OWNED(StaticResearchBonusInventory, StaticResearchBase)
+  EVO_CODEGEN(StaticResearchBonusInventory, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UStaticResearchModifier : public UStaticResearch {
+class EVOSPACE_API UStaticResearchModifier : public UStaticResearchBase {
   GENERATED_BODY()
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
@@ -142,18 +162,40 @@ class EVOSPACE_API UStaticResearchModifier : public UStaticResearch {
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   float mBonusValue;
 
-  EVO_OWNED(StaticResearchModifier, StaticResearch)
-  EVO_CODEGEN(StaticResearchModifier, StaticResearch)
+  EVO_OWNED(StaticResearchModifier, StaticResearchBase)
+  EVO_CODEGEN(StaticResearchModifier, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
 
 UCLASS(BlueprintType)
-class EVOSPACE_API UStaticResearchToolUnlock : public UStaticResearch {
+class EVOSPACE_API UStaticResearchEfficiency : public UStaticResearchBase {
   GENERATED_BODY()
   public:
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
-  EVO_OWNED(StaticResearchToolUnlock, StaticResearch)
-  EVO_CODEGEN(StaticResearchToolUnlock, StaticResearch)
+  virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  FName mRecipeDictionary;
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  FName mRecipe;
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  float mBonusValue;
+
+  EVO_OWNED(StaticResearchModifier, StaticResearchBase)
+  EVO_CODEGEN(StaticResearchModifier, StaticResearchBase)
+  virtual void lua_reg(lua_State *L) const override {}
+};
+
+UCLASS(BlueprintType)
+class EVOSPACE_API UStaticResearchToolUnlock : public UStaticResearchBase {
+  GENERATED_BODY()
+  public:
+  virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
+
+  EVO_OWNED(StaticResearchToolUnlock, StaticResearchBase)
+  EVO_CODEGEN(StaticResearchToolUnlock, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
