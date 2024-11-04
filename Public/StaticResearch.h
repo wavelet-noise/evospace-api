@@ -54,9 +54,8 @@ UCLASS(BlueprintType, Abstract)
 class EVOSPACE_API UStaticResearchBase : public UPrototype {
   GENERATED_BODY()
   public:
-
   UStaticResearchBase();
-  
+
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   TArray<FKeyTableObject> LabelParts = {};
 
@@ -75,10 +74,9 @@ class EVOSPACE_API UStaticResearchBase : public UPrototype {
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   bool MainResearch = false;
 
-  
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   UTexture2D *Texture = nullptr;
-  
+
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   EResearchStatus Type;
 
@@ -92,7 +90,7 @@ class EVOSPACE_API UStaticResearchBase : public UPrototype {
   FText GetLabel() const;
 
   UFUNCTION(BlueprintCallable, BlueprintCosmetic)
-  virtual UTexture2D * GetTexture() const;
+  virtual UTexture2D *GetTexture() const;
 
   EVO_OWNER(StaticResearchBase)
   EVO_CODEGEN(StaticResearchBase, StaticResearchBase)
@@ -129,8 +127,8 @@ class EVOSPACE_API UStaticResearch : public UStaticResearchBase {
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
-  
-  virtual UTexture2D * GetTexture() const override;
+
+  virtual UTexture2D *GetTexture() const override;
 
   EVO_OWNED(StaticResearch, StaticResearchBase)
   EVO_CODEGEN(StaticResearch, StaticResearchBase)
