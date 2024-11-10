@@ -18,11 +18,20 @@ int LegacyLuaState::Accessor_bind(lua_State *l) {
   return 0;
 }
 
-int LegacyLuaState::Accessor_bind_resource(lua_State *l) {
+int LegacyLuaState::Accessor_bind_resource_input(lua_State *l) {
   auto side_acc = Stack<UResourceAccessor *>::get(l, 1);
   auto container = Stack<UResourceComponent *>::get(l, 2);
 
-  side_acc.value()->Bind(container.value());
+  side_acc.value()->BindInput(container.value());
+
+  return 0;
+}
+
+int LegacyLuaState::Accessor_bind_resource_output(lua_State *l) {
+  auto side_acc = Stack<UResourceAccessor *>::get(l, 1);
+  auto container = Stack<UResourceComponent *>::get(l, 2);
+
+  side_acc.value()->BindOutput(container.value());
 
   return 0;
 }
@@ -135,7 +144,8 @@ void LegacyLuaState::Init() {
 
   getGlobalNamespace(L)
     .deriveClass<UResourceAccessor, UBaseAccessor>("ResourceAccessor")
-    .addFunction("Bind", &LegacyLuaState::Accessor_bind_resource)
+    .addFunction("bind_input", &LegacyLuaState::Accessor_bind_resource_input)
+    .addFunction("bind_output", &LegacyLuaState::Accessor_bind_resource_output)
     .endClass();
 
   getGlobalNamespace(L).beginClass<UInventoryContainer>("InventoryContainer").endClass();

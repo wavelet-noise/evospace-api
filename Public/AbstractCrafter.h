@@ -35,6 +35,7 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   public:
   UAbstractCrafter();
 
+  UFUNCTION(BlueprintCallable, BlueprintCosmetic)
   FColor GetStateColor() const;
 
   //
