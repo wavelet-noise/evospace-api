@@ -2,6 +2,7 @@
 #include "EvospaceLuaState.h"
 #include "PrototypeHelper.h"
 #include "PrototypeInclude.h"
+#include "Evospace/Blocks/CommonBlockTypes/ResourceComponent.h"
 #include "LuaRegistration/ActorComponents.h"
 
 #include <tuple>
@@ -31,6 +32,8 @@ void RegisterClassAndSuper(UClass *Class, TSet<UClass *> &Registered, lua_State 
 
 void ModLoadingLuaState::Init() {
   LuaState::Init();
+
+  UResourceComponent::reg_lua(L);
 
   TSet<UClass *> registered = {};
   for (TObjectIterator<UClass> it; it; ++it) {

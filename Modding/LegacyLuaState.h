@@ -22,6 +22,10 @@ class LegacyLuaState : public ModLoadingLuaState {
      */
   static int Accessor_bind(lua_State *l);
 
+  static int Accessor_bind_resource(lua_State *l);
+
+  static int Crafter_get_resource_component(lua_State *l);
+
   /**
      * @brief Get input container from crafter
      * @details lua syntax
@@ -54,6 +58,8 @@ class LegacyLuaState : public ModLoadingLuaState {
      */
   static int Accessor_set_side_pos(lua_State *l);
 
+  static int BlockLogic_new_resource_accessor(lua_State *l);
+
   /**
      * @brief Create new accessor for crafter
      * @details lua syntax
@@ -63,7 +69,7 @@ class LegacyLuaState : public ModLoadingLuaState {
      * @param type
      * @return Constructed accessor object with given type
      */
-  static int BlockLogic_create_accessor(lua_State *l);
+  static int BlockLogic_new_item_accessor(lua_State *l);
 
   void SetCurrent(AActor *actor);
   void SetCurrent(UBlockLogic *actor);

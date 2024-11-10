@@ -185,40 +185,6 @@ LuaState::LuaState() {
 }
 
 void LuaState::Init() {
-
-  // std::error_code er;
-  // const auto ref = luabridge::Stack<luabridge::LuaRef>::get(L, 2);
-  //
-  // lua_getglobal(L, "string");
-  // lua_getfield(L, -1, "dump");
-  // lua_remove(L, -2);
-  // luabridge::push(L, ref, er);
-  //
-  // if (er) {
-  //     StaticLogger::Get().Log("Dump error: " + er.message());
-  //     return;
-  // }
-  //
-  // if (lua_pcall(L, 1, 1, 0)) {
-  //     const std::string err = lua_tostring(L, -1);
-  //     std::cout << "Error: " << err << std::endl;
-  //
-  //     lua_getglobal(L, "debug");
-  //     lua_getfield(L, -1, "traceback");
-  //
-  //     if (lua_pcall(L, 0, 1, 0)) {
-  //         const std::string err1 = lua_tostring(L, -1);
-  //         StaticLogger::Get().Log("Error in debug.traceback() call: " +
-  //         err1); return;
-  //     }
-  //
-  //     const std::string stackTrace = lua_tostring(L, -1);
-  //     StaticLogger::Get().Log("C++ stack traceback: " + stackTrace);
-  //     return;
-  // }
-  //
-  // lua_pop(L, 1);
-
   LOG(INFO_LL) << "Lua actor component registering";
 
   registerComponentClasses(L);
@@ -226,10 +192,6 @@ void LuaState::Init() {
   LOG(INFO_LL) << "Lua extra math registering";
 
   registerMathClasses(L);
-
-  LOG(INFO_LL) << "Lua misc classes registering";
-
-  registerMiscClasses(L);
 
   LOG(INFO_LL) << "Lua state initialized";
 

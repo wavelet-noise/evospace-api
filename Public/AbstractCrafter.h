@@ -7,10 +7,22 @@
 
 #include "AbstractCrafter.generated.h"
 
+class UResourceComponent;
 class URecipe;
 class UBaseRecipeDictionary;
 class UAutosizeInventory;
 class UInventoryContainer;
+
+UENUM(BlueprintType)
+enum class ECrafterState : uint8 {
+  InputShortage,
+  Working,
+  NoRoomInOutput,
+  ResourceSaturated,
+  ResourceRequired,
+  NotInitialized,
+  SwitchedOff,
+};
 
 UCLASS(BlueprintType)
 /**
@@ -22,6 +34,8 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
 
   public:
   UAbstractCrafter();
+
+  FColor GetStateColor() const;
 
   //
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
@@ -46,10 +60,18 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   UFUNCTION(BlueprintCallable)
   virtual float GetCurrentProgress() const;
 
+  UFUNCTION(BlueprintCallable)
+  virtual int32 GetProductivity() const;
+
+  UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+  virtual float GetProductivityProgress() const;
+
   UPROPERTY(BlueprintReadOnly)
   bool mLockedInput = false;
 
   virtual void OnCraftPerformed();
+
+  virtual void BlockEndPlay() override;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventoryContainer *mCrafterInputContainer;
@@ -71,15 +93,6 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   virtual void ReplaceWith(UBlockLogic *other) override;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  bool busy = false;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  bool outputError = false;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  bool inputError = false;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   bool mLoadIndependent = false;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -89,25 +102,25 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   bool mSwitchedOn = true;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 ticksPassed = 0;
+  int32 mTicksPassed = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 realTicksPassed = 0;
+  int32 mRealTicksPassed = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 inputTicks = 0;
+  int32 mTotalProduction = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 outputTicks = 0;
+  int32 mToLoss = 1;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 toLoss = 1;
+  ECrafterState mState = ECrafterState::NotInitialized;
+
+  UPROPERTY(EditAnywhere, Instanced, BlueprintReadOnly)
+  class UResourceComponent *mResourceComponent = nullptr;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int64 outputExcess = 0;
-
-  UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int64 inputToGet = 0;
+  int32 mCollectedProductivity = 0;
 
   protected:
   UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
@@ -122,18 +135,13 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, UTieredBlockLogic>("AbstractCrafter")
-      .addProperty("busy", &Self::busy, true)
-      .addProperty("outputError", &Self::outputError, true)
-      .addProperty("inputError", &Self::outputError, true)
       .addProperty("load_independent", &Self::mLoadIndependent, true)
       .addProperty("input_gathered", &Self::mInputGathered, true)
       .addProperty("switched_on", &Self::mSwitchedOn, true)
-      .addProperty("ticks_passed", &Self::ticksPassed, true)
-      .addProperty("real_ticks_passed", &Self::realTicksPassed, true)
-      .addProperty("output_ticks", &Self::outputTicks, true)
-      .addProperty("to_loss", &Self::toLoss, true)
-      .addProperty("output_excess", &Self::outputExcess, true)
-      .addProperty("input_to_get", &Self::inputToGet, true)
+      .addProperty("ticks_passed", &Self::mTicksPassed, true)
+      .addProperty("real_ticks_passed", &Self::mRealTicksPassed, true)
+      .addProperty("to_loss", &Self::mToLoss, true)
+      .addProperty("total_production", &Self::mTotalProduction, true)
       .endClass();
   }
 };

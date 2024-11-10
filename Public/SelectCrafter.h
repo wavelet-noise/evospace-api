@@ -12,13 +12,6 @@ class AMainPlayerController;
 class UInventoryContainer;
 class UCoreAccessor;
 
-UENUM(BlueprintType)
-enum class ECanAccomodate : uint8 {
-  Unknown,
-  Yes,
-  No
-};
-
 UCLASS(BlueprintType)
 /**
  * 
@@ -45,13 +38,15 @@ class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
 
   virtual void ReplaceWith(UBlockLogic *other) override;
 
+  void GenerateOutput();
+
+  void ProcessRecipe();
+
   protected:
   virtual void Tick() override;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
   float mCraftSpeedMultiplier = 1.0f;
-
-  ECanAccomodate mCanAccomodate = ECanAccomodate::Unknown;
 
   virtual void SetWorking(bool working);
 
