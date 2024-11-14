@@ -82,7 +82,13 @@ class UMod : public UObject, public ISerializableJson {
 
   std::optional<luabridge::LuaRef> init;
 
+  std::optional<luabridge::LuaRef> config;
+
   void lua_state_close();
+
+  void SaveConfig(const FString &directory, ModLoadingContext &context) const;
+  void LoadConfig(const FString &directory, ModLoadingContext &context);
+
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
   bool DeserializeFromDirectory(const FString &s, ModLoadingContext &context);
 

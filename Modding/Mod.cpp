@@ -5,12 +5,44 @@
 #include "EvospaceLuaState.h"
 #include "LegacyLuaState.h"
 #include "Evospace/JsonHelper.h"
+#include "Evospace/Misc/JsonLuaConverter.h"
 #include "Public/MainGameModLoader.h"
 
 #include <regex>
 
 void UMod::lua_state_close() {
   init.reset();
+}
+
+void UMod::SaveConfig(const FString &directory, ModLoadingContext &context) const {
+  if (config.has_value() && config->isTable()) {
+    auto json = JLConverter::LuaTableToJson(config.value());
+
+    FString json_data = "";
+    const auto Writer = TJsonWriterFactory<TCHAR, TCondensedJsonPrintPolicy<TCHAR>>::Create(&json_data, 0);
+    FJsonSerializer::Serialize(json.ToSharedRef(), Writer);
+
+    FString file_name = directory / Name() + ".json";
+
+    FFileHelper::SaveStringToFile(json_data, *file_name);
+  }
+}
+
+void UMod::LoadConfig(const FString &directory, ModLoadingContext &context) {
+  IPlatformFile &PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+  FString file_name = directory / Name() + ".json";
+  FString json_data;
+  if (PlatformFile.FileExists(*file_name)) {
+    FFileHelper::LoadFileToString(json_data, *file_name);
+    TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject());
+    TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(json_data);
+
+    if (FJsonSerializer::Deserialize(JsonReader, JsonObject) && JsonObject.IsValid()) {
+      config = JLConverter::JsonToLuaTable(context.lua_state->L, JsonObject);
+    }
+  } else {
+    LOG(WARN_LL) << "No config for mod " << mName;
+  }
 }
 
 bool UMod::DeserializeJson(TSharedPtr<FJsonObject> json) {
@@ -41,11 +73,9 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
     }
 
     TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject());
-    TSharedRef<TJsonReader<>> JsonReader =
-      TJsonReaderFactory<>::Create(json_data);
+    TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(json_data);
 
-    if (FJsonSerializer::Deserialize(JsonReader, JsonObject) &&
-        JsonObject.IsValid()) {
+    if (FJsonSerializer::Deserialize(JsonReader, JsonObject) && JsonObject.IsValid()) {
       DeserializeJson(JsonObject);
     }
   }
