@@ -63,14 +63,16 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   void LoadDirectory(const FString &path, const FString &dir);
   bool LoadSync();
 
-  std::vector<UObject *> GetPrototypes();
+  std::vector<UObject *> GetPrototypes() const;
 
   bool SelectLocalization(const FString &locale);
 
   TArray<FString> GetMods();
 
+  void LuaCleanup();
+
   std::optional<luabridge::LuaRef> lastRegisteredMod;
-  void RegisterPrototypeFromTable(const UMod *owner, const luabridge::LuaRef &table);
+  void RegisterPrototypeFromTable(const UMod *owner, const luabridge::LuaRef &table) const;
   void ModInitTable(const luabridge::LuaRef &table);
 
   static UMainGameModLoader *GetMainGameModLoader();
@@ -85,7 +87,7 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   UMod *mCurrentMod = nullptr;
 
   UPROPERTY()
-  TArray<UMod *> mods;
+  TArray<UMod *> mMods;
 
   ModTickLoadStatus current_mod_status = ModTickLoadStatus::NotChecked;
 
@@ -124,6 +126,8 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   bool Init(ModLoadingContext &context, int32 seq);
   bool PostInit(ModLoadingContext &context, int32 seq);
   bool PreInit(ModLoadingContext &context, int32 seq);
+  bool LoadConfig(ModLoadingContext &context, int32 seq);
+  bool SaveConfig(ModLoadingContext &context, int32 seq);
   bool ResearchPostprocess(ModLoadingContext &context);
   bool LuaPostprocess(ModLoadingContext &context);
   bool CollectingItems(ModLoadingContext &context);

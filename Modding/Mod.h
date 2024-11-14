@@ -80,7 +80,7 @@ class UMod : public UObject, public ISerializableJson {
      */
   std::vector<std::string> dependencies;
 
-  std::optional<luabridge::LuaRef> init;
+  std::optional<luabridge::LuaRef> mod_table;
 
   std::optional<luabridge::LuaRef> config;
 

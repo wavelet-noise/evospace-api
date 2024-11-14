@@ -11,7 +11,8 @@
 #include <regex>
 
 void UMod::lua_state_close() {
-  init.reset();
+  mod_table.reset();
+  config.reset();
 }
 
 void UMod::SaveConfig(const FString &directory, ModLoadingContext &context) const {
@@ -90,8 +91,16 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
     context.loader->lastRegisteredMod = {};
     if (auto result = lua_state->RunCode(TCHAR_TO_UTF8(*json_data), "@init")) {
       if (context.loader->lastRegisteredMod.has_value()) {
-        this->init = context.loader->lastRegisteredMod.value();
-        LOG(INFO_LL) << "Init function table registered. " << this->init->isTable();
+        mod_table = context.loader->lastRegisteredMod.value();
+        if (this->mod_table->isTable()) {
+          LOG(INFO_LL) << "Init function table registered";
+          if ((*mod_table)["config"].isTable()) {
+            LOG(INFO_LL) << "Config table registered";
+            config = (*mod_table)["config"];
+          }
+        } else {
+          LOG(ERROR_LL) << "db:mod expects to get a table";
+        }
       } else {
         LOG(ERROR_LL) << "Registration unknown error";
       }
