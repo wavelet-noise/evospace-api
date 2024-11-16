@@ -79,6 +79,9 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
 
   void RegisterPrototype(const UMod *owner, UPrototype *proto) const;
 
+  void LoadSettings();
+  void SaveSettings();
+
   bool AllSequence(ModLoadingContext &cotext);
 
   int VanillaJsonCount = 0;
@@ -126,8 +129,6 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   bool Init(ModLoadingContext &context, int32 seq);
   bool PostInit(ModLoadingContext &context, int32 seq);
   bool PreInit(ModLoadingContext &context, int32 seq);
-  bool LoadConfig(ModLoadingContext &context, int32 seq);
-  bool SaveConfig(ModLoadingContext &context, int32 seq);
   bool ResearchPostprocess(ModLoadingContext &context);
   bool LuaPostprocess(ModLoadingContext &context);
   bool CollectingItems(ModLoadingContext &context);
