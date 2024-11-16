@@ -22,7 +22,7 @@ int LegacyLuaState::Accessor_bind_resource_input(lua_State *l) {
   auto side_acc = Stack<UResourceAccessor *>::get(l, 1);
   auto container = Stack<UResourceComponent *>::get(l, 2);
 
-  side_acc.value()->BindInput(container.value());
+  side_acc.value()->BindResourceInput(container.value());
 
   return 0;
 }
@@ -31,7 +31,7 @@ int LegacyLuaState::Accessor_bind_resource_output(lua_State *l) {
   auto side_acc = Stack<UResourceAccessor *>::get(l, 1);
   auto container = Stack<UResourceComponent *>::get(l, 2);
 
-  side_acc.value()->BindOutput(container.value());
+  side_acc.value()->BindResourceOutput(container.value());
 
   return 0;
 }
