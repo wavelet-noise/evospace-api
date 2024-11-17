@@ -74,7 +74,7 @@ class EventSystem {
 
   luabridge::LuaRef NewTable() const;
 
-  void Trigger(defines::Event event, luabridge::LuaRef context);
+  void Trigger(defines::Event event, const luabridge::LuaRef &context);
 
   void SetState(evo::LuaState *l);
 

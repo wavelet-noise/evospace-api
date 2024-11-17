@@ -98,7 +98,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject {
   virtual UPartBlockLogic *SpawnPart(ADimension *world, const FTransform &tr, const Vec3i &bpos, UBlockLogic *parent) const;
 
   EVO_OWNED(StaticBlock, StaticObject)
-  EVO_CODEGEN(StaticBlock, StaticBlock);
+  EVO_CODEGEN_DB(StaticBlock, StaticBlock);
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UStaticBlock, UStaticObject>("StaticBlock")

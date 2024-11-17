@@ -177,7 +177,7 @@ class UBiome : public UPrototype {
   UPropsGenerator *props = nullptr;
 
   EVO_OWNER(Biome)
-  EVO_CODEGEN(Biome, Biome)
+  EVO_CODEGEN_DB(Biome, Biome)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UBiome, UPrototype>("Biome")
@@ -219,7 +219,7 @@ class UBiomeFamily : public UBiome {
 
   public:
   EVO_OWNED(BiomeFamily, Biome)
-  EVO_CODEGEN(BiomeFamily, Biome)
+  EVO_CODEGEN_DB(BiomeFamily, Biome)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UBiomeFamily, UBiome>("BiomeFamily")

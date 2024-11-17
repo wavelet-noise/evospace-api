@@ -56,7 +56,7 @@ class EVOSPACE_API UStaticObject : public UPrototype {
   virtual AActor *CreateSelector() const { return nullptr; };
 
   EVO_OWNER(StaticObject)
-  EVO_CODEGEN(StaticObject, StaticObject)
+  EVO_CODEGEN_DB(StaticObject, StaticObject)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UStaticObject, UPrototype>("StaticObject")

@@ -150,7 +150,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
   virtual void MarkIncomplete() override;
 
   EVO_OWNER(StaticItem)
-  EVO_CODEGEN(StaticItem, StaticItem)
+  EVO_CODEGEN_DB(StaticItem, StaticItem)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UStaticItem, UPrototype>("StaticItem")

@@ -118,7 +118,10 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   ECrafterState mState = ECrafterState::NotInitialized;
 
   UPROPERTY(EditAnywhere, Instanced, BlueprintReadOnly)
-  class UResourceComponent *mResourceComponent = nullptr;
+  class UResourceInventory *mResourceInputInventory = nullptr;
+
+  UPROPERTY(EditAnywhere, Instanced, BlueprintReadOnly)
+  class UResourceInventory *mResourceOutputInventory = nullptr;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   int32 mCollectedProductivity = 0;
@@ -132,7 +135,7 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
   const URecipe *mCurrentRecipe = nullptr;
 
-  EVO_CODEGEN(AbstractCrafter, BlockLogic);
+  EVO_CODEGEN_INSTANCE(AbstractCrafter);
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, UTieredBlockLogic>("AbstractCrafter")
@@ -143,6 +146,12 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
       .addProperty("real_ticks_passed", &Self::mRealTicksPassed, true)
       .addProperty("to_loss", &Self::mToLoss, true)
       .addProperty("total_production", &Self::mTotalProduction, true)
+    
+      .addProperty("resource_input_inventory", &Self::mResourceInputInventory, false)
+      .addProperty("resource_output_inventory", &Self::mResourceOutputInventory, false)
+      
+      .addProperty("crafter_input_container", &Self::mCrafterInputContainer, false)
+      .addProperty("crafter_output_container", &Self::mResourceOutputInventory, false)
       .endClass();
   }
 };

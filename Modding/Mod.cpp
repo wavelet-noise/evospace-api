@@ -12,38 +12,6 @@
 
 void UMod::lua_state_close() {
   mod_table.reset();
-  config.reset();
-}
-
-void UMod::SaveConfig(const FString &directory, ModLoadingContext &context) const {
-  if (config.has_value() && config->isTable()) {
-    auto json = JLConverter::LuaTableToJson(config.value());
-
-    FString json_data = "";
-    const auto Writer = TJsonWriterFactory<TCHAR, TCondensedJsonPrintPolicy<TCHAR>>::Create(&json_data, 0);
-    FJsonSerializer::Serialize(json.ToSharedRef(), Writer);
-
-    FString file_name = directory / Name() + ".json";
-
-    FFileHelper::SaveStringToFile(json_data, *file_name);
-  }
-}
-
-void UMod::LoadConfig(const FString &directory, ModLoadingContext &context) {
-  IPlatformFile &PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
-  FString file_name = directory / Name() + ".json";
-  FString json_data;
-  if (PlatformFile.FileExists(*file_name)) {
-    FFileHelper::LoadFileToString(json_data, *file_name);
-    TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject());
-    TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(json_data);
-
-    if (FJsonSerializer::Deserialize(JsonReader, JsonObject) && JsonObject.IsValid()) {
-      config = JLConverter::JsonToLuaTable(context.lua_state->L, JsonObject);
-    }
-  } else {
-    LOG(WARN_LL) << "No config for mod " << mName;
-  }
 }
 
 bool UMod::DeserializeJson(TSharedPtr<FJsonObject> json) {
@@ -94,10 +62,6 @@ bool UMod::DeserializeFromDirectory(const FString &directory, ModLoadingContext 
         mod_table = context.loader->lastRegisteredMod.value();
         if (this->mod_table->isTable()) {
           LOG(INFO_LL) << "Init function table registered";
-          if ((*mod_table)["config"].isTable()) {
-            LOG(INFO_LL) << "Config table registered";
-            config = (*mod_table)["config"];
-          }
         } else {
           LOG(ERROR_LL) << "db:mod expects to get a table";
         }

@@ -37,6 +37,33 @@ class LuaState {
   static UTexture2D *FindTexture(const std::string &name);
   static UMaterialInterface *FindMaterial(const std::string &name);
 
+  static int errorHandler(lua_State *L);
+
+  enum class CallResult : uint8 {
+    Success,
+    Error
+  };
+  CallResult DebugCall(const luabridge::LuaRef &function) const;
+
+  template <typename _Ty>
+  CallResult DebugCall(const luabridge::LuaRef &function, const _Ty &arg) const {
+    lua_pushcfunction(L, errorHandler);
+    function.push(L);
+    luabridge::Stack<_Ty>::push(L, arg);
+    int result = luabridge::pcall(L, 1, LUA_MULTRET, -2);
+    return result == 0 ? CallResult::Success : CallResult::Error;
+  }
+
+  template <typename _Ty, typename _Ty2>
+  CallResult DebugCall(const luabridge::LuaRef &function, const _Ty &arg, const _Ty2 &arg2) const {
+    lua_pushcfunction(L, errorHandler);
+    function.push(L);
+    luabridge::Stack<_Ty>::push(L, arg);
+    luabridge::Stack<_Ty2>::push(L, arg2);
+    int result = luabridge::pcall(L, 2, LUA_MULTRET, -2);
+    return result == 0 ? CallResult::Success : CallResult::Error;
+  }
+
   void AddLuaPath(const FString &path);
 
   void doFile(std::string_view s) { luaL_dofile(L, s.data()); }

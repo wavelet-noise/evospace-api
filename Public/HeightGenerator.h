@@ -20,7 +20,7 @@ class EVOSPACE_API UHeightGenerator : public UPrototype {
   TArray<UNoiseGenerator *> mNoises;
 
   EVO_OWNER(HeightGenerator)
-  EVO_CODEGEN(HeightGenerator, HeightGenerator)
+  EVO_CODEGEN_DB(HeightGenerator, HeightGenerator)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UHeightGenerator, UPrototype>("HeightGenerator")

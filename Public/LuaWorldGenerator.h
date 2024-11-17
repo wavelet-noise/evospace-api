@@ -23,7 +23,7 @@ class ULuaWorldGenerator : public UWorldGenerator {
 
   public:
   EVO_OWNED(LuaWorldGenerator, WorldGenerator)
-  EVO_CODEGEN(LuaWorldGenerator, WorldGenerator)
+  EVO_CODEGEN_DB(LuaWorldGenerator, WorldGenerator)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<ULuaWorldGenerator, UWorldGenerator>("LuaWorldGenerator")

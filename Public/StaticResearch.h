@@ -93,7 +93,7 @@ class EVOSPACE_API UStaticResearchBase : public UPrototype {
   virtual UTexture2D *GetTexture() const;
 
   EVO_OWNER(StaticResearchBase)
-  EVO_CODEGEN(StaticResearchBase, StaticResearchBase)
+  EVO_CODEGEN_DB(StaticResearchBase, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
 
@@ -131,7 +131,7 @@ class EVOSPACE_API UStaticResearch : public UStaticResearchBase {
   virtual UTexture2D *GetTexture() const override;
 
   EVO_OWNED(StaticResearch, StaticResearchBase)
-  EVO_CODEGEN(StaticResearch, StaticResearchBase)
+  EVO_CODEGEN_DB(StaticResearch, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
 
@@ -142,7 +142,7 @@ class EVOSPACE_API UStaticResearchBonusInventory : public UStaticResearchBase {
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
   EVO_OWNED(StaticResearchBonusInventory, StaticResearchBase)
-  EVO_CODEGEN(StaticResearchBonusInventory, StaticResearchBase)
+  EVO_CODEGEN_DB(StaticResearchBonusInventory, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
 
@@ -161,7 +161,7 @@ class EVOSPACE_API UStaticResearchModifier : public UStaticResearchBase {
   float mBonusValue;
 
   EVO_OWNED(StaticResearchModifier, StaticResearchBase)
-  EVO_CODEGEN(StaticResearchModifier, StaticResearchBase)
+  EVO_CODEGEN_DB(StaticResearchModifier, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
 
@@ -183,7 +183,7 @@ class EVOSPACE_API UStaticResearchEfficiency : public UStaticResearchBase {
   float mBonusValue;
 
   EVO_OWNED(StaticResearchModifier, StaticResearchBase)
-  EVO_CODEGEN(StaticResearchModifier, StaticResearchBase)
+  EVO_CODEGEN_DB(StaticResearchModifier, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };
 
@@ -194,6 +194,6 @@ class EVOSPACE_API UStaticResearchToolUnlock : public UStaticResearchBase {
   virtual void ApplyToController(AMainPlayerController *apply_to, int32 level) override;
 
   EVO_OWNED(StaticResearchToolUnlock, StaticResearchBase)
-  EVO_CODEGEN(StaticResearchToolUnlock, StaticResearchBase)
+  EVO_CODEGEN_DB(StaticResearchToolUnlock, StaticResearchBase)
   virtual void lua_reg(lua_State *L) const override {}
 };

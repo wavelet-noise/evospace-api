@@ -18,29 +18,11 @@ int LegacyLuaState::Accessor_bind(lua_State *l) {
   return 0;
 }
 
-int LegacyLuaState::Accessor_bind_resource_input(lua_State *l) {
-  auto side_acc = Stack<UResourceAccessor *>::get(l, 1);
-  auto container = Stack<UResourceComponent *>::get(l, 2);
-
-  side_acc.value()->BindResourceInput(container.value());
-
-  return 0;
-}
-
-int LegacyLuaState::Accessor_bind_resource_output(lua_State *l) {
-  auto side_acc = Stack<UResourceAccessor *>::get(l, 1);
-  auto container = Stack<UResourceComponent *>::get(l, 2);
-
-  side_acc.value()->BindResourceOutput(container.value());
-
-  return 0;
-}
-
 int LegacyLuaState::Crafter_get_resource_component(lua_State *l) {
   const auto self = Stack<UBlockLogic *>::get(l, 1);
 
   if (const auto cra = Cast<USelectCrafter>(self.value())) {
-    auto result = push(l, cra->mResourceComponent);
+    auto result = push(l, cra->mResourceInputInventory);
   }
 
   return 1;
@@ -68,7 +50,7 @@ int LegacyLuaState::Crafter_get_output_container(lua_State *l) {
 }
 
 int LegacyLuaState::Accessor_set_side_pos(lua_State *l) {
-  auto self = Stack<UBaseAccessor *>::get(l, 1);
+  auto self = Stack<UAccessor *>::get(l, 1);
   auto side = Stack<Vec3i>::get(l, 2);
   auto pos = Stack<Vec3i>::get(l, 3);
   self.value()->SetSidePos(side.value(), pos.value());
@@ -80,7 +62,7 @@ int LegacyLuaState::BlockLogic_new_resource_accessor(lua_State *l) {
   auto name = Stack<std::string>::get(l, 2);
 
   auto accessor = NewObject<UResourceAccessor>(self.value(), UResourceAccessor::StaticClass(), FName(UTF8_TO_TCHAR(name.value().data())));
-  self.value()->RegisterComponent(accessor);
+  self.value()->RegisterAccessor(accessor);
   auto result = push(l, accessor);
 
   return 1;
@@ -91,9 +73,9 @@ int LegacyLuaState::BlockLogic_new_item_accessor(lua_State *l) {
   auto type = Stack<UClass *>::get(l, 2);
   std::error_code ec;
 
-  if (type.value() && type.value()->IsChildOf(UBaseAccessor::StaticClass())) {
+  if (type.value() && type.value()->IsChildOf(UAccessor::StaticClass())) {
     auto accessor = NewObject<UBaseInventoryAccessor>(self.value(), type.value());
-    self.value()->RegisterComponent(accessor);
+    self.value()->RegisterAccessor(accessor);
     auto result = push(l, accessor);
   } else {
     auto result = push(l, LuaNil());
@@ -133,22 +115,14 @@ void LegacyLuaState::Init() {
     });
 
   getGlobalNamespace(L)
-    .beginClass<UBaseAccessor>("Accessor")
+    .beginClass<UAccessor>("Accessor")
     .addFunction("SetSidePos", &LegacyLuaState::Accessor_set_side_pos)
     .endClass();
 
   getGlobalNamespace(L)
-    .deriveClass<UBaseInventoryAccessor, UBaseAccessor>("InventoryAccessor")
+    .deriveClass<UBaseInventoryAccessor, UAccessor>("InventoryAccessor")
     .addFunction("Bind", &LegacyLuaState::Accessor_bind)
     .endClass();
-
-  getGlobalNamespace(L)
-    .deriveClass<UResourceAccessor, UBaseAccessor>("ResourceAccessor")
-    .addFunction("bind_input", &LegacyLuaState::Accessor_bind_resource_input)
-    .addFunction("bind_output", &LegacyLuaState::Accessor_bind_resource_output)
-    .endClass();
-
-  getGlobalNamespace(L).beginClass<UInventoryContainer>("InventoryContainer").endClass();
 
   getGlobalNamespace(L).beginNamespace("Legacy").addVariable("this", nullptr).endNamespace();
 }

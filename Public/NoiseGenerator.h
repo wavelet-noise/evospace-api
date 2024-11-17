@@ -123,7 +123,7 @@ class UNoiseGenerator : public UPrototype {
 
   public:
   EVO_OWNER(NoiseGenerator)
-  EVO_CODEGEN(NoiseGenerator, NoiseGenerator)
+  EVO_CODEGEN_DB(NoiseGenerator, NoiseGenerator)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UNoiseGenerator, UPrototype>("NoiseGenerator")

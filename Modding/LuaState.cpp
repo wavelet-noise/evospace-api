@@ -252,6 +252,32 @@ UMaterialInterface *LuaState::FindMaterial(const std::string &name) {
   return type;
 }
 
+int LuaState::errorHandler(lua_State *L) {
+  // Get the error message from the stack
+  const char *errorMessage = lua_tostring(L, -1);
+
+  // Create a traceback
+  lua_getglobal(L, "debug");
+  lua_getfield(L, -1, "traceback");
+  lua_pushstring(L, errorMessage);
+  lua_pushinteger(L, 1); // Skip this function in the traceback
+
+  // Call debug.traceback
+  lua_call(L, 2, 1);
+
+  LOG(ERROR_LL) << lua_tostring(L, -1);
+
+  // Return the traceback message
+  return 1;
+}
+
+LuaState::CallResult LuaState::DebugCall(const luabridge::LuaRef &function) const {
+  lua_pushcfunction(L, errorHandler);
+  function.push(L);
+  int result = luabridge::pcall(L, 0, LUA_MULTRET, -2);
+  return result == 0 ? CallResult::Success : CallResult::Error;
+}
+
 LuaState::~LuaState() {
   if (L != nullptr) {
 

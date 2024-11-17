@@ -52,7 +52,7 @@ class UBiomeWorldGenerator : public UWorldGenerator {
 
   public:
   EVO_OWNED(BiomeWorldGenerator, WorldGenerator)
-  EVO_CODEGEN(BiomeWorldGenerator, WorldGenerator)
+  EVO_CODEGEN_DB(BiomeWorldGenerator, WorldGenerator)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UBiomeWorldGenerator, UWorldGenerator>("WorldGeneratorBiome")
@@ -111,7 +111,7 @@ class UGlobalBiomeFamily : public UBiomeFamily {
 
   public:
   EVO_OWNED(GlobalBiomeFamily, Biome)
-  EVO_CODEGEN(GlobalBiomeFamily, BiomeFamily)
+  EVO_CODEGEN_DB(GlobalBiomeFamily, BiomeFamily)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UGlobalBiomeFamily, UBiomeFamily>("GlobalBiomeFamily")
@@ -135,7 +135,7 @@ class UGlobalBiomeFamily2 : public UGlobalBiomeFamily {
 
   public:
   EVO_OWNED(GlobalBiomeFamily2, Biome)
-  EVO_CODEGEN(GlobalBiomeFamily2, GlobalBiomeFamily)
+  EVO_CODEGEN_DB(GlobalBiomeFamily2, GlobalBiomeFamily)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UGlobalBiomeFamily2, UGlobalBiomeFamily>("GlobalBiomeFamily2")
@@ -159,7 +159,7 @@ class UGlobalBiomeFamily3 : public UGlobalBiomeFamily {
 
   public:
   EVO_OWNED(GlobalBiomeFamily3, Biome)
-  EVO_CODEGEN(GlobalBiomeFamily3, GlobalBiomeFamily)
+  EVO_CODEGEN_DB(GlobalBiomeFamily3, GlobalBiomeFamily)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UGlobalBiomeFamily3, UGlobalBiomeFamily>("GlobalBiomeFamily3")

@@ -41,7 +41,7 @@ class UStaticTip : public UPrototype {
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
   EVO_OWNER(StaticTip)
-  EVO_CODEGEN(StaticTip, StaticTip)
+  EVO_CODEGEN_DB(StaticTip, StaticTip)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UStaticTip, UPrototype>("StaticTip")

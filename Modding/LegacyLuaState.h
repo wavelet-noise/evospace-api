@@ -22,10 +22,6 @@ class LegacyLuaState : public ModLoadingLuaState {
      */
   static int Accessor_bind(lua_State *l);
 
-  static int Accessor_bind_resource_input(lua_State *l);
-
-  static int Accessor_bind_resource_output(lua_State *l);
-
   static int Crafter_get_resource_component(lua_State *l);
 
   /**

@@ -23,7 +23,7 @@ class AItemLogic;
 class UStaticItem;
 class UInventoryAccess;
 class UStaticBlock;
-class UBaseAccessor;
+class UAccessor;
 
 UCLASS(BlueprintType)
 /**
@@ -43,9 +43,9 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   virtual void NeighborBlockAdded(UBlockLogic *block, const Vec3i &pos);
   virtual void NeighborBlockRemoved(UBlockLogic *block, const Vec3i &pos);
 
-  virtual void SideAccessorAdded(UBaseAccessor *accessor, const Vec3i &side,
+  virtual void SideAccessorAdded(UAccessor *accessor, const Vec3i &side,
                                  const Vec3i &pos);
-  virtual void SideAccessorRemoved(UBaseAccessor *accessor, const Vec3i &side,
+  virtual void SideAccessorRemoved(UAccessor *accessor, const Vec3i &side,
                                    const Vec3i &pos);
 
   virtual void SpawnedByItem(AItemLogic *item);
@@ -148,7 +148,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   void SetOwner(void *param1);
 
-  UBaseAccessor *GetSideAccessor(UClass *type, Vec3i side, Vec3i pos);
+  UAccessor *GetSideAccessor(UClass *type, Vec3i side, Vec3i pos);
 
   template <class Ty_>
   Ty_ *GetSideAccessor(FVector3i side, FVector3i pos) {
@@ -172,7 +172,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   template <typename Ty_>
   Ty_ *CreateDefaultAccessor(FName SubobjectFName) {
     auto v = CreateDefaultSubobject<Ty_>(SubobjectFName);
-    RegisterComponent(v);
+    RegisterAccessor(v);
     return v;
   }
 
@@ -201,9 +201,9 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   void SpawnDropItems(APlayerController *pc);
 
-  void RegisterComponent(UBaseAccessor *c);
+  void RegisterAccessor(UAccessor *c);
 
-  virtual TArray<UBaseAccessor *> GetAccessors();
+  virtual TArray<UAccessor *> GetAccessors();
 
   virtual ABlockActor *GetActor();
 
@@ -224,12 +224,12 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   FQuat mQuat = FQuat(EForceInit::ForceInitToZero);
 
   UPROPERTY(VisibleAnywhere)
-  TArray<UBaseAccessor *> mAccessors;
+  TArray<UAccessor *> mAccessors;
 
   // Core
   protected:
   UPROPERTY(VisibleAnywhere)
-  UCoreAccessor *mCore;
+  UCoreAccessor *mCore = nullptr;
   TFunction<UCoreAccessor *()> mCoreInit;
 
   public:
@@ -239,7 +239,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   // Monitor
   protected:
   UPROPERTY(VisibleAnywhere)
-  UCoreAccessor *mMonitor;
+  UCoreAccessor *mMonitor = nullptr;
   TFunction<UCoreAccessor *()> mMonitorInit;
 
   public:
@@ -249,20 +249,21 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   //mutable int32 mFromLastWakeup = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
-  UMaterialInterface *mPaintMaterial;
+  UMaterialInterface *mPaintMaterial = nullptr;
 
   protected:
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
   ABlockActor *mActor = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-  ADimension *mDimension;
+  ADimension *mDimension = nullptr;
 
   public:
-  EVO_CODEGEN(BlockLogic, BlockLogic)
+  EVO_CODEGEN_INSTANCE(BlockLogic)
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UBlockLogic, UPrototype>("BlockLogic")
+      .addFunction("reg", &UBlockLogic::RegisterAccessor)
       .endClass();
   }
 };
@@ -284,7 +285,7 @@ class EVOSPACE_API UPartBlockLogic : public UBlockLogic {
 
   virtual UBlockLogic *GetPartRootBlock() override;
 
-  virtual TArray<UBaseAccessor *> GetAccessors() override;
+  virtual TArray<UAccessor *> GetAccessors() override;
 
   virtual UCoreAccessor *GetCoreAccessor();
 

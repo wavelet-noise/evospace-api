@@ -13,7 +13,9 @@
 class UIcoGenerator;
 
 inline void registerComponentClasses(lua_State *L) {
-  luabridge::getGlobalNamespace(L)
+  using namespace luabridge;
+
+  getGlobalNamespace(L)
     .beginClass<UObject>("Object")
     .addStaticFunction(
       "find", +[](std::string_view name) { return FindObject<UObject>(MainGameOwner<UObject>::Get(), UTF8_TO_TCHAR(name.data())); })
@@ -25,26 +27,26 @@ inline void registerComponentClasses(lua_State *L) {
     .addFunction("__tostring", [](UObject *obj) -> std::string { return TCHAR_TO_UTF8(*("(Object: " + obj->GetName() + ")")); })
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .beginClass<UIcoGenerator>("IcoGenerator")
     //.addStaticFunction("combine", &UIcoGenerator::combine)
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .deriveClass<UTexture2D, UObject>("Texture")
     .addStaticFunction("find", &evo::LuaState::FindTexture)
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .deriveClass<UMaterialInterface, UObject>("Material")
     .addStaticFunction("load", &evo::LuaState::FindMaterial)
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .deriveClass<UStaticMesh, UObject>("StaticMesh")
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .deriveClass<UClass, UObject>("Class")
     .addStaticFunction("find", &evo::LuaState::FindClass)
     .addStaticFunction("load", &evo::LuaState::LoadClass)
@@ -56,11 +58,11 @@ inline void registerComponentClasses(lua_State *L) {
     })
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .beginClass<APlayerController>("PlayerController")
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .beginClass<FKeyTableObject>("Loc")
     .addStaticFunction("new", [](std::string_view key, std::string_view table) {
       auto kt = FKeyTableObject();
@@ -78,7 +80,7 @@ inline void registerComponentClasses(lua_State *L) {
     })
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .beginClass<FItemData>("ItemData")
     .addStaticFunction(
       "new_empty", +[]() { return FItemData(); })
@@ -91,7 +93,7 @@ inline void registerComponentClasses(lua_State *L) {
     .addProperty("item", &FItemData::mItem)
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .beginClass<UActorComponent>("ActorComponent")
     .addProperty(
       "name",
@@ -100,7 +102,7 @@ inline void registerComponentClasses(lua_State *L) {
       })
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .beginClass<AActor>("Actor")
     .addFunction(
       "add_actor_component",
@@ -133,7 +135,7 @@ inline void registerComponentClasses(lua_State *L) {
     })
     .endClass();
 
-  luabridge::getGlobalNamespace(L)
+  getGlobalNamespace(L)
     .deriveClass<ABlockActor, AActor>("BlockActor")
     .endClass();
 }
