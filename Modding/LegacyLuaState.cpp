@@ -22,7 +22,7 @@ int LegacyLuaState::Crafter_get_resource_component(lua_State *l) {
   const auto self = Stack<UBlockLogic *>::get(l, 1);
 
   if (const auto cra = Cast<USelectCrafter>(self.value())) {
-    auto result = push(l, cra->mResourceInputInventory);
+    auto result = push(l, cra->mEnergyInputInventory);
   }
 
   return 1;

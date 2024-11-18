@@ -6,7 +6,6 @@
 #include "Evospace/JsonObjectLibrary.h"
 #include "Evospace/MainGameOwner.h"
 #include "Evospace/SerializableJson.h"
-#include "Logging/StructuredLog.h"
 
 #include "prototype.generated.h"
 
@@ -44,29 +43,58 @@ class Base;
     }                                                                                                                                                         \
   }
 
-#define EVO_CODEGEN_INSTANCE(type)                                                                                                     \
-  public:                                                                                                                              \
-  virtual UClass *lua_reg_type() {                                                                                                     \
-    return U##type::StaticClass();                                                                                                     \
-  }                                                                                                                                    \
-  static U##type *lua_codegen_cast(UObject *parent_inst) {                                                                             \
-    return Cast<U##type>(parent_inst);                                                                                                 \
-  }                                                                                                                                    \
-  virtual void lua_reg_internal(lua_State *L) const override {                                                                         \
-    LOG(INFO_LL) << "Registering lua instance " << TEXT(#type);                                                                        \
-    luabridge::getGlobalNamespace(L)                                                                                                   \
-      .beginClass<U##type>(#type)                                                                                                      \
-      .addStaticFunction("cast", &U##type::lua_codegen_cast)                                                                           \
-      .addStaticFunction("get_class", []() { return U##type::StaticClass(); })                                                         \
-      .addFunction("__tostring", &U##type::ToString)                                                                                   \
-      .endClass();                                                                                                                     \
-    if (!U##type::StaticClass()->HasAnyClassFlags(CLASS_Abstract)) {                                                                   \
-      luabridge::getGlobalNamespace(L)                                                                                                 \
-        .beginClass<U##type>(#type)                                                                                                    \
-        .addStaticFunction(                                                                                                            \
-          "new", +[](UObject *parent, std::string_view newName) { return NewObject<U##type>(parent, UTF8_TO_TCHAR(newName.data())); }) \
-        .endClass();                                                                                                                   \
-    }                                                                                                                                  \
+#define EVO_CODEGEN_INSTANCE(type)                                                                                                       \
+  public:                                                                                                                                \
+  virtual UClass *lua_reg_type() {                                                                                                       \
+    return U##type::StaticClass();                                                                                                       \
+  }                                                                                                                                      \
+  static U##type *lua_codegen_cast(UObject *parent_inst) {                                                                               \
+    return Cast<U##type>(parent_inst);                                                                                                   \
+  }                                                                                                                                      \
+  virtual void lua_reg_internal(lua_State *L) const override {                                                                           \
+    LOG(INFO_LL) << "Registering lua instance " << TEXT(#type);                                                                          \
+    luabridge::getGlobalNamespace(L)                                                                                                     \
+      .beginClass<U##type>(#type)                                                                                                        \
+      .addStaticFunction("cast", &U##type::lua_codegen_cast)                                                                             \
+      .addStaticFunction("get_class", []() { return U##type::StaticClass(); })                                                           \
+      .addFunction("__tostring", &U##type::ToString)                                                                                     \
+      .endClass();                                                                                                                       \
+    if (!U##type::StaticClass()->HasAnyClassFlags(CLASS_Abstract)) {                                                                     \
+        luabridge::getGlobalNamespace(L)                                                                                                 \
+        .beginClass<U##type>(#type)                                                                                                      \
+        .addStaticFunction(                                                                                                              \
+          "new", +[](UInstance *parent, std::string_view newName) { return NewObject<U##type>(parent, UTF8_TO_TCHAR(newName.data())); }) \
+        .endClass();                                                                                                                     \
+    }                                                                                                                                    \
+  }
+
+#define EVO_CODEGEN_ACCESSOR(type)                                                \
+  public:                                                                         \
+  virtual UClass *lua_reg_type() {                                                \
+    return U##type::StaticClass();                                                \
+  }                                                                               \
+  static U##type *lua_codegen_cast(UObject *parent_inst) {                        \
+    return Cast<U##type>(parent_inst);                                            \
+  }                                                                               \
+  virtual void lua_reg_internal(lua_State *L) const override {                    \
+    LOG(INFO_LL) << "Registering lua instance " << TEXT(#type);                   \
+    luabridge::getGlobalNamespace(L)                                              \
+      .beginClass<U##type>(#type)                                                 \
+      .addStaticFunction("cast", &U##type::lua_codegen_cast)                      \
+      .addStaticFunction("get_class", []() { return U##type::StaticClass(); })    \
+      .addFunction("__tostring", &U##type::ToString)                              \
+      .endClass();                                                                \
+    if (!U##type::StaticClass()->HasAnyClassFlags(CLASS_Abstract)) {              \
+      luabridge::getGlobalNamespace(L)                                            \
+        .beginClass<U##type>(#type)                                               \
+        .addStaticFunction(                                                       \
+          "new", +[](UBlockLogic *parent, std::string_view newName) {             \
+            auto acc = NewObject<U##type>(parent, UTF8_TO_TCHAR(newName.data())); \
+            parent->RegisterAccessor(acc);                                        \
+            return acc;                                                           \
+          })                                                                      \
+        .endClass();                                                              \
+    }                                                                             \
   }
 
 // /*.addStaticFunction("get", &evo::DB::get<type>)   */ /* .addStaticFunction("get_derived", &evo::DB::get_derived<type>)  */

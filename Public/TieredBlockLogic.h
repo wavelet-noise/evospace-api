@@ -14,6 +14,14 @@ UCLASS(BlueprintType)
 class EVOSPACE_API UTieredBlockLogic : public UBlockLogic {
   using Self = UTieredBlockLogic;
   GENERATED_BODY()
+  EVO_CODEGEN_INSTANCE(TieredBlockLogic)
+  virtual void lua_reg(lua_State *L) const override {
+      luabridge::getGlobalNamespace(L)
+        .deriveClass<Self, UBlockLogic>("TieredBlockLogic")
+        .addProperty("tier", &Self::mTier)
+        .addProperty("level", &Self::mLevel)
+        .endClass();
+    }
 
   public:
   UTieredBlockLogic();
@@ -37,20 +45,10 @@ class EVOSPACE_API UTieredBlockLogic : public UBlockLogic {
 
   UPROPERTY(BlueprintReadOnly, EditAnywhere)
   uint8 mLevel = 0;
-
-  public:
+  
   static FString TierToString(int32 tier);
 
   static FColor TierToColor(int32 tier);
-
-  EVO_CODEGEN_INSTANCE(TieredBlockLogic)
-  virtual void lua_reg(lua_State *L) const override {
-    luabridge::getGlobalNamespace(L)
-      .deriveClass<Self, UBlockLogic>("TieredBlockLogic")
-      .addProperty("tier", &Self::mTier)
-      .addProperty("level", &Self::mLevel)
-      .endClass();
-  }
 };
 
 UCLASS(BlueprintType)

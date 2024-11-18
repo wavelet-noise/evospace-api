@@ -4,9 +4,7 @@
 #include "Prototype.h"
 #include "Evospace/BreakResult.h"
 #include "Evospace/CoordinameMinimal.h"
-#include "Evospace/SerializableJson.h"
 #include "Evospace/Vector.h"
-#include "Evospace/PerformanceStat.h"
 
 #include "BlockLogic.generated.h"
 
@@ -29,8 +27,15 @@ UCLASS(BlueprintType)
 /**
  * 
  */
-class EVOSPACE_API UBlockLogic : public UPrototype {
+class EVOSPACE_API UBlockLogic : public UInstance {
   GENERATED_BODY()
+  EVO_CODEGEN_INSTANCE(BlockLogic)
+  virtual void lua_reg(lua_State *L) const override {
+    luabridge::getGlobalNamespace(L)
+      .deriveClass<UBlockLogic, UInstance>("BlockLogic")
+      .addFunction("reg", &UBlockLogic::RegisterAccessor)
+      .endClass();
+  }
 
   protected:
   // events
@@ -158,14 +163,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
   template <typename Ty_>
   Ty_ *CreateDefaultAccessor(UObject *Outer, FName SubobjectFName) {
     auto v = CreateDefaultSubobject<Ty_>(Outer, SubobjectFName);
-    RegisterComponent(v);
-    return v;
-  }
-
-  template <typename Ty_>
-  Ty_ *CreateAccessor(FName Name) {
-    auto v = NewObject<Ty_>(this, Name);
-    RegisterComponent(v);
+    RegisterAccessor(v);
     return v;
   }
 
@@ -225,7 +223,7 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   UPROPERTY(VisibleAnywhere)
   TArray<UAccessor *> mAccessors;
-
+  
   // Core
   protected:
   UPROPERTY(VisibleAnywhere)
@@ -257,15 +255,6 @@ class EVOSPACE_API UBlockLogic : public UPrototype {
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
   ADimension *mDimension = nullptr;
-
-  public:
-  EVO_CODEGEN_INSTANCE(BlockLogic)
-  virtual void lua_reg(lua_State *L) const override {
-    luabridge::getGlobalNamespace(L)
-      .deriveClass<UBlockLogic, UPrototype>("BlockLogic")
-      .addFunction("reg", &UBlockLogic::RegisterAccessor)
-      .endClass();
-  }
 };
 
 UCLASS(BlueprintType)
