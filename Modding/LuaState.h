@@ -64,6 +64,20 @@ class LuaState {
     return result == 0 ? CallResult::Success : CallResult::Error;
   }
 
+  template <typename... Args>
+void CallAndHandleError(const luabridge::LuaRef & code, Args&&... args) {
+    if (code.isFunction()) {
+      std::ignore = HandleLuaResult((code)(std::forward<Args>(args)...));
+    }
+  }
+
+  template <typename... Args>
+  void CallAndHandleError(const std::optional<luabridge::LuaRef> & code, Args&&... args) {
+    if (code.has_value() && code->isFunction()) {
+      std::ignore = HandleLuaResult((*code)(std::forward<Args>(args)...));
+    }
+  }
+
   void AddLuaPath(const FString &path);
 
   void doFile(std::string_view s) { luaL_dofile(L, s.data()); }
@@ -72,15 +86,16 @@ class LuaState {
 
   lua_State *L = nullptr;
 
-  static int ToByteCode_Writer(
-    lua_State *L, const void *ptr, size_t size, void *user_data);
-
+  static int ToByteCode_Writer(lua_State *L, const void *ptr, size_t size, void *user_data);
   static std::string ToByteCode(std::string_view code, std::string_view path);
   void processLuaErrorOnStack(std::string_view code);
+
+  static std::string DumpLuaFunction(const luabridge::LuaRef& lua_function);
 
   luabridge::LuaRef ToLuaRefFunction(std::string_view code, std::string_view path);
 
   bool HandleLuaResult(const luabridge::LuaResult &res) const;
+  static bool HandleLuaResult(lua_State *L, const luabridge::LuaResult &res);
 
   void HandleLuaErrorOnStack() const;
 

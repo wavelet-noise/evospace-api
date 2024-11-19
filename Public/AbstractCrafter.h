@@ -100,19 +100,18 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventoryContainer *mCrafterOutputContainer = nullptr;
 
-  UPROPERTY(EditAnywhere, Instanced, BlueprintReadOnly)
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
   UResourceInventory *mEnergyInputInventory = nullptr;
 
-  UPROPERTY(EditAnywhere, Instanced, BlueprintReadOnly)
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
   UResourceInventory *mEnergyOutputInventory = nullptr;
-
 
   //TODO: do we need this?
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   UAutosizeInventory *mRecipeListTierHelper = nullptr;
 
   TArray<class UResourceAccessor *> GetResourceAccessors() const;
-  
+
   virtual bool IsBlockTicks() const override;
 
   UFUNCTION(BlueprintCallable)
@@ -146,6 +145,12 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   ECrafterState mState = ECrafterState::NotInitialized;
+
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  int32 mInputTicks = 0;
+
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  int32 mOutputTicks = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   int32 mCollectedProductivity = 0;

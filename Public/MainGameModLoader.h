@@ -2,6 +2,7 @@
 #include "Containers/Array.h"
 #include "CoreMinimal.h"
 #include "Evospace/Ensure.h"
+#include "Evospace/JsonObjectLibrary.h"
 #include "Modding/Mod.h"
 #include "ThirdParty/luabridge/LuaBridge.h"
 
@@ -32,10 +33,6 @@ class ModLoadingContext {
   evo::LegacyLuaState *lua_state;
 
   UMainGameModLoader *loader;
-
-  FString Get();
-  void Set(const FString &m);
-  FCriticalSection critical;
 };
 
 enum class ModTickLoadStatus {
@@ -72,7 +69,7 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
   void LuaCleanup();
 
   std::optional<luabridge::LuaRef> lastRegisteredMod;
-  void RegisterPrototypeFromTable(const UMod *owner, const luabridge::LuaRef &table) const;
+
   void ModInitTable(const luabridge::LuaRef &table);
 
   static UMainGameModLoader *GetMainGameModLoader();
@@ -109,7 +106,7 @@ class EVOSPACE_API UMainGameModLoader : public UObject {
         }
       })
       .addFunction("from_table", [](UMainGameModLoader *self, const luabridge::LuaRef &table) {
-        self->RegisterPrototypeFromTable(self->mCurrentMod, table);
+        self->mJsonObjectLibrary->ObjectFromTable(self->mCurrentMod, table);
       })
       .addFunction("mod", [](UMainGameModLoader *self, const luabridge::LuaRef &table) {
         self->ModInitTable(table);

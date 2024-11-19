@@ -41,6 +41,8 @@ class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
   void GenerateOutput();
 
   void ProcessRecipe();
+  bool CanGenerateOutput();
+  void ResetCrafterState();
 
   protected:
   virtual void Tick() override;

@@ -95,6 +95,21 @@ void LuaState::processLuaErrorOnStack(std::string_view code) {
   lua_pop(L, 1);
 }
 
+std::string LuaState::DumpLuaFunction(const luabridge::LuaRef& lua_function) {
+  if (lua_function.isFunction()) {
+    lua_State* L = lua_function.state();
+
+    auto string_module = luabridge::getGlobal(L, "string");
+    auto string_dump = string_module["dump"];
+    auto result = string_dump(lua_function);
+    if (HandleLuaResult(L, result)) {
+      return result[0].tostring();
+    }
+  }
+
+  return "<lua dump error>";
+}
+
 luabridge::LuaRef LuaState::ToLuaRefFunction(std::string_view code, std::string_view path) {
   std::string output;
   std::string path_decorated = std::string("@") + path.data();
@@ -110,6 +125,10 @@ luabridge::LuaRef LuaState::ToLuaRefFunction(std::string_view code, std::string_
 }
 
 bool LuaState::HandleLuaResult(const luabridge::LuaResult &res) const {
+  return HandleLuaResult(L, res);
+}
+
+bool LuaState::HandleLuaResult(lua_State * L, const luabridge::LuaResult &res) {
   if (res.wasOk())
     return true;
 

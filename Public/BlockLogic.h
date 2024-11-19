@@ -223,7 +223,7 @@ class EVOSPACE_API UBlockLogic : public UInstance {
 
   UPROPERTY(VisibleAnywhere)
   TArray<UAccessor *> mAccessors;
-  
+
   // Core
   protected:
   UPROPERTY(VisibleAnywhere)
