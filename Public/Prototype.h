@@ -12,17 +12,23 @@
 class UMod;
 class Base;
 
+#define __EVO_COMMON_CODEGEN(type)                             \
+  public:                                                      \
+  virtual UClass *lua_reg_type() {                             \
+    return U##type::StaticClass();                             \
+  }                                                            \
+  static U##type *lua_codegen_cast(UObject *parent_inst) {     \
+    return Cast<U##type>(parent_inst);                         \
+  }                                                            \
+  virtual luabridge::LuaRef to_luaref(lua_State *L) override { \
+    return luabridge::LuaRef(L, this);                         \
+  }
+
 /*.addStaticFunction("get", &evo::DB::get<U##type>) */ /*.addStaticFunction("get_derived", &evo::DB::get_derived<U##type>) */
 #define EVO_CODEGEN_DB(type, topmost_not_prototype)                                                                                                           \
-  public:                                                                                                                                                     \
-  virtual UClass *lua_reg_type() {                                                                                                                            \
-    return U##type::StaticClass();                                                                                                                            \
-  }                                                                                                                                                           \
-  virtual UPrototype *get_or_register(const FString &obj_name, IRegistrar &registry) override {                                                                  \
+  __EVO_COMMON_CODEGEN(type)                                                                                                                                  \
+  virtual UPrototype *get_or_register(const FString &obj_name, IRegistrar &registry) override {                                                               \
     return _get_or_register<U##topmost_not_prototype, U##type>(obj_name, registry);                                                                           \
-  }                                                                                                                                                           \
-  static U##type *lua_codegen_cast(UObject *parent_inst) {                                                                                                    \
-    return Cast<U##type>(parent_inst);                                                                                                                        \
   }                                                                                                                                                           \
   virtual void lua_reg_internal(lua_State *L) const override {                                                                                                \
     LOG(INFO_LL) << "Registering lua prototype " << TEXT(#type);                                                                                              \
@@ -44,13 +50,7 @@ class Base;
   }
 
 #define EVO_CODEGEN_INSTANCE(type)                                                                                                       \
-  public:                                                                                                                                \
-  virtual UClass *lua_reg_type() {                                                                                                       \
-    return U##type::StaticClass();                                                                                                       \
-  }                                                                                                                                      \
-  static U##type *lua_codegen_cast(UObject *parent_inst) {                                                                               \
-    return Cast<U##type>(parent_inst);                                                                                                   \
-  }                                                                                                                                      \
+  __EVO_COMMON_CODEGEN(type)                                                                                                             \
   virtual void lua_reg_internal(lua_State *L) const override {                                                                           \
     LOG(INFO_LL) << "Registering lua instance " << TEXT(#type);                                                                          \
     luabridge::getGlobalNamespace(L)                                                                                                     \
@@ -69,13 +69,7 @@ class Base;
   }
 
 #define EVO_CODEGEN_ACCESSOR(type)                                                \
-  public:                                                                         \
-  virtual UClass *lua_reg_type() {                                                \
-    return U##type::StaticClass();                                                \
-  }                                                                               \
-  static U##type *lua_codegen_cast(UObject *parent_inst) {                        \
-    return Cast<U##type>(parent_inst);                                            \
-  }                                                                               \
+  __EVO_COMMON_CODEGEN(type)                                                      \
   virtual void lua_reg_internal(lua_State *L) const override {                    \
     LOG(INFO_LL) << "Registering lua instance " << TEXT(#type);                   \
     luabridge::getGlobalNamespace(L)                                              \
@@ -137,6 +131,10 @@ class UPrototype : public UObject, public ISerializableJson {
       .deriveClass<UPrototype, UObject>("Prototype")
       .endClass();
   }
+  virtual luabridge::LuaRef to_luaref(lua_State *L) {
+    checkNoEntry();
+    return luabridge::LuaRef(nullptr, nullptr);
+  };
 
   UPROPERTY(VisibleAnywhere)
   const UMod *mOwningMod = nullptr;
@@ -146,8 +144,8 @@ class UPrototype : public UObject, public ISerializableJson {
   }
 
   virtual void LuaCleanup() {}
-
   virtual void MarkIncomplete() {}
+  virtual void OnObjectFromTable() {}
 
   virtual std::string ToString() const {
     return TCHAR_TO_UTF8(*("(" + GetClass()->GetName() + ": " + GetName() + ")"));
@@ -196,6 +194,10 @@ class UInstance : public UObject, public ISerializableJson {
       .deriveClass<UInstance, UObject>("Instance")
       .endClass();
   }
+  virtual luabridge::LuaRef to_luaref(lua_State *L) {
+    checkNoEntry();
+    return luabridge::LuaRef(nullptr, nullptr);
+  };
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override {
     return true;

@@ -41,8 +41,8 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
       .addProperty("switched_on", &Self::mSwitchedOn)
       .addProperty("ticks_passed", &Self::mTicksPassed)
       .addProperty("real_ticks_passed", &Self::mRealTicksPassed)
-      .addProperty("to_loss", &Self::mToLoss)
       .addProperty("total_production", &Self::mTotalProduction)
+      .addProperty("speed", &Self::mSpeed)
 
       .addProperty("energy_input_inventory", &Self::mEnergyInputInventory)
       .addProperty("energy_output_inventory", &Self::mEnergyOutputInventory)
@@ -78,7 +78,7 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   UFUNCTION(BlueprintCallable)
   virtual void ResetRecipe();
 
-  UFUNCTION(BlueprintCallable)
+  UFUNCTION(BlueprintCallable, BlueprintCosmetic)
   virtual float GetCurrentProgress() const;
 
   UFUNCTION(BlueprintCallable)
@@ -109,8 +109,9 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   //TODO: do we need this?
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   UAutosizeInventory *mRecipeListTierHelper = nullptr;
-
-  TArray<class UResourceAccessor *> GetResourceAccessors() const;
+  
+  TArray<class UResourceAccessor *> GetResourceInputAccessors() const;
+  TArray<class UResourceAccessor *> GetResourceOutputAccessors() const;
 
   virtual bool IsBlockTicks() const override;
 
@@ -141,10 +142,10 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   int32 mTotalProduction = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 mToLoss = 1;
+  int32 mSpeed = 100;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  ECrafterState mState = ECrafterState::NotInitialized;
+  ECrafterState mState = ECrafterState::InputShortage;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   int32 mInputTicks = 0;

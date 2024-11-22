@@ -34,6 +34,8 @@ class EVOSPACE_API UAutoCrafter : public USelectCrafter {
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
+  virtual void BlockBeginPlay() override;
+
   int32 cap_replace = 0;
 
   EVO_CODEGEN_INSTANCE(AutoCrafter)

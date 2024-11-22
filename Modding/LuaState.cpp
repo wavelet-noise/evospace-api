@@ -20,7 +20,7 @@ void LuaState::AddLuaPath(const FString &path) {
   lua_pop(L, 1);
 }
 
-bool LuaState::RunCode(std::string_view code, std::string_view path) {
+bool LuaState::RunCode(lua_State *L, std::string_view code, std::string_view path) {
   std::string path_decorated = std::string("@") + path.data();
   if (luaL_loadbuffer(L, code.data(), code.size(), path_decorated.data())) {
     LOG(ERROR_LL) << "Lua loading error: " << UTF8_TO_TCHAR(lua_tostring(L, -1));
@@ -28,11 +28,15 @@ bool LuaState::RunCode(std::string_view code, std::string_view path) {
   }
 
   if (lua_pcall(L, 0, LUA_MULTRET, 0)) {
-    HandleLuaErrorOnStack();
+    HandleLuaErrorOnStack(L);
     return false;
   }
 
   return true;
+}
+
+bool LuaState::RunCode(std::string_view code, std::string_view path) const {
+  return RunCode(L, code, path);
 }
 
 std::vector<std::string> split(std::string_view s, char delim) {
@@ -84,7 +88,7 @@ std::string LuaState::ToByteCode(std::string_view code, std::string_view path) {
   return output;
 }
 
-void LuaState::processLuaErrorOnStack(std::string_view code) {
+void LuaState::HandleLuaErrorOnStackWithSource(std::string_view code) const {
   std::string error = lua_tostring(L, -1);
   auto split_error = split(error, ':');
   auto index = std::stoi(split_error[1]);
@@ -95,9 +99,9 @@ void LuaState::processLuaErrorOnStack(std::string_view code) {
   lua_pop(L, 1);
 }
 
-std::string LuaState::DumpLuaFunction(const luabridge::LuaRef& lua_function) {
+std::string LuaState::DumpLuaFunction(const luabridge::LuaRef &lua_function) {
   if (lua_function.isFunction()) {
-    lua_State* L = lua_function.state();
+    lua_State *L = lua_function.state();
 
     auto string_module = luabridge::getGlobal(L, "string");
     auto string_dump = string_module["dump"];
@@ -110,11 +114,11 @@ std::string LuaState::DumpLuaFunction(const luabridge::LuaRef& lua_function) {
   return "<lua dump error>";
 }
 
-luabridge::LuaRef LuaState::ToLuaRefFunction(std::string_view code, std::string_view path) {
+luabridge::LuaRef LuaState::ToLuaRefFunction(std::string_view code, std::string_view path) const {
   std::string output;
   std::string path_decorated = std::string("@") + path.data();
   if (auto err = luaL_loadbuffer(L, code.data(), code.length(), path_decorated.data())) {
-    processLuaErrorOnStack(code);
+    HandleLuaErrorOnStackWithSource(code);
     return luabridge::LuaRef(L, nullptr);
   }
 
@@ -128,7 +132,7 @@ bool LuaState::HandleLuaResult(const luabridge::LuaResult &res) const {
   return HandleLuaResult(L, res);
 }
 
-bool LuaState::HandleLuaResult(lua_State * L, const luabridge::LuaResult &res) {
+bool LuaState::HandleLuaResult(lua_State *L, const luabridge::LuaResult &res) {
   if (res.wasOk())
     return true;
 
@@ -149,7 +153,7 @@ bool LuaState::HandleLuaResult(lua_State * L, const luabridge::LuaResult &res) {
   return false;
 }
 
-void LuaState::HandleLuaErrorOnStack() const {
+void LuaState::HandleLuaErrorOnStack(lua_State *L) {
   LOG(ERROR_LL) << "Lua execution error: " << UTF8_TO_TCHAR(lua_tostring(L, -1));
 
   LOG(ERROR_LL) << "Call stack:";
@@ -163,6 +167,10 @@ void LuaState::HandleLuaErrorOnStack() const {
       LOG(ERROR_LL) << " in function " << UTF8_TO_TCHAR(debug_info.name);
     ++level;
   }
+}
+
+void LuaState::HandleLuaErrorOnStack() const {
+  HandleLuaErrorOnStack(L);
 }
 
 int LuaState::l_my_print(lua_State *L) {
@@ -217,10 +225,10 @@ void LuaState::Init() {
   auto ver = luabridge::getGlobal(L, "_VERSION");
   LOG(INFO_LL) << UTF8_TO_TCHAR(ver.tostring().data());
 
-  RunCode(
+  std::ignore = RunCode(
     "require('jit') if type(jit) == 'table' then print(jit.version) else "
     "print('jit fatal error') end",
-    "jit_test");
+    "@jit_test");
 }
 
 UClass *LuaState::FindClass(const std::string &name) {
