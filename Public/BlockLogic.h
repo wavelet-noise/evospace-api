@@ -74,7 +74,7 @@ class EVOSPACE_API UBlockLogic : public UInstance {
   virtual void Tick();
   virtual void TickAccessor();
 
-  virtual void ReplaceWith(UBlockLogic *other);
+  virtual void CopyOnReplace(UBlockLogic *from);
 
   /**
    * @brief Test if position is suitable for this block placing

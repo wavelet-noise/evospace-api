@@ -25,9 +25,6 @@ struct FStaticBlockMinable {
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
   UStaticItem *mResult = nullptr;
 
-  UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-  int32 mMiningTime = 20;
-
   bool DeserializeJson(TSharedPtr<FJsonObject> json);
 };
 

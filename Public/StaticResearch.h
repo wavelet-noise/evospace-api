@@ -58,18 +58,21 @@ class EVOSPACE_API UStaticResearchBase : public UPrototype {
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   TArray<FKeyTableObject> LabelParts = {};
-  
+
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   TArray<FKeyTableObject> mDescriptionParts = {};
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventory *DataPoints;
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  TArray<FName> RequiredResearchesNames = {};
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  int mLevel = 0;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  TArray<UStaticResearchBase *> RequiredResearches = {};
+  TArray<FName> RequiredResearchNames = {};
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  TArray<UStaticResearchBase *> RequiredResearch = {};
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   bool mIsUpgrade = false;
@@ -82,6 +85,9 @@ class EVOSPACE_API UStaticResearchBase : public UPrototype {
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   EResearchStatus Type;
+
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  bool mCompleteByDefault = false;
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
@@ -118,12 +124,6 @@ class EVOSPACE_API UStaticResearch : public UStaticResearchBase {
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventory *AlsoNewItemsCache;
-
-  UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  bool mCompleteByDefault = false;
-
-  UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int Level = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   FVector2i LevelMinMax;

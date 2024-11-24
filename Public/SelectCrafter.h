@@ -36,7 +36,7 @@ class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
   virtual void LoadSettings(TSharedPtr<FJsonObject> json,
                             AMainPlayerController *mpc = nullptr) override;
 
-  virtual void ReplaceWith(UBlockLogic *other) override;
+  virtual void CopyOnReplace(UBlockLogic *from) override;
 
   void GenerateOutput();
 
@@ -46,9 +46,6 @@ class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
 
   protected:
   virtual void Tick() override;
-
-  UPROPERTY(EditAnywhere, BlueprintReadWrite)
-  float mCraftSpeedMultiplier = 1.0f;
 
   virtual void SetWorking(bool working);
 

@@ -116,7 +116,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
      * coal.max_count = 64
      * @endcode
      */
-  int64 mMaxCount = 0;
+  int64 mStackSize = 0;
 
   // Item database category
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -155,7 +155,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
     luabridge::getGlobalNamespace(L)
       .deriveClass<UStaticItem, UPrototype>("StaticItem")
       .addProperty("image", &UStaticItem::mImage)
-      .addProperty("max_count", &UStaticItem::mMaxCount)
+      .addProperty("stack_size", &UStaticItem::mStackSize)
       .addProperty("unit_mul", &UStaticItem::mUnitMul)
       .addProperty("mesh", &UStaticItem::mMesh)
       .addProperty("craftable", &UStaticItem::mCraftable)

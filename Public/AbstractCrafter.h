@@ -121,7 +121,7 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   void SetSwitched(bool val) override;
   bool GetSwitched() const override;
 
-  virtual void ReplaceWith(UBlockLogic *other) override;
+  virtual void CopyOnReplace(UBlockLogic *from) override;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   bool mLoadIndependent = false;
@@ -156,7 +156,6 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   int32 mCollectedProductivity = 0;
 
-  protected:
   UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
   UBaseRecipeDictionary *mRecipeDictionary;
 
