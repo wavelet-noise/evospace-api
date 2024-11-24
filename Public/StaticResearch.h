@@ -58,6 +58,9 @@ class EVOSPACE_API UStaticResearchBase : public UPrototype {
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   TArray<FKeyTableObject> LabelParts = {};
+  
+  UPROPERTY(EditAnywhere, BlueprintReadOnly)
+  TArray<FKeyTableObject> mDescriptionParts = {};
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventory *DataPoints;
@@ -88,6 +91,9 @@ class EVOSPACE_API UStaticResearchBase : public UPrototype {
 
   UFUNCTION(BlueprintCallable, BlueprintCosmetic)
   FText GetLabel() const;
+
+  UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+  FText GetDescription() const;
 
   UFUNCTION(BlueprintCallable, BlueprintCosmetic)
   virtual UTexture2D *GetTexture() const;

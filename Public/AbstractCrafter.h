@@ -109,7 +109,7 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   //TODO: do we need this?
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
   UAutosizeInventory *mRecipeListTierHelper = nullptr;
-  
+
   TArray<class UResourceAccessor *> GetResourceInputAccessors() const;
   TArray<class UResourceAccessor *> GetResourceOutputAccessors() const;
 

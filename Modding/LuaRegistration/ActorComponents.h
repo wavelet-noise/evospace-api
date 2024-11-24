@@ -5,6 +5,7 @@
 #include "ThirdParty/luabridge/luabridge.h"
 #include "Evospace/Common.h"
 #include "Evospace/Dimension.h"
+#include "Evospace/MainGameInstance.h"
 #include "Evospace/Blocks/BlockActor.h"
 #include "Evospace/Item/ItemData.h"
 #include "Evospace/Item/ItemLogic.h"
@@ -137,5 +138,12 @@ inline void registerComponentClasses(lua_State *L) {
 
   getGlobalNamespace(L)
     .deriveClass<ABlockActor, AActor>("BlockActor")
+    .endClass();
+
+  getGlobalNamespace(L)
+    .deriveClass<UMainGameInstance, UObject>("Game")
+    .addStaticFunction("set_localization", [](std::string_view s) {
+      UMainGameInstance::ChangeLocalization(UTF8_TO_TCHAR(s.data()));
+    })
     .endClass();
 }
