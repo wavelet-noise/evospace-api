@@ -18,6 +18,12 @@ UCLASS(BlueprintType)
  */
 class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
   using Self = USelectCrafter;
+  EVO_CODEGEN_INSTANCE(SelectCrafter)
+  virtual void lua_reg(lua_State *L) const override {
+      luabridge::getGlobalNamespace(L)
+        .deriveClass<Self, UAbstractCrafter>("SelectCrafter")
+        .endClass();
+    }
   GENERATED_BODY()
 
   public:
@@ -62,11 +68,4 @@ class EVOSPACE_API USelectCrafter : public UAbstractCrafter {
   //TODO: replace with output container
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
   UInventoryContainer *mAutoCrafterCoreOutput;
-
-  EVO_CODEGEN_INSTANCE(SelectCrafter)
-  virtual void lua_reg(lua_State *L) const override {
-    luabridge::getGlobalNamespace(L)
-      .deriveClass<Self, UAbstractCrafter>("SelectCrafter")
-      .endClass();
-  }
 };
