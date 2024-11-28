@@ -46,8 +46,10 @@ class EVOSPACE_API UTieredBlockLogic : public UBlockLogic {
   UPROPERTY(BlueprintReadOnly, EditAnywhere)
   uint8 mLevel = 0;
 
+  UFUNCTION(BlueprintCallable)
   static FString TierToString(int32 tier);
 
+  UFUNCTION(BlueprintCallable)
   static FColor TierToColor(int32 tier);
 };
 
