@@ -48,10 +48,8 @@ class EVOSPACE_API UBlockLogic : public UInstance {
   virtual void NeighborBlockAdded(UBlockLogic *block, const Vec3i &pos);
   virtual void NeighborBlockRemoved(UBlockLogic *block, const Vec3i &pos);
 
-  virtual void SideAccessorAdded(UAccessor *accessor, const Vec3i &side,
-                                 const Vec3i &pos);
-  virtual void SideAccessorRemoved(UAccessor *accessor, const Vec3i &side,
-                                   const Vec3i &pos);
+  virtual void SideAccessorAdded(UAccessor *accessor, const Vec3i &side, const Vec3i &pos);
+  virtual void SideAccessorRemoved(UAccessor *accessor, const Vec3i &side, const Vec3i &pos);
 
   virtual void SpawnedByItem(AItemLogic *item);
   virtual EBreakResult RemovedByItem(AItemLogic *item);
@@ -191,8 +189,7 @@ class EVOSPACE_API UBlockLogic : public UInstance {
 
   virtual void OpenWidget(class UHudWidget *widget);
 
-  virtual void OnAction(const FHitResult &hit, const Vec3i &side,
-                        AItemLogic *item);
+  virtual void OnAction(const FHitResult &hit, const Vec3i &side, AItemLogic *item);
 
   //    .
   virtual int32 DropItems(UInventoryAccess *inventory);
