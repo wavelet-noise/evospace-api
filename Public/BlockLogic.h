@@ -72,6 +72,8 @@ class EVOSPACE_API UBlockLogic : public UInstance {
   virtual void Tick();
   virtual void TickAccessor();
 
+  ADimension * GetDim() const { return mDimension; }
+
   virtual void CopyOnReplace(UBlockLogic *from);
 
   /**
@@ -116,7 +118,8 @@ class EVOSPACE_API UBlockLogic : public UInstance {
   void PaintBlock(UMaterialInterface *mat);
 
   const Vec3i &GetBlockPos() const;
-  void SetBlockPos(const Vec3i &pos);
+
+  void Init(const Vec3i&pos, const FQuat&r, const UStaticBlock*block, ADimension*dim);
 
   virtual UBlockLogic *GetPartRootBlock();
 
@@ -135,6 +138,7 @@ class EVOSPACE_API UBlockLogic : public UInstance {
   UFUNCTION(BlueprintCallable)
   virtual EBlockWidgetType GetWidgetType() const;
 
+  //TODO: remove
   virtual void InitializeBlock();
 
   // No any code
@@ -173,15 +177,11 @@ class EVOSPACE_API UBlockLogic : public UInstance {
   }
 
   public:
-  ADimension *GetDimension() const;
-  void SetDimension(ADimension *dim);
 
   //=====================
 
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
   virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
-
-  void SetStaticBlock(const UStaticBlock *static_block);
 
   virtual const UStaticBlock *GetStaticBlock() const;
 
@@ -205,9 +205,6 @@ class EVOSPACE_API UBlockLogic : public UInstance {
   virtual bool IsNoActor() const;
 
   virtual bool IsPart() { return false; }
-
-  UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-  const UStaticBlock *mStaticBlock = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
   bool mRenderable = false;
@@ -249,6 +246,10 @@ class EVOSPACE_API UBlockLogic : public UInstance {
   protected:
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
   ABlockActor *mActor = nullptr;
+
+private:
+  UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+  const UStaticBlock *mStaticBlock = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
   ADimension *mDimension = nullptr;

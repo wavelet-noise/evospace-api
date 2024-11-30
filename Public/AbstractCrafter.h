@@ -10,7 +10,7 @@
 class UResourceInventory;
 class UResourceComponent;
 class URecipe;
-class UBaseRecipeDictionary;
+class URecipeDictionary;
 class UAutosizeInventory;
 class UInventoryContainer;
 
@@ -36,19 +36,21 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, UTieredBlockLogic>("AbstractCrafter")
-      .addProperty("load_independent", &Self::mLoadIndependent)
-      .addProperty("input_gathered", &Self::mInputGathered)
-      .addProperty("switched_on", &Self::mSwitchedOn)
-      .addProperty("ticks_passed", &Self::mTicksPassed)
-      .addProperty("real_ticks_passed", &Self::mRealTicksPassed)
-      .addProperty("total_production", &Self::mTotalProduction)
-      .addProperty("speed", &Self::mSpeed)
+      .addProperty("recipes", &Self::RecipeDictionary)
+    
+      .addProperty("load_independent", &Self::LoadIndependent)
+      .addProperty("input_gathered", &Self::InputGathered)
+      .addProperty("switched_on", &Self::SwitchedOn)
+      .addProperty("ticks_passed", &Self::TicksPassed)
+      .addProperty("real_ticks_passed", &Self::RealTicksPassed)
+      .addProperty("total_production", &Self::TotalProduction)
+      .addProperty("speed", &Self::Speed)
 
-      .addProperty("energy_input_inventory", &Self::mEnergyInputInventory)
-      .addProperty("energy_output_inventory", &Self::mEnergyOutputInventory)
+      .addProperty("energy_input_inventory", &Self::EnergyInputInventory)
+      .addProperty("energy_output_inventory", &Self::EnergyOutputInventory)
 
-      .addProperty("crafter_input_container", &Self::mCrafterInputContainer)
-      .addProperty("crafter_output_container", &Self::mEnergyOutputInventory)
+      .addProperty("crafter_input_container", &Self::CrafterInputContainer)
+      .addProperty("crafter_output_container", &Self::EnergyOutputInventory)
       .endClass();
   }
 
@@ -64,7 +66,7 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   virtual bool SerializeJson(TSharedPtr<FJsonObject> json) override;
 
   UFUNCTION(BlueprintCallable)
-  virtual UBaseRecipeDictionary *GetRecipeDictionary() const;
+  virtual URecipeDictionary *GetRecipeDictionary() const;
 
   UFUNCTION(BlueprintCallable)
   virtual URecipe *GetCurrentRecipe() const;
@@ -88,27 +90,27 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   virtual float GetProductivityProgress() const;
 
   UPROPERTY(BlueprintReadOnly)
-  bool mLockedInput = false;
+  bool LockedInput = false;
 
   virtual void OnCraftPerformed();
 
   virtual void BlockEndPlay() override;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UInventoryContainer *mCrafterInputContainer = nullptr;
+  UInventoryContainer *CrafterInputContainer = nullptr;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  UInventoryContainer *mCrafterOutputContainer = nullptr;
+  UInventoryContainer *CrafterOutputContainer = nullptr;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  UResourceInventory *mEnergyInputInventory = nullptr;
+  UResourceInventory *EnergyInputInventory = nullptr;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  UResourceInventory *mEnergyOutputInventory = nullptr;
+  UResourceInventory *EnergyOutputInventory = nullptr;
 
   //TODO: do we need this?
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  UAutosizeInventory *mRecipeListTierHelper = nullptr;
+  UAutosizeInventory *RecipeListTierHelper = nullptr;
 
   TArray<class UResourceAccessor *> GetResourceInputAccessors() const;
   TArray<class UResourceAccessor *> GetResourceOutputAccessors() const;
@@ -124,43 +126,43 @@ class EVOSPACE_API UAbstractCrafter : public UTieredBlockLogic, public ISwitchIn
   virtual void CopyOnReplace(UBlockLogic *from) override;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  bool mLoadIndependent = false;
+  bool LoadIndependent = false;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  bool mInputGathered = false;
+  bool InputGathered = false;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-  bool mSwitchedOn = true;
+  bool SwitchedOn = true;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 mTicksPassed = 0;
+  int32 TicksPassed = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 mRealTicksPassed = 0;
+  int32 RealTicksPassed = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 mTotalProduction = 0;
+  int32 TotalProduction = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 mSpeed = 100;
+  int32 Speed = 100;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  ECrafterState mState = ECrafterState::InputShortage;
+  ECrafterState State = ECrafterState::InputShortage;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 mInputTicks = 0;
+  int32 InputTicks = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 mOutputTicks = 0;
+  int32 OutputTicks = 0;
 
   UPROPERTY(EditAnywhere, BlueprintReadOnly)
-  int32 mCollectedProductivity = 0;
+  int32 CollectedProductivity = 0;
 
   UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-  UBaseRecipeDictionary *mRecipeDictionary;
+  URecipeDictionary *RecipeDictionary;
 
   friend class UBlockModdingLuaState;
 
   UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-  const URecipe *mCurrentRecipe = nullptr;
+  const URecipe *CurrentRecipe = nullptr;
 };

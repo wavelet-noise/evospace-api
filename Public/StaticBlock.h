@@ -56,17 +56,10 @@ class EVOSPACE_API UStaticBlock : public UStaticObject {
 
   virtual ABlockActor *SpawnActorAndLuaDeferred(ADimension *world, UBlockLogic *bloc_logic, const FTransform &tr) const;
 
-  TSharedPtr<FJsonObject> mLogicJson;
-
   //std::string mActorBytecode;
   //std::string mBlockBytecode;
 
-  std::optional<luabridge::LuaRef> mBlockLuaRef;
-
-  /**
-   * Actor init
-   */
-  std::optional<luabridge::LuaRef> mActorInit;
+  std::optional<luabridge::LuaRef> Table;
 
   virtual void LuaCleanup() override;
 
@@ -90,10 +83,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject {
    */
   FName mReplaceTag;
 
-  virtual UBlockLogic *SpawnBlockDeffered(ADimension *dim, const FTransform &tr, const Vec3i &bpos) const;
-
-  static int SetBlockInit(lua_State *L);
-  static int GetBlockInit(lua_State *L);
+  virtual UBlockLogic *SpawnBlockDeferred(ADimension *dim, const FTransform &tr, const Vec3i &bpos) const;
 
   virtual UPartBlockLogic *SpawnPart(ADimension *world, const FTransform &tr, const Vec3i &bpos, UBlockLogic *parent) const;
 
@@ -110,8 +100,7 @@ class EVOSPACE_API UStaticBlock : public UStaticObject {
       .addProperty("replace_tag", &UStaticBlock::mReplaceTag)
       .addProperty("color_side", &UStaticBlock::mColorSide)
       .addProperty("color_top", &UStaticBlock::mColorTop)
-      .addProperty("block_init", &UStaticBlock::mBlockLuaRef)
-      .addProperty("actor_init", &UStaticBlock::mActorInit)
+      .addProperty("lua", &UStaticBlock::Table)
       .endClass();
   }
 };

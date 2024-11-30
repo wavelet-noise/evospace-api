@@ -41,8 +41,7 @@ class EVOSPACE_API UStaticItem : public UPrototype {
   public:
   virtual bool DeserializeJson(TSharedPtr<FJsonObject> json) override;
 
-  AItemLogic *SpawnLogicItemDeffered(UWorld *world,
-                                     const FTransform &transform) const;
+  AItemLogic *SpawnLogicItemDeferred(UWorld *world, const FTransform &transform) const;
 
   UFUNCTION(BlueprintCallable, BlueprintCosmetic)
   FText GetLabel() const;

@@ -22,7 +22,7 @@ int LegacyLuaState::Crafter_get_resource_component(lua_State *l) {
   const auto self = Stack<UBlockLogic *>::get(l, 1);
 
   if (const auto cra = Cast<USelectCrafter>(self.value())) {
-    auto result = push(l, cra->mEnergyInputInventory);
+    auto result = push(l, cra->EnergyInputInventory);
   }
 
   return 1;
@@ -32,7 +32,7 @@ int LegacyLuaState::Crafter_get_input_container(lua_State *l) {
   const auto self = Stack<UBlockLogic *>::get(l, 1);
 
   if (const auto cra = Cast<USelectCrafter>(self.value())) {
-    auto result = push(l, cra->mCrafterInputContainer);
+    auto result = push(l, cra->CrafterInputContainer);
   }
 
   return 1;
@@ -43,7 +43,7 @@ int LegacyLuaState::Crafter_get_output_container(lua_State *l) {
 
   auto cra = Cast<USelectCrafter>(self.value());
   if (cra) {
-    auto result = push(l, cra->mCrafterOutputContainer);
+    auto result = push(l, cra->CrafterOutputContainer);
   }
 
   return 1;

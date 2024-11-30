@@ -104,8 +104,8 @@ class EVOSPACE_API UDumpCrafterBlockLogic : public USelectCrafter {
 
   virtual void BlockBeginPlay() override;
 
-  void SetActor(ABlockActor *actor);
-  FObjectProperty *mItem = nullptr;
+  virtual void SetActor(ABlockActor *actor)override;
+  FObjectProperty *Item = nullptr;
 
   public:
   virtual bool IsUniversalCrafter() const override;

@@ -18,8 +18,8 @@ class EVOSPACE_API UTieredBlockLogic : public UBlockLogic {
   virtual void lua_reg(lua_State *L) const override {
     luabridge::getGlobalNamespace(L)
       .deriveClass<Self, UBlockLogic>("TieredBlockLogic")
-      .addProperty("tier", &Self::mTier)
-      .addProperty("level", &Self::mLevel)
+      .addProperty("tier", &Self::Tier)
+      .addProperty("level", &Self::Level)
       .endClass();
   }
 
@@ -41,16 +41,16 @@ class EVOSPACE_API UTieredBlockLogic : public UBlockLogic {
   virtual void SetActor(ABlockActor *actor) override;
 
   UPROPERTY(BlueprintReadOnly, EditAnywhere)
-  uint8 mTier = 0;
+  uint8 Tier = 0;
 
   UPROPERTY(BlueprintReadOnly, EditAnywhere)
-  uint8 mLevel = 0;
+  uint8 Level = 0;
 
   UFUNCTION(BlueprintCallable)
-  static FString TierToString(int32 tier);
+  static FString TierToString(int32 t);
 
   UFUNCTION(BlueprintCallable)
-  static FColor TierToColor(int32 tier);
+  static FColor TierToColor(int32 t);
 };
 
 UCLASS(BlueprintType)

@@ -20,10 +20,10 @@ struct FStaticBlockMinable {
   GENERATED_BODY()
 
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-  bool mMinable = true;
+  bool Minable = true;
 
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-  UStaticItem *mResult = nullptr;
+  UStaticItem *Result = nullptr;
 
   bool DeserializeJson(TSharedPtr<FJsonObject> json);
 };
